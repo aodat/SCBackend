@@ -15,10 +15,12 @@ use App\Http\Controllers\API\AuthController;
 |
 */
 
-Route::post('login', [AuthController::class, 'login']);
-     
-Route::middleware('auth:api')->group( function () {
-    //Route::resource('products', ProductController::class);
+Route::group(['middleware' => ['json.response']], function () { 
+    Route::post('clients/auth/login', [AuthController::class, 'login']);
+    Route::post('clients/auth/register',[AuthController::class, 'register']); 
+    Route::get('verify/email/{token}',[AuthController::class, 'register']);
+    // Route::middleware('auth:api')->group( function () {
+    // Route::resource('products', ProductController::class);
 });
 
 

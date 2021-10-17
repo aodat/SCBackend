@@ -3,11 +3,24 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
+use App\Http\Requests\AuthRequest;
+
+use Illuminate\Support\Facades\Hash;
+
+use App\Models\Merchant;
+use App\Models\User;
 class AuthController extends Controller
 {
-	public function login(Request $request) {
+    /*
+    protected $model;
+    public function __construct(Post $post) 
+    {
+       $this->model = new General($post);
+    }
+    */
+
+	public function login(AuthRequest $request) {
         $loginData = $request->validate([
             'email' => 'email|required',
             'password' => 'required'
@@ -20,6 +33,30 @@ class AuthController extends Controller
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
 
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
+    }
+
+    public function register(AuthRequest $request)
+    {
+        $user = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'remember_token' => md5(time())
+        ];
+        User::create($user);
+
+        $merchant = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'type' => $request->type,
+            'phone' => $request->phone,
+        ];
+        
+
+        Merchant::create($merchant);
+
+        return true;
+        dd($request->json()->all());
     }
 
 }
