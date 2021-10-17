@@ -30,7 +30,7 @@ class AuthController extends Controller
             return response(['message' => 'This User does not exist, check your details'], 400);
         }
 
-        $accessToken = auth()->user()->createToken('authToken')->accessToken;
+        $accessToken = auth()->user()->createToken('users')->accessToken;
 
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
     }
@@ -43,7 +43,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'remember_token' => md5(time())
         ];
-        User::create($user);
+        User::create($user)->createToken('authToken')->accessToken;
 
         $merchant = [
             'name' => $request->name,

@@ -23,13 +23,18 @@ class AuthRequest extends FormRequest
      */
     public function rules()
     {
-        return $rules = [
-            'type' => 'in:individual,corporate',
-            'name' => 'required|min:6|max:255',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required',
-            'password' => 'required|min:6|max:255|confirmed',
-            'password_confirmation' => 'required|min:6|max:255',
-        ];
+        if(strpos(Request()->path(),'clients/auth/register') !== false)
+        {
+            return $rules = [
+                'type' => 'in:individual,corporate',
+                'name' => 'required|min:6|max:255',
+                'email' => 'required|email|unique:users',
+                'phone' => 'required',
+                'password' => 'required|min:6|max:255|confirmed',
+                'password_confirmation' => 'required|min:6|max:255',
+            ];
+        } else if(strpos(Request()->path(),'clients/auth/login') !== false) {
+            return [];
+        }
     }
 }
