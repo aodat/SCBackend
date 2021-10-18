@@ -7,16 +7,15 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
-
-use App\Http\responseHandler;
+use App\Traits\responseHandler;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-
+    use responseHandler;
 
     public function unauthenticated()
     {
-        return responseHandler::error(null, 401);
+        return $this->error(null, 401);
     }
 }

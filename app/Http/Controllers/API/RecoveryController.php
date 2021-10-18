@@ -5,15 +5,10 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RecoveryRequest;
 
-use App\Http\responseHandler;
-use App\Models\User;
-use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
-
 
 class RecoveryController extends Controller
 {
@@ -43,7 +38,7 @@ class RecoveryController extends Controller
                 event(new PasswordReset($user));
             }
         );
-        
+
         if ($response == Password::PASSWORD_RESET) {
             $message = "Password reset successfully";
         } else {

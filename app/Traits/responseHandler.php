@@ -1,11 +1,11 @@
 <?php
-namespace App\Http;
+namespace App\Traits;
 
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Response;
 
-class responseHandler
+trait responseHandler
 {  
     /*
     public static function sendResponse($data = '', $code = 200, $withoutData = false)
