@@ -44,7 +44,7 @@ class AuthController extends Controller
             'remember_token' => md5(time())
         ];
         User::create($user)->createToken('authToken')->accessToken;
-
+        
         $merchant = [
             'name' => $request->name,
             'email' => $request->email,
