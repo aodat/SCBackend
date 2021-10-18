@@ -17,10 +17,15 @@ class RecoveryController extends Controller
     {
         $response =  Password::sendResetLink($request->only('email'));
         if ($response == Password::RESET_LINK_SENT) {
-            $message = "Mail send successfully";
+            $msg = "Mail send successfully";
+            $code = 400;
+
         } else {
-            $message = "Email could not be sent to this email address";
+            $msg = "Email could not be sent to this email address";
+            $code = 400;
+
         }
+        $this->response(['msg' => $msg],$code);
     }
 
 
@@ -40,11 +45,12 @@ class RecoveryController extends Controller
         );
 
         if ($response == Password::PASSWORD_RESET) {
-            $message = "Password reset successfully";
+            $msg = "Password reset successfully";
+            $code = 200;
         } else {
-            $message = "Email could not be sent to this email address";
+            $msg = "Email could not be sent to this email address";
+            $code = 400;
         }
-        $response = ['data' => '', 'message' => $message];
-        return response()->json($response);
+        $this->response(['msg' => $msg],$code);
     }
 }

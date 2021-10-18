@@ -35,7 +35,7 @@ trait responseHandler
 
     public static function response($response, $code)
     {
-        return Response::json($response, $code);
+        return Response::make($response, $code);
     }
 
     public static function successful()

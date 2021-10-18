@@ -22,7 +22,7 @@ class UserController extends Controller
     public function login(AuthRequest $request) {
         $data = $this->userRepo->login($request->email,$request->password);
         $code = 200;
-        if(empty($data))
+        if(isset($data['msg']))
             $code = 400;
         
         return $this->response($data,$code);
