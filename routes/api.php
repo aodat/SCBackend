@@ -20,14 +20,12 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['json.response']], function () { 
     Route::post('clients/auth/login', [UserController::class, 'login']);
     Route::post('clients/auth/register',[UserController::class, 'register']);
-    Route::get('verify/email/{token}',[UserController::class, 'register']);
+    Route::post('clients/auth/forgetpassword',[recoveryController::class, 'forgetpassword']);
+    Route::post('clients/password/reset', [recoveryController::class, 'sendResetResponse']);
 
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('clients/logout',[UserController::class, 'logout']);
     });
-    // Route::middleware('auth:api')->group( function () {
-    // Route::resource('products', ProductController::class);
-
     Route::get('/unauthenticated',[Controller::class, 'unauthenticated'])->name('unauthenticated');
 
 });
