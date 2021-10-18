@@ -34,7 +34,10 @@ class AuthRequest extends FormRequest
                 'password_confirmation' => 'required|min:6|max:255',
             ];
         } else if(strpos(Request()->path(),'clients/auth/login') !== false) {
-            return [];
+            return [
+                'email' => 'email|required',
+                'password' => 'required'
+            ];
         }
     }
 }
