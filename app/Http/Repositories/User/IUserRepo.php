@@ -10,4 +10,7 @@ interface IUserRepo
     public function logout($data);
 
     public function getUseriInfo($userID);
+
+    public function update($update , $where);
+
 }

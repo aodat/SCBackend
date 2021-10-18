@@ -29,7 +29,7 @@ class AuthRequest extends FormRequest
                 'type' => 'in:individual,corporate',
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|email|unique:users',
-                'phone' => 'required',
+                'phone' => 'required|unique:users',
                 'password' => 'required|min:6|max:255|confirmed',
                 'password_confirmation' => 'required|min:6|max:255',
             ];

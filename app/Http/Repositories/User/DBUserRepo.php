@@ -32,6 +32,7 @@ class DBUserRepo implements IUserRepo
                 'name' => $data->name,
                 'email' => $data->email,
                 'password' => Hash::make($data->password),
+                'phone' => $data->phone,
                 'remember_token' => md5(time())
             ]
         );
@@ -64,4 +65,9 @@ class DBUserRepo implements IUserRepo
     {
         return User::create($data);
     } 
+
+    public function update($update , $where)
+    {
+        return User::where($where)->update($update);
+    }
 }

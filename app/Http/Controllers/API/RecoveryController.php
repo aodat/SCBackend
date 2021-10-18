@@ -31,15 +31,14 @@ class RecoveryController extends Controller
     public function forgetpassword(RecoveryRequest $request)
     {
         $response =  Password::sendResetLink($request->only('email'));
+
+        $msg = "Email could not be sent to this email address";
+        $code = 400;
         if ($response == Password::RESET_LINK_SENT) {
             $msg = "Mail send successfully";
             $code = 400;
-
-        } else {
-            $msg = "Email could not be sent to this email address";
-            $code = 400;
-
         }
+
         $this->response(['msg' => $msg],$code);
     }
 
@@ -78,6 +77,12 @@ class RecoveryController extends Controller
     
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
+
+            $this->userRepo->update(
+                ['is_email_verified' => true],
+                ['id' => $user->id]
+            );
+
             $this->merchantRepo->update(
                 ['is_email_verified' => true],
                 ['email' => $user->email]

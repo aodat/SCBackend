@@ -2,7 +2,6 @@
 
 namespace App\Messenger;
 
-use App\Models\Company;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -29,6 +28,7 @@ class SmsService
 			'mobile_number' => $number,
 			'from' => 'ShipCash'
 		];
+		
 		return Http::get("http://sendsms.ngt.jo/http/send_sms_http.php?".http_build_query($data));
 	}
 
@@ -39,7 +39,7 @@ class SmsService
 		session(['pin_code' => $randomPinCode]);
 
 		if (auth()->check()) {
-			auth()->user()->company->update(['pin_code' => $randomPinCode]);
+			auth()->user()->update(['pin_code' => $randomPinCode]);
 		}
 
 		self::sendSMS($randomPinCode, $number);
@@ -47,7 +47,7 @@ class SmsService
 
 	public static function verifyPinCode($pin)
 	{
-		if (auth()->check() && auth()->user()->company->pin_code == $pin || session('pin_code') == $pin) {
+		if (auth()->check() && auth()->user()->pin_code == $pin || session('pin_code') == $pin) {
 			return true;
 		}
 

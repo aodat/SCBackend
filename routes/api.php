@@ -28,8 +28,8 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::group(['middleware' => ['auth:api']], function () {
         Route::group(['prefix' => 'user/'], function () {
             Route::get('check/phone',[OtpController::class,'checkOTP']);
-            Route::get('otp/verify',[OtpController::class,'checkOTP']);
-
+            Route::get('send/phone/verification',[OtpController::class,'sendVerification']);
+            Route::post('verify/phone',[OtpController::class,'verifyPhoneNumber']);
         });
         Route::post('clients/logout',[UserController::class, 'logout']);
         

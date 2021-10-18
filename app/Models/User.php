@@ -19,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'remember_token'
+        'name', 'email', 'password','phone', 'pin_code', 'remember_token'
     ];
  
     /**
@@ -44,8 +44,6 @@ class User extends Authenticatable
     {
         // Your your own implementation.
         $this->notify(new MailResetPasswordNotification($token));
-        
-
     }
 
 }
