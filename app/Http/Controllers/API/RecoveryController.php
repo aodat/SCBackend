@@ -13,15 +13,19 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 
 use App\Http\Repositories\User\IUserRepo;
+use App\Http\Repositories\Merchant\IMerchantRepo;
+
 class RecoveryController extends Controller
 {
 
-    protected $userRepo;
+    protected $userRepo,$merchantRepo;
     public function __construct(
-        IUserRepo $user
+        IUserRepo $user,
+        IMerchantRepo $merchant
     )
     {
         $this->userRepo = $user;
+        $this->merchantRepo = $merchant;
     }
 
     public function forgetpassword(RecoveryRequest $request)
@@ -74,6 +78,10 @@ class RecoveryController extends Controller
     
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
+            $this->merchantRepo->update(
+                ['is_email_verified' => true],
+                ['email' => $user->email]
+            );
         }
     
         return $this->response(['msg' => 'Email verified sucessfully'],200);

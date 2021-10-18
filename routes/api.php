@@ -26,7 +26,13 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/resend', [recoveryController::class, 'sendResetResponse'])->name('verification.resend');
         
     Route::group(['middleware' => ['auth:api']], function () {
+        Route::group(['prefix' => 'user/'], function () {
+            Route::get('check/phone',[OtpController::class,'checkOTP']);
+            Route::get('otp/verify',[OtpController::class,'checkOTP']);
+
+        });
         Route::post('clients/logout',[UserController::class, 'logout']);
+        
     });
     Route::get('/unauthenticated',[Controller::class, 'unauthenticated'])->name('unauthenticated');
 
