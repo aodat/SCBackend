@@ -9,5 +9,5 @@ interface IUserRepo
 
     public function logout($data);
 
-    public function profile();
+    public function getUseriInfo($userID);
 }

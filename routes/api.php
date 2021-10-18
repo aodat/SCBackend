@@ -21,8 +21,10 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('clients/auth/login', [UserController::class, 'login']);
     Route::post('clients/auth/register',[UserController::class, 'register']);
     Route::post('clients/auth/forgetpassword',[recoveryController::class, 'forgetpassword']);
-    Route::post('clients/password/reset', [recoveryController::class, 'sendResetResponse']);
 
+    Route::get('email/verify/{id}', [recoveryController::class, 'verify'])->name('verification.verify');
+    Route::get('email/resend', [recoveryController::class, 'sendResetResponse'])->name('verification.resend');
+        
     Route::group(['middleware' => ['auth:api']], function () {
         Route::post('clients/logout',[UserController::class, 'logout']);
     });

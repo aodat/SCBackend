@@ -5,13 +5,24 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RecoveryRequest;
 
+use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 
+use App\Http\Repositories\User\IUserRepo;
 class RecoveryController extends Controller
 {
+
+    protected $userRepo;
+    public function __construct(
+        IUserRepo $user
+    )
+    {
+        $this->userRepo = $user;
+    }
 
     public function forgetpassword(RecoveryRequest $request)
     {
@@ -53,4 +64,29 @@ class RecoveryController extends Controller
         }
         $this->response(['msg' => $msg],$code);
     }
+
+    public function verify($userID, Request $request) {
+        if (!$request->hasValidSignature()) {
+            return $this->response(['msg' => 'Invalid/Expired url provided.'],401);
+        }
+    
+        $user = $this->userRepo->getUseriInfo($userID);
+    
+        if (!$user->hasVerifiedEmail()) {
+            $user->markEmailAsVerified();
+        }
+    
+        return $this->response(['msg' => 'Email verified sucessfully'],200);
+    }
+    
+    public function resend() {
+        if (auth()->user()->hasVerifiedEmail()) {
+            return $this->response(['msg' => 'Email already verified.'],401);
+        }
+    
+        auth()->user()->sendEmailVerificationNotification();
+    
+        return $this->response(['msg' => 'Email verification link sent on your email id.'],200);
+    }
+    
 }

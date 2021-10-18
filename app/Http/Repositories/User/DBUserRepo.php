@@ -35,7 +35,7 @@ class DBUserRepo implements IUserRepo
                 'remember_token' => md5(time())
             ]
         );
-
+        $user->sendEmailVerificationNotification();
         $this->merchantRepo->create(
             [
                 'name' => $data->name,
@@ -55,9 +55,9 @@ class DBUserRepo implements IUserRepo
         return $data->user()->token()->revoke();
     }
 
-    public function profile()
+    public function getUseriInfo($userID)
     {
-
+        return User::findOrFail($userID);
     }
 
     public function createUser($data)
