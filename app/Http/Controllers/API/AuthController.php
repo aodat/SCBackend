@@ -7,9 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 use App\Models\Merchant;
 use App\Models\User;
+
+use Laravel\Passport\Token;
 class AuthController extends Controller
 {
     /*
@@ -29,7 +32,6 @@ class AuthController extends Controller
         if (!auth()->attempt($loginData)) {
             return response(['message' => 'This User does not exist, check your details'], 400);
         }
-
         $accessToken = auth()->user()->createToken('users')->accessToken;
 
         return response(['user' => auth()->user(), 'access_token' => $accessToken]);
@@ -57,6 +59,11 @@ class AuthController extends Controller
 
         return true;
         dd($request->json()->all());
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
     }
 
 }

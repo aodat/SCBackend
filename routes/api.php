@@ -17,8 +17,12 @@ use App\Http\Controllers\API\AuthController;
 
 Route::group(['middleware' => ['json.response']], function () { 
     Route::post('clients/auth/login', [AuthController::class, 'login']);
-    Route::post('clients/auth/register',[AuthController::class, 'register']); 
+    Route::post('clients/auth/register',[AuthController::class, 'register']);
     Route::get('verify/email/{token}',[AuthController::class, 'register']);
+
+    Route::group(['middleware' => ['auth:api']], function () {
+        Route::post('clients/logout',[AuthController::class, 'logout']);
+    });
     // Route::middleware('auth:api')->group( function () {
     // Route::resource('products', ProductController::class);
 });
