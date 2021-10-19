@@ -7,17 +7,10 @@ use Illuminate\Http\Request;
 
 use App\Messenger\SmsService;
 
-use App\Http\Repositories\User\IUserRepo;
+use App\Models\User;
+
 class OtpController extends Controller
 {
-    protected $userRepo;
-    public function __construct(
-        IUserRepo $user
-    )
-    {
-        $this->userRepo = $user;
-    }
-
     public function checkOTP(Request $request)
     {      
         $msg = "Phone verified";
@@ -47,13 +40,12 @@ class OtpController extends Controller
         $code = 500;
 
         if(auth()->user()->pin_code == $request->pin_code) {
-            $this->userRepo->update(['is_phone_verified' => true,'phone_verified_at' => now(),'pin_code' => null] , ['id' => Request()->user()->id]);
+            User::where('id',Request()->user()->id)
+                ->update(['is_phone_verified' => true,'phone_verified_at' => now(),'pin_code' => null]);
             $msg = "Phone verified";
             $code = 200;
         }
         return $this->response(['msg' => $msg],$code);
-
-        
     }
     
 }

@@ -12,22 +12,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 
-use App\Http\Repositories\User\IUserRepo;
-use App\Http\Repositories\Merchant\IMerchantRepo;
+use App\Models\Merchant;
+use App\Models\User;
 
 class RecoveryController extends Controller
 {
-
-    protected $userRepo,$merchantRepo;
-    public function __construct(
-        IUserRepo $user,
-        IMerchantRepo $merchant
-    )
-    {
-        $this->userRepo = $user;
-        $this->merchantRepo = $merchant;
-    }
-
     public function forgetpassword(RecoveryRequest $request)
     {
         $response =  Password::sendResetLink($request->only('email'));
@@ -73,20 +62,13 @@ class RecoveryController extends Controller
             return $this->response(['msg' => 'Invalid/Expired url provided.'],401);
         }
     
-        $user = $this->userRepo->getUseriInfo($userID);
-    
+        $user = User::findOrFail($userID);
+
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
 
-            $this->userRepo->update(
-                ['is_email_verified' => true],
-                ['id' => $user->id]
-            );
-
-            $this->merchantRepo->update(
-                ['is_email_verified' => true],
-                ['email' => $user->email]
-            );
+            User::where('id' , $user->id)->update(['is_email_verified' => true]);
+            Merchant::where('email' , $user->email)->update(['is_email_verified' => true]);
         }
     
         return $this->response(['msg' => 'Email verified sucessfully'],200);

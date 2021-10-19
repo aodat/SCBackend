@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['json.response']], function () { 
-    Route::post('clients/auth/login', [UserController::class, 'login']);
-    Route::post('clients/auth/register',[UserController::class, 'register']);
+    Route::post('clients/auth/login', [AuthController::class, 'login']);
+    Route::post('clients/auth/register',[AuthController::class, 'register']);
     Route::post('clients/auth/forgetpassword',[recoveryController::class, 'forgetpassword']);
 
     Route::get('email/verify/{id}', [recoveryController::class, 'verify'])->name('verification.verify');
@@ -31,11 +31,10 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('send/phone/verification',[OtpController::class,'sendVerification']);
             Route::post('verify/phone',[OtpController::class,'verifyPhoneNumber']);
         });
-        Route::post('clients/logout',[UserController::class, 'logout']);
+        Route::post('clients/logout',[AuthController::class, 'logout']);
         
     });
     Route::get('/unauthenticated',[Controller::class, 'unauthenticated'])->name('unauthenticated');
-
 });
 
 
