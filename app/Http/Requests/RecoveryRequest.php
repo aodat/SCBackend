@@ -26,13 +26,12 @@ class RecoveryRequest extends FormRequest
      */
     public function rules()
     {
-        $baseName = Request()->path();
-        if(strpos(Request()->path(),'clients/auth/forgetpassword') !== false)
-        {
+        $base_url = Request()->path();
+        if(strpos($base_url,'clients/auth/forgetpassword') !== false) {
             return [
                 'email' => 'required|string|email|max:255|exists:users'
             ];
-        } else if(strpos(Request()->path(),'clients/password/reset') !== false) {
+        } else if(strpos($base_url,'clients/password/reset') !== false) {
             return [
                 'token' => 'required',
                 'email' => 'required|email',

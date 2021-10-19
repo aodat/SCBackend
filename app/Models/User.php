@@ -19,7 +19,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','phone', 'pin_code'
+        'merchant_id' , 'name', 'email', 'password','phone', 'pin_code',
+        'is_email_verified' ,'is_phone_verified','email_verified_at','phone_verified_at'
     ];
  
     /**
@@ -28,7 +29,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password' , 'remember_token'
+        'password' , 'remember_token' , 'pin_code',
+        'is_email_verified' ,'is_phone_verified','email_verified_at','phone_verified_at'
     ];
  
     /**
@@ -46,4 +48,8 @@ class User extends Authenticatable
         $this->notify(new MailResetPasswordNotification($token));
     }
 
+    public function merchant()
+    {
+        return $this->hasOne(Merchant::class,'id','merchant_id');
+    }
 }

@@ -31,6 +31,15 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('send/phone/verification',[OtpController::class,'sendVerification']);
             Route::post('verify/phone',[OtpController::class,'verifyPhoneNumber']);
         });
+
+
+        // API/MerchantController
+        Route::group(['prefix' => 'merchant/'], function () {
+            Route::get('profile',[MerchantController::class,'profile']);
+            Route::put('profile/update-profile',[MerchantController::class,'updateProfile']);
+            Route::put('profile/update-password',[MerchantController::class,'updatePassword']);
+        });
+
         Route::post('clients/logout',[AuthController::class, 'logout']);
         
     });
