@@ -62,4 +62,56 @@ class MerchantController extends Controller
 
         return $this->response(['msg' => 'Password Updated Sucessfully'],200);
     }
+
+    public function getPaymentMethods(MerchantRequest $request)
+    {
+        $merchantID = $request->user()->merchant_id;
+        $data = Merchant::where('id',$merchantID)->select('payment_methods')->first();
+
+      
+        if(collect($data->payment_methods)->isEmpty())
+            return $this->notFound();
+
+        return $this->response(['msg' => 'All Payment Methods','data' => $data->payment_methods],200);
+    }
+
+    public function createPaymentMethod(MerchantRequest $request)
+    {
+        $merchantID = $request->user()->merchant_id;
+        $json = $request->json()->all();
+        
+        $merchant = Merchant::where('id',$merchantID);
+
+        $paymentMethods = collect($merchant->select('payment_methods')->first()->payment_methods);
+        $counter = $paymentMethods->max('id') ?? 0;
+        $json['id'] = ++$counter;
+
+        /* 
+        // for multi payment method
+        $json = $data->map(function ($value) use(&$counter) {
+            if(!isset($value['id']))
+                $value['id'] = ++$counter;
+            return $value;
+        });
+        */
+
+        $merchant->update(['payment_methods' => $paymentMethods->merge([$json])]);
+        return $this->response(['msg' => 'Payment Created Sucessfully'],200);
+    }
+
+    public function deletePaymentMethod($paymentID,MerchantRequest $request)
+    {
+        $merchantID = $request->user()->merchant_id;
+        
+        $list = Merchant::where('id',$merchantID);
+        $paymentMethods = collect($list->select('payment_methods')->first()->payment_methods);
+
+        $json = $paymentMethods->reject(function ($value) use($paymentID) {
+            if($value['id'] == $paymentID)
+                return $value;
+        });
+        $json = array_values($json->toArray());
+        $list->update(['payment_methods' => collect($json)]);
+        return $this->response(null,204);
+    }
 }

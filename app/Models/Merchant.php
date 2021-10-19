@@ -11,6 +11,10 @@ class Merchant extends Model
     protected $guarded = [];
 
 
+    protected $casts = [
+        'payment_methods' => 'array'
+    ];
+
     protected $hidden = [
         'is_email_verified' ,'is_phone_verified','is_documents_verified','is_active','is_instant_payment_active'
     ];

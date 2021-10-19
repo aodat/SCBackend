@@ -35,9 +35,15 @@ Route::group(['middleware' => ['json.response']], function () {
 
         // API/MerchantController
         Route::group(['prefix' => 'merchant/'], function () {
+            // Merchent Profile
             Route::get('profile',[MerchantController::class,'profile']);
             Route::put('profile/update-profile',[MerchantController::class,'updateProfile']);
             Route::put('profile/update-password',[MerchantController::class,'updatePassword']);
+
+            // Merchent Payment Method
+            Route::get('payment-methods',[MerchantController::class,'getPaymentMethods']);
+            Route::post('payment-methods/create',[MerchantController::class,'createPaymentMethod']);
+            Route::delete('payment-methods/{payment_id}',[MerchantController::class,'deletePaymentMethod']);
         });
 
         Route::post('clients/logout',[AuthController::class, 'logout']);

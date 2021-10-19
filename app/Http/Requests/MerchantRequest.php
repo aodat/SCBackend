@@ -36,6 +36,13 @@ class MerchantRequest extends FormRequest
                 'email' => 'required|email|unique:users,email,'.Auth::id(),
                 'phone' => 'required|unique:users,phone,'.Auth::id()
             ];
+        } else if(strpos($base_url,'payment-methods/create') !== false) {
+            return [
+                "name" => "required",
+                "iban" => "required",
+                "provider" => "required|string"
+            ];
         }
+        return [];
     }
 }
