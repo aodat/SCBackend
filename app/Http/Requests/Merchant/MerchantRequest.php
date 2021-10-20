@@ -35,6 +35,10 @@ class MerchantRequest extends FormRequest
                 'email' => 'required|email|unique:users,email,'.Auth::id(),
                 'phone' => 'required|unique:users,phone,'.Auth::id()
             ];
+        } else if(strpos($path,'merchant/verify/phone') !== false) {
+            return [
+                'phone' => 'required'
+            ];
         }
         return [];
     }

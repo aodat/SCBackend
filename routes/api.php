@@ -36,14 +36,10 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
         
     Route::group(['middleware' => ['auth:api']], function () {
-        Route::group(['prefix' => 'user/'], function () {
-            Route::get('check/phone',[OtpController::class,'checkOTP']);
-            Route::get('send/phone/verification',[OtpController::class,'sendVerification']);
-            Route::post('verify/phone',[OtpController::class,'verifyPhoneNumber']);
-        });
 
         // MerchantController
         Route::group(['prefix' => 'merchant/'], function () {
+            Route::post('verify/phone',[MerchantController::class,'verifyPhoneNumber']);
             // Merchant Profile
             Route::get('profile',[MerchantController::class,'profile']);
             Route::put('profile/update-profile',[MerchantController::class,'updateProfile']);

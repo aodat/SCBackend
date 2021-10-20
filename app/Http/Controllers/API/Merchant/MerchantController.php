@@ -8,8 +8,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 use App\Http\Requests\Merchant\MerchantRequest;
+use App\Models\Merchant;
 use App\Models\User;
 
+use App\Http\Controllers\Utilities\SmsService;
 class MerchantController extends Controller
 {
     public function profile(MerchantRequest $request)
@@ -58,4 +60,13 @@ class MerchantController extends Controller
 
         return $this->response(null,204);
     }
+
+    public function verifyPhoneNumber(MerchantRequest $request)
+    {
+        $randomPinCode = mt_rand(111111, 999999);
+
+        SmsService::sendSMS($request->phone,$randomPinCode);
+        // Merchant::where
+        dd('');
+    }  
 }
