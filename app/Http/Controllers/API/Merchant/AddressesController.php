@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\AddressesRequest;
 
 use App\Models\Merchant;

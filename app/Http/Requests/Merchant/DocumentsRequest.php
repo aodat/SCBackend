@@ -27,7 +27,7 @@ class DocumentsRequest extends FormRequest
         if(strpos($path,'documents/create') !== false) 
             return [
                 "type" => "required|in:license,passport,id",
-                "url" => "required|url"
+                "file" => "required|mimes:pdf,jpg,jpeg"
             ];
         return [];
     }

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\DocumentsRequest;
+use App\Http\Controllers\Utilities\uploadController;
+
 use App\Models\Merchant;
 
 class DocumentsController extends MerchantController
@@ -23,16 +24,19 @@ class DocumentsController extends MerchantController
 
     public function createDocuments(DocumentsRequest $request)
     {
-        $merchantID = $request->user()->merchant_id;
-        $json = $request->json()->all();
-        
+        $merchantID = $request->user()->merchant_id;        
         $merchant = Merchant::where('id',$merchantID);
 
         $result = collect($merchant->select('documents')->first()->documents);
         $counter = $result->max('id') ?? 0;
-        $json['id'] = ++$counter;
+        
+        $data = [
+            'id' => ++$counter,
+            'type' => $request->type,
+            'url' => uploadController::uploadFiles('documents',$request->file('file'))
+        ];
 
-        $merchant->update(['documents' => $result->merge([$json])]);
+        $merchant->update(['documents' => $result->merge([$data])]);
         return $this->response(null,204);
     }
 

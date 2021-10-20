@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Http\Controllers\Controller;
 use App\Models\Merchant;
 
 use App\Http\Requests\Merchant\PaymentMethodsRequest;
