@@ -15,6 +15,9 @@ use App\Http\Controllers\API\Merchant\SendersController;
 // Transactions
 use App\Http\Controllers\API\Transactions\TransactionsController;
 
+// Pickups
+use App\Http\Controllers\API\Pickup\PickupsController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -69,9 +72,14 @@ Route::group(['middleware' => ['json.response']], function () {
 
             // Transactions
             Route::post('transactions',[TransactionsController::class,'getAllTransactions']);
-            Route::get('transactions/{id}',[TransactionsController::class,'createSenders']);
-            Route::post('transactions/withdraw',[TransactionsController::class,'createSenders']);
-            Route::post('transactions/export',[TransactionsController::class,'createSenders']);
+            Route::get('transactions/{id}',[TransactionsController::class,'getTransaction']);
+            Route::post('transactions/withdraw',[TransactionsController::class,'withDraw']);
+            Route::post('transactions/export',[TransactionsController::class,'export']);
+
+
+            // Pickups
+            Route::post('pickups',[PickupsController::class,'getAllPickups']);
+            Route::post('pickups/create',[PickupsController::class,'createPickup']);
         });
 
         Route::post('clients/logout',[AuthController::class, 'logout']);
