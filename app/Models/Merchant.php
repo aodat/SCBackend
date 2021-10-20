@@ -19,7 +19,8 @@ class Merchant extends Model
     ];
 
     protected $hidden = [
-        'is_email_verified' ,'is_phone_verified','is_documents_verified','is_active','is_instant_payment_active'
+        'is_email_verified' ,'is_phone_verified',
+        'is_documents_verified','is_active','is_instant_payment_active'
     ];
 
     public function user()

@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Controllers\Controller;
 
@@ -39,12 +40,26 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('profile',[MerchantController::class,'profile']);
             Route::put('profile/update-profile',[MerchantController::class,'updateProfile']);
             Route::put('profile/update-password',[MerchantController::class,'updatePassword']);
+        
+            // Payment-methods
+            Route::get('payment-methods',[PaymentMethodsController::class,'getPaymentMethods']);
+            Route::post('payment-methods/create',[PaymentMethodsController::class,'createPaymentMethods']);
+            Route::delete('payment-methods/{id}',[PaymentMethodsController::class,'deletePaymentMethods']);
 
-            // Merchant 
-            // type {{ payment-methods , documents , addresses , senders }}
-            Route::get('{col}',[MerchantController::class,'getMerchantJson']);
-            Route::post('{col}/create',[MerchantController::class,'createMerchantJson']);
-            Route::delete('{col}/{id}',[MerchantController::class,'deleteMerchantJson']);
+            // Documents
+            Route::get('documents',[DocumentsController::class,'getDocuments']);
+            Route::post('documents/create',[DocumentsController::class,'createDocuments']);
+            Route::delete('documents/{id}',[DocumentsController::class,'deleteDocuments']);
+
+            // Addresses // Done
+            Route::get('addresses',[AddressesController::class,'getAddresses']);
+            Route::post('addresses/create',[AddressesController::class,'createAddresses']);
+            Route::delete('addresses/{id}',[AddressesController::class,'deleteAddresses']);
+
+            // Senders
+            Route::get('senders',[SendersController::class,'getSenders']);
+            Route::post('senders/create',[SendersController::class,'createSenders']);
+            Route::delete('senders/{id}',[SendersController::class,'deleteSenders']);
         });
 
         Route::post('clients/logout',[AuthController::class, 'logout']);
