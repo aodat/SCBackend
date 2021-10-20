@@ -12,6 +12,9 @@ use App\Http\Controllers\API\Merchant\DocumentsController;
 use App\Http\Controllers\API\Merchant\PaymentMethodsController;
 use App\Http\Controllers\API\Merchant\SendersController;
 
+// Shipment
+use App\Http\Controllers\API\Shipment\ShipmentController;
+
 // Transactions
 use App\Http\Controllers\API\Transactions\TransactionsController;
 
@@ -70,12 +73,17 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('senders/create',[SendersController::class,'createSenders']);
             Route::delete('senders/{id}',[SendersController::class,'deleteSenders']);
 
+            // Shipments
+            Route::post('shipments',[ShipmentController::class,'getAllShipments']);
+            Route::get('shipments/{id}',[ShipmentController::class,'getShipment']);
+            Route::post('shipments/create',[ShipmentController::class,'create']);
+            Route::get('shipments/export/{type}',[ShipmentController::class,'export']);
+
             // Transactions
             Route::post('transactions',[TransactionsController::class,'getAllTransactions']);
             Route::get('transactions/{id}',[TransactionsController::class,'getTransaction']);
             Route::post('transactions/withdraw',[TransactionsController::class,'withDraw']);
-            Route::post('transactions/export',[TransactionsController::class,'export']);
-
+            Route::get('transactions/export/{type}',[TransactionsController::class,'export']);
 
             // Pickups
             Route::post('pickups',[PickupsController::class,'getAllPickups']);
