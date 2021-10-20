@@ -35,15 +35,16 @@ Route::group(['middleware' => ['json.response']], function () {
 
         // API/MerchantController
         Route::group(['prefix' => 'merchant/'], function () {
-            // Merchent Profile
+            // Merchant Profile
             Route::get('profile',[MerchantController::class,'profile']);
             Route::put('profile/update-profile',[MerchantController::class,'updateProfile']);
             Route::put('profile/update-password',[MerchantController::class,'updatePassword']);
 
-            // Merchent Payment Method
-            Route::get('payment-methods',[MerchantController::class,'getPaymentMethods']);
-            Route::post('payment-methods/create',[MerchantController::class,'createPaymentMethod']);
-            Route::delete('payment-methods/{payment_id}',[MerchantController::class,'deletePaymentMethod']);
+            // Merchant 
+            // type {{ payment-methods , documents , addresses , senders }}
+            Route::get('{col}',[MerchantController::class,'getMerchantJson']);
+            Route::post('{col}/create',[MerchantController::class,'createMerchantJson']);
+            Route::delete('{col}/{id}',[MerchantController::class,'deleteMerchantJson']);
         });
 
         Route::post('clients/logout',[AuthController::class, 'logout']);

@@ -7,8 +7,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-use Illuminate\Http\Request;
-
 use App\Http\Requests\MerchantRequest;
 use App\Models\Merchant;
 use App\Models\User;
@@ -52,7 +50,6 @@ class MerchantController extends Controller
 
     public function updatePassword(MerchantRequest $request)
     {
-
         $user = User::findOrFail(Auth::id());
         if (Hash::check($request->current,$user->password) == false)
             return $this->response(['msg' => 'Current Password Is Wrong'],500);
@@ -62,56 +59,47 @@ class MerchantController extends Controller
 
         return $this->response(['msg' => 'Password Updated Sucessfully'],200);
     }
-
-    public function getPaymentMethods(MerchantRequest $request)
+    
+    public function getMerchantJson($col,MerchantRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
-        $data = Merchant::where('id',$merchantID)->select('payment_methods')->first();
+        $data = Merchant::where('id',$merchantID)->select($col)->first();
 
       
-        if(collect($data->payment_methods)->isEmpty())
+        if(collect($data->$col)->isEmpty())
             return $this->notFound();
 
-        return $this->response(['msg' => 'All Payment Methods','data' => $data->payment_methods],200);
+        return $this->response(['msg' => 'Data Retrieved Successfully','data' => $data->$col],200);
     }
 
-    public function createPaymentMethod(MerchantRequest $request)
+    public function createMerchantJson($col,MerchantRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $json = $request->json()->all();
         
         $merchant = Merchant::where('id',$merchantID);
 
-        $paymentMethods = collect($merchant->select('payment_methods')->first()->payment_methods);
-        $counter = $paymentMethods->max('id') ?? 0;
+        $result = collect($merchant->select($col)->first()->$col);
+        $counter = $result->max('id') ?? 0;
         $json['id'] = ++$counter;
 
-        /* 
-        // for multi payment method
-        $json = $data->map(function ($value) use(&$counter) {
-            if(!isset($value['id']))
-                $value['id'] = ++$counter;
-            return $value;
-        });
-        */
-
-        $merchant->update(['payment_methods' => $paymentMethods->merge([$json])]);
-        return $this->response(['msg' => 'Payment Created Sucessfully'],200);
+        $merchant->update([$col => $result->merge([$json])]);
+        return $this->response(['msg' => "$col created sucessfully"],200);
     }
 
-    public function deletePaymentMethod($paymentID,MerchantRequest $request)
+    public function deleteMerchantJson($col,$id,MerchantRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         
         $list = Merchant::where('id',$merchantID);
-        $paymentMethods = collect($list->select('payment_methods')->first()->payment_methods);
+        $result = collect($list->select($col)->first()->$col);
 
-        $json = $paymentMethods->reject(function ($value) use($paymentID) {
-            if($value['id'] == $paymentID)
+        $json = $result->reject(function ($value) use($id) {
+            if($value['id'] == $id)
                 return $value;
         });
         $json = array_values($json->toArray());
-        $list->update(['payment_methods' => collect($json)]);
+        $list->update([$col => collect($json)]);
         return $this->response(null,204);
     }
 }

@@ -12,7 +12,10 @@ class Merchant extends Model
 
 
     protected $casts = [
-        'payment_methods' => 'array'
+        'payment_methods' => 'array',
+        'documents' => 'array',
+        'addresses' => 'array',
+        'senders' => 'array'
     ];
 
     protected $hidden = [
