@@ -1,8 +1,16 @@
 <?php
-namespace App\Http\Controllers\API;
-namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Controllers\Controller;
+
+// Auth
+use App\Http\Controllers\API\AuthController;
+
+// Merchant
+use App\Http\Controllers\API\Merchant\MerchantController;
+use App\Http\Controllers\API\Merchant\AddressesController;
+use App\Http\Controllers\API\Merchant\DocumentsController;
+use App\Http\Controllers\API\Merchant\PaymentMethodsController;
+use App\Http\Controllers\API\Merchant\SendersController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,10 +29,11 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => ['json.response']], function () { 
     Route::post('clients/auth/login', [AuthController::class, 'login']);
     Route::post('clients/auth/register',[AuthController::class, 'register']);
-    Route::post('clients/auth/forgetpassword',[recoveryController::class, 'forgetpassword']);
+    Route::post('clients/auth/forgetpassword',[AuthController::class, 'forgetPassword']);
+    Route::post('clients/password/reset', [AuthController::class, 'sendResetResponse']);
 
-    Route::get('email/verify/{id}', [recoveryController::class, 'verify'])->name('verification.verify');
-    Route::get('email/resend', [recoveryController::class, 'sendResetResponse'])->name('verification.resend');
+    Route::get('email/verify/{id}', [AuthController::class, 'verify'])->name('verification.verify');
+    Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
         
     Route::group(['middleware' => ['auth:api']], function () {
         Route::group(['prefix' => 'user/'], function () {
@@ -33,8 +42,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('verify/phone',[OtpController::class,'verifyPhoneNumber']);
         });
 
-
-        // API/MerchantController
+        // MerchantController
         Route::group(['prefix' => 'merchant/'], function () {
             // Merchant Profile
             Route::get('profile',[MerchantController::class,'profile']);
@@ -63,10 +71,6 @@ Route::group(['middleware' => ['json.response']], function () {
         });
 
         Route::post('clients/logout',[AuthController::class, 'logout']);
-        
     });
     Route::get('/unauthenticated',[Controller::class, 'unauthenticated'])->name('unauthenticated');
 });
-
-
-
