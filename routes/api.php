@@ -12,6 +12,9 @@ use App\Http\Controllers\API\Merchant\DocumentsController;
 use App\Http\Controllers\API\Merchant\PaymentMethodsController;
 use App\Http\Controllers\API\Merchant\SendersController;
 
+// Transactions
+use App\Http\Controllers\API\Transactions\TransactionsController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -36,7 +39,6 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
         
     Route::group(['middleware' => ['auth:api']], function () {
-
         // MerchantController
         Route::group(['prefix' => 'merchant/'], function () {
             Route::post('verify/phone',[MerchantController::class,'verifyPhoneNumber']);
@@ -64,6 +66,12 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('senders',[SendersController::class,'getSenders']);
             Route::post('senders/create',[SendersController::class,'createSenders']);
             Route::delete('senders/{id}',[SendersController::class,'deleteSenders']);
+
+            // Transactions
+            Route::post('transactions',[TransactionsController::class,'getAllTransactions']);
+            Route::get('transactions/{id}',[TransactionsController::class,'createSenders']);
+            Route::post('transactions/withdraw',[TransactionsController::class,'createSenders']);
+            Route::post('transactions/export',[TransactionsController::class,'createSenders']);
         });
 
         Route::post('clients/logout',[AuthController::class, 'logout']);
