@@ -66,7 +66,9 @@ class MerchantController extends Controller
         $randomPinCode = mt_rand(111111, 999999);
 
         SmsService::sendSMS($request->phone,$randomPinCode);
-        // Merchant::where
-        dd('');
+
+        $merchantID = $request->user()->merchant_id;
+        Merchant::where('id',$merchantID)->update(['pin_code' => $randomPinCode]);
+        return $this->response(null,204);
     }  
 }

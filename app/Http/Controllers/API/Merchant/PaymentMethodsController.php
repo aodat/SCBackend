@@ -25,13 +25,26 @@ class PaymentMethodsController extends MerchantController
         $merchantID = $request->user()->merchant_id;
         $json = $request->json()->all();
         
-        $merchant = Merchant::where('id',$merchantID);
+        $merchant = Merchant::where('id',$merchantID)->first();
 
-        $result = collect($merchant->select('payment_methods')->first()->payment_methods);
+        if(
+            $request->provider == 'phone' && 
+            (
+                isset($request->pin_code) && 
+                $request->pin_code != $merchant->pin_code
+            )
+            ) {
+                return $this->response(['msg' => 'invald pin code'],500);            
+        }
+
+        $result = collect($merchant->payment_methods);
         $counter = $result->max('id') ?? 0;
+        
         $json['id'] = ++$counter;
+        if(isset($json['pin_code']))
+            unset($json['pin_code']);
 
-        $merchant->update(['payment_methods' => $result->merge([$json])]);
+        $merchant->update(['pin_code' => null , 'payment_methods' => $result->merge([$json])]);
         return $this->response(null,204);
     }
 
