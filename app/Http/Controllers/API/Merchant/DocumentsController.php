@@ -9,7 +9,7 @@ use App\Models\Merchant;
 class DocumentsController extends MerchantController
 {
 
-    public function getPaymentMethods(DocumentsRequest $request)
+    public function getDocuments(DocumentsRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $data = Merchant::where('id',$merchantID)->select('documents')->first();
@@ -21,7 +21,7 @@ class DocumentsController extends MerchantController
         return $this->response(['msg' => 'Payment Methods Retrieved Successfully','data' => $data->documents],200);
     }
 
-    public function createPaymentMethods(DocumentsRequest $request)
+    public function createDocuments(DocumentsRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $json = $request->json()->all();
@@ -36,7 +36,7 @@ class DocumentsController extends MerchantController
         return $this->response(null,204);
     }
 
-    public function deletePaymentMethods($id,DocumentsRequest $request)
+    public function deleteDocuments($id,DocumentsRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $list = Merchant::where('id',$merchantID);
