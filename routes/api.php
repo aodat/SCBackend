@@ -71,7 +71,7 @@ Route::group(['middleware' => ['json.response']], function () {
             // Shipments
             Route::post('shipments',[ShipmentController::class,'index']);
             Route::get('shipments/{id}',[ShipmentController::class,'show']);
-            Route::post('shipments/create',[ShipmentController::class,'create']);
+            Route::post('shipments/create',[ShipmentController::class,'store']);
             Route::get('shipments/export/{type}',[ShipmentController::class,'export']);
 
             // Transactions
@@ -82,7 +82,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
             // Pickups
             Route::post('pickups',[PickupsController::class,'index']);
-            Route::post('pickups/create',[PickupsController::class,'createPickup']);
+            Route::post('pickups/create',[PickupsController::class,'store']);
         });
 
         Route::post('clients/logout',[AuthController::class, 'logout']);

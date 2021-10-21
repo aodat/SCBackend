@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 
 class PickupsController extends MerchantController
 {
-    public function getAllPickups(Request $request)
+    public function index(Request $request)
     {
 
     }
 
-    public function createPickup(Request $request)
+    public function store(Request $request)
     {
         
     }

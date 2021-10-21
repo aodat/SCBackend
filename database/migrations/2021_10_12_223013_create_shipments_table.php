@@ -15,8 +15,8 @@ class CreateShipmentsTable extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            $table->enum('carrier', ['ARAMEX','DHL']);
-            $table->integer('internal_awb');
+            // $table->enum('carrier', ['ARAMEX','DHL']);
+            $table->integer('internal_awb')->unique();
             $table->integer('external_awb')->nullable();
 
             $table->string('reference1', 128)->nullable();

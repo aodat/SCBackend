@@ -4,6 +4,10 @@ namespace App\Http\Requests\Merchant;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Transaction;
+use App\Models\Shipment;
+use Illuminate\Support\Facades\Request;
+
 class MerchantRequest extends FormRequest
 {
     /**
@@ -13,8 +17,14 @@ class MerchantRequest extends FormRequest
      */
     public function authorize()
     {
+        $path = Request()->route()->uri;
+        if($this->getMethod() == 'GET' && strpos($path, 'transactions/{id}') !== false)
+            return Transaction::where('id', Request::instance()->id)->where('merchant_id', Request()->user()->merchant_id)->exists();
+        else if($this->getMethod() == 'GET' && strpos($path, 'shipments/{id}') !== false)
+            return Shipment::where('id', Request::instance()->id)->where('merchant_id', Request()->user()->merchant_id)->exists();
         return true;
     }
+
 
     /**
      * Get the validation rules that apply to the request.
