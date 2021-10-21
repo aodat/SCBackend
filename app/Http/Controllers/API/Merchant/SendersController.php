@@ -8,7 +8,7 @@ use App\Http\Requests\Merchant\SendersRequest;
 
 class SendersController extends MerchantController
 {
-    public function getSenders(SendersRequest $request)
+    public function index(SendersRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $data = Merchant::where('id',$merchantID)->select('senders')->first();

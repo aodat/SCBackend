@@ -8,7 +8,7 @@ use App\Http\Requests\Merchant\PaymentMethodsRequest;
 
 class PaymentMethodsController extends MerchantController
 {
-    public function getPaymentMethods(PaymentMethodsRequest $request)
+    public function index(PaymentMethodsRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $data = Merchant::where('id',$merchantID)->select('payment_methods')->first();

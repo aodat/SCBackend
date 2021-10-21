@@ -10,7 +10,7 @@ use App\Models\Merchant;
 class DocumentsController extends MerchantController
 {
 
-    public function getDocuments(DocumentsRequest $request)
+    public function index(DocumentsRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $data = Merchant::where('id',$merchantID)->select('documents')->first();

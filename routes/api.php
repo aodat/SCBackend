@@ -11,15 +11,10 @@ use App\Http\Controllers\API\Merchant\AddressesController;
 use App\Http\Controllers\API\Merchant\DocumentsController;
 use App\Http\Controllers\API\Merchant\PaymentMethodsController;
 use App\Http\Controllers\API\Merchant\SendersController;
+use App\Http\Controllers\API\Merchant\ShipmentController;
+use App\Http\Controllers\API\Merchant\TransactionsController;
+use App\Http\Controllers\API\Merchant\PickupsController;
 
-// Shipment
-use App\Http\Controllers\API\Shipment\ShipmentController;
-
-// Transactions
-use App\Http\Controllers\API\Transactions\TransactionsController;
-
-// Pickups
-use App\Http\Controllers\API\Pickup\PickupsController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -54,39 +49,39 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::put('profile/update-password',[MerchantController::class,'updatePassword']);
         
             // Payment-methods
-            Route::get('payment-methods',[PaymentMethodsController::class,'getPaymentMethods']);
+            Route::get('payment-methods',[PaymentMethodsController::class,'index']);
             Route::post('payment-methods/create',[PaymentMethodsController::class,'createPaymentMethods']);
             Route::delete('payment-methods/{id}',[PaymentMethodsController::class,'deletePaymentMethods']);
 
             // Documents
-            Route::get('documents',[DocumentsController::class,'getDocuments']);
+            Route::get('documents',[DocumentsController::class,'index']);
             Route::post('documents/create',[DocumentsController::class,'createDocuments']);
             Route::delete('documents/{id}',[DocumentsController::class,'deleteDocuments']);
 
             // Addresses // Done
-            Route::get('addresses',[AddressesController::class,'getAddresses']);
+            Route::get('addresses',[AddressesController::class,'index']);
             Route::post('addresses/create',[AddressesController::class,'createAddresses']);
             Route::delete('addresses/{id}',[AddressesController::class,'deleteAddresses']);
 
             // Senders
-            Route::get('senders',[SendersController::class,'getSenders']);
+            Route::get('senders',[SendersController::class,'index']);
             Route::post('senders/create',[SendersController::class,'createSenders']);
             Route::delete('senders/{id}',[SendersController::class,'deleteSenders']);
 
             // Shipments
-            Route::post('shipments',[ShipmentController::class,'getAllShipments']);
+            Route::post('shipments',[ShipmentController::class,'index']);
             Route::get('shipments/{id}',[ShipmentController::class,'getShipment']);
             Route::post('shipments/create',[ShipmentController::class,'create']);
             Route::get('shipments/export/{type}',[ShipmentController::class,'export']);
 
             // Transactions
-            Route::post('transactions',[TransactionsController::class,'getAllTransactions']);
+            Route::post('transactions',[TransactionsController::class,'index']);
             Route::get('transactions/{id}',[TransactionsController::class,'getTransaction']);
-            Route::post('transactions/withdraw',[TransactionsController::class,'withDraw']);
+            Route::put('transactions/{id}/withdraw',[TransactionsController::class,'withDraw']);
             Route::get('transactions/export/{type}',[TransactionsController::class,'export']);
 
             // Pickups
-            Route::post('pickups',[PickupsController::class,'getAllPickups']);
+            Route::post('pickups',[PickupsController::class,'index']);
             Route::post('pickups/create',[PickupsController::class,'createPickup']);
         });
 

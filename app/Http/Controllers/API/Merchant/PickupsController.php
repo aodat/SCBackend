@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API\Pickup;
+namespace App\Http\Controllers\API\Merchant;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class PickupsController extends Controller
+class PickupsController extends MerchantController
 {
     public function getAllPickups(Request $request)
     {

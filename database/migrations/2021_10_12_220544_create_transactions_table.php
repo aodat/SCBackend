@@ -16,7 +16,7 @@ class CreateTransactionsTable extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['CASHIN','CASHOUT']);
-            $table->integer('shipment_id');
+            $table->integer('shipment_id')->nullable();
             $table->double('amount', 8, 2)->default('0');
             $table->double('balance_after', 8, 2)->default('0');
             $table->string('description', 256)->nullable();

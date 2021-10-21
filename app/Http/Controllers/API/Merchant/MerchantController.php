@@ -70,5 +70,10 @@ class MerchantController extends Controller
         $merchantID = $request->user()->merchant_id;
         Merchant::where('id',$merchantID)->update(['pin_code' => $randomPinCode]);
         return $this->response(null,204);
-    }  
+    }
+
+    public function getMerchentInfo($id)
+    {
+        return Merchant::findOrFail($id);
+    }
 }

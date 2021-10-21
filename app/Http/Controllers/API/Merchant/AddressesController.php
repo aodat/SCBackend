@@ -7,7 +7,7 @@ use App\Http\Requests\Merchant\AddressesRequest;
 use App\Models\Merchant;
 class AddressesController extends MerchantController
 {
-    public function getAddresses(AddressesRequest $request)
+    public function index(AddressesRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $data = Merchant::where('id',$merchantID)->select('addresses')->first();

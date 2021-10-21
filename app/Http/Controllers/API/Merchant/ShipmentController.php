@@ -1,15 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\API\Shipment;
+namespace App\Http\Controllers\API\Merchant;
 
-use App\Http\Controllers\Controller;
 use App\Models\Shipment;
 use Illuminate\Http\Request;
 
-class ShipmentController extends Controller
+class ShipmentController extends MerchantController
 {
     
-    public function getAllShipments(Request $request)
+    public function index(Request $request)
     {
 
     }
