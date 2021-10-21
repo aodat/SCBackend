@@ -72,8 +72,10 @@ class MerchantController extends Controller
         return $this->successful(null,204);
     }
 
-    public function getMerchentInfo($id)
+    public function getMerchentInfo($id = null)
     {
+        if($id == null)
+            $id = Request()->user()->merchant_id;
         return Merchant::findOrFail($id);
     }
 }

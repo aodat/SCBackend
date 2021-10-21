@@ -20,7 +20,7 @@ class TransactionsController extends MerchantController
     
     public function withDraw(TransactionRequest $request)
     {
-        $merchecntInfo = $this->getMerchentInfo($request->user()->merchant_id);
+        $merchecntInfo = $this->getMerchentInfo();
         
         $actualBalance = $merchecntInfo->actual_balance;
         $paymentMethod = $merchecntInfo->payment_methods;

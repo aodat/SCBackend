@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -22,7 +22,7 @@
     },
     {
         "id": 2,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -43,7 +43,7 @@
     },
     {
         "id": 3,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -64,7 +64,7 @@
     },
     {
         "id": 4,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -85,7 +85,7 @@
     },
     {
         "id": 5,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -106,7 +106,7 @@
     },
     {
         "id": 6,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -127,7 +127,7 @@
     },
     {
         "id": 7,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -148,7 +148,7 @@
     },
     {
         "id": 8,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -169,7 +169,7 @@
     },
     {
         "id": 9,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -190,7 +190,7 @@
     },
     {
         "id": 10,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -211,7 +211,7 @@
     },
     {
         "id": 11,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,
@@ -232,7 +232,7 @@
     },
     {
         "id": 12,
-        "code": "Amman",
+        "code": "JOD",
         "name_en": "Amman",
         "name_ar": "عمان",
         "price": 3.5,

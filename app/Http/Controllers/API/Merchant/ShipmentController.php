@@ -4,8 +4,9 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Models\Shipment;
 use App\Http\Requests\Merchant\ShipmentRequest;
+use Illuminate\Support\Facades\Response;
+
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends MerchantController
 {
@@ -53,22 +54,14 @@ class ShipmentController extends MerchantController
     
     public function store(ShipmentRequest $request)
     {
-        /*
-        "consignee_country": "DU", Domastic => merchant Country
-        $data['merchant_id'] = $request->user()->merchant_id;
-        $data['internal_awb'] = floor(time()-999999999);
-        $data['created_by'] = $request->user()->id;
-        Shipment::create($data);
-        */
         $data = $request->json()->all();
-        DB::transaction(function () use($data) {
-            if($data['group'] == 'EXP')
-                $this->createExpressShipment();
-            else if($data['group'] == 'DOM')
-                $this->createDomesticShipment($data);
-        });
+        if($data['group'] == 'EXP')
+            $result = $this->createExpressShipment();
+        else if($data['group'] == 'DOM')
+            $result = $this->createDomesticShipment($data);
 
-        return $this->successful(null,204);
+        
+        return $result;
     }
 
     public function export(ShipmentRequest $request)
@@ -83,12 +76,35 @@ class ShipmentController extends MerchantController
 
     public function createDomesticShipment($data)
     {
+        $merchentInfo = $this->getMerchentInfo();
+
+        $address = collect($merchentInfo->addresses)->where('id','=',$data['sender_address_id'])->first();
+
+        if(count($address) == 0)
+            return $this->error(['msg' => 'sender address id is in valid'],400);
+        if(!isset($merchentInfo['country_code']))
+            return $this->error(['msg' => 'Merchent Country Is Empty'],400);
+
+        unset($data['sender_address_id']);
+
+        $final = $data;
+        $final['sender_email'] = $merchentInfo['email'];
+        $final['sender_name'] = $merchentInfo['name'];
+        $final['sender_phone'] = $address['phone'];
+        $final['sender_country'] = $merchentInfo['country_code'];
+        $final['sender_city'] = $address['city'];
+        $final['sender_area'] = $address['area'];
+        $final['sender_address_description'] = $address['description'];
+        $final['consignee_country'] = $merchentInfo->country_code;
         
-        dd($data);
+        $dom_rates = collect($merchentInfo->dom_rates)->where('code','=',$final['consignee_country'])->first();
+        $final['fees'] = $dom_rates['price'] ?? 0;
+        
+        $final['merchant_id'] = Request()->user()->merchant_id;
+        $final['internal_awb'] = floor(time()-999999999);
+        $final['created_by'] = Request()->user()->id;
+        Shipment::create($final);
 
-        // get fees from price 
-
-        // consignee_country from merchant id
-
+        return $this->successful();
     }
 }
