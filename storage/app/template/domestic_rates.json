@@ -1,0 +1,254 @@
+[
+    {
+        "id": 1,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "code": "Amman",
+        "name_en": "Amman",
+        "name_ar": "عمان",
+        "price": 3.5,
+        "areas": [
+            {
+                "id" : 1,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            },
+            {
+                "id" : 2,
+                "code": "Amman",
+                "name_en": "aa",
+                "name_ar": "bb"
+            }
+        ]
+    }
+]

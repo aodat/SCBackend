@@ -42,15 +42,15 @@ class CreateShipmentsTable extends Migration
 
             $table->integer('pieces')->default('1');
             $table->string('content', 64);
-            $table->double('actual_weight', 3, 2)->default('0');
-            $table->double('chargable_weight', 3, 2)->default('0');
+            $table->double('actual_weight', 4, 2)->default('0');
+            $table->double('chargable_weight', 4, 2)->default('0');
             $table->string('notes', 128)->nullable();
-            $table->double('cod', 8, 2)->default('0');
-            $table->double('fees', 8, 2)->default('0');
-            $table->double('extra_fees', 8, 2)->default('0');
-            $table->double('cash_collected', 8, 2)->default('0');
+            $table->double('cod', 6, 2)->default('0');
+            $table->double('fees', 6, 2)->default('0');
+            $table->double('extra_fees', 6, 2)->default('0');
+            $table->double('cash_collected', 6, 2)->default('0');
             $table->set('extra_services', ['DOMCOD'])->nullable();
-            $table->double('extra_services_fees', 8, 2)->default('0');
+            $table->double('extra_services_fees', 6, 2)->default('0');
             $table->enum('group', ['EXP','DOM']);
             $table->enum('status', ['DRAFT','PROCESSING','COMPLETED'])->default('DRAFT');
 

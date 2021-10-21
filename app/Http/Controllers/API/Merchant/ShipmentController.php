@@ -53,12 +53,19 @@ class ShipmentController extends MerchantController
     
     public function store(ShipmentRequest $request)
     {
+        /*
+        "consignee_country": "DU", Domastic => merchant Country
+        $data['merchant_id'] = $request->user()->merchant_id;
+        $data['internal_awb'] = floor(time()-999999999);
+        $data['created_by'] = $request->user()->id;
+        Shipment::create($data);
+        */
         $data = $request->json()->all();
-        DB::transaction(function () use($data,$request) {
-            $data['merchant_id'] = $request->user()->merchant_id;
-            $data['internal_awb'] = floor(time()-999999999);
-            $data['created_by'] = $request->user()->id;
-            Shipment::create($data);
+        DB::transaction(function () use($data) {
+            if($data['group'] == 'EXP')
+                $this->createExpressShipment();
+            else if($data['group'] == 'DOM')
+                $this->createDomesticShipment($data);
         });
 
         return $this->successful(null,204);
@@ -66,6 +73,22 @@ class ShipmentController extends MerchantController
 
     public function export(ShipmentRequest $request)
     {
+        return [];
+    }
+
+    public function createExpressShipment()
+    {
+
+    }
+
+    public function createDomesticShipment($data)
+    {
+        
+        dd($data);
+
+        // get fees from price 
+
+        // consignee_country from merchant id
 
     }
 }

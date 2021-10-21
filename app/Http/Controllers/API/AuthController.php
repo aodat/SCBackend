@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Merchant;
 use App\Models\User;
@@ -36,7 +37,8 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'type' => $request->type,
-                'phone' => $request->phone
+                'phone' => $request->phone,
+                'dom_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'),true))
             ]
         );
         $user = User::create(

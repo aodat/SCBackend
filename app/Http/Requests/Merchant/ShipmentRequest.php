@@ -18,27 +18,19 @@ class ShipmentRequest extends MerchantRequest
         if($this->method() == 'POST' && strpos($path,'shipments/create') !== false)
             return [
                 'carrier_id' => 'required|exists:carriers,id',
-
-                'sender_name' => 'required|min:6|max:255',
-                'sender_email' => 'required|email',
-                'sender_phone' => 'required',
-                'sender_country' => 'required',
-                'sender_city' => 'required',
-                'sender_area' => 'required',
-                'sender_address_description' => 'required',
+                'sender_address_id' => 'required',
 
                 'consignee_name' => 'required|min:6|max:255',
                 'consignee_email' => 'required|email',
                 'consignee_phone' => 'required',
-                'consignee_country' => 'required',
                 'consignee_city' => 'required',
                 'consignee_area' => 'required',
                 'consignee_address_description' => 'required',
 
                 'content' => 'required',
 
-                'actual_weight' => 'required|numeric|between:1,9',
-                'cod' => 'required|numeric',
+                'actual_weight' => 'required|numeric|between:0,9999',
+                'cod' => 'required|numeric|between:0,9999',
                 'pieces' => 'required|integer',
                 'extra_services' => 'required|in:DOMCOD',
                 'group' => 'required|in:EXP,DOM'
