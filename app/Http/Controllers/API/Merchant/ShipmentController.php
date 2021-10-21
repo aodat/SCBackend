@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Exports\ShipmentExport;
 use App\Models\Shipment;
 use App\Http\Requests\Merchant\ShipmentRequest;
-use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
+
+use Maatwebsite\Excel\Facades\Excel as Excel;
 
 use Carbon\Carbon;
 
@@ -23,7 +26,6 @@ class ShipmentController extends MerchantController
         $phone = $filters['phone'] ?? [];
         $cod    = $filters['cod']['val'] ?? null;
         $operation    = $filters['cod']['operation'] ?? null;
-
         $shipments = Shipment::whereBetween('created_at',[$since." 00:00:00",$until." 23:59:59"]);
         
         if(count($external))
@@ -64,9 +66,13 @@ class ShipmentController extends MerchantController
         return $result;
     }
 
-    public function export(ShipmentRequest $request)
+    public function export($type,ShipmentRequest $request)
     {
-        return [];
+        $shipments = Shipment::find(Request()->user()->merchant_id);
+        $path = "export/shipments-".now().".xlsx";
+        Excel::store(new ShipmentExport($shipments), $path,'s3');
+        
+        return $this->response(['link' => Storage::disk('s3')->url($path)],200);
     }
 
     public function createExpressShipment()
@@ -80,7 +86,7 @@ class ShipmentController extends MerchantController
 
         $address = collect($merchentInfo->addresses)->where('id','=',$data['sender_address_id'])->first();
 
-        if(count($address) == 0)
+        if($address == null)
             return $this->error(['msg' => 'sender address id is in valid'],400);
         if(!isset($merchentInfo['country_code']))
             return $this->error(['msg' => 'Merchent Country Is Empty'],400);
