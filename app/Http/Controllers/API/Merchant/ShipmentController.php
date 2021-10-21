@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Models\Shipment;
 use App\Http\Requests\Merchant\ShipmentRequest;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends MerchantController
@@ -11,6 +12,36 @@ class ShipmentController extends MerchantController
     
     public function index(ShipmentRequest $request)
     {
+        $filters = $request->json()->all();
+ 
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');;
+        $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
+
+        $external = $filters['external'] ?? [];
+        $statuses = $filters['statuses'] ?? [];
+        $phone = $filters['phone'] ?? [];
+        $cod    = $filters['cod']['val'] ?? null;
+        $operation    = $filters['cod']['operation'] ?? null;
+
+        $shipments = Shipment::whereBetween('created_at',[$since." 00:00:00",$until." 23:59:59"]);
+        
+        if(count($external))
+            $shipments->whereIn('external_awb',$external);
+        if(count($statuses))
+            $shipments->whereIn('status',$statuses);
+        if(count($phone))
+            $shipments = $shipments->where(function($query) use ($phone) {
+                $query->whereIn('sender_phone',$phone)->orWhereIn('consignee_phone',$phone);
+            });
+
+        if($operation)
+            $shipments->where("cod",$operation, $cod);
+        else if($cod)
+            $shipments->whereBetween('cod', [intval($cod), intval($cod).'.99']);
+
+        $paginated = $shipments->paginate(request()->perPage ?? 10);
+    
+        return $this->response($paginated,200);
 
     }
 
@@ -30,7 +61,7 @@ class ShipmentController extends MerchantController
             Shipment::create($data);
         });
 
-        return $this->response(null,204);
+        return $this->successful(null,204);
     }
 
     public function export(ShipmentRequest $request)

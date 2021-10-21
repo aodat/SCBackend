@@ -46,19 +46,19 @@ class MerchantController extends Controller
         }
         $user->save();
 
-        return $this->response(null,204);
+        return $this->successful(null,204);
     }
 
     public function updatePassword(MerchantRequest $request)
     {
         $user = User::findOrFail(Auth::id());
         if (Hash::check($request->current,$user->password) == false)
-            return $this->response(['msg' => 'Current Password Is Wrong'],500);
+            return $this->error(['msg' => 'Current Password Is Wrong'],500);
 
         $user->password = Hash::make($request->new);
         $user->save();
 
-        return $this->response(null,204);
+        return $this->successful(null,204);
     }
 
     public function verifyPhoneNumber(MerchantRequest $request)
@@ -69,7 +69,7 @@ class MerchantController extends Controller
 
         $merchantID = $request->user()->merchant_id;
         Merchant::where('id',$merchantID)->update(['pin_code' => $randomPinCode]);
-        return $this->response(null,204);
+        return $this->successful(null,204);
     }
 
     public function getMerchentInfo($id)

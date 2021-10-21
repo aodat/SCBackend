@@ -34,7 +34,7 @@ class PaymentMethodsController extends MerchantController
                 $request->pin_code != $merchant->pin_code
             )
             ) {
-                return $this->response(['msg' => 'invald pin code'],500);            
+                return $this->error(['msg' => 'invald pin code'],500);            
         }
 
         $result = collect($merchant->payment_methods);
@@ -45,7 +45,7 @@ class PaymentMethodsController extends MerchantController
             unset($json['pin_code']);
 
         $merchant->update(['pin_code' => null , 'payment_methods' => $result->merge([$json])]);
-        return $this->response(null,204);
+        return $this->successful(null,204);
     }
 
     public function deletePaymentMethods($id,PaymentMethodsRequest $request)
@@ -61,6 +61,6 @@ class PaymentMethodsController extends MerchantController
         });
         $json = array_values($json->toArray());
         $list->update(['payment_methods' => collect($json)]);
-        return $this->response(null,204);
+        return $this->successful(null,204);
     }
 }

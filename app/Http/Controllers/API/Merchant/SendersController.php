@@ -32,7 +32,7 @@ class SendersController extends MerchantController
         $json['id'] = ++$counter;
 
         $merchant->update(['senders' => $result->merge([$json])]);
-        return $this->response(null,204);
+        return $this->successful(null,204);
     }
 
     public function deleteSenders($id,SendersRequest $request)
@@ -48,7 +48,7 @@ class SendersController extends MerchantController
         });
         $json = array_values($json->toArray());
         $list->update(['senders' => collect($json)]);
-        return $this->response(null,204);
+        return $this->successful(null,204);
     }
     
 }

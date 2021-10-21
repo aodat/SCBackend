@@ -14,7 +14,8 @@ class ShipmentRequest extends MerchantRequest
     public function rules()
     {
         $path = Request()->path();
-        if(strpos($path,'shipments/create') !== false)
+        
+        if($this->method() == 'POST' && strpos($path,'shipments/create') !== false)
             return [
                 'carrier_id' => 'required|exists:carriers,id',
 
@@ -42,5 +43,16 @@ class ShipmentRequest extends MerchantRequest
                 'extra_services' => 'required|in:DOMCOD',
                 'group' => 'required|in:EXP,DOM'
             ];
+        else if($this->method() == 'POST' && strpos($path,'shipments') !== false) 
+            return [
+                'created_at.since' => 'nullable|date|date_format:Y-m-d',
+                'created_at.until' => 'nullable|date|date_format:Y-m-d|after:created_at.since',
+                'external' => 'Array',
+                'statuses' => 'Array',
+                'phone' => 'Array',
+                'cod.val' =>  'nullable|numeric|between:1,999',
+                'cod.operation' => 'nullable'
+            ];
+        return [];
     }
 }
