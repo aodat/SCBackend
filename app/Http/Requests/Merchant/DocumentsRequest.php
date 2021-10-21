@@ -4,7 +4,7 @@ namespace App\Http\Requests\Merchant;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DocumentsRequest extends FormRequest
+class DocumentsRequest extends MerchantRequest
 {
     /**
      * Determine if the user is authorized to make this request.

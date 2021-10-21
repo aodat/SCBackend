@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Http\Requests\Transaction\TransactionRequest;
+use App\Http\Requests\Merchant\TransactionRequest;
 
 use App\Models\Transaction;
 class TransactionsController extends MerchantController
@@ -12,7 +12,7 @@ class TransactionsController extends MerchantController
 
     }
 
-    public function getTransaction($id,TransactionRequest $request)
+    public function show($id,TransactionRequest $request)
     {
         $data = Transaction::findOrFail($id);
         return $this->response(['msg' => 'Transaction Retrived Sucessfully','data' => $data],200);

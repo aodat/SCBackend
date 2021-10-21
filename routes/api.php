@@ -70,13 +70,13 @@ Route::group(['middleware' => ['json.response']], function () {
 
             // Shipments
             Route::post('shipments',[ShipmentController::class,'index']);
-            Route::get('shipments/{id}',[ShipmentController::class,'getShipment']);
+            Route::get('shipments/{id}',[ShipmentController::class,'show']);
             Route::post('shipments/create',[ShipmentController::class,'create']);
             Route::get('shipments/export/{type}',[ShipmentController::class,'export']);
 
             // Transactions
             Route::post('transactions',[TransactionsController::class,'index']);
-            Route::get('transactions/{id}',[TransactionsController::class,'getTransaction']);
+            Route::get('transactions/{id}',[TransactionsController::class,'show']);
             Route::put('transactions/withdraw',[TransactionsController::class,'withDraw']);
             Route::get('transactions/export/{type}',[TransactionsController::class,'export']);
 

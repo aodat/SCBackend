@@ -2,20 +2,8 @@
 
 namespace App\Http\Requests\Merchant;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class PaymentMethodsRequest extends FormRequest
+class PaymentMethodsRequest extends MerchantRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *

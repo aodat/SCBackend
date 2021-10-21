@@ -3,28 +3,28 @@
 namespace App\Http\Controllers\API\Merchant;
 
 use App\Models\Shipment;
-use Illuminate\Http\Request;
+use App\Http\Requests\Merchant\ShipmentRequest;
 
 class ShipmentController extends MerchantController
 {
     
-    public function index(Request $request)
+    public function index(ShipmentRequest $request)
     {
 
     }
 
-    public function getShipment($id,Request $request)
+    public function show($id,ShipmentRequest $request)
     {
         $data = Shipment::findOrFail($id);
         return $this->response(['msg' => 'Transaction Retrived Sucessfully','data' => $data],200);
     }
     
-    public function withDraw(Request $request)
+    public function store(ShipmentRequest $request)
     {
 
     }
 
-    public function export(Request $request)
+    public function export(ShipmentRequest $request)
     {
 
     }

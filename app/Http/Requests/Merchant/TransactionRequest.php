@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Transaction;
+namespace App\Http\Requests\Merchant;
 
 use App\Models\Transaction;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Validation\Rule;
 
-class TransactionRequest extends FormRequest
+class TransactionRequest extends MerchantRequest
 {
     /**
      * Determine if the user is authorized to make this request.
