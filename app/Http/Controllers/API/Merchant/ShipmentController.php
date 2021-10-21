@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends MerchantController
 {
@@ -56,12 +57,20 @@ class ShipmentController extends MerchantController
     
     public function store(ShipmentRequest $request)
     {
-        $data = $request->json()->all();
-        if($data['group'] == 'EXP')
-            $result = $this->createExpressShipment();
-        else if($data['group'] == 'DOM')
-            $result = $this->createDomesticShipment($data);
-
+        $result = DB::transaction(function () use($request){
+            $jsons = $request->json()->all();
+            if(count($jsons) > 1)
+                foreach($jsons as $json)
+                    $result = $this->createDomesticShipment($json);
+            else {
+                $jsons = reset($jsons);
+                if($jsons['group'] == 'EXP')
+                    $result = $this->createExpressShipment();
+                else if($jsons['group'] == 'DOM')
+                    $result = $this->createDomesticShipment($jsons);
+            }
+            return $result;
+        });
         
         return $result;
     }
@@ -107,7 +116,7 @@ class ShipmentController extends MerchantController
         $final['fees'] = $domestic_rates['price'] ?? 0;
         
         $final['merchant_id'] = Request()->user()->merchant_id;
-        $final['internal_awb'] = floor(time()-999999999);
+        $final['internal_awb'] = abs( crc32( uniqid() ) );
         $final['created_by'] = Request()->user()->id;
         Shipment::create($final);
 
