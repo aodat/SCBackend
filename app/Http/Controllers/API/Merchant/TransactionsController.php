@@ -18,7 +18,7 @@ class TransactionsController extends MerchantController
         return $this->response(['msg' => 'Transaction Retrived Sucessfully','data' => $data],200);
     }
     
-    public function withDraw($id,TransactionRequest $request)
+    public function withDraw(TransactionRequest $request)
     {
         $merchecntInfo = $this->getMerchentInfo($request->user()->merchant_id);
         
@@ -29,8 +29,10 @@ class TransactionsController extends MerchantController
         if($actualBalance < $request->amount)
             return $this->response(['msg' => 'The Actual Balance Not Enough'],500);
 
+
         $merchecntInfo->actual_balance = $actualBalance - $request->amount;
         $merchecntInfo->save();
+
 
         $selectedPayment = collect($paymentMethod)->reject(function ($value) use($paymentMethodID) {
             if($value['id'] != $paymentMethodID)
@@ -38,10 +40,15 @@ class TransactionsController extends MerchantController
         });
         $selectedPayment = array_values($selectedPayment->toArray());
 
-        $transaction = Transaction::findOrFail($id);
-        $transaction->balance_after = $request->amount;
-        $transaction->payment_method = collect($selectedPayment);
-        $transaction->save();
+        Transaction::create(
+            [
+                'type' => 'CASHOUT',
+                'merchant_id' => $request->user()->merchant_id,
+                'created_by' => $request->user()->id,
+                'balance_after' => $request->amount,
+                'payment_method' => collect($selectedPayment)
+            ]
+        );
 
         return $this->response(null,204);
     }

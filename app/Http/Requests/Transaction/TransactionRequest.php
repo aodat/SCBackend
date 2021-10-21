@@ -16,7 +16,10 @@ class TransactionRequest extends FormRequest
      */
     public function authorize()
     {
-        return Transaction::where('id', Request::instance()->id)->where('merchant_id', Request()->user()->merchant_id)->exists();
+        $path = Request()->route()->uri;
+        if($this->getMethod() == 'GET' && strpos($path, 'transactions/{id}') !== false)
+            return Transaction::where('id', Request::instance()->id)->where('merchant_id', Request()->user()->merchant_id)->exists();
+        return true;
     }
 
     /**
@@ -28,7 +31,7 @@ class TransactionRequest extends FormRequest
     {
         $path = Request()->route()->uri;
         if (
-            ($this->getMethod() == 'PUT' && strpos($path, 'transactions/{id}/withdraw') !== false)
+            ($this->getMethod() == 'PUT' && strpos($path, 'transactions/withdraw') !== false)
         )
             return [
                 'amount' => 'required',

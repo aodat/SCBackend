@@ -77,7 +77,7 @@ Route::group(['middleware' => ['json.response']], function () {
             // Transactions
             Route::post('transactions',[TransactionsController::class,'index']);
             Route::get('transactions/{id}',[TransactionsController::class,'getTransaction']);
-            Route::put('transactions/{id}/withdraw',[TransactionsController::class,'withDraw']);
+            Route::put('transactions/withdraw',[TransactionsController::class,'withDraw']);
             Route::get('transactions/export/{type}',[TransactionsController::class,'export']);
 
             // Pickups
