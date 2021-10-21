@@ -26,8 +26,8 @@ class CreateMerchantsTable extends Migration
             $table->json('documents')->nullable();
             $table->json('addresses')->nullable();
             $table->json('payment_methods')->nullable();
-            $table->json('dom_rates')->nullable();
-            $table->json('exp_rates')->nullable();
+            $table->json('domestic_rates')->nullable();
+            $table->json('express_rates')->nullable();
             $table->json('senders')->nullable();
             $table->enum('type', ['individual','corporate']);
             $table->tinyInteger('is_email_verified')->default('0');

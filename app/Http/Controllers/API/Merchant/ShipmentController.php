@@ -97,8 +97,8 @@ class ShipmentController extends MerchantController
         $final['sender_address_description'] = $address['description'];
         $final['consignee_country'] = $merchentInfo->country_code;
         
-        $dom_rates = collect($merchentInfo->dom_rates)->where('code','=',$final['consignee_country'])->first();
-        $final['fees'] = $dom_rates['price'] ?? 0;
+        $domestic_rates = collect($merchentInfo->domestic_rates)->where('code','=',$address['city'])->first();
+        $final['fees'] = $domestic_rates['price'] ?? 0;
         
         $final['merchant_id'] = Request()->user()->merchant_id;
         $final['internal_awb'] = floor(time()-999999999);
