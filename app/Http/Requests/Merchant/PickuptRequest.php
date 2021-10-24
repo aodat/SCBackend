@@ -15,9 +15,8 @@ class PickuptRequest extends MerchantRequest
         if(strpos($path,'pickups/create') !== false)
             return [
                 'carrier_id' => 'required|exists:carriers,id',
-                "hash" => "required",
-                "from" => "required|date",
-                "to" => "required|date|after:from"
+                "from" => "required|date|date_format:Y-m-d",
+                "to" => "required|date|after:from|date_format:Y-m-d"
             ];
         return [];
     }

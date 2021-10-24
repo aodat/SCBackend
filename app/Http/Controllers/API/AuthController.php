@@ -18,16 +18,22 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\Merchant;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     public function login(AuthRequest $request)
     {
         if (!auth()->attempt(['email' => $request->email,'password' => $request->password])) {
-            return $this->response(['msg' => 'Invalid Email or Password'],400);
+            return $this->error('Invalid Email or Password',400);
         }
         $userData = auth()->user();
-        return $this->response(['user' => $userData, 'access_token' => $userData->createToken('users')->accessToken],200);
+        $userData['token'] = $userData->createToken('users')->accessToken;
+        return $this->response(
+            $userData,
+            'User Login Successfully',
+            200
+        );
     }
 
     public function register(AuthRequest $request)
@@ -51,7 +57,7 @@ class AuthController extends Controller
             ]
         );
         $user->sendEmailVerificationNotification();
-        return $this->response(['user' => $user, 'access_token' => $user->createToken('users')->accessToken],200);
+        return $this->response([],'User Created Successfully',200);
     }
 
     // Forget Password
@@ -63,14 +69,14 @@ class AuthController extends Controller
         $code = 400;
         if ($response == Password::RESET_LINK_SENT) {
             $msg = "Mail send successfully";
-            $code = 400;
+            $code = 200;
         }
 
-        $this->response(['msg' => $msg],$code);
+        $this->response([],$msg,$code);
     }
 
     // Reset password
-    protected function sendResetResponse(RecoveryRequest $request)
+    protected function resetPassword(RecoveryRequest $request)
     {
         $response = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
@@ -85,23 +91,23 @@ class AuthController extends Controller
             }
         );
 
+        $msg = "Email could not be sent to this email address";
+        $code = 400;
         if ($response == Password::PASSWORD_RESET) {
             $msg = "Password reset successfully";
             $code = 200;
-        } else {
-            $msg = "Email could not be sent to this email address";
-            $code = 400;
         }
-        $this->response(['msg' => $msg],$code);
+
+        $this->response([],$msg,$code);
     }
 
     // Verify Email
-    public function verify($userID, Request $request) {
+    public function verifyEmail(Request $request) {
         if (!$request->hasValidSignature()) {
-            return $this->response(['msg' => 'Invalid/Expired url provided.'],401);
+            return $this->response([],'Invalid/Expired url provided',401);
         }
-    
-        $user = User::findOrFail($userID);
+
+        $user = User::findOrFail($request->id);
 
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
@@ -109,25 +115,23 @@ class AuthController extends Controller
             User::where('id' , $user->id)->update(['is_email_verified' => true]);
             Merchant::where('email' , $user->email)->update(['is_email_verified' => true]);
         }
-    
-        return $this->response(['msg' => 'Email verified sucessfully'],200);
+        return $this->response([],'Email verified sucessfully',200);
     }
     
     // Resend Email for verfification
     public function resend() {
-        if (auth()->user()->hasVerifiedEmail()) {
-            return $this->response(['msg' => 'Email already verified.'],401);
-        }
+        if (auth()->user()->hasVerifiedEmail())
+            return $this->response([],'Email already verified.',200);
     
         auth()->user()->sendEmailVerificationNotification();
     
-        return $this->response(['msg' => 'Email verification link sent on your email id.'],200);
+        return $this->response([],'Email verification link sent on your email id.',200);
     }
 
     // Logout
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return $this->response(null,200);
+        return $this->response([],'User Log Out.',200);
     }
 }

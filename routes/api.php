@@ -31,12 +31,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['json.response']], function () { 
-    Route::post('clients/auth/login', [AuthController::class, 'login']);
-    Route::post('clients/auth/register',[AuthController::class, 'register']);
-    Route::post('clients/auth/forgetpassword',[AuthController::class, 'forgetPassword']);
-    Route::post('clients/password/reset', [AuthController::class, 'sendResetResponse']); // Auto / Reset
+    Route::post('auth/login', [AuthController::class, 'login']);
+    Route::post('auth/register',[AuthController::class, 'register']);
+    Route::post('auth/forget-password',[AuthController::class, 'forgetPassword']);
+    Route::post('auth/reset/password', [AuthController::class, 'resetPassword']);
 
-    Route::get('email/verify/{id}', [AuthController::class, 'verify'])->name('verification.verify'); // this no {id}
+    Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
         
     Route::group(['middleware' => ['auth:api']], function () {
@@ -63,15 +63,11 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('addresses/create',[AddressesController::class,'createAddresses']);
             Route::delete('addresses/{id}',[AddressesController::class,'deleteAddresses']);
 
-            // Senders
-            Route::get('senders',[SendersController::class,'index']);
-            Route::post('senders/create',[SendersController::class,'createSenders']);
-            Route::delete('senders/{id}',[SendersController::class,'deleteSenders']);
-
             // Shipments
             Route::post('shipments',[ShipmentController::class,'index']);
             Route::get('shipments/{id}',[ShipmentController::class,'show']);
-            Route::post('shipments/create',[ShipmentController::class,'store']);
+            Route::post('shipments/domestic/create',[ShipmentController::class,'createDomesticShipment']);
+            Route::post('shipments/express/create',[ShipmentController::class,'createExpressShipment']);
             Route::get('shipments/export/{type}',[ShipmentController::class,'export']);
 
             // Transactions
@@ -85,7 +81,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('pickups/create',[PickupsController::class,'store']);
         });
 
-        Route::post('clients/logout',[AuthController::class, 'logout']);
+        Route::post('auth/logout',[AuthController::class, 'logout']);
     });
     Route::get('/unauthenticated',[Controller::class, 'unauthenticated'])->name('unauthenticated');
 });

@@ -18,6 +18,6 @@ class PickupsController extends MerchantController
         $data['merchant_id'] = $request->user()->merchant_id;
 
         Pickup::create($data);
-        return $this->successful(null,204);
+        return $this->successful('Data Created Sucessfully');
     }
 }

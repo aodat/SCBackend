@@ -24,15 +24,15 @@ class AuthRequest extends FormRequest
     public function rules()
     {
         $base_url = Request()->path();
-        if(strpos($base_url,'clients/auth/register') !== false) {
+        if(strpos($base_url,'auth/register') !== false) {
             return [
                 'type' => 'in:individual,corporate',
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|email|unique:users',
                 'phone' => 'required|unique:users',
-                'password' => 'required|min:6|max:255|confirmed'
+                'password' => 'required|min:6|max:255'
             ];
-        } else if(strpos($base_url,'clients/auth/login') !== false)
+        } else if(strpos($base_url,'auth/login') !== false)
         {
             return [
                 'email' => 'email|required',

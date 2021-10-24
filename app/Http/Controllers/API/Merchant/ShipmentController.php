@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Exports\ShipmentExport;
 use App\Models\Shipment;
-use App\Http\Requests\Merchant\ShipmentRequest;
 
+use App\Http\Requests\Merchant\ShipmentRequest;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -42,39 +42,19 @@ class ShipmentController extends MerchantController
 
         $paginated = $shipments->paginate(request()->perPage ?? 10);
     
-        return $this->response($paginated,200);
+        return $this->response($paginated,'Data Retrieved Successfully',200);
 
     }
 
     public function show($id,ShipmentRequest $request)
     {
         $data = Shipment::findOrFail($id);
-        return $this->response(['msg' => 'Transaction Retrived Sucessfully','data' => $data],200);
-    }
-    
-    public function store(ShipmentRequest $request)
-    {
-        $result = DB::transaction(function () use($request){
-            $jsons = $request->json()->all();
-            if(count($jsons) > 1)
-                foreach($jsons as $json)
-                    $result = $this->createDomesticShipment($json);
-            else {
-                $jsons = reset($jsons);
-                if($jsons['group'] == 'EXP')
-                    $result = $this->createExpressShipment();
-                else if($jsons['group'] == 'DOM')
-                    $result = $this->createDomesticShipment($jsons);
-            }
-            return $result;
-        });
-        
-        return $result;
+        return $this->response($data,'Data Retrieved Sucessfully',200);
     }
 
     public function export($type,ShipmentRequest $request)
     {
-        $merchentID = 1;// Request()->user()->merchant_id;
+        $merchentID = Request()->user()->merchant_id;
         $shipments = Shipment::find($merchentID);
         $path = "export/shipments-$merchentID-".Carbon::today()->format('Y-m-d').".$type";
 
@@ -83,45 +63,52 @@ class ShipmentController extends MerchantController
         } else {
             $url = exportPDF('shipments',$path,$shipments);
         }        
-        return $this->response(['link' => $url],200);
+        return $this->response(['link' => $url],'Data Retrieved Sucessfully',200);
     }
 
-    public function createExpressShipment()
+    public function createExpressShipment(ShipmentRequest $request)
     {
-
-    }
-
-    public function createDomesticShipment($data)
-    {
+        $shipmentRequest = $request->json()->all();
         $merchentInfo = $this->getMerchentInfo();
+        $merchentAddresses = collect($merchentInfo->addresses);
+        // foreach($shipmentRequest as $shipment) {}
+    }
 
-        $address = collect($merchentInfo->addresses)->where('id','=',$data['sender_address_id'])->first();
-
-        if($address == null)
-            return $this->error(['msg' => 'sender address id is in valid'],400);
-        if(!isset($merchentInfo['country_code']))
-            return $this->error(['msg' => 'Merchent Country Is Empty'],400);
-
-        unset($data['sender_address_id']);
-
-        $final = $data;
-        $final['sender_email'] = $merchentInfo['email'];
-        $final['sender_name'] = $merchentInfo['name'];
-        $final['sender_phone'] = $address['phone'];
-        $final['sender_country'] = $merchentInfo['country_code'];
-        $final['sender_city'] = $address['city'];
-        $final['sender_area'] = $address['area'];
-        $final['sender_address_description'] = $address['description'];
-        $final['consignee_country'] = $merchentInfo->country_code;
+    public function createDomesticShipment(ShipmentRequest $request)
+    {
+        return DB::transaction(function () use ($request) {
+            $shipmentRequest = $request->json()->all();
+            $merchentInfo = $this->getMerchentInfo();
+            $merchentAddresses = collect($merchentInfo->addresses);
+            foreach($shipmentRequest as $shipment)
+            {
+                $address = $merchentAddresses->where('id','=',$shipment['sender_address_id'])->first();
+                if($address == null)
+                    return $this->error('Sender address id is in valid',400);
+                if(!isset($merchentInfo['country_code']))
+                    return $this->error('Merchent country is empty',400);
         
-        $domestic_rates = collect($merchentInfo->domestic_rates)->where('code','=',$address['city'])->first();
-        $final['fees'] = $domestic_rates['price'] ?? 0;
+                unset($shipment['sender_address_id']);
         
-        $final['merchant_id'] = Request()->user()->merchant_id;
-        $final['internal_awb'] = abs( crc32( uniqid() ) );
-        $final['created_by'] = Request()->user()->id;
-        Shipment::create($final);
-
-        return $this->successful();
+                $final = $shipment;
+                $final['sender_email'] = $merchentInfo['email'];
+                $final['sender_name'] = $merchentInfo['name'];
+                $final['sender_phone'] = $address['phone'];
+                $final['sender_country'] = $merchentInfo['country_code'];
+                $final['sender_city'] = $address['city'];
+                $final['sender_area'] = $address['area'];
+                $final['sender_address_description'] = $address['description'];
+                $final['consignee_country'] = $merchentInfo->country_code;
+                $final['group'] = 'DOM';
+                $domestic_rates = collect($merchentInfo->domestic_rates)->where('code','=',$address['city'])->first();
+                $final['fees'] = $domestic_rates['price'] ?? 0;
+                
+                $final['merchant_id'] = Request()->user()->merchant_id;
+                $final['internal_awb'] = abs(crc32(uniqid()));
+                $final['created_by'] = Request()->user()->id;
+                Shipment::create($final);
+            }
+            return $this->successful();
+        });
     }
 }

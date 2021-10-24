@@ -15,7 +15,7 @@ class TransactionsController extends MerchantController
     public function show($id,TransactionRequest $request)
     {
         $data = Transaction::findOrFail($id);
-        return $this->response(['msg' => 'Transaction Retrived Sucessfully','data' => $data],200);
+        return $this->response($data,'Transaction Retrived Sucessfully',200);
     }
     
     public function withDraw(TransactionRequest $request)
@@ -27,7 +27,7 @@ class TransactionsController extends MerchantController
         $paymentMethodID = $request->payment_method_id;
 
         if($actualBalance < $request->amount)
-            return $this->response(['msg' => 'The Actual Balance Not Enough'],500);
+            return $this->response([],'The Actual Balance Not Enough',500);
 
 
         $merchecntInfo->actual_balance = $actualBalance - $request->amount;
@@ -50,7 +50,7 @@ class TransactionsController extends MerchantController
             ]
         );
 
-        return $this->response(null,204);
+        return $this->successful();
     }
 
     public function export(TransactionRequest $request)

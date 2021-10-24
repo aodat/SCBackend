@@ -37,7 +37,7 @@ class MerchantRequest extends FormRequest
         if(strpos($path,'merchant/profile/update-password') !== false) {
             return [
                 'current' => 'required',
-                'new' => 'required|confirmed|min:6|max:255',
+                'new' => 'required|min:6|max:255',
             ];
         } else if(strpos($path,'merchant/profile/update-profile') !== false) {
             return [

@@ -18,7 +18,7 @@ class DocumentsController extends MerchantController
         if(collect($data->documents)->isEmpty())
             return $this->notFound();
 
-        return $this->response(['msg' => 'Payment Methods Retrieved Successfully','data' => $data->documents],200);
+        return $this->response($data->documents,'Payment Methods Retrieved Successfully',200);
     }
 
     public function createDocuments(DocumentsRequest $request)
@@ -36,7 +36,7 @@ class DocumentsController extends MerchantController
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);
-        return $this->response(null,204);
+        return $this->successful();
     }
 
     public function deleteDocuments($id,DocumentsRequest $request)
@@ -51,6 +51,6 @@ class DocumentsController extends MerchantController
         });
         $json = array_values($json->toArray());
         $list->update(['documents' => collect($json)]);
-        return $this->response(null,204);
+        return $this->successful('Deleted Sucessfully');
     }
 }

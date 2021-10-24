@@ -16,7 +16,7 @@ class AddressesController extends MerchantController
         if(collect($data->addresses)->isEmpty())
             return $this->notFound();
 
-        return $this->response(['msg' => 'Addresses Retrieved Successfully','data' => $data->addresses],200);
+        return $this->response($data->addresses,'Addresses Retrieved Successfully',200);
     }
 
     public function createAddresses(AddressesRequest $request)
@@ -32,7 +32,7 @@ class AddressesController extends MerchantController
         $json['country'] = 'JOR';
         
         $merchant->update(['addresses' => $result->merge([$json])]);
-        return $this->response(null,204);
+        return $this->successful();
     }
 
     public function deleteAddresses($id,AddressesRequest $request)
@@ -48,6 +48,6 @@ class AddressesController extends MerchantController
         });
         $json = array_values($json->toArray());
         $list->update(['addresses' => collect($json)]);
-        return $this->response(null,204);
+        return $this->successful('Deleted Successfully');
     }
 }

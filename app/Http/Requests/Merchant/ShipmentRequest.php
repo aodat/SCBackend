@@ -23,7 +23,13 @@ class ShipmentRequest extends MerchantRequest
     {
         $path = Request()->route()->uri;
         
-        if($this->method() == 'POST' && strpos($path,'shipments/create') !== false)
+        if(
+            $this->method() == 'POST' && 
+            (   
+                strpos($path,'shipments/express/create') !== false ||
+                strpos($path,'shipments/domestic/create') !== false
+            )
+        )
             return [
                 '*.carrier_id' => 'required|exists:carriers,id',
                 '*.sender_address_id' => 'required',
@@ -37,11 +43,9 @@ class ShipmentRequest extends MerchantRequest
 
                 '*.content' => 'required',
 
-                '*.actual_weight' => 'required|numeric|between:0,9999',
                 '*.cod' => 'required|numeric|between:0,9999',
                 '*.pieces' => 'required|integer',
                 '*.extra_services' => 'required|in:DOMCOD',
-                '*.group' => 'required|in:EXP,DOM'
             ];
         else if($this->method() == 'POST' && strpos($path,'shipments') !== false) 
             return [

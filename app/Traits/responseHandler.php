@@ -1,55 +1,53 @@
 <?php
 namespace App\Traits;
-
-
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Response;
 
 trait responseHandler
 {  
-    /*
-    public static function sendResponse($data = '', $code = 200, $withoutData = false)
+    public static function response($data = [], $msg = '', $status = 200)
     {
-        if (in_array($code, [201, 202, 204, 404]))
-            return Response::make(null, $code);
-
-        if ($data === null)
-            return Response::make(null, 404);
-
-        if (empty($data))
-            return Response::make(null, 204);
-
-        if ($data instanceof Collection)
-            if ($data->isEmpty())
-                return Response::make(null, 204);
-
-        if ($withoutData == false)
-            return Response::json([
-                'data' => $data,
-            ], $code);
-
-        return Response::json($data, $code);
-    }
-    */
-
-
-    public static function response($response, $code)
-    {
-        return Response::make($response, $code);
+        $response = [
+            'meta' => [
+                'code' => $status,
+                'msg' => $msg
+            ]
+        ];
+        if(!empty($data))
+            $response['data'] = $data;
+        return Response::make($response, 200);
     }
 
-    public static function successful()
+    public static function successful($msg = '')
     {
-        return Response::make(null, 204);
+        $response = [
+            'meta' => [
+                'code' => 200,
+                'msg' => ($msg != '') ? $msg : 'Created Sucessfully'
+            ]
+        ];
+
+        return Response::make($response, 200);
     }
 
     public static function notFound()
     {
-        return Response::make(null, 404);
+        $response = [
+            'meta' => [
+                'code' => 400,
+                'msg' => 'Not Found'
+            ]
+        ];
+        return Response::make($response, 200);
     }
 
-    public static function error($data, $status_code = 400)
+    public static function error($msg, $status_code = 400)
     {
-        return Response::make($data, $status_code);
+        $response = [
+            'meta' => [
+                'code' => $status_code,
+                'msg' => ($msg != '') ? $msg : 'Unexpected Error'
+            ]
+        ];
+        return Response::make($response, 200);
     }
 }
