@@ -1,0 +1,121 @@
+{
+    "LabelInfo": {
+      "ReportID": 9729,
+      "ReportType": "URL"
+    },
+    "Shipments": [
+      {
+        "Reference1": "ShipCash",
+        "Reference2": "",
+        "Reference3": "",
+        "Shipper": {
+          "Reference2": "",
+          "PartyAddress": {
+            "StateOrProvinceCode": "",
+            "PostCode": "",
+            "CountryCode": "JO",
+            "Longitude": 0,
+            "Latitude": 0,
+            "BuildingNumber": null,
+            "BuildingName": null,
+            "Floor": null,
+            "Apartment": null,
+            "POBox": null,
+            "Description": ""
+          },
+          "Contact": {
+            "Department": "",
+            "Title": "",
+            "PhoneNumber1Ext": "",
+            "PhoneNumber2": "",
+            "PhoneNumber2Ext": "",
+            "FaxNumber": "",
+            "Type": ""
+          }
+        },
+        "ThirdParty": {
+          "Reference1": "",
+          "Reference2": "",
+          "PartyAddress": {
+            "StateOrProvinceCode": "",
+            "PostCode": "",
+            "CountryCode": "JO",
+            "Longitude": 0,
+            "Latitude": 0,
+            "BuildingNumber": null,
+            "BuildingName": null,
+            "Floor": null,
+            "Apartment": null,
+            "POBox": null,
+            "Description": null
+          },
+          "Contact": {
+            "Department": "",
+            "Title": "",
+            "PhoneNumber1Ext": "",
+            "PhoneNumber2": "",
+            "PhoneNumber2Ext": "",
+            "FaxNumber": "",
+            "Type": ""
+          }
+        },
+        "Consignee": {
+          "Reference1": "",
+          "Reference2": "",
+          "AccountNumber": "",
+          "PartyAddress": {
+            "StateOrProvinceCode": "",
+            "PostCode": "10004",
+            "Longitude": 0,
+            "Latitude": 0,
+            "BuildingNumber": "",
+            "BuildingName": "",
+            "Floor": "",
+            "Apartment": "",
+            "POBox": null,
+            "Description": ""
+          },
+          "Contact": {
+            "Department": "",
+            "Title": "",
+            "PhoneNumber1Ext": "",
+            "PhoneNumber2Ext": "",
+            "FaxNumber": "",
+            "Type": ""
+          }
+        },
+        "PickupLocation": "",
+        "OperationsInstructions": "",
+        "AccountingInstrcutions": "",
+        "Details": {
+          "Dimensions": null,
+          "ActualWeight": {
+            "Unit": "KG"
+          },
+          "ChargeableWeight": null,
+          "GoodsOriginCountry": "JO",
+          "ProductGroup": "DOM",
+          "PaymentType": "P",
+          "PaymentOptions": "ACCT",
+          "CashAdditionalAmount": {
+            "Value": "0"
+          },
+          "CashAdditionalAmountDescription": "",
+          "Items": []
+        },
+        "Attachments": [],
+        "ForeignHAWB": "",
+        "TransportType ": 0,
+        "PickupGUID": "",
+        "Number": null,
+        "ScheduledDelivery": null
+      }
+    ],
+    "Transaction": {
+      "Reference1": "",
+      "Reference2": "",
+      "Reference3": "",
+      "Reference4": "",
+      "Reference5": ""
+    }
+  }
