@@ -5,6 +5,14 @@ namespace App\Http\Requests\Merchant;
 
 class ShipmentRequest extends MerchantRequest
 {
+    public function all($keys = null)
+    {
+        $path = Request()->route()->uri;
+        $data = parent::all($keys);
+        if ($this->method() == 'GET' && strpos($path,'shipments/export/{type}') !== false)
+            $data['type'] = $this->route('type');
+        return $data;
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -13,7 +21,7 @@ class ShipmentRequest extends MerchantRequest
     
     public function rules()
     {
-        $path = Request()->path();
+        $path = Request()->route()->uri;
         
         if($this->method() == 'POST' && strpos($path,'shipments/create') !== false)
             return [
@@ -44,6 +52,10 @@ class ShipmentRequest extends MerchantRequest
                 'phone' => 'Array',
                 'cod.val' =>  'nullable|numeric|between:1,999',
                 'cod.operation' => 'nullable'
+            ];
+        else if($this->method() == 'GET' && strpos($path,'shipments/export/{type}') !== false)
+            return [
+                'type' => 'in:xlsx,pdf'
             ];
         return [];
     }

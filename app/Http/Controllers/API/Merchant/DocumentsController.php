@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Requests\Merchant\DocumentsRequest;
-use App\Http\Controllers\Utilities\uploadController;
 
 use App\Models\Merchant;
 
@@ -33,7 +32,7 @@ class DocumentsController extends MerchantController
         $data = [
             'id' => ++$counter,
             'type' => $request->type,
-            'url' => uploadController::uploadFiles('documents',$request->file('file'))
+            'url' => uploadFiles('documents',$request->file('file'))
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);

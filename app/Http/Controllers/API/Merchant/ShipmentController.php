@@ -5,9 +5,6 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Exports\ShipmentExport;
 use App\Models\Shipment;
 use App\Http\Requests\Merchant\ShipmentRequest;
-use Illuminate\Support\Facades\Storage;
-
-use Maatwebsite\Excel\Facades\Excel as Excel;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -77,11 +74,16 @@ class ShipmentController extends MerchantController
 
     public function export($type,ShipmentRequest $request)
     {
-        $shipments = Shipment::find(Request()->user()->merchant_id);
-        $path = "export/shipments-".now().".xlsx";
-        Excel::store(new ShipmentExport($shipments), $path,'s3');
-        
-        return $this->response(['link' => Storage::disk('s3')->url($path)],200);
+        $merchentID = 1;// Request()->user()->merchant_id;
+        $shipments = Shipment::find($merchentID);
+        $path = "export/shipments-$merchentID-".Carbon::today()->format('Y-m-d').".$type";
+
+        if($type == 'xlsx') {
+            $url = exportXLSX(new ShipmentExport($shipments),$path);
+        } else {
+            $url = exportPDF('shipments',$path,$shipments);
+        }        
+        return $this->response(['link' => $url],200);
     }
 
     public function createExpressShipment()
