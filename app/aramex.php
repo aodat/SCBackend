@@ -24,30 +24,29 @@ class aramex
         ];
     }
 
-    public function createPickup($data)
+    public function createPickup($address)
     {
         $payload = json_decode(Storage::disk('local')->get('template/aramex/pickup.create.json'),true);
         $payload['ClientInfo'] = $this->config;
 
-        $payload['Pickup']['PickupAddress']['Line1'] = '';
+        $payload['Pickup']['PickupAddress']['Line1'] = $address->country;
         $payload['Pickup']['PickupAddress']['Line2'] = '';
         $payload['Pickup']['PickupAddress']['Line3'] = '';
-        $payload['Pickup']['PickupAddress']['City'] = '';
+        $payload['Pickup']['PickupAddress']['City'] = $address->city;
         
-        $payload['Pickup']['PickupContact']['PersonName'] = '';
-        $payload['Pickup']['PickupContact']['CompanyName'] = '';
-        $payload['Pickup']['PickupContact']['PhoneNumber1'] = '';
+        $payload['Pickup']['PickupContact']['PersonName'] = $address->name;
+        $payload['Pickup']['PickupContact']['CompanyName'] = $data['name'] ?? '';
+        $payload['Pickup']['PickupContact']['PhoneNumber1'] = $data['phone'] ?? '';
         $payload['Pickup']['PickupContact']['CellPhone'] = '';
-        $payload['Pickup']['PickupContact']['EmailAddress'] = '';
+        $payload['Pickup']['PickupContact']['EmailAddress'] = $data['email'] ?? '';
 
         $payload['Pickup']['PickupLocation'] = '';
         $payload['Pickup']['PickupDate'] = '';
         $payload['Pickup']['ReadyTime'] = '';
         $payload['Pickup']['LastPickupTime'] = '';
         $payload['Pickup']['ClosingTime'] = '';
-        $payload['Pickup']['ClosingTime'] = '';
         $payload['Pickup']['Reference1'] = '';
-        $payload['Pickup']['PickupItems']['NumberOfPieces'] = 0;
+        $payload['Pickup']['PickupItems']['NumberOfPieces'] = 1;
         $payload['Pickup']['PickupItems']['Comments'] = '';
 
         
@@ -196,6 +195,7 @@ class aramex
             "CurrencyCode" => '',
             "Value" => ''
         ];
+        dd($payload);
 
         $response = Http::post(self::$CREATE_SHIPMENTS_URL, $payload);
 

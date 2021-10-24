@@ -16,8 +16,13 @@ class PickupsController extends MerchantController
 
     public function store(PickuptRequest $request)
     {
-        // $obj = new aramex();
-        // $obj->createPickup();
+        $merchentInfo = $this->getMerchentInfo();
+        $merchentAddresses = collect($merchentInfo->addresses);
+        $address = $merchentAddresses->where('id','=',$request->address_id)->first();
+
+        $obj = new aramex();
+        // $data = $this->getMerchentInfo();
+        $obj->createPickup($address);
 
         $data = $request->json()->all();
         $data['merchant_id'] = $request->user()->merchant_id;
