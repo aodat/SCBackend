@@ -1,0 +1,67 @@
+{
+    "LabelInfo": {
+      "ReportID": 9729,
+      "ReportType": "URL"
+    },
+    "Pickup": {
+      "PickupAddress": {
+        "StateOrProvinceCode": "",
+        "PostCode": "",
+        "CountryCode": "JO",
+        "Longitude": 0,
+        "Latitude": 0,
+        "BuildingNumber": null,
+        "BuildingName": null,
+        "Floor": null,
+        "Apartment": null,
+        "POBox": null,
+        "Description": null
+      },
+      "PickupContact": {
+        "Department": "",
+        "Title": "",
+        "PhoneNumber1Ext": "",
+        "PhoneNumber2": "",
+        "PhoneNumber2Ext": "",
+        "FaxNumber": "",
+        "Type": ""
+      },
+      "Comments": "",
+      "Reference2": "",
+      "Vehicle": "",
+      "Shipments": [],
+      "PickupItems": [
+        {
+          "ProductGroup": "DOM",
+          "ProductType": "OND",
+          "NumberOfShipments": 1,
+          "PackageType": "Box",
+          "Payment": "P",
+          "ShipmentWeight": {
+            "Unit": "KG",
+            "Value": 0.5
+          },
+          "ShipmentVolume": null,
+          "CashAmount": null,
+          "ExtraCharges": null,
+          "ShipmentDimensions": {
+            "Length": 0,
+            "Width": 0,
+            "Height": 0,
+            "Unit": ""
+          }
+        }
+      ],
+      "Status": "Ready",
+      "ExistingShipments": null,
+      "Branch": "",
+      "RouteCode": ""
+    },
+    "Transaction": {
+      "Reference1": "",
+      "Reference2": "",
+      "Reference3": "",
+      "Reference4": "",
+      "Reference5": ""
+    }
+  }
