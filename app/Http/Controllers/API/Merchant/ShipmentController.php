@@ -119,23 +119,27 @@ class ShipmentController extends MerchantController
                 $aramix[] = $obj->shipmentArray($merchentInfo,$address,$shipment);
                 $ships[] = $shipment;
             }
-            // $createShipments = $obj->createShipment($aramix);
-            // if($createShipments['HasErrors'])
-            //     return $this->error($createShipments['Notifications']);
-            
-            $files = [
-                "https://ws.aramex.net/content/rpt_cache/6820fc0773c842be95bcd1b0e1719877.pdf",
-                "https://ws.aramex.net/content/rpt_cache/e431f1e9d05b4985b46ecc9d704cdf2b.pdf"
-            ];
-            dd(mergePDF($files));
-            // collect($createShipments['Shipments'])->pluck('ShipmentLabel.LabelURL');
+            $createShipments = $obj->createShipment($aramix);
+            if($createShipments['HasErrors'])
+                return $this->error($createShipments['Notifications']);
 
-            dd($files);
-            // Shipment::create($final);
-            // foreach
-            // dd(collect($createShipments['Shipments'])->pluck('ShipmentLabel.LabelURL'));
-            // dd(,$ships);
-            return $this->successful();
+            $list = collect($createShipments['Shipments']);
+
+            $externalAWB = $list->pluck('ID')->toArray();
+            $ships = collect($ships)->map(function ($value,$key) use($externalAWB){
+                $value['external_awb'] = $externalAWB[$key];
+                return $value;
+            });
+            DB::table('shipments')->insert($ships->toArray());
+            return $this->response(
+                [
+                    'link' => mergePDF(
+                            $list
+                            ->pluck('ShipmentLabel.LabelURL')
+                            ->toArray()
+                        )
+                ]
+            );
         });
     }
 }

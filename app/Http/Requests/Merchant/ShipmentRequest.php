@@ -37,7 +37,8 @@ class ShipmentRequest extends MerchantRequest
 
                 '*.consignee_name' => 'required|min:6|max:255',
                 '*.consignee_email' => 'required|email',
-                '*.consignee_phone' => 'required',
+                '*.consignee_phone' => 'required|max:10',
+                '*.consignee_second_phone' => 'required|max:10',
                 '*.consignee_city' => 'required',
                 '*.consignee_area' => 'required',
                 '*.consignee_address_description' => 'required',
