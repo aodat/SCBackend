@@ -6,6 +6,7 @@ use App\Exports\ShipmentExport;
 use App\Models\Shipment;
 
 use App\Http\Requests\Merchant\ShipmentRequest;
+use aramex;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -76,12 +77,14 @@ class ShipmentController extends MerchantController
 
     public function createDomesticShipment(ShipmentRequest $request)
     {
-        return DB::transaction(function () use ($request) {
+        $obj = new aramex();
+        return DB::transaction(function () use ($request,$obj) {
             $shipmentRequest = $request->json()->all();
             $merchentInfo = $this->getMerchentInfo();
             $merchentAddresses = collect($merchentInfo->addresses);
             foreach($shipmentRequest as $shipment)
             {
+
                 $address = $merchentAddresses->where('id','=',$shipment['sender_address_id'])->first();
                 if($address == null)
                     return $this->error('Sender address id is in valid',400);
@@ -89,23 +92,28 @@ class ShipmentController extends MerchantController
                     return $this->error('Merchent country is empty',400);
         
                 unset($shipment['sender_address_id']);
-        
+
                 $final = $shipment;
                 $final['sender_email'] = $merchentInfo['email'];
                 $final['sender_name'] = $merchentInfo['name'];
                 $final['sender_phone'] = $address['phone'];
                 $final['sender_country'] = $merchentInfo['country_code'];
-                $final['sender_city'] = $address['city'];
+                $final['sender_city'] = $address['city_code'];
                 $final['sender_area'] = $address['area'];
                 $final['sender_address_description'] = $address['description'];
                 $final['consignee_country'] = $merchentInfo->country_code;
                 $final['group'] = 'DOM';
-                $domestic_rates = collect($merchentInfo->domestic_rates)->where('code','=',$address['city'])->first();
+                $domestic_rates = collect($merchentInfo->domestic_rates)->where('code','=',$address['city_code'])->first();
                 $final['fees'] = $domestic_rates['price'] ?? 0;
                 
                 $final['merchant_id'] = Request()->user()->merchant_id;
                 $final['internal_awb'] = abs(crc32(uniqid()));
                 $final['created_by'] = Request()->user()->id;
+
+                $obj->createShipment($merchentInfo,$address,$final);
+                //         "LabelURL" => "https://ws.aramex.net/content/rpt_cache/97abe06699ec4eeaac7ced7bf97d65ad.pdf"
+                //       "ID" => "46594921133" // external_awb 
+
                 Shipment::create($final);
             }
             return $this->successful();

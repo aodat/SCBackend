@@ -10,6 +10,7 @@
         "Reference3": "",
         "Shipper": {
           "Reference2": "",
+          "AccountNumber": "",
           "PartyAddress": {
             "StateOrProvinceCode": "",
             "PostCode": "",
@@ -81,7 +82,9 @@
             "PhoneNumber1Ext": "",
             "PhoneNumber2Ext": "",
             "FaxNumber": "",
-            "Type": ""
+            "Type": "",
+            "EmailAddress": "",
+            "CellPhone": ""
           }
         },
         "PickupLocation": "",
@@ -101,7 +104,8 @@
             "Value": "0"
           },
           "CashAdditionalAmountDescription": "",
-          "Items": []
+          "Items": [],
+          "ProductType":""
         },
         "Attachments": [],
         "ForeignHAWB": "",
