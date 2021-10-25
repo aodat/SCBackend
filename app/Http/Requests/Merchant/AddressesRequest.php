@@ -14,10 +14,14 @@ class AddressesRequest extends MerchantRequest
         $path = Request()->path();
         if(strpos($path,'addresses/create') !== false)
             return [
-                "city" => "required",
-                "area" => "",
+                "name_ar" => "required",
+                "name_en" => "required",
+                "city_code" => "required",
+                "country" => "required",
+                "country_code" => "required",
+                "area" => "required",
                 "phone" => "required",
-                "description" => ""
+                "description" => "required"
             ];
         return [];
     }

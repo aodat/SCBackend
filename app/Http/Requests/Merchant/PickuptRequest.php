@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests\Merchant;
 
+use Carbon\Carbon;
+
 class PickuptRequest extends MerchantRequest
 {
     /**
@@ -11,14 +13,16 @@ class PickuptRequest extends MerchantRequest
      */
     public function rules()
     {
+        $new_date = Carbon::parse(Carbon::today())->addDays(3);
+        $new_date->toDateString();
+
         $path = Request()->path();
         if(strpos($path,'pickups/create') !== false)
             return [
                 'type' => 'in:aramex,dhl',
                 'address_id' => 'required',
-                // 'carrier_id' => 'required|exists:carriers,id',
-                "from" => "required|date|date_format:Y-m-d",
-                "to" => "required|date|after:from|date_format:Y-m-d"
+                'carrier_id' => 'required|exists:carriers,id',
+                "pickup_date" => "required|date|date_format:Y-m-d|after:today|before:$new_date"
             ];
         return [];
     }

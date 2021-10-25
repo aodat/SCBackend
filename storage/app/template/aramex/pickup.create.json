@@ -7,7 +7,6 @@
       "PickupAddress": {
         "StateOrProvinceCode": "",
         "PostCode": "",
-        "CountryCode": "JO",
         "Longitude": 0,
         "Latitude": 0,
         "BuildingNumber": null,
@@ -44,6 +43,8 @@
           "ShipmentVolume": null,
           "CashAmount": null,
           "ExtraCharges": null,
+          "NumberOfPieces":1,
+          "Comments":"",
           "ShipmentDimensions": {
             "Length": 0,
             "Width": 0,

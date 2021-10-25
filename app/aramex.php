@@ -1,4 +1,6 @@
 <?php
+
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
@@ -13,57 +15,48 @@ class aramex
     function __construct()
     {
         $this->config = [
-            'aramex_username' => config('aramex.ARAMEX_USERNAME'),
-            'aramex_password' => config('aramex.ARAMEX_PASSWORD'),
-            'aramex_account_number' => config('aramex.ARAMEX_ACCOUNT_NUMBER'),
-            'aramex_pin' => config('aramex.ARAMEX_PIN'),
-            'aramex_account_entity' => config('aramex.ARAMEX_ACCOUNT_ENTITY'),
-            'aramex_account_country_code' => config('aramex.ARAMEX_ACCOUNT_COUNTRY_CODE'),
-            'version' => config('aramex.VERSION'),
-            'source' => config('aramex.SOURCE')
+            'UserName' => config('aramex.ARAMEX_USERNAME'),
+            'Password' => config('aramex.ARAMEX_PASSWORD'),
+            'AccountNumber' => config('aramex.ARAMEX_ACCOUNT_NUMBER'),
+            'AccountPin' => config('aramex.ARAMEX_PIN'),
+            'AccountEntity' => config('aramex.ARAMEX_ACCOUNT_ENTITY'),
+            'AccountCountryCode' => config('aramex.ARAMEX_ACCOUNT_COUNTRY_CODE'),
+            'Version' => config('aramex.VERSION'),
+            'Source' => config('aramex.SOURCE')
         ];
     }
 
-    public function createPickup($address)
+    public function createPickup($email,$date,$address)
     {
         $payload = json_decode(Storage::disk('local')->get('template/aramex/pickup.create.json'),true);
         $payload['ClientInfo'] = $this->config;
 
-        $payload['Pickup']['PickupAddress']['Line1'] = $address->country;
-        $payload['Pickup']['PickupAddress']['Line2'] = '';
+        $payload['Pickup']['Reference1'] = $address['description'];
+        $payload['Pickup']['PickupAddress']['Line1'] = $address['description'];
+        $payload['Pickup']['PickupAddress']['Line2'] = $address['area'];
         $payload['Pickup']['PickupAddress']['Line3'] = '';
-        $payload['Pickup']['PickupAddress']['City'] = $address->city;
-        
-        $payload['Pickup']['PickupContact']['PersonName'] = $address->name;
-        $payload['Pickup']['PickupContact']['CompanyName'] = $data['name'] ?? '';
-        $payload['Pickup']['PickupContact']['PhoneNumber1'] = $data['phone'] ?? '';
-        $payload['Pickup']['PickupContact']['CellPhone'] = '';
-        $payload['Pickup']['PickupContact']['EmailAddress'] = $data['email'] ?? '';
+        $payload['Pickup']['PickupAddress']['City'] = $address['name_en'];
+        $payload['Pickup']['PickupAddress']['CountryCode'] = $address['country_code'];
 
-        $payload['Pickup']['PickupLocation'] = '';
-        $payload['Pickup']['PickupDate'] = '';
-        $payload['Pickup']['ReadyTime'] = '';
-        $payload['Pickup']['LastPickupTime'] = '';
-        $payload['Pickup']['ClosingTime'] = '';
-        $payload['Pickup']['Reference1'] = '';
-        $payload['Pickup']['PickupItems']['NumberOfPieces'] = 1;
-        $payload['Pickup']['PickupItems']['Comments'] = '';
+        $payload['Pickup']['PickupContact']['PersonName'] = $address['name_en'];
+        $payload['Pickup']['PickupContact']['CompanyName'] = $address['name_en'];
+        $payload['Pickup']['PickupContact']['PhoneNumber1'] = $address['phone'];
+        $payload['Pickup']['PickupContact']['CellPhone'] = $address['phone'];
+        $payload['Pickup']['PickupContact']['EmailAddress'] = $email;
 
-        
+        $payload['Pickup']['PickupLocation'] = $address['city_code'];
+        $payload['Pickup']['PickupDate'] = '/Date('.(strtotime($date) * 1000).')/';
+
+        $ReadyTime  = strtotime(Carbon::createFromFormat('Y-m-d',$date)->format('Y-m-d').' 03:00 PM') * 1000;
+        $LastPickupTime = $ClosingTime = strtotime(Carbon::createFromFormat('Y-m-d',$date)->format('Y-m-d').' 04:00 PM') * 1000;
+
+        $payload['Pickup']['ReadyTime'] = '/Date('.$ReadyTime.')/';
+        $payload['Pickup']['LastPickupTime'] = '/Date('.$LastPickupTime.')/';
+        $payload['Pickup']['ClosingTime'] = '/Date('.$ClosingTime.')/';
+
         $response = Http::post(self::$CREATE_PICKUP_URL, $payload);
-        // dd($response);
-        // if (! $response->successful()) {
-        //     dd($response->successful());
-        //     // throw new AramexException("Aramex Create Pickup – Something Went Wrong", 1);
-        // }
 
-        // if ($response->json()['HasErrors']) {
-        //     dd($response->json()['HasErrors']);
-        //     // throw new AramexException("Cannot create pickup please call 06 535 8855", null, null, $response->json()['Notifications']);
-
-        // }
-
-        // return $response->json();
+        return $response->json();
     }
 
     public function cancelPickup($pickup_guid)
@@ -99,7 +92,6 @@ class aramex
     {
         $payload =  [
             "ClientInfo" => $$this->config,
-
             "LabelInfo" => [
                 "ReportID" => $ReportID,
                 "ReportType" => "URL"
@@ -133,68 +125,47 @@ class aramex
     {
         $payload = json_decode(Storage::disk('local')->get('template/aramex/shipment.create.json'),true);
         $payload['ClientInfo'] = $this->config;
-        $payload['Shipments']['Shipper']['Reference1'] = '';
-        $payload['Shipments']['Shipper']['AccountNumber'] = '';
 
-        $payload['Shipments']['Shipper']['PartyAddress']['line1'] = '';
-        $payload['Shipments']['Shipper']['PartyAddress']['Line2'] = '';
-        $payload['Shipments']['Shipper']['PartyAddress']['Line3'] = '';
-        $payload['Shipments']['Shipper']['PartyAddress']['City'] = '';
+        $payload['Shipments']['Shipper']['Reference1'] = '';// / merchant -> id;
+        $payload['Shipments']['Shipper']['AccountNumber'] = ''; //
 
-        $payload['Shipments']['Shipper']['Contact']['PersonName'] = '';
-        $payload['Shipments']['Shipper']['Contact']['CompanyName'] = '';
-        $payload['Shipments']['Shipper']['Contact']['PhoneNumber1'] = '';
-        $payload['Shipments']['Shipper']['Contact']['CellPhone'] = '';
-        $payload['Shipments']['Shipper']['Contact']['EmailAddress'] = '';
+        $payload['Shipments']['Shipper']['PartyAddress']['line1'] = ''; // address area
+        $payload['Shipments']['Shipper']['PartyAddress']['Line2'] = ''; //
+        $payload['Shipments']['Shipper']['PartyAddress']['Line3'] = ''; //
+        $payload['Shipments']['Shipper']['PartyAddress']['City'] = ''; // address city code ;
+        $payload['Shipments']['Shipper']['PartyAddress']['country code'] = ''; // add country code to be merchant-> country code
 
-        $payload['Shipments']['ThirdParty']['AccountNumber'] = '';
-
-        $payload['Shipments']['ThirdParty']['PartyAddress']['Line1'] = '';
-        $payload['Shipments']['ThirdParty']['PartyAddress']['Line2'] = '';
-        $payload['Shipments']['ThirdParty']['PartyAddress']['Line3'] = '';
-        $payload['Shipments']['ThirdParty']['PartyAddress']['City'] = '';
+        $payload['Shipments']['Shipper']['Contact']['PersonName'] = ''; // // address name
+        $payload['Shipments']['Shipper']['Contact']['CompanyName'] = ''; // address name
+        $payload['Shipments']['Shipper']['Contact']['PhoneNumber1'] = ''; // address phone 
+        $payload['Shipments']['Shipper']['Contact']['CellPhone'] = ''; // address phone 
+        $payload['Shipments']['Shipper']['Contact']['EmailAddress'] = ''; // merchant email 
 
 
-        $payload['Shipments']['ThirdParty']['Contact']['PersonName'] = '';
-        $payload['Shipments']['ThirdParty']['Contact']['CompanyName'] = '';
-        $payload['Shipments']['ThirdParty']['Contact']['PhoneNumber1'] = '';
-        $payload['Shipments']['ThirdParty']['Contact']['CellPhone'] = '';
-        $payload['Shipments']['ThirdParty']['Contact']['EmailAddress'] = '';
+        $payload['Shipments']['Consignee']['PartyAddress']['Line1'] = ''; // consignee description 
+        $payload['Shipments']['Consignee']['PartyAddress']['Line2'] = ''; // consginee area 
+        $payload['Shipments']['Consignee']['PartyAddress']['Line3'] = ''; // consignee second phone 
+        $payload['Shipments']['Consignee']['PartyAddress']['City'] = ''; //  consginee city code  
+        $payload['Shipments']['Consignee']['PartyAddress']['CountryCode'] = ''; // merch country code  
 
+        $payload['Shipments']['Consignee']['Contact']['PersonName'] = ''; // consginee name
+        $payload['Shipments']['Consignee']['Contact']['CompanyName'] = ''; // consignee name 
+        $payload['Shipments']['Consignee']['Contact']['PhoneNumber1'] = ''; // consignee phone
+        $payload['Shipments']['Consignee']['Contact']['PhoneNumber2'] = ''; // consignee second phone
+        $payload['Shipments']['Consignee']['Contact']['CellPhone'] = ''; //
+        $payload['Shipments']['Consignee']['Contact']['EmailAddress'] = ''; // remove it and make it static a@a.com
 
-        $payload['Shipments']['Consignee']['PartyAddress']['Line1'] = '';
-        $payload['Shipments']['Consignee']['PartyAddress']['Line2'] = '';
-        $payload['Shipments']['Consignee']['PartyAddress']['Line3'] = '';
-        $payload['Shipments']['Consignee']['PartyAddress']['City'] = '';
-        $payload['Shipments']['Consignee']['PartyAddress']['CountryCode'] = '';
+        $payload['Shipments']['ShippingDateTime'] = ''; // timestamp for tomorrow same time of creation
+        $payload['Shipments']['DueDate'] = ''; //timestamp for tomorrow same time of creation 
+        $payload['Shipments']['Comments'] = ''; // notes 
 
-        $payload['Shipments']['Consignee']['Contact']['PersonName'] = '';
-        $payload['Shipments']['Consignee']['Contact']['CompanyName'] = '';
-        $payload['Shipments']['Consignee']['Contact']['PhoneNumber1'] = '';
-        $payload['Shipments']['Consignee']['Contact']['PhoneNumber2'] = '';
-        $payload['Shipments']['Consignee']['Contact']['CellPhone'] = '';
-        $payload['Shipments']['Consignee']['Contact']['EmailAddress'] = '';
+        $payload['Shipments']['Details']['CashOnDeliveryAmount']['CurrencyCode'] = ''; // merchant currency 
+        $payload['Shipments']['Details']['CashOnDeliveryAmount']['Value'] = ''; // cod 
 
-        $payload['Shipments']['ShippingDateTime'] = '';
-        $payload['Shipments']['DueDate'] = '';
-        $payload['Shipments']['Comments'] = '';
-
-        $payload['Shipments']['Details']['Value'] = '';
-        $payload['Shipments']['Details']['DescriptionOfGoods'] = '';
-        $payload['Shipments']['Details']['NumberOfPieces'] = '';
-        $payload['Shipments']['Details']['ProductType'] = '';
-
-        $payload['Shipments']['Details']['CashOnDeliveryAmount'] = [
-            "CurrencyCode" => '',
-            "Value" => ''
-        ];
-
-        $payload['Shipments']['Details']['CashAdditionalAmount']['CurrencyCode'] = '';
-        $payload['Shipments']['Details']['Services'] = '';
-        $payload['Shipments']['Details']['CustomsValueAmount'] = [
-            "CurrencyCode" => '',
-            "Value" => ''
-        ];
+        $payload['Shipments']['Details']['DescriptionOfGoods'] = ''; // content 
+        $payload['Shipments']['Details']['NumberOfPieces'] = ''; // picees 
+        $payload['Shipments']['Details']['Services'] = ''; // if cod > 0 make the value "CODS" else ""
+        $payload['Shipments']['Details']['ProductType'] = 'DOM'; // fixed remove it from here
         dd($payload);
 
         $response = Http::post(self::$CREATE_SHIPMENTS_URL, $payload);

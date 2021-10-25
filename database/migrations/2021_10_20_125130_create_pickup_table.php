@@ -18,9 +18,9 @@ class CreatePickupTable extends Migration
             $table->unsignedBigInteger('merchant_id');
             $table->unsignedBigInteger('carrier_id');
             $table->string('hash', 128);
-
-            $table->date('from', 32)->nullable();
-            $table->date('to', 32)->nullable();
+            $table->string('cancel_ref', 32);
+            
+            $table->date('pickup_date')->nullable();
 
             $table->timestamps();
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
