@@ -27,7 +27,6 @@ class PickupsController extends MerchantController
         $final = DB::transaction(function () use($merchentInfo,$request,$address) {
             $obj = new aramex();
             $result = $obj->createPickup($merchentInfo->email,$request->pickup_date,$address);
-
             if($result['HasErrors'])
                 return $result['Notifications'];
             
