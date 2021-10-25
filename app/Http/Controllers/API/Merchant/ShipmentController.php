@@ -82,6 +82,7 @@ class ShipmentController extends MerchantController
             $shipmentRequest = $request->json()->all();
             $merchentInfo = $this->getMerchentInfo();
             $merchentAddresses = collect($merchentInfo->addresses);
+            $dom_rates = collect($merchentInfo->domestic_rates);
             foreach($shipmentRequest as $shipment)
             {
 
@@ -93,29 +94,32 @@ class ShipmentController extends MerchantController
         
                 unset($shipment['sender_address_id']);
 
-                $final = $shipment;
-                $final['sender_email'] = $merchentInfo['email'];
-                $final['sender_name'] = $merchentInfo['name'];
-                $final['sender_phone'] = $address['phone'];
-                $final['sender_country'] = $merchentInfo['country_code'];
-                $final['sender_city'] = $address['city_code'];
-                $final['sender_area'] = $address['area'];
-                $final['sender_address_description'] = $address['description'];
-                $final['consignee_country'] = $merchentInfo->country_code;
-                $final['group'] = 'DOM';
-                $domestic_rates = collect($merchentInfo->domestic_rates)->where('code','=',$address['city_code'])->first();
-                $final['fees'] = $domestic_rates['price'] ?? 0;
+                $shipment['sender_email'] = $merchentInfo['email'];
+                $shipment['sender_name'] = $merchentInfo['name'];
+                $shipment['sender_phone'] = $address['phone'];
+                $shipment['sender_country'] = $merchentInfo['country_code'];
+                $shipment['sender_city'] = $address['city_code'];
+                $shipment['sender_area'] = $address['area'];
+                $shipment['sender_address_description'] = $address['description'];
+                $shipment['consignee_country'] = $merchentInfo->country_code;
+                $shipment['group'] = 'DOM';
+                $domestic_rates = $dom_rates->where('code','=',$address['city_code'])->first();
+                $shipment['fees'] = $domestic_rates['price'] ?? 0;
                 
-                $final['merchant_id'] = Request()->user()->merchant_id;
-                $final['internal_awb'] = abs(crc32(uniqid()));
-                $final['created_by'] = Request()->user()->id;
+                $shipment['merchant_id'] = Request()->user()->merchant_id;
+                $shipment['internal_awb'] = abs(crc32(uniqid()));
+                
+                $shipment['created_by'] = Request()->user()->id;
 
-                $obj->createShipment($merchentInfo,$address,$final);
+                $obj->shipmentArray($merchentInfo,$address,$shipment,$aramix);
+                // $obj->createShipment($merchentInfo,$address,$final);
                 //         "LabelURL" => "https://ws.aramex.net/content/rpt_cache/97abe06699ec4eeaac7ced7bf97d65ad.pdf"
                 //       "ID" => "46594921133" // external_awb 
 
-                Shipment::create($final);
+                // Shipment::create($final);
             }
+
+            dd($aramix);
             return $this->successful();
         });
     }
