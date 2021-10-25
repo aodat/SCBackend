@@ -8,6 +8,8 @@ use App\Models\Shipment;
 use App\Http\Requests\Merchant\ShipmentRequest;
 use aramex;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
+
 use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends MerchantController
@@ -100,10 +102,11 @@ class ShipmentController extends MerchantController
                 $shipment['sender_name'] = $merchentInfo['name'];
                 $shipment['sender_phone'] = $address['phone'];
                 $shipment['sender_country'] = $merchentInfo['country_code'];
+                $shipment['consignee_country'] = $merchentInfo->country_code;
+
                 $shipment['sender_city'] = $address['city_code'];
                 $shipment['sender_area'] = $address['area'];
                 $shipment['sender_address_description'] = $address['description'];
-                $shipment['consignee_country'] = $merchentInfo->country_code;
                 $shipment['group'] = 'DOM';
                 $domestic_rates = $dom_rates->where('code','=',$address['city_code'])->first();
                 $shipment['fees'] = $domestic_rates['price'] ?? 0;
@@ -113,16 +116,25 @@ class ShipmentController extends MerchantController
                 
                 $shipment['created_by'] = Request()->user()->id;
 
-                $obj->shipmentArray($merchentInfo,$address,$shipment,$aramix);
-                $ships[] = $shipment; 
-                // $obj->createShipment($merchentInfo,$address,$final);
-                //         "LabelURL" => "https://ws.aramex.net/content/rpt_cache/97abe06699ec4eeaac7ced7bf97d65ad.pdf"
-                //       "ID" => "46594921133" // external_awb 
-
-                // Shipment::create($final);
+                $aramix[] = $obj->shipmentArray($merchentInfo,$address,$shipment);
+                $ships[] = $shipment;
             }
-            $obj->createShipment($aramix);
-            dd($aramix,$ships);
+            // $createShipments = $obj->createShipment($aramix);
+            // if($createShipments['HasErrors'])
+            //     return $this->error($createShipments['Notifications']);
+            
+            $files = [
+                "https://ws.aramex.net/content/rpt_cache/6820fc0773c842be95bcd1b0e1719877.pdf",
+                "https://ws.aramex.net/content/rpt_cache/e431f1e9d05b4985b46ecc9d704cdf2b.pdf"
+            ];
+            dd(mergePDF($files));
+            // collect($createShipments['Shipments'])->pluck('ShipmentLabel.LabelURL');
+
+            dd($files);
+            // Shipment::create($final);
+            // foreach
+            // dd(collect($createShipments['Shipments'])->pluck('ShipmentLabel.LabelURL'));
+            // dd(,$ships);
             return $this->successful();
         });
     }

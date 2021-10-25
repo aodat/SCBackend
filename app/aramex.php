@@ -103,7 +103,7 @@ class aramex
         return $response->json();
     }
 
-    public function shipmentArray($merchentInfo,$address,$shipmentInfo,&$final){
+    public function shipmentArray($merchentInfo,$address,$shipmentInfo){
         $ship = [
             'Reference1' => 'ShipCash',
             'Reference2' => '',
@@ -258,6 +258,6 @@ class aramex
             'ScheduledDelivery' => NULL,
         ];
 
-        $final[] = $ship;
+        return $ship;
     } 
 }
