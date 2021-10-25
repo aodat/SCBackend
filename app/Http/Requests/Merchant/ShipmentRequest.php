@@ -31,6 +31,7 @@ class ShipmentRequest extends MerchantRequest
             )
         )
             return [
+                "*" => "required|array|min:1|max:50",
                 '*.carrier_id' => 'required|exists:carriers,id',
                 '*.sender_address_id' => 'required',
 

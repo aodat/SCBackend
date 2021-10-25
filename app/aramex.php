@@ -85,167 +85,12 @@ class aramex
         return $response->json();
     }
 
-    public function createShipment($merchentInfo,$address,$shipmentInfo)
+    public function createShipment($shipmentArray)
     {
-        $this->shipmentArray($merchentInfo,$address,$shipmentInfo);
-        $payload = array (
+        $payload = [
             'ClientInfo' => $this->config,
             'LabelInfo' => ['ReportID' => 9729,'ReportType' => 'URL'],
-            'Shipments' => [
-                [
-                    'Reference1' => 'ShipCash',
-                    'Reference2' => '',
-                    'Reference3' => '',
-                    'Shipper' => 
-                    [
-                        'Reference1' => $merchentInfo->id,
-                        'Reference2' => '',
-                        'AccountNumber' => $this->config['AccountNumber'],
-                        'PartyAddress' => [
-                            'Line1' => $address['description'], // 
-                            'Line2' => $address['area'],
-                            'Line3' => '',
-                            'City' => $address['city_code'],
-                            'StateOrProvinceCode' => '',
-                            'PostCode' => '',
-                            'CountryCode' => $merchentInfo->country_code,
-                            'Longitude' => 0,
-                            'Latitude' => 0,
-                            'BuildingNumber' => NULL,
-                            'BuildingName' => NULL,
-                            'Floor' => NULL,
-                            'Apartment' => NULL,
-                            'POBox' => NULL,
-                            'Description' => '',
-                        ],
-                        'Contact' => [
-                            'Department' => '',
-                            'PersonName' => $address['name'] ?? 'Tareq Fawakhiri',
-                            'Title' => '',
-                            'CompanyName' => $address['name'] ?? 'Tareq',
-                            'PhoneNumber1' => $address['phone'],
-                            'PhoneNumber1Ext' => '',
-                            'PhoneNumber2' => '',
-                            'PhoneNumber2Ext' => '',
-                            'FaxNumber' => '',
-                            'CellPhone' => $address['phone'],
-                            'EmailAddress' => 'info@aramex.com',
-                            'Type' => '',
-                        ],
-                    ],
-                    'ThirdParty' => [
-                        'Reference1' => '',
-                        'Reference2' => '',
-                        'AccountNumber' =>  $this->config['AccountNumber'],
-                            'PartyAddress' => [
-                            'Line1' => '',
-                            'Line2' => '',
-                            'Line3' => '',
-                            'City' => '',
-                            'StateOrProvinceCode' => '',
-                            'PostCode' => '',
-                            'CountryCode' => 'JO',
-                            'Longitude' => 0,
-                            'Latitude' => 0,
-                            'BuildingNumber' => NULL,
-                            'BuildingName' => NULL,
-                            'Floor' => NULL,
-                            'Apartment' => NULL,
-                            'POBox' => NULL,
-                            'Description' => NULL,
-                        ],
-                        'Contact' => [
-                            'Department' => '',
-                            'PersonName' => '',
-                            'Title' => '',
-                            'CompanyName' => '',
-                            'PhoneNumber1' => '',
-                            'PhoneNumber1Ext' => '',
-                            'PhoneNumber2' => '',
-                            'PhoneNumber2Ext' => '',
-                            'FaxNumber' => '',
-                            'CellPhone' => '',
-                            'EmailAddress' => '',
-                            'Type' => '',
-                        ],
-                    ],
-                    'Consignee' => [
-                        'Reference1' => '',
-                        'Reference2' => '',
-                        'AccountNumber' => '',
-                        'PartyAddress' => [
-                            'Line1' => $shipmentInfo['consignee_address_description'],
-                            'Line2' => $shipmentInfo['consignee_area'],
-                            'Line3' => $shipmentInfo['consignee_second_phone'],
-                            'City' => $shipmentInfo['consignee_city'],
-                            'StateOrProvinceCode' => '',
-                            'PostCode' => '', // this
-                            'CountryCode' => $merchentInfo->country_code,
-                            'Longitude' => 0,
-                            'Latitude' => 0,
-                            'BuildingNumber' => '',
-                            'BuildingName' => '',
-                            'Floor' => '',
-                            'Apartment' => '',
-                            'POBox' => NULL,
-                            'Description' => '',
-                        ],
-                        'Contact' => [
-                            'Department' => '',
-                            'PersonName' => $shipmentInfo['consignee_name'],
-                            'Title' => '',
-                            'CompanyName' => $shipmentInfo['consignee_name'],
-                            'PhoneNumber1' => $shipmentInfo['consignee_phone'],
-                            'PhoneNumber1Ext' => '',
-                            'PhoneNumber2' => $shipmentInfo['consignee_second_phone'],
-                            'PhoneNumber2Ext' => '',
-                            'FaxNumber' => '',
-                            'CellPhone' => $shipmentInfo['consignee_phone'],
-                            'EmailAddress' => 'info@aramex.com',
-                            'Type' => '',
-                        ],
-                    ],
-                    'ShippingDateTime' => '/Date(1635240591000)/',
-                    'DueDate' => '/Date(1635240591000)/',
-                    'Comments' => $shipmentInfo['notes'] ?? '',
-                    'PickupLocation' => '',
-                    'OperationsInstructions' => '',
-                    'AccountingInstrcutions' => '',
-                    'Details' => [
-                        'Dimensions' => NULL,
-                        'ActualWeight' => ['Unit' => 'KG','Value' => 0.5,],
-                        'ChargeableWeight' => NULL,
-                        'DescriptionOfGoods' => $shipmentInfo['content'],
-                        'GoodsOriginCountry' => $merchentInfo->country_code,
-                        'NumberOfPieces' => $shipmentInfo['pieces'],
-                        'ProductGroup' => 'DOM',
-                        'ProductType' => 'COM',
-                        'PaymentType' => 'P',
-                        'PaymentOptions' => 'ACCT',
-                        'CashOnDeliveryAmount' => [
-                            'CurrencyCode' => $merchentInfo->currency_code,
-                            'Value' => $shipmentInfo['cod'],
-                        ],
-                        'CashAdditionalAmount' => [
-                            'CurrencyCode' => $merchentInfo->currency_code,
-                            'Value' => 0,
-                        ],
-                        'CustomsValueAmount' => [
-                            'CurrencyCode' => $merchentInfo->currency_code,
-                            'Value' => 0,
-                        ],
-                        'CashAdditionalAmountDescription' => '',
-                        'Services' => ($shipmentInfo['cod'] > 0) ? 'CODS' : '',
-                        'Items' => [],
-                    ],
-                    'Attachments' => [],
-                    'ForeignHAWB' => '',
-                    'TransportType ' => 0,
-                    'PickupGUID' => '',
-                    'Number' => NULL,
-                    'ScheduledDelivery' => NULL,
-                ],
-            ],
+            'Shipments' => $shipmentArray,
             'Transaction' => [
                 'Reference1' => '',
                 'Reference2' => '',
@@ -253,18 +98,8 @@ class aramex
                 'Reference4' => '',
                 'Reference5' => '',
             ]
-        );
+        ];
         $response = Http::post(self::$CREATE_SHIPMENTS_URL, $payload);
-
-        
-        dd(
-            $response->json(),
-            $payload,
-            // Determine if the status code is >= 200 and < 300...
-            $response->successful(),
-            // Determine if the response has a 500 level status code...
-            $response->serverError()
-        );
         return $response->json();
     }
 
@@ -382,8 +217,8 @@ class aramex
                     'Type' => '',
                 ],
             ],
-            'ShippingDateTime' => '/Date(1635240591000)/',
-            'DueDate' => '/Date(1635240591000)/',
+            'ShippingDateTime' => '/Date('.(Carbon::tomorrow()->getTimestamp()*1000).')/',
+            'DueDate' => '/Date('.(Carbon::tomorrow()->getTimestamp()*1000).')/',
             'Comments' => $shipmentInfo['notes'] ?? '',
             'PickupLocation' => '',
             'OperationsInstructions' => '',

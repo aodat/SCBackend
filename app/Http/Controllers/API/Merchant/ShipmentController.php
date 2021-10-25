@@ -83,9 +83,11 @@ class ShipmentController extends MerchantController
             $merchentInfo = $this->getMerchentInfo();
             $merchentAddresses = collect($merchentInfo->addresses);
             $dom_rates = collect($merchentInfo->domestic_rates);
+
+            $aramex = [];
+            $ships = [];
             foreach($shipmentRequest as $shipment)
             {
-
                 $address = $merchentAddresses->where('id','=',$shipment['sender_address_id'])->first();
                 if($address == null)
                     return $this->error('Sender address id is in valid',400);
@@ -112,14 +114,15 @@ class ShipmentController extends MerchantController
                 $shipment['created_by'] = Request()->user()->id;
 
                 $obj->shipmentArray($merchentInfo,$address,$shipment,$aramix);
+                $ships[] = $shipment; 
                 // $obj->createShipment($merchentInfo,$address,$final);
                 //         "LabelURL" => "https://ws.aramex.net/content/rpt_cache/97abe06699ec4eeaac7ced7bf97d65ad.pdf"
                 //       "ID" => "46594921133" // external_awb 
 
                 // Shipment::create($final);
             }
-
-            dd($aramix);
+            $obj->createShipment($aramix);
+            dd($aramix,$ships);
             return $this->successful();
         });
     }
