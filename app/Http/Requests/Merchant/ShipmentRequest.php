@@ -22,7 +22,6 @@ class ShipmentRequest extends MerchantRequest
     public function rules()
     {
         $path = Request()->route()->uri;
-        
         if(
             $this->method() == 'POST' && 
             (   
@@ -49,7 +48,7 @@ class ShipmentRequest extends MerchantRequest
                 '*.pieces' => 'required|integer',
                 '*.extra_services' => 'required|in:DOMCOD',
             ];
-        else if($this->method() == 'POST' && strpos($path,'shipments') !== false) 
+        else if($this->method() == 'POST' && strpos($path,'shipments/filters') !== false) 
             return [
                 'created_at.since' => 'nullable|date|date_format:Y-m-d',
                 'created_at.until' => 'nullable|date|date_format:Y-m-d|after:created_at.since',
@@ -63,6 +62,11 @@ class ShipmentRequest extends MerchantRequest
             return [
                 'type' => 'in:xlsx,pdf'
             ];
+        else if($this->method() == 'POST' && strpos($path,'shipments/print') !== false)
+            return [
+                'shipment_number.*' => 'required|exists:shipments,external_awb'
+            ];
+
         return [];
     }
 }

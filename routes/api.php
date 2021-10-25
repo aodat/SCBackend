@@ -64,11 +64,12 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::delete('addresses/{id}',[AddressesController::class,'deleteAddresses']);
 
             // Shipments
-            Route::post('shipments',[ShipmentController::class,'index']);
+            Route::post('shipments/filters',[ShipmentController::class,'index']);
             Route::get('shipments/{id}',[ShipmentController::class,'show']);
             Route::post('shipments/domestic/create',[ShipmentController::class,'createDomesticShipment']);
             Route::post('shipments/express/create',[ShipmentController::class,'createExpressShipment']);
             Route::get('shipments/export/{type}',[ShipmentController::class,'export']);
+            Route::post('shipments/print',[ShipmentController::class,'printLabel']);
 
             // Transactions
             Route::post('transactions',[TransactionsController::class,'index']);

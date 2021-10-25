@@ -73,7 +73,7 @@ class aramex
     public function printLabel($shipment_number, $ReportID = 9729)
     {
         $payload =  [
-            "ClientInfo" => $$this->config,
+            "ClientInfo" => $this->config,
             "LabelInfo" => [
                 "ReportID" => $ReportID,
                 "ReportType" => "URL"
