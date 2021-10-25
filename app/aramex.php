@@ -62,29 +62,10 @@ class aramex
     public function cancelPickup($pickup_guid)
     {
         $payload = [
-           "ClientInfo" => $this->config,
-            "Comments" => "",
+            "ClientInfo" => $this->config,
             "PickupGUID" => $pickup_guid,
-            "Transaction" => [
-                "Reference1" => "",
-                "Reference2" => "",
-                "Reference3" => "",
-                "Reference4" => "",
-                "Reference5" => ""
-            ]
         ];
-
-
         $response = Http::post(self::$CANCEL_PICKUP_URL, $payload);
-
-        // if (! $response->successful()) {
-        //     throw new AramexException("Aramex Cancel Pickup – Something Went Wrong", 1);
-        // }
-
-        // if ($response->json()['HasErrors']) {
-        //     throw new AramexException("Cannot cancel pickup please call 06 535 8855", null, null, $response->json()['Notifications']);
-        // }
-
         return $response->json();
     }
 
@@ -109,16 +90,7 @@ class aramex
         ];
 
         $response = Http::post(self::$PRINT_LABEL_URL, $payload);
-
-        // if (! $response->successful()) {
-        //     throw new AramexException("Aramex Print Label – Something Went Wrong", 1);
-        // }
-
-        // if ($response->json()['HasErrors']) {
-        //     throw new AramexException("Cannot get label URL", null, null, $response->json()['Notifications']);
-        // }
-
-        // return $response->json()['ShipmentLabel']['LabelURL'];
+        return $response->json();
     }
 
     public function createShipment()

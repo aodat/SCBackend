@@ -79,6 +79,7 @@ Route::group(['middleware' => ['json.response']], function () {
             // Pickups
             Route::post('pickups',[PickupsController::class,'index']);
             Route::post('pickups/create',[PickupsController::class,'store']);
+            Route::post('pickup/cancel',[PickupsController::class,'cancel']);
         });
 
         Route::post('auth/logout',[AuthController::class, 'logout']);

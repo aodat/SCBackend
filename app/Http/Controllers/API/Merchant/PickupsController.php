@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Pickup;
 use aramex;
 
-
 class PickupsController extends MerchantController
 {
     public function index(PickuptRequest $request)
@@ -41,5 +40,22 @@ class PickupsController extends MerchantController
         });
 
         return $this->response($final);
+    }
+
+    public function cancel(PickuptRequest $request)
+    {
+        
+        $data = Pickup::where('merchant_id',Request()->user()->merchant_id)
+            ->where('carrier_id',$request->carrier_id)
+            ->where('id',$request->pickup_id)
+            ->select('hash')
+            ->first();
+        if($data == null)
+            $this->error('requested data invalid');
+        $obj = new aramex();
+        $result = $obj->cancelPickup($data->hash);
+        if($result['HasErrors'])
+            return $this->error($result['Notifications']);
+        return $this->successful('The pickup has been canceled successfully');
     }
 }
