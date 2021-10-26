@@ -12,7 +12,7 @@ use App\Models\Merchant;
 use App\Models\User;
 
 use App\Http\Controllers\Utilities\SmsService;
-use App\Models\Transaction;
+use App\Models\Shipment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -78,11 +78,39 @@ class MerchantController extends Controller
 
     public function dashboardInfo(MerchantRequest $request)
     {
+        $shipmentInfo = Shipment::where('merchant_id',$request->user()->merchant_id);
+        
+        $result['overall']['PROCESSING'] = 0;
+        $result['overall']['DRAFT'] = 0;
+        $result['overall']['COMPLETED'] = 0;
+
+        $result['today']['PROCESSING'] = 0;
+        $result['today']['DRAFT'] = 0;
+        $result['today']['COMPLETED'] = 0;
+
+        $result['today'] =  $shipmentInfo->select('status',DB::raw('count(status) as counter'))
+                                ->whereDate('created_at', '=', Carbon::today()->toDateString())
+                                ->groupBy('status')
+                                ->pluck('counter','status');
+        $result['overall'] = $shipmentInfo->select('status',DB::raw('count(status) as counter'))
+                                ->groupBy('status')
+                                ->pluck('counter','status');
+        $result['onHold'] = [];
+
+        $result['rates']['delivered'] = Shipment::where('merchant_id',$request->user()->merchant_id)
+                                        ->select(DB::raw('count(delivered_at) as counter'))
+                                        ->whereNotNull('delivered_at')
+                                        ->first()->counter;
+        $result['rates']['returned'] = (
+                                            $result['overall']['PROCESSING'] +
+                                            $result['overall']['DRAFT'] +
+                                            $result['overall']['COMPLETED']
+                                        ) - $result['overall']['DRAFT'];
+
         $merchantInfo = $this->getMerchentInfo();
-        $transactionInfo = Transaction::select('status',DB::raw('count(status) as counter'))->groupBy('status');
-        $result['today'] =  $transactionInfo->whereDate('created_at', '=', Carbon::today()->toDateString());
-        $result['all'] = $transactionInfo;
-       return $result;
+        $result['balances']['available'] = $merchantInfo->actual_balance;
+        $result['balances']['actual'] = $merchantInfo->available_balance;
+        return $result;
     }
 
     public function getMerchentInfo($id = null)

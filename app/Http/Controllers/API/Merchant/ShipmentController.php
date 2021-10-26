@@ -116,10 +116,10 @@ class ShipmentController extends MerchantController
                 
                 $shipment['created_by'] = Request()->user()->id;
 
-                $aramix[] = $obj->shipmentArray($merchentInfo,$address,$shipment);
+                $aramex[] = $obj->shipmentArray($merchentInfo,$address,$shipment);
                 $ships[] = $shipment;
             }
-            $createShipments = $obj->createShipment($aramix);
+            $createShipments = $obj->createShipment($aramex);
             if($createShipments['HasErrors'])
                 return $this->error($createShipments['Notifications']);
 
