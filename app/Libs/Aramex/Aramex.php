@@ -1,10 +1,13 @@
 <?php
 
+namespace Libs;
+
+use App\Exceptions\CarriersException;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-class aramex
+class Aramex
 {
     private static $CREATE_PICKUP_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CreatePickup';
     private static $CANCEL_PICKUP_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CancelPickup';
@@ -29,7 +32,7 @@ class aramex
 
     public function createPickup($email,$date,$address)
     {
-        $payload = json_decode(Storage::disk('local')->get('template/aramex/pickup.create.json'),true);
+        $payload = $this->bindJsonFile('pickup.create.json');
         $payload['ClientInfo'] = $this->config;
 
         $payload['Pickup']['Reference1'] = $address['description'];
@@ -57,32 +60,47 @@ class aramex
 
         $response = Http::post(self::$CREATE_PICKUP_URL, $payload);
 
-        return $response->json();
+
+        if (! $response->successful())
+            throw new CarriersException('Aramex Create Pickup – Something Went Wrong');
+        if ($response->json()['HasErrors'])
+            throw new CarriersException('Aramex Data Provided Not Correct');
+        
+        $final = $response->json();
+        return ['id' => $final['ProcessedPickup']['ID'] , 'guid' => $final['ProcessedPickup']['GUID']];
     }
 
     public function cancelPickup($pickup_guid)
     {
-        $payload = [
-            "ClientInfo" => $this->config,
-            "PickupGUID" => $pickup_guid,
-        ];
+        $payload = ["ClientInfo" => $this->config,"PickupGUID" => $pickup_guid,];
         $response = Http::post(self::$CANCEL_PICKUP_URL, $payload);
-        return $response->json();
+        if (! $response->successful())
+            throw new CarriersException('Aramex Cancel Pickup – Something Went Wrong');
+        if ($response->json()['HasErrors'])
+            throw new CarriersException('Aramex Data Provided Not Correct');
+
+        return true;
     }
 
-    public function printLabel($shipment_number, $ReportID = 9729)
+    public function printLabel($shipments, $ReportID = 9729)
     {
         $payload =  [
             "ClientInfo" => $this->config,
-            "LabelInfo" => [
-                "ReportID" => $ReportID,
-                "ReportType" => "URL"
-            ],
-            "ShipmentNumber" => $shipment_number,
+            "LabelInfo" => ["ReportID" => $ReportID,"ReportType" => "URL"]
         ];
-
-        $response = Http::post(self::$PRINT_LABEL_URL, $payload);
-        return $response->json();
+        $files = [];
+        foreach($shipments as $shipment){
+            $payload['ShipmentNumber'] = $shipment;
+    
+            $response = Http::post(self::$PRINT_LABEL_URL, $payload);
+            if (! $response->successful())
+                throw new CarriersException('Aramex Print Label – Something Went Wrong');
+            if ($response->json()['HasErrors'])
+                throw new CarriersException('Aramex Data Provided Not Correct');
+            
+            $files[] = $response->json()['ShipmentLabel']['LabelURL'];
+        }
+        return $files;
     }
 
     public function createShipment($shipmentArray)
@@ -259,5 +277,10 @@ class aramex
         ];
 
         return $ship;
-    } 
+    }
+    
+    public function bindJsonFile($file)
+    {
+        return json_decode(file_get_contents(storage_path().'/../App/Libs/Aramex/'.$file),true);
+    }
 }

@@ -23,20 +23,15 @@ class PickupsController extends MerchantController
         if($address == null)
             return $this->error('address id is in valid',400);
 
-        $final = DB::transaction(function () use($merchentInfo,$request,$address) {
-            $obj = new aramex();
-            $result = $obj->createPickup($merchentInfo->email,$request->pickup_date,$address);
-            if($result['HasErrors'])
-                return $result['Notifications'];
-            
+        $final = DB::transaction(function () use($request,$address) {
             $data = $request->json()->all();
+            $pickupInfo = $this->generatePickup('Aramex',$request->pickup_date,$address);
     
             $data['merchant_id'] = $request->user()->merchant_id;
-            $data['hash'] = $result['GUID'];
-            $data['cancel_ref'] = $result['ID'];
+            $data['hash'] = $pickupInfo['guid'];
+            $data['cancel_ref'] = $pickupInfo['id'];
     
             Pickup::create($data);
-            return [];
         });
 
         return $this->response($final);
@@ -44,7 +39,6 @@ class PickupsController extends MerchantController
 
     public function cancel(PickuptRequest $request)
     {
-        
         $data = Pickup::where('merchant_id',Request()->user()->merchant_id)
             ->where('carrier_id',$request->carrier_id)
             ->where('id',$request->pickup_id)
@@ -52,10 +46,8 @@ class PickupsController extends MerchantController
             ->first();
         if($data == null)
             $this->error('requested data invalid');
-        $obj = new aramex();
-        $result = $obj->cancelPickup($data->hash);
-        if($result['HasErrors'])
-            return $this->error($result['Notifications']);
+
+        $this->cancelPickup('Aramex',$data->hash);
         return $this->successful('The pickup has been canceled successfully');
     }
 }

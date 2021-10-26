@@ -32,9 +32,11 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
         },
+        "classmap": [
+            "app/Libs"
+        ],
         "files": [
-            "app/helpers.php",
-            "app/aramex.php"
+            "app/helpers.php"
         ]
     },
     "autoload-dev": {

@@ -145,21 +145,6 @@ class ShipmentController extends MerchantController
 
     public function printLabel(ShipmentRequest $request)
     {
-        $shipment_numbers = $request->shipment_number;
-        $obj = new aramex();
-        $files = [];
-        foreach($shipment_numbers as $shipment_number) {
-            $data = $obj->printLabel($shipment_number);
-            if(isset($data['ShipmentLabel']['LabelURL']))
-                $files[] = $data['ShipmentLabel']['LabelURL'];
-        }
-        if(count($files) == 1)
-            return $this->response(['link' => $files[0]]);
-        else if(count($files) > 1)
-            return $this->response(
-                [
-                    'link' => mergePDF($files)
-                ]
-            );
+        return $this->response(['link' => $this->printShipment('Aramex',$request->shipment_number)]);
     }
 }
