@@ -12,6 +12,10 @@ use App\Models\Merchant;
 use App\Models\User;
 
 use App\Http\Controllers\Utilities\SmsService;
+use App\Models\Transaction;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+
 class MerchantController extends Controller
 {
     public function profile(MerchantRequest $request)
@@ -70,6 +74,15 @@ class MerchantController extends Controller
         $merchantID = $request->user()->merchant_id;
         Merchant::where('id',$merchantID)->update(['pin_code' => $randomPinCode]);
         return $this->successful('Check Your Mobile');
+    }
+
+    public function dashboardInfo(MerchantRequest $request)
+    {
+        $merchantInfo = $this->getMerchentInfo();
+        $transactionInfo = Transaction::select('status',DB::raw('count(status) as counter'))->groupBy('status');
+        $result['today'] =  $transactionInfo->whereDate('created_at', '=', Carbon::today()->toDateString());
+        $result['all'] = $transactionInfo;
+       return $result;
     }
 
     public function getMerchentInfo($id = null)

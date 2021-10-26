@@ -19,7 +19,7 @@ class CreateCarriersTable extends Migration
             $table->string('email', 64);
             $table->string('phone', 16);
             $table->double('balance', 8, 2)->default('0');;
-            $table->enum('country_code', ['JOR']);
+            $table->enum('country_code', ['JO']);
             $table->enum('currency_code', ['JOD']);
             $table->json('documents')->nullable();
             $table->tinyInteger('is_email_verified')->default('0');

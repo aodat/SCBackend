@@ -42,6 +42,9 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::group(['middleware' => ['auth:api']], function () {
         // MerchantController
         Route::group(['prefix' => 'merchant/'], function () {
+            // Dashboard Information 
+            Route::get('dashboard',[MerchantController::class,'dashboardInfo']);
+
             Route::post('verify/phone',[MerchantController::class,'verifyPhoneNumber']);
             // Merchant Profile
             Route::get('profile',[MerchantController::class,'profile']);

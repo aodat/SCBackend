@@ -29,7 +29,7 @@ class AddressesController extends MerchantController
         $result = collect($merchant->select('addresses')->first()->addresses);
         $counter = $result->max('id') ?? 0;
         $json['id'] = ++$counter;
-        $json['country'] = 'JOR';
+        $json['country'] = 'JO';
         
         $merchant->update(['addresses' => $result->merge([$json])]);
         return $this->successful();
