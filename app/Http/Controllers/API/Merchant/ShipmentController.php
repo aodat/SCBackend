@@ -6,9 +6,7 @@ use App\Exports\ShipmentExport;
 use App\Models\Shipment;
 
 use App\Http\Requests\Merchant\ShipmentRequest;
-use aramex;
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
 
 use Illuminate\Support\Facades\DB;
 
@@ -118,27 +116,16 @@ class ShipmentController extends MerchantController
                 $array[] = $this->generateShipmentArray('Aramex',$address,$shipment);
                 $ships[] = $shipment;
             }
-            $createShipments = $this->generateShipment('Aramex',$array);
-            if($createShipments['HasErrors'])
-                return $this->error($createShipments['Notifications']);
-
-            $list = collect($createShipments['Shipments']);
-
-            $externalAWB = $list->pluck('ID')->toArray();
+            $result = $this->generateShipment('Aramex',$array);
+            
+            $externalAWB = $result['id'];
             $ships = collect($ships)->map(function ($value,$key) use($externalAWB){
                 $value['external_awb'] = $externalAWB[$key];
                 return $value;
             });
+            
             DB::table('shipments')->insert($ships->toArray());
-            return $this->response(
-                [
-                    'link' => mergePDF(
-                            $list
-                            ->pluck('ShipmentLabel.LabelURL')
-                            ->toArray()
-                        )
-                ]
-            );
+            return $this->response(['link' => $result['link']]);
         });
     }
 

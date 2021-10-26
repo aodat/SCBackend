@@ -124,8 +124,14 @@ class Aramex
         if ($response->json()['HasErrors'])
             throw new CarriersException('Aramex Data Provided Not Correct');
 
-        dd($response->json());
-        return $response->json();
+        $result = [];
+        foreach($response->json()['Shipments'] as $ship){
+            $result[] =[
+                'id' => $ship['ID'],
+                'file' => $ship['ShipmentLabel']['LabelURL']
+            ];
+        }
+        return $result;
     }
 
     public function shipmentArray($merchentInfo,$address,$shipmentInfo)

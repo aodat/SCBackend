@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Http\Requests\Merchant\PickuptRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pickup;
-use aramex;
 
 class PickupsController extends MerchantController
 {

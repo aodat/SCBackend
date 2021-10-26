@@ -2,7 +2,7 @@
 namespace App\Traits;
 use Illuminate\Support\Facades\Response;
 
-trait responseHandler
+trait ResponseHandler
 {  
     public static function response($data = [], $msg = '', $status = 200,$isPagination = false)
     {

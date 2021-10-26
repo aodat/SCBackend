@@ -43,7 +43,14 @@ trait CarriersManager {
     public function generateShipment($provider,$shipmentArray)
     {
         $this->loadProvider($provider);
-        return $this->adapter->createShipment($shipmentArray);
+        $shipments = $this->adapter->createShipment($shipmentArray);
+        
+        $link = mergePDF((collect($shipments)->pluck('file')));
+
+        return [
+            'link' => $link,
+            'id' => collect($shipments)->pluck('id')
+        ];
     }
 
     public function generateShipmentArray($provider,$address,$shipmentInfo)
