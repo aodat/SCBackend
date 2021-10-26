@@ -27,7 +27,7 @@ class ShipmentController extends MerchantController
         $phone = $filters['phone'] ?? [];
         $cod    = $filters['cod']['val'] ?? null;
         $operation    = $filters['cod']['operation'] ?? null;
-        $shipments = Shipment::whereBetween('created_at',[$since." 00:00:00",$until." 23:59:59"]);
+        $shipments = Shipment::whereBetween('created_at',[$since." 00:00:00",$until." 23:59:59"])->where('merchant_id',$request->user()->merchant_id);
         
         if(count($external))
             $shipments->whereIn('external_awb',$external);
@@ -45,7 +45,7 @@ class ShipmentController extends MerchantController
 
         $paginated = $shipments->paginate(request()->perPage ?? 10);
     
-        return $this->response($paginated,'Data Retrieved Successfully',200);
+        return $this->response($paginated,'Data Retrieved Successfully',200,true);
 
     }
 

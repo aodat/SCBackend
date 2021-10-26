@@ -4,16 +4,27 @@ use Illuminate\Support\Facades\Response;
 
 trait responseHandler
 {  
-    public static function response($data = [], $msg = '', $status = 200)
+    public static function response($data = [], $msg = '', $status = 200,$isPagination = false)
     {
-        $response = [
-            'meta' => [
-                'code' => $status,
-                'msg' => $msg
-            ]
-        ];
-        if(!empty($data))
+        $response = null;
+        if($isPagination) {
+            $pagination = $data->toArray();
+            
+            $response['data'] = $pagination['data'];
+            $response['pagination_meta'] = [
+                'current_page' => $pagination['current_page'],
+                'last_page' => $pagination['last_page'],
+                'total' => $pagination['total'],
+                'first_page_url' => $pagination['first_page_url'],
+                'next_page_url' => $pagination['next_page_url'],
+                'per_page' => intval($pagination['per_page'])
+            ];
+        }
+        else if(!empty($data))
             $response['data'] = $data;
+        
+        $response['meta']['code'] =  $status;
+        $response['meta']['msg'] =  $msg;
         return Response::make($response, 200);
     }
 
