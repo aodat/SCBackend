@@ -79,14 +79,13 @@ class ShipmentController extends MerchantController
 
     public function createDomesticShipment(ShipmentRequest $request)
     {
-        $obj = new aramex();
-        return DB::transaction(function () use ($request,$obj) {
+        return DB::transaction(function () use ($request) {
             $shipmentRequest = $request->json()->all();
             $merchentInfo = $this->getMerchentInfo();
             $merchentAddresses = collect($merchentInfo->addresses);
             $dom_rates = collect($merchentInfo->domestic_rates);
 
-            $aramex = [];
+            $array = [];
             $ships = [];
             foreach($shipmentRequest as $shipment)
             {
@@ -116,10 +115,10 @@ class ShipmentController extends MerchantController
                 
                 $shipment['created_by'] = Request()->user()->id;
 
-                $aramex[] = $obj->shipmentArray($merchentInfo,$address,$shipment);
+                $array[] = $this->generateShipmentArray('Aramex',$address,$shipment);
                 $ships[] = $shipment;
             }
-            $createShipments = $obj->createShipment($aramex);
+            $createShipments = $this->generateShipment('Aramex',$array);
             if($createShipments['HasErrors'])
                 return $this->error($createShipments['Notifications']);
 

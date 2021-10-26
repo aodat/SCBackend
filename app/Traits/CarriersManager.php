@@ -40,9 +40,16 @@ trait CarriersManager {
         return Merchant::findOrFail(Request()->user()->merchant_id);
     }
 
-    public function generateShipment($provider)
+    public function generateShipment($provider,$shipmentArray)
     {
         $this->loadProvider($provider);
+        return $this->adapter->createShipment($shipmentArray);
+    }
+
+    public function generateShipmentArray($provider,$address,$shipmentInfo)
+    {
+        $this->loadProvider($provider);
+        return $this->adapter->shipmentArray($this->merchantInfo,$address,$shipmentInfo);
     }
 
     public function generatePickup($provider,$pickup_date,$address)

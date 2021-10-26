@@ -1,20 +1,13 @@
 {
-    "LabelInfo": {
-      "ReportID": 9729,
-      "ReportType": "URL"
-    },
-    "Shipments": [
-      {
-        "Reference1": "ShipCash",
+    "Reference1": "ShipCash",
+    "Reference2": "",
+    "Reference3": "",
+    "Shipper": {
         "Reference2": "",
-        "Reference3": "",
-        "Shipper": {
-          "Reference2": "",
-          "AccountNumber": "",
-          "PartyAddress": {
+        "PartyAddress": {
+            "Line3": "",
             "StateOrProvinceCode": "",
             "PostCode": "",
-            "CountryCode": "JO",
             "Longitude": 0,
             "Latitude": 0,
             "BuildingNumber": null,
@@ -23,21 +16,26 @@
             "Apartment": null,
             "POBox": null,
             "Description": ""
-          },
-          "Contact": {
+        },
+        "Contact": {
             "Department": "",
             "Title": "",
             "PhoneNumber1Ext": "",
             "PhoneNumber2": "",
             "PhoneNumber2Ext": "",
             "FaxNumber": "",
+            "EmailAddress": "info@aramex.com",
             "Type": ""
-          }
-        },
-        "ThirdParty": {
-          "Reference1": "",
-          "Reference2": "",
-          "PartyAddress": {
+        }
+    },
+    "ThirdParty": {
+        "Reference1": "",
+        "Reference2": "",
+        "PartyAddress": {
+            "Line1": "",
+            "Line2": "",
+            "Line3": "",
+            "City": "",
             "StateOrProvinceCode": "",
             "PostCode": "",
             "CountryCode": "JO",
@@ -49,24 +47,29 @@
             "Apartment": null,
             "POBox": null,
             "Description": null
-          },
-          "Contact": {
+        },
+        "Contact": {
             "Department": "",
+            "PersonName": "",
             "Title": "",
+            "CompanyName": "",
+            "PhoneNumber1": "",
             "PhoneNumber1Ext": "",
             "PhoneNumber2": "",
             "PhoneNumber2Ext": "",
             "FaxNumber": "",
+            "CellPhone": "",
+            "EmailAddress": "",
             "Type": ""
-          }
-        },
-        "Consignee": {
-          "Reference1": "",
-          "Reference2": "",
-          "AccountNumber": "",
-          "PartyAddress": {
+        }
+    },
+    "Consignee": {
+        "Reference1": "",
+        "Reference2": "",
+        "AccountNumber": "",
+        "PartyAddress": {
             "StateOrProvinceCode": "",
-            "PostCode": "10004",
+            "PostCode": "",
             "Longitude": 0,
             "Latitude": 0,
             "BuildingNumber": "",
@@ -75,51 +78,44 @@
             "Apartment": "",
             "POBox": null,
             "Description": ""
-          },
-          "Contact": {
+        },
+        "Contact": {
             "Department": "",
             "Title": "",
             "PhoneNumber1Ext": "",
             "PhoneNumber2Ext": "",
             "FaxNumber": "",
-            "Type": "",
-            "EmailAddress": "",
-            "CellPhone": ""
-          }
+            "EmailAddress": "info@aramex.com",
+            "Type": ""
+        }
+    },
+    "PickupLocation": "",
+    "OperationsInstructions": "",
+    "AccountingInstrcutions": "",
+    "Details": {
+        "Dimensions": null,
+        "ActualWeight": {
+            "Unit": "KG",
+            "Value": 0.5
         },
-        "PickupLocation": "",
-        "OperationsInstructions": "",
-        "AccountingInstrcutions": "",
-        "Details": {
-          "Dimensions": null,
-          "ActualWeight": {
-            "Unit": "KG"
-          },
-          "ChargeableWeight": null,
-          "GoodsOriginCountry": "JO",
-          "ProductGroup": "DOM",
-          "PaymentType": "P",
-          "PaymentOptions": "ACCT",
-          "CashAdditionalAmount": {
-            "Value": "0"
-          },
-          "CashAdditionalAmountDescription": "",
-          "Items": [],
-          "ProductType":""
+        "ChargeableWeight": null,
+        "ProductGroup": "DOM",
+        "ProductType": "COM",
+        "PaymentType": "P",
+        "PaymentOptions": "ACCT",
+        "CashAdditionalAmount": {
+            "Value": 0
         },
-        "Attachments": [],
-        "ForeignHAWB": "",
-        "TransportType ": 0,
-        "PickupGUID": "",
-        "Number": null,
-        "ScheduledDelivery": null
-      }
-    ],
-    "Transaction": {
-      "Reference1": "",
-      "Reference2": "",
-      "Reference3": "",
-      "Reference4": "",
-      "Reference5": ""
-    }
-  }
+        "CustomsValueAmount": {
+            "Value": 0
+        },
+        "CashAdditionalAmountDescription": "",
+        "Items": []
+    },
+    "Attachments": [],
+    "ForeignHAWB": "",
+    "TransportType ": 0,
+    "PickupGUID": "",
+    "Number": null,
+    "ScheduledDelivery": null
+}
