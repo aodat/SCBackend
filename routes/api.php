@@ -10,7 +10,6 @@ use App\Http\Controllers\API\Merchant\MerchantController;
 use App\Http\Controllers\API\Merchant\AddressesController;
 use App\Http\Controllers\API\Merchant\DocumentsController;
 use App\Http\Controllers\API\Merchant\PaymentMethodsController;
-use App\Http\Controllers\API\Merchant\SendersController;
 use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\API\Merchant\PickupsController;
@@ -34,7 +33,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('auth/login', [AuthController::class, 'login']);
     Route::post('auth/register',[AuthController::class, 'register']);
     Route::post('auth/forget-password',[AuthController::class, 'forgetPassword']);
-    Route::post('auth/reset/password', [AuthController::class, 'resetPassword']);
+    Route::post('auth/reset-password', [AuthController::class, 'resetPassword']);
 
     Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');

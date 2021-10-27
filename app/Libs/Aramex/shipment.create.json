@@ -99,7 +99,6 @@
             "Value": 0.5
         },
         "ChargeableWeight": null,
-        "ProductGroup": "DOM",
         "ProductType": "COM",
         "PaymentType": "P",
         "PaymentOptions": "ACCT",

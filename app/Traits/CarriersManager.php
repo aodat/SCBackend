@@ -15,18 +15,19 @@ trait CarriersManager {
     public $adapter;
     private $merchantInfo;
     public function loadProvider($provider) {
+        $provider = strtoupper($provider);
         switch($provider)
         {
-            case "Aramex":
+            case "ARAMEX":
                 $this->adapter = new Aramex();
                 break;
             case "DHL":
                 $this->adapter = new DHL();
                 break;
-            case "Fedex":
+            case "FEDEX":
                 $this->adapter = new Fedex();
                 break;
-            case "Strip":
+            case "STRIP":
                 $this->adapter = new Strip();
                 break;
             default:
@@ -75,5 +76,11 @@ trait CarriersManager {
     {
         $this->loadProvider($provider);
         return $this->adapter->cancelPickup($shipment_number);
+    }
+
+    public function calculateFees($provider)
+    {
+        $this->loadProvider($provider);
+        // $shipments = $this->adapter->createShipment($shipmentArray);
     }
 }

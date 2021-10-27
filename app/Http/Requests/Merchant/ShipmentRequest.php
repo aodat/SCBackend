@@ -22,32 +22,31 @@ class ShipmentRequest extends MerchantRequest
     public function rules()
     {
         $path = Request()->route()->uri;
-        if(
-            $this->method() == 'POST' && 
-            (   
-                strpos($path,'shipments/express/create') !== false ||
-                strpos($path,'shipments/domestic/create') !== false
-            )
-        )
-            return [
-                "*" => "required|array|min:1|max:50",
-                '*.carrier_id' => 'required|exists:carriers,id',
-                '*.sender_address_id' => 'required',
+        if($this->method() == 'POST' && (strpos($path,'shipments/express/create') !== false || strpos($path,'shipments/domestic/create') !== false)) {
+            $validation = [
+                    "*" => "required|array|min:1|max:50",
+                    '*.carrier_id' => 'required|exists:carriers,id',
+                    '*.sender_address_id' => 'required',
 
-                '*.consignee_name' => 'required|min:6|max:255',
-                '*.consignee_email' => 'required|email',
-                '*.consignee_phone' => 'required|max:10',
-                '*.consignee_second_phone' => 'required|max:10',
-                '*.consignee_city' => 'required',
-                '*.consignee_area' => 'required',
-                '*.consignee_address_description' => 'required',
+                    '*.consignee_name' => 'required|min:6|max:255',
+                    '*.consignee_email' => 'required|email',
+                    '*.consignee_phone' => 'required|max:10',
+                    '*.consignee_second_phone' => 'required|max:10',
+                    '*.consignee_city' => 'required',
+                    '*.consignee_area' => 'required',
+                    '*.consignee_address_description' => 'required',
 
-                '*.content' => 'required',
+                    '*.content' => 'required',
 
-                '*.cod' => 'required|numeric|between:0,9999',
-                '*.pieces' => 'required|integer',
-                '*.extra_services' => 'required|in:DOMCOD',
-            ];
+                    '*.cod' => 'required|numeric|between:0,9999',
+                    '*.pieces' => 'required|integer'
+                ];
+            if(strpos($path,'shipments/domestic/create') !== false)
+                $validation['*.extra_services'] = 'required|in:DOMCOD';
+            else if(strpos($path,'shipments/express/create') !== false ) {
+                $validation['*.consignee_country'] = 'required';
+            }
+        }
         else if($this->method() == 'POST' && strpos($path,'shipments/filters') !== false) 
             return [
                 'created_at.since' => 'nullable|date|date_format:Y-m-d',

@@ -6,6 +6,7 @@ use App\Exports\ShipmentExport;
 use App\Models\Shipment;
 
 use App\Http\Requests\Merchant\ShipmentRequest;
+use App\Models\Carriers;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
@@ -69,64 +70,98 @@ class ShipmentController extends MerchantController
 
     public function createExpressShipment(ShipmentRequest $request)
     {
-        $shipmentRequest = $request->json()->all();
-        $merchentInfo = $this->getMerchentInfo();
-        $merchentAddresses = collect($merchentInfo->addresses);
-        // foreach($shipmentRequest as $shipment) {}
+        return DB::transaction(function () use($request) {
+            $shipmentRequest = $request->json()->all();
+
+            return $this->shipment('EPX',$shipmentRequest);
+            // dd($ships,$array);
+            // $result = $this->generateShipment('Aramex',$array);
+            
+            // $externalAWB = $result['id'];
+            // $ships = collect($ships)->map(function ($value,$key) use($externalAWB){
+            //     $value['external_awb'] = $externalAWB[$key];
+            //     return $value;
+            // });
+            
+            // DB::table('shipments')->insert($ships->toArray());
+            // return $this->response(['link' => $result['link']]);
+
+            
+
+        });
     }
 
     public function createDomesticShipment(ShipmentRequest $request)
     {
         return DB::transaction(function () use ($request) {
             $shipmentRequest = $request->json()->all();
-            $merchentInfo = $this->getMerchentInfo();
-            $merchentAddresses = collect($merchentInfo->addresses);
-            $dom_rates = collect($merchentInfo->domestic_rates);
+            return $this->shipment('DOM',$shipmentRequest);
+        });
+    }
 
-            $array = [];
-            $ships = [];
-            foreach($shipmentRequest as $shipment)
-            {
-                $address = $merchentAddresses->where('id','=',$shipment['sender_address_id'])->first();
-                if($address == null)
-                    return $this->error('Sender address id is in valid',400);
-                if(!isset($merchentInfo['country_code']))
-                    return $this->error('Merchent country is empty',400);
-        
-                unset($shipment['sender_address_id']);
+    public function shipment($type,$shipmentRequest)
+    {
+        $array = [];
+        $ships = [];
 
-                $shipment['sender_email'] = $merchentInfo['email'];
-                $shipment['sender_name'] = $merchentInfo['name'];
-                $shipment['sender_phone'] = $address['phone'];
-                $shipment['sender_country'] = $merchentInfo['country_code'];
+        $merchentInfo = $this->getMerchentInfo();
+        $merchentAddresses = collect($merchentInfo->addresses);
+        $dom_rates = collect($merchentInfo->domestic_rates);
+        $providers = Carriers::pluck('name','id');
+       
+        foreach($shipmentRequest as $shipment)
+        {
+            $address = $merchentAddresses->where('id','=',$shipment['sender_address_id'])->first();
+            if($address == null)
+                return $this->error('Sender address id is in valid',400);
+            if(!isset($merchentInfo['country_code']))
+                return $this->error('Merchent country is empty',400);
+    
+            unset($shipment['sender_address_id']);
+
+            $provider = $providers[$shipment['carrier_id']];
+            $shipment['provider'] = $provider;
+            $shipment['sender_email'] = $merchentInfo['email'];
+            $shipment['sender_name'] = $merchentInfo['name'];
+            $shipment['sender_phone'] = $address['phone'];
+            $shipment['sender_country'] = $merchentInfo['country_code'];
+            $shipment['sender_city'] = $address['city_code'];
+            $shipment['sender_area'] = $address['area'];                
+            $shipment['sender_address_description'] = $address['description'];
+
+            $shipment['group'] = $type;
+            if($type == 'DOM') {
                 $shipment['consignee_country'] = $merchentInfo->country_code;
 
-                $shipment['sender_city'] = $address['city_code'];
-                $shipment['sender_area'] = $address['area'];
-                $shipment['sender_address_description'] = $address['description'];
-                $shipment['group'] = 'DOM';
                 $domestic_rates = $dom_rates->where('code','=',$address['city_code'])->first();
                 $shipment['fees'] = $domestic_rates['price'] ?? 0;
-                
-                $shipment['merchant_id'] = Request()->user()->merchant_id;
-                $shipment['internal_awb'] = abs(crc32(uniqid()));
-                
-                $shipment['created_by'] = Request()->user()->id;
+                if($shipment == 0)
+                    $this->error('Domestic Rates Is Zero');
+            } else {
 
-                $array[] = $this->generateShipmentArray('Aramex',$address,$shipment);
-                $ships[] = $shipment;
+                // Express
+                $shipment['fees'] = $this->calculateFees($provider);
             }
-            $result = $this->generateShipment('Aramex',$array);
             
-            $externalAWB = $result['id'];
-            $ships = collect($ships)->map(function ($value,$key) use($externalAWB){
-                $value['external_awb'] = $externalAWB[$key];
-                return $value;
-            });
+            $shipment['merchant_id'] = Request()->user()->merchant_id;
+            $shipment['internal_awb'] = abs(crc32(uniqid()));
             
-            DB::table('shipments')->insert($ships->toArray());
-            return $this->response(['link' => $result['link']]);
+            $shipment['created_by'] = Request()->user()->id;
+
+            $array[$provider][] = $this->generateShipmentArray($provider,$address,$shipment);
+            $ships[] = $shipment;
+        }
+        dd($array,$ships);
+        $result = $this->generateShipment($provider,$array);
+        
+        $externalAWB = $result['id'];
+        $ships = collect($ships)->map(function ($value,$key) use($externalAWB){
+            $value['external_awb'] = $externalAWB[$key];
+            return $value;
         });
+        
+        DB::table('shipments')->insert($ships->toArray());
+        return $this->response(['link' => $result['link']]);
     }
 
     public function printLabel(ShipmentRequest $request)

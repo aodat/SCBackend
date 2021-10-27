@@ -144,20 +144,14 @@ class Aramex
             $this->config['AccountNumber'];
 
 
-        $data['Shipper']['PartyAddress']['CountryCode'] = 
-        $data['Consignee']['PartyAddress']['CountryCode'] = 
-            $merchentInfo->country_code;
-
-        $data['Details']['CashAdditionalAmount']['CurrencyCode'] =
-        $data['Details']['CustomsValueAmount']['CurrencyCode'] =
-            $merchentInfo->currency_code;
-        
+            
+        $data['Shipper']['PartyAddress']['CountryCode'] = $merchentInfo->country_code;
         $data['Shipper']['PartyAddress']['Line1'] = $address['description'];
         $data['Shipper']['PartyAddress']['Line2'] = $address['area'];
         $data['Shipper']['PartyAddress']['City'] = $address['city_code'];
 
-        $data['Shipper']['Contact']['PersonName'] = $address['name'] ?? 'Tareq Fawakhiri';
-        $data['Shipper']['Contact']['CompanyName'] = $address['name'] ?? 'Tareq';
+        $data['Shipper']['Contact']['PersonName'] = $address['name'];
+        $data['Shipper']['Contact']['CompanyName'] = $address['name'];
         $data['Shipper']['Contact']['PhoneNumber1'] = $address['phone'];
         $data['Shipper']['Contact']['CellPhone'] = $address['phone'];
 
@@ -165,6 +159,7 @@ class Aramex
         $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_area'];
         $data['Consignee']['PartyAddress']['Line3'] = $shipmentInfo['consignee_second_phone'];
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
+        $data['Consignee']['PartyAddress']['CountryCode'] = ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->country_code: $shipmentInfo['consignee_country'];
 
         $data['Consignee']['Contact']['PersonName'] = $shipmentInfo['consignee_name'];
         $data['Consignee']['Contact']['CompanyName'] = $shipmentInfo['consignee_name'];
@@ -179,10 +174,24 @@ class Aramex
         $data['Details']['DescriptionOfGoods'] = $shipmentInfo['content'];
         $data['Details']['GoodsOriginCountry'] = $merchentInfo->country_code;
         $data['Details']['NumberOfPieces'] = $shipmentInfo['pieces'];
+        $data['Details']['ProductGroup'] = $shipmentInfo['group'];
         $data['Details']['CashOnDeliveryAmount'] = [
-            'CurrencyCode' => $merchentInfo->currency_code,
-            'Value' => $shipmentInfo['cod']
+            'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
+            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : $shipmentInfo['cod']/ 0.71,
         ];
+
+        $data['Details']['CashAdditionalAmount'] = [
+            'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
+            "Value" => "0",
+        ];
+        $data['Details']['CustomsValueAmount'] = [
+            'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
+            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : $shipmentInfo['cod']/ 0.71,
+        ];
+
+        $data['Details']['CustomsValueAmount']['CurrencyCode'] = 
+            ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD';
+            
 
         $data['Details']['Services'] = ($shipmentInfo['cod'] > 0) ? 'CODS' : '';
         return $data;
