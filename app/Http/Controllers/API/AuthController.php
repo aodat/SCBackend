@@ -44,7 +44,8 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'type' => $request->type,
                 'phone' => $request->phone,
-                'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'),true))
+                'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'),true)),
+                'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'),true))
             ]
         );
         $user = User::create(

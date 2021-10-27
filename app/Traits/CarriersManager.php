@@ -9,7 +9,6 @@ use Libs\Strip;
 use App\Exceptions\CarriersException;
 
 use App\Models\Merchant;
-use App\Models\Shipment;
 
 trait CarriersManager {
     public $adapter;
@@ -78,9 +77,46 @@ trait CarriersManager {
         return $this->adapter->cancelPickup($shipment_number);
     }
 
-    public function calculateFees($provider)
+    public function calculateFees($provider,$carrier_id,$country_code,$weight)
     {
         $this->loadProvider($provider);
-        // $shipments = $this->adapter->createShipment($shipmentArray);
+        $provider = strtoupper($provider);
+        $express_rates =  collect(
+                            json_decode(file_get_contents(storage_path().'/../App/Libs/express.rates.json'),true)['Countries']
+                        )->where('code',$country_code)
+                        ->all();
+
+        if(count($express_rates) > 1)
+            throw new CarriersException('Express Rates Json Retrun More Than One Country');
+        
+        $list = reset($express_rates);
+        
+        $zones = collect($list['zones'])->where('carrier_id',$carrier_id)->all();
+
+        if(count($zones) > 1)
+            throw new CarriersException('Express Rates Json Retrun More Than One zone');
+
+        $zone_id = reset($zones)['zone_id'];
+        
+        $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id',$zone_id)->all();
+
+        if(count($zoneRates) != 1)
+            throw new CarriersException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
+
+        $zoneRates = reset($zoneRates);
+        $base = $zoneRates['basic'];
+        $additional = $zoneRates['additional'];
+
+        $fees = 0;
+        if ($weight > 0) {
+            $weights_count = ceil($weight / 0.5);
+            $weight_fees = (($weights_count - 1) * $additional) + $base;
+            $fees += $weight_fees;
+        }
+        
+        if($fees == 0)
+            throw new CarriersException('Fees Equal Zero');
+
+        return $fees;
     }
 }

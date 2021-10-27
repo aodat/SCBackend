@@ -64,7 +64,7 @@ class Aramex
         if (! $response->successful())
             throw new CarriersException('Aramex Create Pickup – Something Went Wrong');
         if ($response->json()['HasErrors'])
-            throw new CarriersException('Aramex Data Provided Not Correct');
+            throw new CarriersException('Aramex Data Provided Not Correct - Create Pickup');
         
         $final = $response->json();
         return ['id' => $final['ProcessedPickup']['ID'] , 'guid' => $final['ProcessedPickup']['GUID']];
@@ -122,7 +122,7 @@ class Aramex
             throw new CarriersException('Aramex Create Shipment – Something Went Wrong');
 
         if ($response->json()['HasErrors'])
-            throw new CarriersException('Aramex Data Provided Not Correct');
+            throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment');
 
         $result = [];
         foreach($response->json()['Shipments'] as $ship){
@@ -145,11 +145,10 @@ class Aramex
 
 
             
-        $data['Shipper']['PartyAddress']['CountryCode'] = $merchentInfo->country_code;
         $data['Shipper']['PartyAddress']['Line1'] = $address['description'];
         $data['Shipper']['PartyAddress']['Line2'] = $address['area'];
         $data['Shipper']['PartyAddress']['City'] = $address['city_code'];
-
+        $data['Shipper']['PartyAddress']['CountryCode'] = $merchentInfo->country_code;
         $data['Shipper']['Contact']['PersonName'] = $address['name'];
         $data['Shipper']['Contact']['CompanyName'] = $address['name'];
         $data['Shipper']['Contact']['PhoneNumber1'] = $address['phone'];
@@ -159,6 +158,8 @@ class Aramex
         $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_area'];
         $data['Consignee']['PartyAddress']['Line3'] = $shipmentInfo['consignee_second_phone'];
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
+        if($shipmentInfo['group'] == 'EXP')
+            $data['Consignee']['PartyAddress']['PostCode'] = $shipmentInfo['consignee_zip_code'];
         $data['Consignee']['PartyAddress']['CountryCode'] = ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->country_code: $shipmentInfo['consignee_country'];
 
         $data['Consignee']['Contact']['PersonName'] = $shipmentInfo['consignee_name'];

@@ -15,7 +15,7 @@ class AddMerchentIdToTransactionsTable extends Migration
     {
         Schema::table('transactions', function (Blueprint $table) {
             $table->unsignedBigInteger('merchant_id')->after('type');
-            $table->foreign('merchant_id')->references('id')->on('merchants');
+            $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
         });
     }
 

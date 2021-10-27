@@ -45,7 +45,9 @@ class ShipmentRequest extends MerchantRequest
                 $validation['*.extra_services'] = 'required|in:DOMCOD';
             else if(strpos($path,'shipments/express/create') !== false ) {
                 $validation['*.consignee_country'] = 'required';
+                $validation['*.actual_weight'] = 'required|numeric|between:0,9999';
             }
+            return $validation;
         }
         else if($this->method() == 'POST' && strpos($path,'shipments/filters') !== false) 
             return [

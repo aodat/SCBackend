@@ -29,6 +29,7 @@ class fakeUserShipments extends Seeder
             'email' => $email,
             'phone' => $phone,
             'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'),true)),
+            'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'),true)),
             'created_at' => Carbon::now(),
             'updated_at'=> Carbon::now()
         ];
@@ -45,9 +46,10 @@ class fakeUserShipments extends Seeder
         DB::table('merchants')->insert($merchant);
         DB::table('users')->insert($user);
         
-        for($i=1;$i<5;$i++){
+        $carriersArr = ['aramex','dhl','stripe','fedex'];
+        for($i=0;$i<4;$i++){
             $carriers = [
-                'name' => Str::random(10),
+                'name' => $carriersArr[$i],
                 'email' => Str::random(10).'@gmail.com',
                 'phone' => Str::random(10),
                 'balance' => 1000,
@@ -65,8 +67,8 @@ class fakeUserShipments extends Seeder
         $status = ['DRAFT','PROCESSING','COMPLETED'];
         for($i=1;$i<15;$i++){
             $shipments = [
-                // 'carrier' => 'ARAMEX',
                 'internal_awb' => abs(crc32(uniqid())),
+
                 'sender_name' => Str::random(10),
                 'sender_email'=> Str::random(10).'@gmail.com',
                 'sender_phone'=> Str::random(10),

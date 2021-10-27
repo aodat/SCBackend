@@ -1,0 +1,94 @@
+{
+    "1": {
+        "zones": [
+            {
+                "id": 1,
+                "basic": 17,
+                "additional": 7,
+                "g30": 8,
+                "g99": 10
+            },
+            {
+                "id": 2,
+                "basic": 15,
+                "additional": 4,
+                "g30": 10,
+                "g99": 10
+            },
+            {
+                "id": 3,
+                "basic": 15,
+                "additional": 4,
+                "g30": 8,
+                "g99": 10
+            },
+            {
+                "id": 4,
+                "basic": 15,
+                "additional": 4,
+                "g30": 10,
+                "g99": 10
+            },
+            {
+                "id": 5,
+                "basic": 15,
+                "additional": 4,
+                "g30": 10,
+                "g99": 10
+            }
+        ]
+    },
+    "2": {
+        "zones": [
+            {
+                "id": 1,
+                "basic": 17,
+                "additional": 7,
+                "g30": 8,
+                "g99": 10
+            },
+            {
+                "id": 2,
+                "basic": 15,
+                "additional": 4,
+                "g30": 10,
+                "g99": 10
+            },
+            {
+                "id": 3,
+                "basic": 15,
+                "additional": 4,
+                "g30": 8,
+                "g99": 10
+            },
+            {
+                "id": 4,
+                "basic": 15,
+                "additional": 4,
+                "g30": 10,
+                "g99": 10
+            },
+            {
+                "id": 5,
+                "basic": 15,
+                "additional": 4,
+                "g30": 10,
+                "g99": 10
+            },
+            {
+                "id": 6,
+                "basic": 15,
+                "additional": 4,
+                "g30": 10,
+                "g99": 10
+            },
+            {
+                "id": 7,
+                "basic": 15,
+                "additional": 4,
+                "g30": 10,
+                "g99": 10
+            }
+        ]
+    }
+}
