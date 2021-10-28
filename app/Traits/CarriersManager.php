@@ -79,6 +79,12 @@ trait CarriersManager {
         return $this->adapter->cancelPickup($shipment_number);
     }
 
+    public function track($provider,$shipments_number)
+    {
+        $this->loadProvider($provider);
+        return $this->trackShipment($shipments_number);
+    }
+
     public function calculateFees($provider,$carrier_id,$country_code,$weight)
     {
         $this->loadProvider($provider);

@@ -58,7 +58,7 @@ return [
             'prefix' => env('SQS_PREFIX', 'https://sqs.us-east-2.amazonaws.com/your-account-id'),
             'queue' => env('SQS_QUEUE', 'default'),
             'suffix' => env('SQS_SUFFIX'),
-            'region' => env('AWS_DEFAULT_REGION'),
+            'region' => env('SQS_DEFAULT_REGION'),
             'after_commit' => false,
         ],
 

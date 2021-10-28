@@ -13,6 +13,7 @@ class Aramex
     private static $CANCEL_PICKUP_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CancelPickup';
     private static $PRINT_LABEL_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/PrintLabel';
     private static $CREATE_SHIPMENTS_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CreateShipments';
+    private static $TRACK_SHIPMENTS_URL = 'https://ws.aramex.net/ShippingAPI.V2/Tracking/Service_1_0.svc/json/TrackShipments';
 
     private $config;
 
@@ -207,4 +208,20 @@ class Aramex
     {
         return json_decode(file_get_contents(storage_path().'/../App/Libs/Aramex/'.$file),true);
     }
+
+    public function trackShipment($shipment_waybills)
+    {
+        $trackingPayload = ["ClientInfo" => $this->config,"Shipments" => $shipment_waybills];
+
+        $response = Http::post(self::$TRACK_SHIPMENTS_URL, $trackingPayload);
+        if (! $response->successful())
+            throw new CarriersException('Aramex Track Shipments – Something Went Wrong');
+
+        if ($response->json()['HasErrors'])
+            throw new CarriersException('Cannot track Aramex shipment');
+
+
+        return $response->json()['TrackingResults'];
+    }
+
 }

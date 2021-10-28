@@ -6,9 +6,11 @@ use App\Exports\ShipmentExport;
 use App\Models\Shipment;
 
 use App\Http\Requests\Merchant\ShipmentRequest;
+
+use App\Jobs\ProcessShipCashUpdates;
 use App\Models\Carriers;
 use Carbon\Carbon;
-use Facade\Ignition\Http\Requests\ShareReportRequest;
+
 use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends MerchantController
@@ -156,13 +158,9 @@ class ShipmentController extends MerchantController
         return $this->response(['link' => $this->printShipment('Aramex',$request->shipment_number)]);
     }
 
-    public function shipmentWebhook($provider,ShipmentRequest $request)
+    public function shipmentWebhook(ShipmentRequest $request)
     {
-        $data = $request->validated();
-
-        $shipmentInfo = Shipment::where('external_awb',$data['WaybillNumber'])->first();
-        $this->webhook($shipmentInfo,$data['UpdateCode']);
-
-        return $this->successful('Webhook Completed');
+        ProcessShipCashUpdates::dispatch();
+        // $data = $request->validated();
     }
 }
