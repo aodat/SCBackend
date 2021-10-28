@@ -108,10 +108,11 @@ class fakeUserShipments extends Seeder
             $transactions = [
                 'type' => Arr::random($type, 1)[0],
                 'merchant_id' => 1,
-                'shipment_id' => rand(1,15),
+                'fk_id' => rand(1,15),
                 'amount' => rand(1,2000),
                 'balance_after' => rand(1,2000),
                 'status' => Arr::random($status, 1)[0],
+                'source' => 'order',
                 'created_by' => 1,
                 'created_at' => Carbon::now(),
                 'updated_at'=> Carbon::now()

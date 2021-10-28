@@ -18,7 +18,7 @@ class TransactionsController extends MerchantController
 
         $types = $filters['types'] ?? [];
         $statuses = $filters['statuses'] ?? [];
-
+        $sources = $filters['sources'] ?? [];
         $amount = $filters['amount']['val'] ?? null;
         $operation = $filters['amount']['operation'] ?? null;
         
@@ -28,6 +28,9 @@ class TransactionsController extends MerchantController
         if(count($statuses))
             $transaction->whereIn('status',$statuses);
 
+        if(count($sources))
+            $transaction->whereIn('status',$sources);
+                        
         if(count($types))
             $transaction->whereIn('type',$types);
         
@@ -72,6 +75,7 @@ class TransactionsController extends MerchantController
             [
                 'type' => 'CASHOUT',
                 'merchant_id' => $request->user()->merchant_id,
+                'source' => $request->source,
                 'created_by' => $request->user()->id,
                 'balance_after' => $request->amount,
                 'payment_method' => collect($selectedPayment)

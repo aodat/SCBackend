@@ -17,7 +17,8 @@ class TransactionRequest extends MerchantRequest
         )
             return [
                 'amount' => 'required|numeric',
-                'payment_method_id' => 'required'
+                'payment_method_id' => 'required',
+                'source' => 'required|in:shipment,creditcard,invoice,order'
             ];
         return [];
     }
