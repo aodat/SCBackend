@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Shipment;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -20,10 +21,13 @@ class ProcessShipCashUpdates implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    protected $data;
+    public function __construct(array $data)
     {
-        //
+        $this->data = $data;
     }
+
+
 
     /**
      * Execute the job.
@@ -32,12 +36,7 @@ class ProcessShipCashUpdates implements ShouldQueue
      */
     public function handle()
     {
-        var_dump($this,'Tareq Is Here');
-
-
-        // $shipmentInfo = Shipment::where('external_awb',$data['WaybillNumber'])->first();
-        // $this->webhook($shipmentInfo,$data['UpdateCode']);
-
-        // return $this->successful('Webhook Completed');
+        $shipmentInfo = Shipment::where('external_awb',$this->data['WaybillNumber'])->first();
+        $this->webhook($shipmentInfo,$this->data['UpdateCode']);
     }
 }

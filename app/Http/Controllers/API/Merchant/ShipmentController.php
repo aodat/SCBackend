@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Exports\ShipmentExport;
-use App\Models\Shipment;
 
 use App\Http\Requests\Merchant\ShipmentRequest;
 
 use App\Jobs\ProcessShipCashUpdates;
+use App\Jobs\CreateShipCashUpdates;
+
+use App\Exports\ShipmentExport;
+
+
 use App\Models\Carriers;
+use App\Models\Shipment;
+
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
@@ -158,14 +163,9 @@ class ShipmentController extends MerchantController
         return $this->response(['link' => $this->printShipment('Aramex',$request->shipment_number)]);
     }
 
-    public function shipmentWebhook(ShipmentRequest $request)
+    public function shipmentProcessSQS(ShipmentRequest $request)
     {
-        // ProcessShipCashUpdates::dispatch();
-        $data = $request->all();
-
-        $shipmentInfo = Shipment::where('external_awb',$data['WaybillNumber'])->first();
-        $this->webhook($shipmentInfo,$data['UpdateCode']);
-
-        // return $this->successful('Webhook Completed');
+        ProcessShipCashUpdates::dispatch($request->json()->all());
+        return $this->successful('Webhook Completed');
     }
 }
