@@ -82,7 +82,7 @@ trait CarriersManager {
     public function track($provider,$shipments_number)
     {
         $this->loadProvider($provider);
-        return $this->trackShipment($shipments_number);
+        return $this->adapter->trackShipment($shipments_number);
     }
 
     public function calculateFees($provider,$carrier_id,$country_code,$weight)
@@ -132,9 +132,17 @@ trait CarriersManager {
     {
         $this->loadProvider($shipmentInfo['provider'],true);
 
-        $setup = $this->adapter->setup[$status] ?? ['status' => 'PROCESSING'];
-        $shipmentInfo->update($setup);
+        
+        $ChargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']])['ChargeableWeight'] ?? null;
 
+        // if($ChargeableWeight)
+        //     throw new CarriersException('Chargeable Weight Is Zero');
+
+        $setup = $this->adapter->setup[$status] ?? ['status' => 'PROCESSING'];
+        if($ChargeableWeight) 
+            $setup['chargable_weight'] = $this->calculateFees($shipmentInfo['provider'],$shipmentInfo['carrier_id'],$shipmentInfo['consignee_country'],$ChargeableWeight);
+
+        $shipmentInfo->update($setup);
         return true;
     }
 }

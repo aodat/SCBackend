@@ -160,7 +160,12 @@ class ShipmentController extends MerchantController
 
     public function shipmentWebhook(ShipmentRequest $request)
     {
-        ProcessShipCashUpdates::dispatch();
-        // $data = $request->validated();
+        // ProcessShipCashUpdates::dispatch();
+        $data = $request->all();
+
+        $shipmentInfo = Shipment::where('external_awb',$data['WaybillNumber'])->first();
+        $this->webhook($shipmentInfo,$data['UpdateCode']);
+
+        // return $this->successful('Webhook Completed');
     }
 }

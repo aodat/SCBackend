@@ -220,8 +220,11 @@ class Aramex
         if ($response->json()['HasErrors'])
             throw new CarriersException('Cannot track Aramex shipment');
 
+        $result = $response->json()['TrackingResults'];
+        if (empty($result));
+            throw new CarriersException('Tracking Details Is Empty');
 
-        return $response->json()['TrackingResults'];
+        return $result;
     }
 
 }

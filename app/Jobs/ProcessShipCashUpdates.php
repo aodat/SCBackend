@@ -17,7 +17,7 @@ class ProcessShipCashUpdates implements ShouldQueue
     use CarriersManager;
     /**
      * Create a new job instance.
-     *\
+     *
      * @return void
      */
     public function __construct()
