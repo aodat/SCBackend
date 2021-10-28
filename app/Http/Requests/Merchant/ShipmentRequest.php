@@ -67,7 +67,14 @@ class ShipmentRequest extends MerchantRequest
             return [
                 'shipment_number.*' => 'required|exists:shipments,external_awb'
             ];
-
+        else if($this->method() == 'POST' && strpos(Request()->path(),'webhook/aramex'))
+            return [
+                "UpdateCode" => "required",
+                "WaybillNumber" => "required|exists:shipments,external_awb",
+                "Comment1" => "",
+                "UpdateDateTime" => "required|date",
+                "ProblemCode" => ""
+            ];
         return [];
     }
 }

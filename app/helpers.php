@@ -1,4 +1,6 @@
 <?php
+
+use App\Models\Shipment;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 
 use Illuminate\Support\Facades\Storage;
@@ -41,4 +43,19 @@ function exportXLSX($data,$path,$disk = 's3')
 {
     Excel::store($data,$path,$disk);
     return Storage::disk('s3')->url($path);
+}
+
+function generateBarcodeNumber() {
+    $number = mt_rand(1000000000, 9999999999);
+
+    if (InternalAWBExists($number)) {
+        return generateBarcodeNumber();
+    }
+
+    // otherwise, it's valid and can be used
+    return $number;
+}
+
+function InternalAWBExists($number) {
+    return Shipment::where('internal_awb',$number)->exists();
 }

@@ -28,6 +28,13 @@ class Aramex
             'Version' => config('aramex.VERSION'),
             'Source' => config('aramex.SOURCE')
         ];
+    
+        $this->setup = [
+            'SH005' => ['status' => 'COMPLETED' , 'delivered_at' => Carbon::now(),'returned_at' => null,'paid_at' => null],
+            'SH006' => ['status' => 'COMPLETED' , 'delivered_at' => Carbon::now(),'returned_at' => null,'paid_at' => null],
+            'SH069' => ['status' => 'COMPLETED' , 'returned_at' => Carbon::now(),'delivered_at' => null,'paid_at' => null],
+            'SH239' => ['status' => 'COMPLETED' , 'paid_at' => Carbon::now() , 'delivered_at' => Carbon::now() ,'returned_at' => null]
+        ];
     }
 
     public function createPickup($email,$date,$address)
@@ -142,8 +149,6 @@ class Aramex
         $data['Shipper']['AccountNumber'] = 
         $data['ThirdParty']['AccountNumber'] = 
             $this->config['AccountNumber'];
-
-
             
         $data['Shipper']['PartyAddress']['Line1'] = $address['description'];
         $data['Shipper']['PartyAddress']['Line2'] = $address['area'];

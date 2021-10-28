@@ -9,5 +9,9 @@ class Shipment extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $appends = ['provider'];
+    public function getProviderAttribute() {
+        return 'aramex';// $this->hasOne(Carriers::class,'id','carrier_id');
 
+    }
 }

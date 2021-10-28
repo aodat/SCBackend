@@ -8,7 +8,7 @@ use App\Models\Shipment;
 use App\Http\Requests\Merchant\ShipmentRequest;
 use App\Models\Carriers;
 use Carbon\Carbon;
-
+use Facade\Ignition\Http\Requests\ShareReportRequest;
 use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends MerchantController
@@ -122,11 +122,11 @@ class ShipmentController extends MerchantController
                 $domestic_rates = $dom_rates->where('code','=',$address['city_code'])->first();
                 $shipment['fees'] = $domestic_rates['price'] ?? 0;
                 if($shipment == 0)
-                    $this->error('Domestic Rates Is Zero');
+                    return $this->error('Domestic Rates Is Zero');
             } else {
                 $shipment['fees'] = $this->calculateFees($provider,$shipment['carrier_id'],$shipment['consignee_country'],$shipment['actual_weight']);
             }
-            
+            $shipment['internal_awb'] = generateBarcodeNumber();
             $shipment['merchant_id'] = Request()->user()->merchant_id;            
             $shipment['created_by'] = Request()->user()->id;
 
@@ -150,8 +150,19 @@ class ShipmentController extends MerchantController
             return $this->response(['link' => $result['link']]);
         return $this->response(['link' => mergePDF($links)]);
     }
+
     public function printLabel(ShipmentRequest $request)
     {
         return $this->response(['link' => $this->printShipment('Aramex',$request->shipment_number)]);
+    }
+
+    public function shipmentWebhook($provider,ShipmentRequest $request)
+    {
+        $data = $request->validated();
+
+        $shipmentInfo = Shipment::where('external_awb',$data['WaybillNumber'])->first();
+        $this->webhook($shipmentInfo,$data['UpdateCode']);
+
+        return $this->successful('Webhook Completed');
     }
 }

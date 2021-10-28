@@ -13,7 +13,7 @@ use App\Models\Merchant;
 trait CarriersManager {
     public $adapter;
     private $merchantInfo;
-    public function loadProvider($provider) {
+    public function loadProvider($provider,$isWebHook = false) {
         $provider = strtoupper($provider);
         switch($provider)
         {
@@ -32,7 +32,9 @@ trait CarriersManager {
             default:
                 throw new CarriersException('Invalid Provider');
         }
-        $this->merchantInfo = $this->getMerchantInfo();
+
+        if(!$isWebHook)
+            $this->merchantInfo = $this->getMerchantInfo();
     } 
     
     public function getMerchantInfo()
@@ -118,5 +120,15 @@ trait CarriersManager {
             throw new CarriersException('Fees Equal Zero');
 
         return $fees;
+    }
+
+    public function webhook($shipmentInfo,$status)
+    {
+        $this->loadProvider($shipmentInfo['provider'],true);
+
+        $setup = $this->adapter->setup[$status] ?? ['status' => 'PROCESSING'];
+        $shipmentInfo->update($setup);
+
+        return true;
     }
 }
