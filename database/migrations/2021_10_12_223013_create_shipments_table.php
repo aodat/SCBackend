@@ -64,13 +64,13 @@ class CreateShipmentsTable extends Migration
             $table->unsignedBigInteger('merchant_id');
             $table->unsignedBigInteger('carrier_id');
 
-            $table->foreign('created_by')->references('id')->on('users');
-            $table->foreign('merchant_id')->references('id')->on('merchants');
-            $table->foreign('carrier_id')->references('id')->on('carriers');
-
             $table->json('logs')->nullable();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
+            $table->foreign('carrier_id')->references('id')->on('carriers')->onDelete('cascade');
         });
     }
 
