@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Models\Merchant;
 
 use App\Http\Requests\Merchant\PaymentMethodsRequest;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentMethodsController extends MerchantController
 {
@@ -12,7 +13,6 @@ class PaymentMethodsController extends MerchantController
     {
         $merchantID = $request->user()->merchant_id;
         $data = Merchant::where('id',$merchantID)->select('payment_methods')->first();
-
       
         if(collect($data->payment_methods)->isEmpty())
             return $this->notFound();
@@ -22,37 +22,25 @@ class PaymentMethodsController extends MerchantController
 
     public function createPaymentMethods(PaymentMethodsRequest $request)
     {
-        $merchantID = $request->user()->merchant_id;
         $json = $request->json()->all();
-        
-        $merchant = Merchant::where('id',$merchantID)->first();
-
-        if(
-            $request->provider == 'phone' && 
-            (
-                isset($request->pin_code) && 
-                $request->pin_code != $merchant->pin_code
-            )
-            ) {
-                return $this->error('Invald pin code',500);            
-        }
-
-        $result = collect($merchant->payment_methods);
+        $list = $this->getMerchentInfo();
+        $result = collect($list->payment_methods);
         $counter = $result->max('id') ?? 0;
-        
+
+        // Get Merchants Template 
+        $paymentMthodsTemplate = collect(json_decode(Storage::disk('local')->get('template/payment_methods.json'),true));
+        $json += $paymentMthodsTemplate->where('provider_code',strtolower($json['provider_code']))->first();
         $json['id'] = ++$counter;
         if(isset($json['pin_code']))
             unset($json['pin_code']);
 
-        $merchant->update(['pin_code' => null , 'payment_methods' => $result->merge([$json])]);
+        $list->update(['payment_methods' => $result->merge([$json])]);
         return $this->successful();
     }
 
     public function deletePaymentMethods($id,PaymentMethodsRequest $request)
-    {
-        $merchantID = $request->user()->merchant_id;
-        
-        $list = Merchant::where('id',$merchantID);
+    {        
+        $list = $this->getMerchentInfo();
         $result = collect($list->select('payment_methods')->first()->payment_methods);
 
         $json = $result->reject(function ($value) use($id) {

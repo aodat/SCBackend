@@ -14,9 +14,8 @@ class PaymentMethodsRequest extends MerchantRequest
         $path = Request()->path();
         if(strpos($path,'payment-methods/create') !== false)
             return [
-                "name" => "required",
-                "iban" => "required",
-                "provider" => "required|string"
+                "provider_code" => "required|string",
+                "iban" => "required"
             ];
         return [];
     }
