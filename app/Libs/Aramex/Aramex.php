@@ -209,7 +209,7 @@ class Aramex
         return json_decode(file_get_contents(storage_path().'/../App/Libs/Aramex/'.$file),true);
     }
 
-    public function trackShipment($shipment_waybills)
+    public function trackShipment($shipment_waybills,$getChargeableWeight = false)
     {
         $trackingPayload = ["ClientInfo" => $this->config,"Shipments" => $shipment_waybills];
 
@@ -220,11 +220,15 @@ class Aramex
         if ($response->json()['HasErrors'])
             throw new CarriersException('Cannot track Aramex shipment');
 
+
         $result = $response->json()['TrackingResults'];
-        if (empty($result));
+        if (empty($result))
             throw new CarriersException('Tracking Details Is Empty');
 
-        return $result;
+        if(count($shipment_waybills) == 1)
+            return last($response['TrackingResults'][0]['Value']);
+
+        return $result['TrackingResults'];
     }
 
 }

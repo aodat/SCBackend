@@ -133,7 +133,7 @@ trait CarriersManager {
         $this->loadProvider($shipmentInfo['provider'],true);
 
         
-        $ChargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']])['ChargeableWeight'] ?? null;
+        $ChargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']],true)['ChargeableWeight'] ?? null;
 
         // if($ChargeableWeight)
         //     throw new CarriersException('Chargeable Weight Is Zero');
