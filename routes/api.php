@@ -13,9 +13,8 @@ use App\Http\Controllers\API\Merchant\PaymentMethodsController;
 use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\API\Merchant\PickupsController;
+use App\Http\Controllers\API\Merchant\InvoiceController;
 
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -83,6 +82,10 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('pickups',[PickupsController::class,'index']);
             Route::post('pickups/create',[PickupsController::class,'store']);
             Route::post('pickup/cancel',[PickupsController::class,'cancel']);
+
+            // Invoice
+            Route::post('invoice/create',[InvoiceController::class,'store']);
+            Route::delete('invoice/{invoice_id}',[InvoiceController::class,'delete']);
         });
 
         Route::post('auth/logout',[AuthController::class, 'logout']);
