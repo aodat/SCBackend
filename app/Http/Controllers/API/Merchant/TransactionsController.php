@@ -29,7 +29,7 @@ class TransactionsController extends MerchantController
             $transaction->whereIn('status',$statuses);
 
         if(count($sources))
-            $transaction->whereIn('status',$sources);
+            $transaction->whereIn('source',$sources);
                         
         if(count($types))
             $transaction->whereIn('type',$types);
