@@ -19,7 +19,6 @@ class PickuptRequest extends MerchantRequest
         $path = Request()->path();
         if(strpos($path,'pickups/create') !== false)
             return [
-                'type' => 'in:aramex,dhl',
                 'address_id' => 'required',
                 'carrier_id' => 'required|exists:carriers,id',
                 "pickup_date" => "required|date|date_format:Y-m-d|after:today|before:$new_date"

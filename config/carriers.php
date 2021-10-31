@@ -13,5 +13,10 @@ return [
     ],
     'stripe' => [
         'key' => env('STRIPE_ACCESS_KEY',null)
+    ],
+    'dhl' => [
+        'SITE_ID' => env('DHL_SITE_ID',null),
+        'PASSWORD' => env('DHL_PASSWORD',null),
+        'ACCOUNT_NUMBER' => env('DHL_ACCOUNT_NUMBER',null)
     ]
 ];

@@ -1,0 +1,14 @@
+{
+    "req:CancelPURequest": {
+        "-xmlns:req": "http://www.dhl.com",
+        "-xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "-xsi:schemaLocation": "http://www.dhl.com cancel-pickup-global-req.xsd",
+        "-schemaVersion": "3.0",
+        "Request": {
+            "MetaData": {
+                "SoftwareName": "XMLPI",
+                "SoftwareVersion": "1.0"
+            }
+        }
+    }
+}

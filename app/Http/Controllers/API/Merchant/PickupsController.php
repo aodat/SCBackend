@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Requests\Merchant\PickuptRequest;
+use App\Models\Carriers;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pickup;
 
@@ -20,11 +21,12 @@ class PickupsController extends MerchantController
         
         $address = $merchentAddresses->where('id','=',$request->address_id)->first();
         if($address == null)
-            return $this->error('address id is in valid',400);
+            return $this->error('address id is not valid',400);
 
-        $final = DB::transaction(function () use($request,$address) {
+        $type = Carriers::findOrfail($request->carrier_id)->name;
+        $final = DB::transaction(function () use($request,$address,$type) {
             $data = $request->json()->all();
-            $pickupInfo = $this->generatePickup('Aramex',$request->pickup_date,$address);
+            $pickupInfo = $this->generatePickup($type,$request->pickup_date,$address);
     
             $data['merchant_id'] = $request->user()->merchant_id;
             $data['hash'] = $pickupInfo['guid'];
