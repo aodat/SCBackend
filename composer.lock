@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad4ebe63e9fab43efbe87ab2e041b327",
+    "content-hash": "9424f7895704e6f01144846a28cd56bb",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -678,6 +678,46 @@
                 }
             ],
             "time": "2020-12-29T14:50:06+00:00"
+        },
+        {
+            "name": "elitedevsolution/laravel-dhl-api",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EliteDevSolution/laravel-dhl-api.git",
+                "reference": "67c00ba2a7655f2c8aca5b3a91fe108e054fbbb6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EliteDevSolution/laravel-dhl-api/zipball/67c00ba2a7655f2c8aca5b3a91fe108e054fbbb6",
+                "reference": "67c00ba2a7655f2c8aca5b3a91fe108e054fbbb6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Mtc\\Dhl\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Elite Dev Solution",
+                    "email": "fstorm707@gmail.com"
+                }
+            ],
+            "description": "PHP library to communicate with the DHL XML Services.",
+            "support": {
+                "issues": "https://github.com/EliteDevSolution/laravel-dhl-api/issues",
+                "source": "https://github.com/EliteDevSolution/laravel-dhl-api/tree/1.0.1"
+            },
+            "time": "2021-03-05T03:06:46+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
