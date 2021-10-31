@@ -5,7 +5,6 @@ namespace Libs;
 use App\Exceptions\CarriersException;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 
 class Aramex
 {
@@ -20,14 +19,14 @@ class Aramex
     function __construct()
     {
         $this->config = [
-            'UserName' => config('aramex.ARAMEX_USERNAME'),
-            'Password' => config('aramex.ARAMEX_PASSWORD'),
-            'AccountNumber' => config('aramex.ARAMEX_ACCOUNT_NUMBER'),
-            'AccountPin' => config('aramex.ARAMEX_PIN'),
-            'AccountEntity' => config('aramex.ARAMEX_ACCOUNT_ENTITY'),
-            'AccountCountryCode' => config('aramex.ARAMEX_ACCOUNT_COUNTRY_CODE'),
-            'Version' => config('aramex.VERSION'),
-            'Source' => config('aramex.SOURCE')
+            'UserName' => config('carriers.aramex.ARAMEX_USERNAME'),
+            'Password' => config('carriers.aramex.ARAMEX_PASSWORD'),
+            'AccountNumber' => config('carriers.aramex.ARAMEX_ACCOUNT_NUMBER'),
+            'AccountPin' => config('carriers.aramex.ARAMEX_PIN'),
+            'AccountEntity' => config('carriers.aramex.ARAMEX_ACCOUNT_ENTITY'),
+            'AccountCountryCode' => config('carriers.aramex.ARAMEX_ACCOUNT_COUNTRY_CODE'),
+            'Version' => config('carriers.aramex.VERSION'),
+            'Source' => config('carriers.aramex.SOURCE')
         ];
     
         $this->setup = [

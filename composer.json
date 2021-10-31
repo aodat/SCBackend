@@ -34,7 +34,10 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "classmap": [
-            "app/Libs"
+            "app/Libs/Stripe",
+            "app/Libs/Aramex",
+            "app/Libs/DHL",
+            "app/Libs/Fedex"
         ],
         "files": [
             "app/helpers.php"

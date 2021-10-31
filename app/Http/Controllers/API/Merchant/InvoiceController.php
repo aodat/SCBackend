@@ -9,13 +9,14 @@ class InvoiceController extends MerchantController
 {
     public function store(InvoiceRequest $request)
     {
-        $data = $request->validated();
-        $data['merchant_id'] = $request->user()->merchant_id;
-        $data['user_id'] = $request->user()->id;
-        Invoices::create($data);
+        // $data = $request->validated();
+        // $data['merchant_id'] = $request->user()->merchant_id;
+        // $data['user_id'] = $request->user()->id;
+        // Invoices::create($data);
 
-        
-        return $this->successful(); 
+        // on create invoice you can build it by stripe 
+        $this->invoice();
+        // return $this->successful(); 
     }
 
     public function delete($invoiceID,InvoiceRequest $request)

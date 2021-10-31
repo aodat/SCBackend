@@ -2,9 +2,9 @@
 namespace App\Traits;
 
 use Libs\Aramex;
+use Libs\Stripe;
 use Libs\DHL;
 use Libs\Fedex;
-use Libs\Strip;
 
 use App\Exceptions\CarriersException;
 
@@ -26,8 +26,8 @@ trait CarriersManager {
             case "FEDEX":
                 $this->adapter = new Fedex();
                 break;
-            case "STRIP":
-                $this->adapter = new Strip();
+            case "STRIPE":
+                $this->adapter = new Stripe();
                 break;
             default:
                 throw new CarriersException('Invalid Provider');
@@ -144,5 +144,11 @@ trait CarriersManager {
 
         $shipmentInfo->update($setup);
         return true;
+    }
+
+    public function invoice()
+    {
+        $this->loadProvider('Stripe');
+        $this->adapter->invoice();
     }
 }
