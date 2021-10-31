@@ -84,9 +84,9 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('pickup/cancel',[PickupsController::class,'cancel']);
 
             // Invoice
+            Route::get('invoice/finalize/{invoice_id}',[InvoiceController::class,'finalize']);
             Route::post('invoice/create',[InvoiceController::class,'store']);
             Route::delete('invoice/{invoice_id}',[InvoiceController::class,'delete']);
-            Route::post('invoice/finalize',[InvoiceController::class,'finalize']);
         });
 
         Route::post('auth/logout',[AuthController::class, 'logout']);

@@ -21,6 +21,16 @@ class InvoiceController extends MerchantController
         return $this->successful(); 
     }
 
+    public function finalize($invoiceID,InvoiceRequest $request)
+    {
+        $invoiceInfo = Invoices::where('id',$invoiceID)->where('merchant_id',$request->user()->merchant_id)->first();
+
+        $link = $this->publishInvoice($invoiceInfo->fk_id);
+        $invoiceInfo->link = $link;
+        $invoiceInfo->save();
+
+        $this->response(['link' => $link]);
+    }
     
     public function delete($invoiceID,InvoiceRequest $request)
     {

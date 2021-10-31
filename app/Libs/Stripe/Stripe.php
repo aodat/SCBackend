@@ -73,8 +73,7 @@ class Stripe
 
         if (! $response->successful())
             throw new CarriersException('Stripe Finalize Invoice – Something Went Wrong');
-
-        return $response->json();
+        return $response->json()['hosted_invoice_url'];
     }
 
     public function createCustomer($name,$email)
