@@ -17,7 +17,7 @@ class InvoiceRequest extends MerchantRequest
             return [
                 "customer_name" => "required|string",
                 "customer_email" => "required|email",
-                "amount" => 'required|numeric|between:0,9999'
+                "amount" => 'required|numeric|between:0.0001,9999'
             ];
         return [];
     }

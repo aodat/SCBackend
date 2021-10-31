@@ -10,40 +10,88 @@ class Stripe
 {
     private $access_key;
 
-    private static $INVOICE_URL = 'https://api.stripe.com/v1/invoices';
+    private static $NEW_CUSTOMER_URL = 'https://api.stripe.com/v1/customers';
+    private static $INVOICE_ITEM = 'https://api.stripe.com/v1/invoiceitems';
+    private static $CREATE_INVOICE = 'https://api.stripe.com/v1/invoices';
+    private static $FINALIZE_INVOICE = 'https://api.stripe.com/v1/invoices/##invoiceID##/finalize';
+
     function __construct() {
         $this->access_key = config('carriers.stripe.key');
     }
-    public function invoice()
+    
+    public function invoice($custmerID,$amount)
     {
-
-        // $client = new http\Client;
-        // $request = new http\Client\Request;
-        // $request->setRequestMethod('POST');
-        // $body = new http\Message\Body;
-        // $body->append(new http\QueryString(array(
-        //     'customer' => 'cus_KVZY6KCMMtaEOp')
-        // ));$request->setBody($body);
-        // $request->setOptions(array());
-        // $request->setHeaders(array(
-        //     'Authorization' => 'Basic c2tfdGVzdF81MUpwWkpVSFpmWUlqUmVmUUNWZE5rYjgzRzF5YWZ5d0E4NE1jU1RIZDllb2l6RkE0ZTc2S2hoVXhaZ3dDa1Y2c21uc01ma2FOcnlHMEFTWVJzNDE3RkNnazAwUG5adndGcTA6',
-        //     'Content-Type' => 'application/x-www-form-urlencoded'
-        // ));
-        // $client->enqueue($request)->send();
-        // $response = $client->getResponse();
-        // echo $response->getBody();
-
-
+        $this->invoiceItem($custmerID,$amount);
 
         $response = Http::withHeaders([
-            'Authorization' => 'Basic c2tfdGVzdF81MUpwWkpVSFpmWUlqUmVmUUNWZE5rYjgzRzF5YWZ5d0E4NE1jU1RIZDllb2l6RkE0ZTc2S2hoVXhaZ3dDa1Y2c21uc01ma2FOcnlHMEFTWVJzNDE3RkNnazAwUG5adndGcTA6', // .$this->access_key
             'Content-Type' => 'application/x-www-form-urlencoded'
         ])
-        ->post(self::$INVOICE_URL,[
-            'customer' => 'cus_KVZY6KCMMtaEOp'
+        ->withToken($this->access_key)
+        ->asForm()
+        ->post(self::$CREATE_INVOICE,[
+            'customer' => $custmerID
         ]);
 
-        // dd($response->json());
-        dd($response);
+        if (! $response->successful())
+            throw new CarriersException('Stripe Create Invoice Item – Something Went Wrong');
+
+        $receipt = $this->finalizeInvoice($response['id']);
+
+        return [
+            'fk_id' => $receipt['id'],
+            'link' => $receipt['hosted_invoice_url']
+        ];
+    }
+
+    public function invoiceItem($custmerID,$amount)
+    {
+        $response = Http::withHeaders([
+                'Content-Type' => 'application/x-www-form-urlencoded'
+            ])
+            ->withToken($this->access_key)
+            ->asForm()
+            ->post(self::$INVOICE_ITEM,[
+                'customer' => $custmerID,
+                'amount' => $amount,
+                'currency' => 'USD'
+            ]);
+
+        if (! $response->successful())
+            throw new CarriersException('Stripe Create Invoice Item – Something Went Wrong');
+
+        return true;
+    }
+
+    public function finalizeInvoice($invoiceID)
+    {
+        $url = str_replace('##invoiceID##',$invoiceID,self::$FINALIZE_INVOICE);
+        $response = Http::withHeaders([
+                'Content-Type' => 'application/x-www-form-urlencoded'
+            ])
+            ->withToken($this->access_key)
+            ->asForm()
+            ->post($url);
+
+        if (! $response->successful())
+            throw new CarriersException('Stripe Finalize Invoice – Something Went Wrong');
+
+        return $response->json();
+    }
+
+    public function createCustomer($name,$email)
+    {
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/x-www-form-urlencoded'
+        ])
+        ->withToken($this->access_key)
+        ->asForm()
+        ->post(self::$NEW_CUSTOMER_URL,[
+            'name'  => $name,
+            'email' => $email
+        ]);
+
+        if (! $response->successful())
+            throw new CarriersException('Stripe Create Customer – Something Went Wrong');
+        return $response->json()['id'];
     }
 }

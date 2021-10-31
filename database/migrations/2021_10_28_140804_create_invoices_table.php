@@ -17,7 +17,8 @@ class CreateInvoicesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('merchant_id');
             $table->unsignedBigInteger('user_id');
-            $table->bigInteger('fk_id')->nullable()->index();
+            $table->string('fk_id')->nullable()->index();
+            
             $table->string('customer_name', 64);
             $table->string('customer_email', 32);
             $table->double('amount', 6, 2)->default('0');
