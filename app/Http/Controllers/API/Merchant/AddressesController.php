@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Http\Requests\Merchant\AddressesRequest;
 
 use App\Models\Merchant;
+use Carbon\Carbon;
+
 class AddressesController extends MerchantController
 {
     public function index(AddressesRequest $request)
@@ -29,8 +31,8 @@ class AddressesController extends MerchantController
         $result = collect($merchant->select('addresses')->first()->addresses);
         $counter = $result->max('id') ?? 0;
         $json['id'] = ++$counter;
-        $json['country'] = 'JO';
-        
+        $json['country'] = $request->country ?? 'JO';
+        $json['created_at'] = Carbon::now();
         $merchant->update(['addresses' => $result->merge([$json])]);
         return $this->successful();
     }

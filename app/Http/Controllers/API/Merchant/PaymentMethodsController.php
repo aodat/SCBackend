@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Models\Merchant;
 
 use App\Http\Requests\Merchant\PaymentMethodsRequest;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class PaymentMethodsController extends MerchantController
@@ -31,6 +32,7 @@ class PaymentMethodsController extends MerchantController
         $paymentMthodsTemplate = collect(json_decode(Storage::disk('local')->get('template/payment_methods.json'),true));
         $json += $paymentMthodsTemplate->where('provider_code',strtolower($json['provider_code']))->first();
         $json['id'] = ++$counter;
+        $json['created_at'] = Carbon::now();
         if(isset($json['pin_code']))
             unset($json['pin_code']);
 

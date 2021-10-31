@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Http\Requests\Merchant\DocumentsRequest;
 
 use App\Models\Merchant;
+use Carbon\Carbon;
 
 class DocumentsController extends MerchantController
 {
@@ -32,7 +33,8 @@ class DocumentsController extends MerchantController
         $data = [
             'id' => ++$counter,
             'type' => $request->type,
-            'url' => uploadFiles('documents',$request->file('file'))
+            'url' => uploadFiles('documents',$request->file('file')),
+            'created_at' => Carbon::now()
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);
