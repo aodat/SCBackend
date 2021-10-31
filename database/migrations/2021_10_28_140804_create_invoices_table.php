@@ -25,7 +25,7 @@ class CreateInvoicesTable extends Migration
             $table->double('amount', 6, 2)->default('0');
 
             $table->date('paid_at', 32)->nullable();
-            $table->enum('status', ['DRAFT','PAID'])->default('DRAFT');
+            $table->enum('status', ['DRAFT','PAID','FAILED'])->default('DRAFT');
             $table->text('link')->nullable();
             $table->timestamps();
 

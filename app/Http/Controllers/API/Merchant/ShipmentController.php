@@ -6,7 +6,6 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Http\Requests\Merchant\ShipmentRequest;
 
 use App\Jobs\ProcessShipCashUpdates;
-use App\Jobs\CreateShipCashUpdates;
 
 use App\Exports\ShipmentExport;
 

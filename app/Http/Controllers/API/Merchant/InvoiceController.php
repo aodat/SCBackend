@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Requests\Merchant\InvoiceRequest;
-
+use App\Jobs\StripeUpdates;
 use App\Models\Invoices;
 class InvoiceController extends MerchantController
 {
@@ -42,5 +42,11 @@ class InvoiceController extends MerchantController
 
 
         return $this->successful('Deleted Sucessfully'); 
+    }
+
+    public function stripeProcessSQS(InvoiceRequest $request)
+    {
+        StripeUpdates::dispatch($request->json()->all());
+        return $this->successful('Webhook Completed');
     }
 }
