@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Models\Transaction;
 use App\Models\Shipment;
+use App\Models\Invoices;
+
 use Illuminate\Support\Facades\Request;
 
 class MerchantRequest extends FormRequest
@@ -22,6 +24,8 @@ class MerchantRequest extends FormRequest
             return Transaction::where('id', Request::instance()->id)->where('merchant_id', Request()->user()->merchant_id)->exists();
         else if($this->getMethod() == 'GET' && strpos($path, 'shipments/{id}') !== false)
             return Shipment::where('id', Request::instance()->id)->where('merchant_id', Request()->user()->merchant_id)->exists();
+        else if($this->getMethod() == 'DELETE' && strpos($path, 'invoice/{invoice_id}') !== false)
+            return Invoices::where('id', Request::instance()->invoice_id)->where('merchant_id', Request()->user()->merchant_id)->exists();
         return true;
     }
 

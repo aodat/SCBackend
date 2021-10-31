@@ -21,6 +21,7 @@ class CreateInvoicesTable extends Migration
             
             $table->string('customer_name', 64);
             $table->string('customer_email', 32);
+            $table->text('description')->nullable();
             $table->double('amount', 6, 2)->default('0');
 
             $table->date('paid_at', 32)->nullable();

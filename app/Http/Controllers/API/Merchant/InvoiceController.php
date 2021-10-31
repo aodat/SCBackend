@@ -14,7 +14,6 @@ class InvoiceController extends MerchantController
         // on create invoice you can build it by stripe
         $receipt = $this->invoice($data); 
         $data['fk_id'] = $receipt['fk_id'];
-        $data['link'] = $receipt['link'];
         $data['merchant_id'] = $request->user()->merchant_id;
         $data['user_id'] = $request->user()->id;
         Invoices::create($data);
@@ -22,12 +21,16 @@ class InvoiceController extends MerchantController
         return $this->successful(); 
     }
 
+    
     public function delete($invoiceID,InvoiceRequest $request)
     {
         $invoiceInfo = Invoices::where('id',$invoiceID)->where('merchant_id',$request->user()->merchant_id)->first();
         if($invoiceInfo->status != 'DRAFT')
             return $this->error('you cant delete this invoice');
+        $this->deleteInvoice($invoiceInfo->fk_id);    
         $invoiceInfo->delete();
+
+
         return $this->successful('Deleted Sucessfully'); 
     }
 }

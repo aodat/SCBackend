@@ -150,6 +150,18 @@ trait CarriersManager {
     {
         $this->loadProvider('Stripe');
         $customerID = $this->adapter->createCustomer($data['customer_name'],$data['customer_email']);
-        return $this->adapter->invoice($customerID,$data['amount']);
+        return $this->adapter->invoice($customerID,$data['description'],$data['amount']);
+    }
+
+    public function publishInvoice($invoiceID)
+    {
+        $this->loadProvider('Stripe');
+        return $this->adapter->finalizeInvoice($invoiceID);
+    }
+
+    public function deleteInvoice($invoiceID)
+    {
+        $this->loadProvider('Stripe');
+        return $this->adapter->deleteInvoice($invoiceID);
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Requests\Merchant;
 
 class InvoiceRequest extends MerchantRequest
 {
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -17,6 +16,7 @@ class InvoiceRequest extends MerchantRequest
             return [
                 "customer_name" => "required|string",
                 "customer_email" => "required|email",
+                "description" => "required",
                 "amount" => 'required|numeric|between:0.0001,9999'
             ];
         return [];

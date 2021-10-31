@@ -86,6 +86,7 @@ Route::group(['middleware' => ['json.response']], function () {
             // Invoice
             Route::post('invoice/create',[InvoiceController::class,'store']);
             Route::delete('invoice/{invoice_id}',[InvoiceController::class,'delete']);
+            Route::post('invoice/finalize',[InvoiceController::class,'finalize']);
         });
 
         Route::post('auth/logout',[AuthController::class, 'logout']);
