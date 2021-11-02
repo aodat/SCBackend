@@ -5,10 +5,24 @@
         "-xsi:schemaLocation": "http://www.dhl.com cancel-pickup-global-req.xsd",
         "-schemaVersion": "3.0",
         "Request": {
+            "ServiceHeader": {
+                "MessageTime": "2001-12-19T09:30:47-05:00",
+                "MessageReference": "1234567890123456789012345678901",
+                "SiteID": "CustomerSiteID",
+                "Password": "CustomerPassword"
+            },
             "MetaData": {
                 "SoftwareName": "XMLPI",
                 "SoftwareVersion": "1.0"
             }
-        }
+        },
+        "RegionCode": "AM",
+        "ConfirmationNumber": "CBJ180206002254",
+        "RequestorName": "Roy",
+        "CountryCode": "CA",
+        "OriginSvcArea": "YHM",
+        "Reason": "001",
+        "PickupDate": "2017-11-21",
+        "CancelTime": "10:20"
     }
 }

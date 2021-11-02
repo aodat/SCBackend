@@ -4,7 +4,13 @@ namespace Libs;
 use Carbon\Carbon;
 
 use Mtc\Dhl\Client\Web;
+
 use Mtc\Dhl\Entity\GB\BookPURequest;
+use Mtc\Dhl\Entity\GB\ShipmentRequest;
+use Mtc\Dhl\Entity\GB\CancelPickupRequest;
+// use Mtc\Dhl\Entity\
+use Mtc\Dhl\Datatype\GB\Piece;
+
 
 use App\Exceptions\CarriersException;
 
@@ -71,7 +77,7 @@ class DHL
         $payload->ShipmentDetails->BillToAccountNumber = $this->config['AccountNumber'];
         $payload->ShipmentDetails->AWBNumber = "7520067111";// $tracking_number;
         $payload->ShipmentDetails->NumberOfPieces = 1;// $package_count;
-        $payload->ShipmentDetails->GlobalProductCode = "P";// $shipment_product_code;
+        $payload->ShipmentDetails->GlobalProductCode = "P";// $payload_product_code;
         $payload->ShipmentDetails->Weight = 10;// $package_weight;
         $payload->ShipmentDetails->WeightUnit = 'K';
         $payload->ShipmentDetails->DoorTo = 'DD';
@@ -84,30 +90,131 @@ class DHL
         if ($response['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Pickup – Something Went Wrong');
 
-        // return ['id' => $final['ProcessedPickup']['ID'] , 'guid' => $final['ProcessedPickup']['GUID']];
+        dd($response);
     }
+
     public function cancelPickup()
     {
-        $payload = $this->bindJsonFile('pickup.cancel.json');
+        $payload = new CancelPickupRequest();
+        $payload->SiteID = $this->config['SiteID'];
+        $payload->Password = $this->config['Password'];
+        $payload->MessageTime = $this->config['MessageTime'];
+        $payload->MessageReference = $this->config['MessageReference'];
+        $payload->SoftwareName = 'XMLPI';
+        $payload->SoftwareVersion = '3.0';
 
-        $payload['req:CancelPURequest']['Request']['ServiceHeader'] = $this->config;
-        $payload['req:CancelPURequest']['RegionCode'] = '';
-        $payload['req:CancelPURequest']['ConfirmationNumber'] = '';
-        $payload['req:CancelPURequest']['RequestorName'] = '';
-        $payload['req:CancelPURequest']['CountryCode'] = '';
-        $payload['req:CancelPURequest']['OriginSvcArea'] = '';
-        $payload['req:CancelPURequest']['Reason'] = '';
-        $payload['req:CancelPURequest']['PickupDate'] = '';
-        $payload['req:CancelPURequest']['CancelTime'] = '';
+        $payload->RegionCode = "AM";
+        $payload->ConfirmationNumber = "CBJ180206002254";
+        $payload->RequestorName = "Roy";
+        $payload->CountryCode = "CA";
+        $payload->OriginSvcArea = "YHM";
+        $payload->Reason = '001';
+        $payload->PickupDate = '2017-11-21';
+        $payload->CancelTime = '10:20';
+
+        $client = new Web("production");
+        $response = XMLToArray($client->call($payload));
         
-        dd($payload);
+        if ($response['Status']['ActionStatus'] == 'Error')
+            throw new CarriersException('DHL Create Pickup – Something Went Wrong');
+        dd($response);
     }
+
     public function printLabel(){}
-    public function createShipment(){}
-    public function shipmentArray(){}
-    
-    public function bindJsonFile($file)
+
+    public function createShipment($merchentInfo,$address,$shipmentInfo)
     {
-        return json_decode(file_get_contents(storage_path().'/../App/Libs/DHL/'.$file),true);
+        $payload = new ShipmentRequest();
+        $payload->SiteID = $this->config['SiteID'];
+        $payload->Password = $this->config['Password'];
+        $payload->MessageTime = $this->config['MessageTime'];
+        $payload->MessageReference = $this->config['MessageReference'];
+        $payload->SoftwareName = 'XMLPI';
+        $payload->SoftwareVersion = '3.0';
+
+
+        $payload->LanguageCode = 'en';
+        $payload->PiecesEnabled = 'Y';
+
+        $payload->Billing->ShipperAccountNumber = $this->config['AccountNumber'];
+        $payload->Billing->ShippingPaymentType = 'S';
+        $payload->Billing->BillingAccountNumber = $this->config['AccountNumber'];
+
+        $payload->Consignee->CompanyName = $shipmentInfo['consignee_name'];
+        $payload->Consignee->Contact->PersonName = $shipmentInfo['consignee_name'];
+        $payload->Consignee->addAddressLine($shipmentInfo['consignee_address_description']);
+        $payload->Consignee->addAddressLine($shipmentInfo['consignee_address_description']);
+        $payload->Consignee->City = $shipmentInfo['consignee_city'];
+        $payload->Consignee->PostalCode = $shipmentInfo['consignee_zip_code'] ?? '';
+        $payload->Consignee->Division = '';
+        $payload->Consignee->CountryCode = $shipmentInfo['consignee_country'];
+        $payload->Consignee->CountryName = $shipmentInfo['consignee_country'];
+        $payload->Consignee->Contact->PhoneNumber = $shipmentInfo['consignee_phone'];
+        $payload->Consignee->Contact->Email = $shipmentInfo['consignee_email'];
+        $payload->Consignee->Contact->PhoneExtension = '';
+        $payload->Consignee->Contact->FaxNumber = '';
+        $payload->Consignee->Contact->Telex = '';
+
+
+        $payload->RegionCode = 'AM';
+
+        $payload->Dutiable->DeclaredValue = 1.0;
+        $payload->Dutiable->DeclaredCurrency = 'GBP';
+        $payload->Dutiable->TermsOfTrade = 'DDP';
+
+        $payload->Shipper->ShipperID = $merchentInfo->id;
+        $payload->Shipper->RegisteredAccount = $this->config['AccountNumber'];;
+        $payload->Shipper->CompanyName = $address['name'];
+        $payload->Shipper->addAddressLine($address['description']);
+        $payload->Shipper->addAddressLine($address['area']);
+        $payload->Shipper->City = $address['city_code'];
+        $payload->Shipper->PostalCode = '';
+        $payload->Shipper->CountryCode =  $merchentInfo->country_code;
+        $payload->Shipper->CountryName = $merchentInfo->country_code;
+        $payload->Shipper->Contact->PersonName = $address['name'];
+        $payload->Shipper->Contact->PhoneNumber = $address['phone'];
+        $payload->Shipper->Contact->Email = $merchentInfo->email;
+        $payload->Shipper->Contact->PhoneExtension = '';
+        $payload->Shipper->Contact->FaxNumber = '';
+        $payload->Shipper->Contact->Telex = '';
+
+        
+        // Delivery Service is obtained via Quote request which will find valid services for shipment
+        $payload->ShipmentDetails->GlobalProductCode = "P";
+        $payload->ShipmentDetails->Contents = $shipmentInfo['content'];
+        $payload->ShipmentDetails->CurrencyCode = 'GBP';
+        $payload->ShipmentDetails->WeightUnit = 'K';
+        $payload->ShipmentDetails->Weight = 1;
+        $payload->ShipmentDetails->Date = Carbon::now()->format('Y-m-d');
+        $payload->ShipmentDetails->DimensionUnit = 'C';
+        $payload->ShipmentDetails->InsuredAmount = 0;
+        $payload->ShipmentDetails->PackageType = 'PA';
+        $payload->ShipmentDetails->IsDutiable = 'N';
+        $payload->ShipmentDetails->DOSFlag = 'N';
+
+        // Information about Packages in shipment
+        $payload->ShipmentDetails->NumberOfPieces = 1;
+        
+        $piece = new Piece();
+        $piece->PieceID = 1;
+        $piece->PackageType = 'CP';
+        $piece->Weight = 0.5;
+        $piece->DimWeight = 0.5;
+        $payload->ShipmentDetails->addPiece($piece);
+
+        $payload->EProcShip = 'N';
+        $payload->LabelImageFormat = 'PDF';
+        $payload->Label->LabelTemplate = '8X4_PDF';
+
+        $client = new Web("production");
+        $response = XMLToArray($client->call($payload));
+        
+        if ($response['Status']['ActionStatus'] == 'Error')
+            throw new CarriersException('DHL Create Pickup – Something Went Wrong');
+        dd($response);
+    }
+
+    public function shipmentArray($merchentInfo,$address,$shipmentInfo){
+        return $this->createShipment($merchentInfo,$address,$shipmentInfo);
     }
 }

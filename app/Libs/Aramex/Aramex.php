@@ -79,7 +79,7 @@ class Aramex
 
     public function cancelPickup($pickup_guid)
     {
-        $payload = ["ClientInfo" => $this->config,"PickupGUID" => $pickup_guid,];
+        $payload = ["ClientInfo" => $this->config,"PickupGUID" => $pickup_guid];
         $response = Http::post(self::$CANCEL_PICKUP_URL, $payload);
         if (! $response->successful())
             throw new CarriersException('Aramex Cancel Pickup – Something Went Wrong');
