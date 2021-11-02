@@ -8,26 +8,43 @@ use Mtc\Dhl\Client\Web;
 use Mtc\Dhl\Entity\GB\BookPURequest;
 use Mtc\Dhl\Entity\GB\ShipmentRequest;
 use Mtc\Dhl\Entity\GB\CancelPickupRequest;
-// use Mtc\Dhl\Entity\
 use Mtc\Dhl\Datatype\GB\Piece;
 
 
+use Illuminate\Support\Facades\Http;
+
 use App\Exceptions\CarriersException;
+
+use SimpleXMLElement;
 
 class DHL
 {
-    private $config;
+
+    private static $stagingUrl = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet?isUTF8Support=true';
+    private static $productionUrl = 'https://xmlpi-ea.dhl.com/XMLShippingServlet?isUTF8Support=true';
+    private $end_point;
+    private $account_number;
     function __construct() {
         $this->config = [
             'MessageTime' => Carbon::now()->format(Carbon::ATOM),
             'MessageReference' => randomNumber(32),
             'SiteID' => config('carriers.dhl.SITE_ID'),
-            'Password' =>  config('carriers.dhl.PASSWORD'),
-            'AccountNumber' => config('carriers.dhl.ACCOUNT_NUMBER')
+            'Password' =>  config('carriers.dhl.PASSWORD')
         ];
+
+        $this->end_point = self::$stagingUrl;
+        $this->account_number = config('carriers.dhl.ACCOUNT_NUMBER');
+
     }
+    
     public function createPickup($email,$date,$address)
     {
+        
+        $payload = $this->bindJsonFile('pickup.create.json');
+        $payload['Request']['ServiceHeader'] = $this->config;
+        
+        $response = $this->call($payload);
+        dd($response);
 
         $payload = new BookPURequest();
 
@@ -95,7 +112,6 @@ class DHL
         echo $payload->toXML();die;
         // Call DHL API
         $client = new Web();
-        $response = XMLToArray($client->call($payload));
         dd($response);
 
         if ($response['Status']['ActionStatus'] == 'Error')
@@ -226,5 +242,33 @@ class DHL
 
     public function shipmentArray($merchentInfo,$address,$shipmentInfo){
         return $this->createShipment($merchentInfo,$address,$shipmentInfo);
+    }
+
+    public function bindJsonFile($file)
+    {
+        return json_decode(file_get_contents(storage_path().'/../App/Libs/DHL/'.$file),true);
+    }
+
+    private function dhlXMLFile($type,$data) {
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>'."<req:$type></req:$type>", LIBXML_NOERROR, false, 'ws', true);
+        $xml->addAttribute('req:xmlns:req', 'http://www.dhl.com');
+        $xml->addAttribute('req:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $xml->addAttribute('req:xsi:schemaLocation', 'http://www.dhl.com book-pickup-global-req_EA.xsd');
+        $xml->addAttribute('req:schemaVersion', '3.0');
+        return array_to_xml($data,$xml);
+    }
+
+    private function call($data)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_URL, $this->end_point);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_PORT, 443);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->dhlXMLFile('BookPURequest',$payload)->asXML());
+        $result = curl_exec($ch);
+        curl_error($ch);
+
+        return XMLToArray($result);
     }
 }

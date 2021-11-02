@@ -95,3 +95,14 @@ function XMLToArray($xml)
     // One function to both clean the XML string and return an array
     return json_decode(json_encode(simplexml_load_string(removeNamespaceFromXML($xml))), true);
 }
+
+
+function array_to_xml(array $arr, SimpleXMLElement $xml)
+{
+    foreach ($arr as $k => $v) {
+        is_array($v)
+            ? array_to_xml($v, $xml->addChild($k))
+            : $xml->addChild($k, $v);
+    }
+    return $xml;
+}

@@ -1,86 +1,81 @@
 {
-    "req:BookPURequest": {
-        "-xmlns:req": "http://www.dhl.com",
-        "-xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
-        "-xsi:schemaLocation": "http://www.dhl.com book-pickup-global-req_EA.xsd",
-        "-schemaVersion": "3.0",
-        "Request": {
-            "MetaData": {
-                "SoftwareName": "XMLPI",
-                "SoftwareVersion": "3.0"
-            }
-        },
-        "Requestor": {
-            "AccountType": "D",
-            "AccountNumber": "123456789",
-            "RequestorContact": {
-                "PersonName": "Roy",
-                "Phone": "1234567890"
-            },
-            "CompanyName": "DHL TEST",
-            "Address1": "DHL EXPRESS FR",
-            "Address2": "Le Rue",
-            "City": "Paris",
-            "CountryCode": "FR",
-            "PostalCode": "75001"
-        },
-        "Place": {
-            "LocationType": "B",
-            "CompanyName": "Test Pickup",
-            "Address1": "DHL EXPRESS GB",
-            "Address2": "A Road",
-            "PackageLocation": "Reception",
-            "City": "LIVERPOOL",
-            "CountryCode": "GB",
-            "PostalCode": "L24 8RF"
-        },
-        "Pickup": {
-            "PickupDate": "2018-02-06",
-            "PickupTypeCode": "A",
-            "ReadyByTime": "10:20",
-            "CloseTime": "14:20",
-            "Pieces": "1",
-            "RemotePickupFlag": "Y",
-            "weight": {
-                "Weight": "10",
-                "WeightUnit": "K"
-            }
-        },
-        "PickupContact": {
-            "PersonName": "Kosani",
+    "Request": {
+        "ServiceHeader" : {},
+        "MetaData": {
+            "SoftwareName": "XMLPI",
+            "SoftwareVersion": "3.0"
+        }
+    },
+    "Requestor": {
+        "AccountType": "D",
+        "AccountNumber": "123456789",
+        "RequestorContact": {
+            "PersonName": "Roy",
             "Phone": "1234567890"
         },
-        "ShipmentDetails": {
-            "AccountType": "D",
-            "AccountNumber": "123456789",
-            "BillToAccountNumber": "123456789",
-            "AWBNumber": "7520067111",
-            "NumberOfPieces": "1",
+        "CompanyName": "DHL TEST",
+        "Address1": "DHL EXPRESS FR",
+        "Address2": "Le Rue",
+        "City": "Paris",
+        "CountryCode": "FR",
+        "PostalCode": "75001"
+    },
+    "Place": {
+        "LocationType": "B",
+        "CompanyName": "Test Pickup",
+        "Address1": "DHL EXPRESS GB",
+        "Address2": "A Road",
+        "PackageLocation": "Reception",
+        "City": "LIVERPOOL",
+        "CountryCode": "GB",
+        "PostalCode": "L24 8RF"
+    },
+    "Pickup": {
+        "PickupDate": "2018-02-06",
+        "PickupTypeCode": "A",
+        "ReadyByTime": "10:20",
+        "CloseTime": "14:20",
+        "Pieces": "1",
+        "RemotePickupFlag": "Y",
+        "weight": {
             "Weight": "10",
-            "WeightUnit": "K",
-            "GlobalProductCode": "P",
-            "LocalProductCode": "P",
-            "DoorTo": "DD",
-            "DimensionUnit": "C",
-            "Pieces": {
-                "Piece": {
-                    "Weight": "10",
-                    "Width": "1",
-                    "Height": "1",
-                    "Depth": "1"
-                }
+            "WeightUnit": "K"
+        }
+    },
+    "PickupContact": {
+        "PersonName": "Kosani",
+        "Phone": "1234567890"
+    },
+    "ShipmentDetails": {
+        "AccountType": "D",
+        "AccountNumber": "123456789",
+        "BillToAccountNumber": "123456789",
+        "AWBNumber": "7520067111",
+        "NumberOfPieces": "1",
+        "Weight": "10",
+        "WeightUnit": "K",
+        "GlobalProductCode": "P",
+        "LocalProductCode": "P",
+        "DoorTo": "DD",
+        "DimensionUnit": "C",
+        "Pieces": {
+            "Piece": {
+                "Weight": "10",
+                "Width": "1",
+                "Height": "1",
+                "Depth": "1"
             }
-        },
-        "ConsigneeDetails": {
-            "CompanyName": "ConsigneeCompany",
-            "AddressLine": "ConsigneeAdd1",
-            "City": "ConsigneeCity",
-            "CountryCode": "FR",
-            "PostalCode": "75001",
-            "Contact": {
-                "PersonName": "ConsigneePerson",
-                "Phone": "12345"
-            }
+        }
+    },
+    "ConsigneeDetails": {
+        "CompanyName": "ConsigneeCompany",
+        "AddressLine": "ConsigneeAdd1",
+        "City": "ConsigneeCity",
+        "CountryCode": "FR",
+        "PostalCode": "75001",
+        "Contact": {
+            "PersonName": "ConsigneePerson",
+            "Phone": "12345"
         }
     }
 }
