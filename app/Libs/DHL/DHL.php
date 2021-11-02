@@ -28,6 +28,7 @@ class DHL
     }
     public function createPickup($email,$date,$address)
     {
+
         $payload = new BookPURequest();
 
         // Setup Config
@@ -68,7 +69,7 @@ class DHL
         $payload->Pickup->PickupTypeCode = 'A';
         $payload->Pickup->ReadyByTime = '10:20';
         $payload->Pickup->CloseTime = '14:20';
-
+        $payload->Pickup->RemotePickupFlag = 'Y';
         $payload->PickupContact->PersonName = "Kosani";// $address['name'];
         $payload->PickupContact->Phone = "1234567890";// $address['phone'];
 
@@ -83,14 +84,23 @@ class DHL
         $payload->ShipmentDetails->DoorTo = 'DD';
         $payload->ShipmentDetails->DimensionUnit = 'C';
 
+        $payload->Consignee->CompanyName = 'Test Pickup';
+        $payload->Consignee->AddressLine = 'DHL EXPRESS GB';
+        $payload->Consignee->City = 'LIVERPOOL';
+        $payload->Consignee->CountryCode = 'FR';
+        $payload->Consignee->PostalCode = '75001';
+        $payload->Consignee->Contact->PersonName = 'Tareq FW';
+        $payload->Consignee->Contact->Phone = '12345';
+
+        echo $payload->toXML();die;
         // Call DHL API
-        $client = new Web("production");
+        $client = new Web();
         $response = XMLToArray($client->call($payload));
-        
+        dd($response);
+
         if ($response['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Pickup – Something Went Wrong');
 
-        dd($response);
     }
 
     public function cancelPickup()
@@ -112,7 +122,7 @@ class DHL
         $payload->PickupDate = '2017-11-21';
         $payload->CancelTime = '10:20';
 
-        $client = new Web("production");
+        $client = new Web();
         $response = XMLToArray($client->call($payload));
         
         if ($response['Status']['ActionStatus'] == 'Error')
@@ -206,7 +216,7 @@ class DHL
         $payload->LabelImageFormat = 'PDF';
         $payload->Label->LabelTemplate = '8X4_PDF';
 
-        $client = new Web("production");
+        $client = new Web();
         $response = XMLToArray($client->call($payload));
         
         if ($response['Status']['ActionStatus'] == 'Error')
