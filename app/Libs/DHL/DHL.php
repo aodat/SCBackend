@@ -6,119 +6,85 @@ use Carbon\Carbon;
 use Mtc\Dhl\Client\Web;
 use Mtc\Dhl\Entity\GB\BookPURequest;
 
+use App\Exceptions\CarriersException;
+
 class DHL
 {
     private $config;
-    private $account_number;
     function __construct() {
         $this->config = [
-            'MessageTime' => Carbon::today(),
-            'MessageReference' => mt_rand(1000000000, 9999999999),
+            'MessageTime' => Carbon::now()->format(Carbon::ATOM),
+            'MessageReference' => randomNumber(32),
             'SiteID' => config('carriers.dhl.SITE_ID'),
-            'Password' => config('carriers.dhl.PASSWORD')
+            'Password' =>  config('carriers.dhl.PASSWORD'),
+            'AccountNumber' => config('carriers.dhl.ACCOUNT_NUMBER')
         ];
-        
-        $this->account_number = config('carriers.dhl.ACCOUNT_NUMBER');
     }
     public function createPickup($email,$date,$address)
     {
-        
-        $pickup = new BookPURequest();
+        $payload = new BookPURequest();
+
         // Setup Config
-        $pickup->SiteID = $this->config['SiteID'];
-        $pickup->Password = $this->config['Password'];
-        $pickup->MessageTime = Carbon::now()->format(Carbon::ATOM);
-        $pickup->MessageReference = '12345678912345678912345678912345';
-        $pickup->SoftwareName = 'XMLPI';
-        $pickup->SoftwareVersion = '3.0';
-        $pickup->Requestor->AccountNumber = '951237760';
-        $pickup->Requestor->AccountType = 'D';
+        $payload->SiteID = $this->config['SiteID'];
+        $payload->Password = $this->config['Password'];
+        $payload->MessageTime = $this->config['MessageTime'];
+        $payload->MessageReference = $this->config['MessageReference'];
+        $payload->SoftwareName = 'XMLPI';
+        $payload->SoftwareVersion = '3.0';
 
+        // Requester 
+        $payload->Requestor->AccountNumber = $this->config['AccountNumber'];
+        $payload->Requestor->AccountType = 'D';
+        $payload->Requestor->CompanyName ="DHL TEST";// $address['name'];
+        $payload->Requestor->Address1 ="DHL EXPRESS FR";// $address['name'];
+        $payload->Requestor->City ="Paris";// $address['name'];
+        $payload->Requestor->CountryCode ="FR";// $address['name'];
+        $payload->Requestor->PostalCode ="75001";// $address['name'];
+        $payload->Requestor->RequestorContact->PersonName = "Roy";// $address['name'];
+        $payload->Requestor->RequestorContact->Phone = "1234567890";// $address['phone'];
 
-        /*
-            array:10 [
-                "id" => 1
-                "area" => "Tabrbour Amman"
-                "city" => "Amman"
-                "name" => "Tareq Fawakhiri"
-                "phone" => "07999999"
-                "country" => "Jordan"
-                "city_code" => "Amman"
-                "created_at" => "2021-10-31T13:52:23.036546Z"
-                "description" => "test test"
-                "country_code" => "JO"
-            ]
-        */
-
-        // $payload['Pickup']['Reference1'] = $address['description'];
-        // $payload['Pickup']['PickupAddress']['Line1'] = $address['description'];
-        // $payload['Pickup']['PickupAddress']['Line2'] = $address['area'];
-        // $payload['Pickup']['PickupAddress']['Line3'] = '';
-        // $payload['Pickup']['PickupAddress']['City'] = $address['name_en'];
-        // $payload['Pickup']['PickupAddress']['CountryCode'] = $address['country_code'];
-
-        // $payload['Pickup']['PickupContact']['PersonName'] = $address['name_en'];
-        // $payload['Pickup']['PickupContact']['CompanyName'] = $address['name_en'];
-        // $payload['Pickup']['PickupContact']['PhoneNumber1'] = $address['phone'];
-        // $payload['Pickup']['PickupContact']['CellPhone'] = $address['phone'];
-        // $payload['Pickup']['PickupContact']['EmailAddress'] = $email;
-
-        // $payload['Pickup']['PickupLocation'] = $address['city_code'];
-        // $payload['Pickup']['PickupDate'] = '/Date('.(strtotime($date) * 1000).')/';
-
-        // $ReadyTime  = strtotime(Carbon::createFromFormat('Y-m-d',$date)->format('Y-m-d').' 03:00 PM') * 1000;
-        // $LastPickupTime = $ClosingTime = strtotime(Carbon::createFromFormat('Y-m-d',$date)->format('Y-m-d').' 04:00 PM') * 1000;
-
-        // $payload['Pickup']['ReadyTime'] = '/Date('.$ReadyTime.')/';
-        // $payload['Pickup']['LastPickupTime'] = '/Date('.$LastPickupTime.')/';
-        // $payload['Pickup']['ClosingTime'] = '/Date('.$ClosingTime.')/';
-
-        $pickup->Requestor->CompanyName =  $address['name'];
-        $pickup->Requestor->RequestorContact->PersonName = $address['name'];
-        $pickup->Requestor->RequestorContact->Phone = $address['phone'];
 
         // DHL REGION based on the Toolkit documentation for the pickup country
-        $pickup->RegionCode = 'AP';// $dhl_region;
+        $payload->RegionCode = 'AP';
 
-        $pickup->Place->LocationType = 'B';
-        $pickup->Place->CompanyName = $address['name'];
-        $pickup->Place->Address1 = $address['city'];
-        $pickup->Place->Address2 =$address['city'];
-        $pickup->Place->PackageLocation = '';
-        $pickup->Place->City = $address['city'];
-        $pickup->Place->CountryCode = $address['country_code'];
-        $pickup->Place->PostalCode = '';
+        // Places 
+        $payload->Place->LocationType = 'B';
+        $payload->Place->CompanyName = "Test Pickup";// $address['name'];
+        $payload->Place->Address1 = "DHL EXPRESS GB";// $address['city'];
+        $payload->Place->Address2 = "A Road";// $address['city'];
+        $payload->Place->PackageLocation = "Reception";// $address['city'];
+        $payload->Place->City = "LIVERPOOL";// $address['city'];
+        $payload->Place->CountryCode = "GB";// $address['country_code'];
+        $payload->Place->PostalCode = "L24 8RF";
 
-        $pickup->Pickup->PickupDate = '2021-11-11';// $pickup_time;
-        $pickup->Pickup->ReadyByTime = '13:00';
-        $pickup->Pickup->CloseTime = '17:00';
+        // Pickup
+        $payload->Pickup->PickupDate = '2021-11-05';
+        $payload->Pickup->PickupTypeCode = 'A';
+        $payload->Pickup->ReadyByTime = '10:20';
+        $payload->Pickup->CloseTime = '14:20';
 
-        $pickup->PickupContact->PersonName = $address['name'];
-        $pickup->PickupContact->Phone = $address['phone'];
+        $payload->PickupContact->PersonName = "Kosani";// $address['name'];
+        $payload->PickupContact->Phone = "1234567890";// $address['phone'];
 
-        $pickup->ShipmentDetails->AccountType = 'D';
-        $pickup->ShipmentDetails->AccountNumber = '951237760';
-        $pickup->ShipmentDetails->BillToAccountNumber = '951237760';
+        $payload->ShipmentDetails->AccountType = 'D';
+        $payload->ShipmentDetails->AccountNumber = $this->config['AccountNumber'];
+        $payload->ShipmentDetails->BillToAccountNumber = $this->config['AccountNumber'];
+        $payload->ShipmentDetails->AWBNumber = "7520067111";// $tracking_number;
+        $payload->ShipmentDetails->NumberOfPieces = 1;// $package_count;
+        $payload->ShipmentDetails->GlobalProductCode = "P";// $shipment_product_code;
+        $payload->ShipmentDetails->Weight = 10;// $package_weight;
+        $payload->ShipmentDetails->WeightUnit = 'K';
+        $payload->ShipmentDetails->DoorTo = 'DD';
+        $payload->ShipmentDetails->DimensionUnit = 'C';
 
-        $pickup->ShipmentDetails->AWBNumber = 123;// $tracking_number;
-        $pickup->ShipmentDetails->NumberOfPieces = 1;// $package_count;
-        $pickup->ShipmentDetails->GlobalProductCode = 1;// $shipment_product_code;
-        $pickup->ShipmentDetails->Weight = 1;// $package_weight;
-        $pickup->ShipmentDetails->WeightUnit = 'K';
-        $pickup->ShipmentDetails->DoorTo = 'DD';
-        $pickup->ShipmentDetails->DimensionUnit = 'C';
+        // Call DHL API
+        $client = new Web("production");
+        $response = XMLToArray($client->call($payload));
+        
+        if ($response['Status']['ActionStatus'] == 'Error')
+            throw new CarriersException('DHL Create Pickup – Something Went Wrong');
 
-        $client = new Web();
-        $xml_response = $client->call($pickup);
-        echo ($xml_response); die;
-
-        // $payload = $this->bindJsonFile('pickup.create.json');
-        // $payload['req:BookPURequest']['Request']['ServiceHeader'] = $this->config;
-
-
-
-        // echo json_encode($payload);die;
-        // dd($payload);
+        // return ['id' => $final['ProcessedPickup']['ID'] , 'guid' => $final['ProcessedPickup']['GUID']];
     }
     public function cancelPickup()
     {
