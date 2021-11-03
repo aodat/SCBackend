@@ -77,9 +77,9 @@ class Aramex
         return ['id' => $final['ProcessedPickup']['ID'] , 'guid' => $final['ProcessedPickup']['GUID']];
     }
 
-    public function cancelPickup($pickup_guid)
+    public function cancelPickup($pickupInfo)
     {
-        $payload = ["ClientInfo" => $this->config,"PickupGUID" => $pickup_guid];
+        $payload = ["ClientInfo" => $this->config,"PickupGUID" => $pickupInfo->hash];
         $response = Http::post(self::$CANCEL_PICKUP_URL, $payload);
         if (! $response->successful())
             throw new CarriersException('Aramex Cancel Pickup – Something Went Wrong');

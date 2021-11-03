@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Support\Facades\DB;
+
 class Merchant extends Model
 {
     use HasFactory;
@@ -28,5 +30,16 @@ class Merchant extends Model
     public function user()
     {
         return $this->hasMany(User::class,'merchant_id','id');
+    }
+
+    public static function getAdressInfoByID($id)
+    {
+        $address = DB::table('merchants')
+            ->where('id','=',Request()->user()->id)
+            ->select('addresses')
+            ->first()
+            ->addresses;
+
+        return collect(json_decode($address))->where('id', '=', $id)->first();
     }
 }

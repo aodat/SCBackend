@@ -73,10 +73,10 @@ trait CarriersManager {
         return mergePDF($this->adapter->printLabel($shipments_number));
     }
 
-    public function cancelPickup($provider,$shipment_number)
+    public function cancelPickup($provider,$pickupInfo)
     {
         $this->loadProvider($provider);
-        return $this->adapter->cancelPickup($shipment_number);
+        return $this->adapter->cancelPickup($pickupInfo);
     }
 
     public function track($provider,$shipments_number)

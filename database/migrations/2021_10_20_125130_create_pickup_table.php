@@ -17,6 +17,8 @@ class CreatePickupTable extends Migration
             $table->id();
             $table->unsignedBigInteger('merchant_id');
             $table->unsignedBigInteger('carrier_id');
+            $table->integer('address_id');
+            
             $table->string('hash', 128);
             $table->string('cancel_ref', 32);
             

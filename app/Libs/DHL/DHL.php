@@ -14,14 +14,21 @@ use Mtc\Dhl\Datatype\GB\Piece;
 use Illuminate\Support\Facades\Http;
 
 use App\Exceptions\CarriersException;
-
+use App\Models\Merchant;
+use App\Models\Pickup;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
 use SimpleXMLElement;
 
 class DHL
 {
+    private static $xsd = [
+        'BookPURequest' => 'http://www.dhl.com book-pickup-global-req_EA.xsd',
+        'CancelPURequest' => 'http://www.dhl.com cancel-pickup-global-req.xsd'
+    ];
 
     private static $stagingUrl = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet?isUTF8Support=true';
     private static $productionUrl = 'https://xmlpi-ea.dhl.com/XMLShippingServlet?isUTF8Support=true';
+
     private $end_point;
     private $account_number;
     function __construct() {
@@ -40,7 +47,6 @@ class DHL
     public function createPickup($email,$date,$address)
     {
         $payload = $this->bindJsonFile('pickup.create.json');
-        $payload['Request']['ServiceHeader'] = $this->config;
         
         $payload['Requestor']['AccountNumber'] = $this->account_number;
 
@@ -88,31 +94,23 @@ class DHL
         return ['id' => $this->config['MessageReference'] , 'guid' => $response['ConfirmationNumber']];
     }
 
-    public function cancelPickup()
+    public function cancelPickup($pickupInfo)
     {
-        $payload = new CancelPickupRequest();
-        $payload->SiteID = $this->config['SiteID'];
-        $payload->Password = $this->config['Password'];
-        $payload->MessageTime = $this->config['MessageTime'];
-        $payload->MessageReference = $this->config['MessageReference'];
-        $payload->SoftwareName = 'XMLPI';
-        $payload->SoftwareVersion = '3.0';
+        $address = Merchant::getAdressInfoByID($pickupInfo->address_id);
+        $payload = $this->bindJsonFile('pickup.cancel.json');
 
-        $payload->RegionCode = "AM";
-        $payload->ConfirmationNumber = "CBJ180206002254";
-        $payload->RequestorName = "Roy";
-        $payload->CountryCode = "CA";
-        $payload->OriginSvcArea = "YHM";
-        $payload->Reason = '001';
-        $payload->PickupDate = '2017-11-21';
-        $payload->CancelTime = '10:20';
+        $payload['RegionCode'] = 'EU';
+        $payload['ConfirmationNumber'] = $pickupInfo->hash;
+        $payload['RequestorName'] = $address->name;
+        $payload['CountryCode'] = $address->country_code;
+        $payload['PickupDate'] = $pickupInfo->pickup_date;
+        $payload['CancelTime'] = '10:20';
 
-        $client = new Web();
-        $response = XMLToArray($client->call($payload));
-        
-        if ($response['Status']['ActionStatus'] == 'Error')
-            throw new CarriersException('DHL Create Pickup – Something Went Wrong');
-        dd($response);
+        $response = $this->call('CancelPURequest',$payload);
+        if(isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
+            throw new CarriersException('DHL Cancel Pickup – Something Went Wrong');
+
+        return true;
     }
 
     public function printLabel(){}
@@ -215,14 +213,17 @@ class DHL
 
     public function bindJsonFile($file)
     {
-        return json_decode(file_get_contents(storage_path().'/../App/Libs/DHL/'.$file),true);
+        $payload = json_decode(file_get_contents(storage_path().'/../App/Libs/DHL/'.$file),true);
+        $payload['Request']['ServiceHeader'] = $this->config;
+
+        return $payload;
     }
 
     private function dhlXMLFile($type,$data) {
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>'."<req:$type></req:$type>", LIBXML_NOERROR, false, 'ws', true);
         $xml->addAttribute('req:xmlns:req', 'http://www.dhl.com');
         $xml->addAttribute('req:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $xml->addAttribute('req:xsi:schemaLocation', 'http://www.dhl.com book-pickup-global-req_EA.xsd');
+        $xml->addAttribute('req:xsi:schemaLocation', self::$xsd[$type]);
         $xml->addAttribute('req:schemaVersion', '3.0');
         return array_to_xml($data,$xml);
     }

@@ -23,8 +23,6 @@ class PickupsController extends MerchantController
         $address = $merchentAddresses->where('id', '=', $data['address_id'])->first();
         if ($address == null)
             return $this->error('address id is not valid', 400);
-        unset($data['address_id']);
-
         $provider = Carriers::findOrfail($data['carrier_id'])->name;
         DB::transaction(function () use ($data, $address, $provider,$merchentInfo) {
             $pickupInfo = $this->generatePickup($provider, $data['pickup_date'], $address);
@@ -35,7 +33,7 @@ class PickupsController extends MerchantController
 
             Pickup::updateOrCreate(
                 ['merchant_id' => $merchentInfo->id,'hash' => $pickupInfo['guid'],'carrier_id' => $data['carrier_id']],
-                ['merchant_id' => $merchentInfo->id,'hash' => $pickupInfo['guid'], 'cancel_ref' => $pickupInfo['id'],'carrier_id' => $data['carrier_id'] , 'pickup_date' => $data['pickup_date']],
+                ['merchant_id' => $merchentInfo->id,'hash' => $pickupInfo['guid'], 'cancel_ref' => $pickupInfo['id'],'carrier_id' => $data['carrier_id'] , 'pickup_date' => $data['pickup_date'],'address_id' => $data['address_id']],
             );
         });
 
@@ -44,15 +42,14 @@ class PickupsController extends MerchantController
 
     public function cancel(PickuptRequest $request)
     {
-        $data = Pickup::where('merchant_id', Request()->user()->merchant_id)
-            ->where('carrier_id', $request->carrier_id)
-            ->where('id', $request->pickup_id)
-            ->select('hash')
-            ->first();
-        if ($data == null)
-            $this->error('requested data invalid');
-
-        $this->cancelPickup('Aramex', $data->hash);
+        $lists = Pickup::getPickupCarrires($request->user()->merchant_id,$request->pickup_id,$request->carrier_id);
+        $lists = $lists->groupBy('name');
+        
+        $lists->map(function($list,$provider){
+            $list->map(function($pickup) use($provider){
+                $this->cancelPickup($provider, $pickup);
+            });
+        });
         return $this->successful('The pickup has been canceled successfully');
     }
 }
