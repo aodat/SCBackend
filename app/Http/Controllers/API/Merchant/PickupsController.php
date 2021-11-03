@@ -12,6 +12,25 @@ class PickupsController extends MerchantController
 {
     public function index(PickuptRequest $request)
     {
+        $filters = $request->json()->all();
+ 
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');;
+        $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
+
+        $pickupID = $request->pickup_id ?? null;
+        $carrierID = $request->carrier_id ?? null;
+
+        $pickup = Pickup::whereBetween('created_at',[$since." 00:00:00",$until." 23:59:59"])->where('merchant_id',$request->user()->merchant_id);
+        
+        if($pickupID != null)
+            $pickup->where('id',$pickupID);
+        
+        if($carrierID != null)
+            $pickup->where('carrier_id',$carrierID);
+        $pickup->where('merchant_id',$request->user()->id);
+
+        $paginated = $pickup->paginate(request()->perPage ?? 10);
+        return $this->response($paginated,'Data Retrieved Successfully',200,true);
     }
 
     public function store(PickuptRequest $request)
