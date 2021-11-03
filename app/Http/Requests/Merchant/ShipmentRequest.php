@@ -35,8 +35,8 @@ class ShipmentRequest extends MerchantRequest
 
                     $type.'consignee_name' => 'required|min:6|max:255',
                     $type.'consignee_email' => 'required|email',
-                    $type.'consignee_phone' => 'required|max:10',
-                    $type.'consignee_second_phone' => 'required|max:10',
+                    $type.'consignee_phone' => 'required',
+                    $type.'consignee_second_phone' => 'required',
                     $type.'consignee_city' => 'required',
                     $type.'consignee_area' => 'required',
                     $type.'consignee_address_description' => 'required',
@@ -53,9 +53,6 @@ class ShipmentRequest extends MerchantRequest
                 $validation[$type.'consignee_country'] = 'required';
                 $validation[$type.'actual_weight'] = 'required|numeric|between:0,9999';
             }
-            
-            dd($validation);
-
             return $validation;
         }
         else if($this->method() == 'POST' && strpos($path,'shipments/filters') !== false) 

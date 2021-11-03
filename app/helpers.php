@@ -6,28 +6,34 @@ use Maatwebsite\Excel\Facades\Excel as Excel;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
-function uploadFiles($folder,$data)
+function uploadFiles($folder, $data, $type, $isOutput = false)
 {
-    $path = $folder. "/" . md5(Carbon::now()) . '.' . $data->getClientOriginalExtension();
-    Storage::disk('s3')->put($path, file_get_contents($data));
-    
+    $path = $folder . "/" . md5(Carbon::now());
+    if (!$isOutput) {
+        $data = file_get_contents($data);
+        $path .= $data->getClientOriginalExtension();
+    } else
+        $path .= ".$type";
+
+    Storage::disk('s3')->put($path, $data);
+
     return Storage::disk('s3')->url($path);
 }
 
-function exportPDF($view,$path,$data)
+function exportPDF($view, $path, $data)
 {
     $pdf = \PDF::loadView("pdf.$view", [$view => $data]);
-    Storage::disk('s3')->put($path,$pdf->output());
+    Storage::disk('s3')->put($path, $pdf->output());
     return Storage::disk('s3')->url($path);
 }
 
 function mergePDF($files)
-{    
+{
     $pdf = new PDFMerger();
     foreach ($files as $file) {
-        $path = 'aramex/'.md5(time()).'.pdf';
-        Storage::disk('local')->put($path,file_get_contents($file));
-        $pdf->addPDF(Storage::path($path,'all'));
+        $path = 'aramex/' . md5(time()) . '.pdf';
+        Storage::disk('local')->put($path, file_get_contents($file));
+        $pdf->addPDF(Storage::path($path, 'all'));
     }
     $pathForTheMergedPdf = Storage::path("aramex/result.pdf");
     $pdf->merge('file', $pathForTheMergedPdf);
@@ -39,16 +45,17 @@ function mergePDF($files)
 }
 
 
-function exportXLSX($data,$path,$disk = 's3')
+function exportXLSX($data, $path, $disk = 's3')
 {
-    Excel::store($data,$path,$disk);
+    Excel::store($data, $path, $disk);
     return Storage::disk('s3')->url($path);
 }
 
-function randomNumber($length = 16) {
+function randomNumber($length = 16)
+{
     $result = '';
 
-    for($i = 0; $i < $length; $i++) {
+    for ($i = 0; $i < $length; $i++) {
         $result .= mt_rand(0, 9);
     }
 
@@ -59,11 +66,13 @@ function randomNumber($length = 16) {
     return $result;
 }
 
-function InternalAWBExists($number) {
-    return Shipment::where('internal_awb',$number)->exists();
+function InternalAWBExists($number)
+{
+    return Shipment::where('internal_awb', $number)->exists();
 }
 
-function nestedLowercase($value) {
+function nestedLowercase($value)
+{
     if (is_array($value)) {
         return array_map('nestedLowercase', $value);
     }
@@ -80,7 +89,7 @@ function array_to_xml(array $arr, SimpleXMLElement $xml)
     return $xml;
 }
 
-function removeNamespaceFromXML( $xml )
+function removeNamespaceFromXML($xml)
 {
     // Because I know all of the the namespaces that will possibly appear in 
     // in the XML string I can just hard code them and check for 
@@ -90,7 +99,7 @@ function removeNamespaceFromXML( $xml )
     $nameSpaceDefRegEx = '(\S+)=["\']?((?:.(?!["\']?\s+(?:\S+)=|[>"\']))+.)["\']?';
 
     // Cycle through each namespace and remove it from the XML string
-   foreach( $toRemove as $remove ) {
+    foreach ($toRemove as $remove) {
         // First remove the namespace from the opening of the tag
         $xml = str_replace('<' . $remove . ':', '<', $xml);
         // Now remove the namespace from the closing of the tag

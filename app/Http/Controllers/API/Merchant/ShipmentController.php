@@ -78,7 +78,7 @@ class ShipmentController extends MerchantController
     {
         return DB::transaction(function () use($request) {
             $shipmentRequest = $request->json()->all();
-            return $this->shipment('EXP',$shipmentRequest);
+            return $this->shipment('EXP',[$shipmentRequest]);
         });
     }
 
@@ -109,38 +109,38 @@ class ShipmentController extends MerchantController
             if(!isset($merchentInfo['country_code']))
                 return $this->error('Merchent country is empty',422);
     
-            unset($shipment['sender_address_id']);
+            // unset($shipment['sender_address_id']);
 
             $provider = $providers[$shipment['carrier_id']];
 
-            $shipment['sender_email'] = $merchentInfo['email'];
-            $shipment['sender_name'] = $merchentInfo['name'];
-            $shipment['sender_phone'] = $address['phone'];
-            $shipment['sender_country'] = $merchentInfo['country_code'];
-            $shipment['sender_city'] = $address['city_code'];
-            $shipment['sender_area'] = $address['area'];                
-            $shipment['sender_address_description'] = $address['description'];
+            // $shipment['sender_email'] = $merchentInfo['email'];
+            // $shipment['sender_name'] = $merchentInfo['name'];
+            // $shipment['sender_phone'] = $address['phone'];
+            // $shipment['sender_country'] = $merchentInfo['country_code'];
+            // $shipment['sender_city'] = $address['city_code'];
+            // $shipment['sender_area'] = $address['area'];                
+            // $shipment['sender_address_description'] = $address['description'];
 
-            $shipment['group'] = $type;
-            if($type == 'DOM') {
-                $shipment['consignee_country'] = $merchentInfo['country_code'];
+            // $shipment['group'] = $type;
+            // if($type == 'DOM') {
+            //     $shipment['consignee_country'] = $merchentInfo['country_code'];
 
-                $domestic_rates = $dom_rates->where('code','=',$address['city_code'])->first();
-                $shipment['fees'] = $domestic_rates['price'] ?? 0;
-                if($shipment == 0)
-                    return $this->error('Domestic Rates Is Zero');
-            } else {
-                $shipment['fees'] = $this->calculateFees($provider,$shipment['carrier_id'],$shipment['consignee_country'],$shipment['actual_weight']);
-            }
-            $shipment['internal_awb'] = randomNumber();
-            $shipment['merchant_id'] = Request()->user()->merchant_id;            
-            $shipment['created_by'] = Request()->user()->id;
+            //     $domestic_rates = $dom_rates->where('code','=',$address['city_code'])->first();
+            //     $shipment['fees'] = $domestic_rates['price'] ?? 0;
+            //     if($shipment == 0)
+            //         return $this->error('Domestic Rates Is Zero');
+            // } else {
+            //     $shipment['fees'] = $this->calculateFees($provider,$shipment['carrier_id'],$shipment['consignee_country'],$shipment['actual_weight']);
+            // }
+            // $shipment['internal_awb'] = randomNumber();
+            // $shipment['merchant_id'] = Request()->user()->merchant_id;            
+            // $shipment['created_by'] = Request()->user()->id;
 
             $usedProvider[] = $provider;
             $providerShipemntsArr[$provider][] = $this->generateShipmentArray($provider,$address,$shipment);
             $shipments[$provider][] = $shipment;
         }
-        
+        dd($providerShipemntsArr);
         $links = [];
         foreach($usedProvider as $provide){
             $result = $this->generateShipment($provide,$providerShipemntsArr[$provide]);
