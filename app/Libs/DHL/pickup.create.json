@@ -36,7 +36,7 @@
         "ReadyByTime": "10:20",
         "CloseTime": "14:20",
         "Pieces": "1",
-        "RemotePickupFlag": "Y",
+        "RemotePickupFlag": "N",
         "weight": {
             "Weight": "10",
             "WeightUnit": "K"

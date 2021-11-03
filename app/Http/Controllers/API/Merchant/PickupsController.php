@@ -3,52 +3,56 @@
 namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Requests\Merchant\PickuptRequest;
-use App\Models\Carriers;
 use Illuminate\Support\Facades\DB;
+
 use App\Models\Pickup;
+use App\Models\Carriers;
 
 class PickupsController extends MerchantController
 {
     public function index(PickuptRequest $request)
     {
-
     }
 
     public function store(PickuptRequest $request)
     {
         $merchentInfo = $this->getMerchentInfo();
         $merchentAddresses = collect($merchentInfo->addresses);
-        
-        $address = $merchentAddresses->where('id','=',$request->address_id)->first();
-        if($address == null)
-            return $this->error('address id is not valid',400);
 
-        $type = Carriers::findOrfail($request->carrier_id)->name;
-        $final = DB::transaction(function () use($request,$address,$type) {
-            $data = $request->json()->all();
-            $pickupInfo = $this->generatePickup($type,$request->pickup_date,$address);
-    
-            $data['merchant_id'] = $request->user()->merchant_id;
+        $data = $request->validated();
+        $address = $merchentAddresses->where('id', '=', $data['address_id'])->first();
+        if ($address == null)
+            return $this->error('address id is not valid', 400);
+        unset($data['address_id']);
+
+        $provider = Carriers::findOrfail($data['carrier_id'])->name;
+        DB::transaction(function () use ($data, $address, $provider,$merchentInfo) {
+            $pickupInfo = $this->generatePickup($provider, $data['pickup_date'], $address);
+
+            $data['merchant_id'] = $merchentInfo->id;
             $data['hash'] = $pickupInfo['guid'];
             $data['cancel_ref'] = $pickupInfo['id'];
-    
-            Pickup::create($data);
+
+            Pickup::updateOrCreate(
+                ['merchant_id' => $merchentInfo->id,'hash' => $pickupInfo['guid'],'carrier_id' => $data['carrier_id']],
+                ['merchant_id' => $merchentInfo->id,'hash' => $pickupInfo['guid'], 'cancel_ref' => $pickupInfo['id'],'carrier_id' => $data['carrier_id'] , 'pickup_date' => $data['pickup_date']],
+            );
         });
 
-        return $this->response($final);
+        return $this->successful();
     }
 
     public function cancel(PickuptRequest $request)
     {
-        $data = Pickup::where('merchant_id',Request()->user()->merchant_id)
-            ->where('carrier_id',$request->carrier_id)
-            ->where('id',$request->pickup_id)
+        $data = Pickup::where('merchant_id', Request()->user()->merchant_id)
+            ->where('carrier_id', $request->carrier_id)
+            ->where('id', $request->pickup_id)
             ->select('hash')
             ->first();
-        if($data == null)
+        if ($data == null)
             $this->error('requested data invalid');
 
-        $this->cancelPickup('Aramex',$data->hash);
+        $this->cancelPickup('Aramex', $data->hash);
         return $this->successful('The pickup has been canceled successfully');
     }
 }

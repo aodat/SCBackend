@@ -63,6 +63,23 @@ function InternalAWBExists($number) {
     return Shipment::where('internal_awb',$number)->exists();
 }
 
+function nestedLowercase($value) {
+    if (is_array($value)) {
+        return array_map('nestedLowercase', $value);
+    }
+    return strtolower($value);
+}
+
+function array_to_xml(array $arr, SimpleXMLElement $xml)
+{
+    foreach ($arr as $k => $v) {
+        is_array($v)
+            ? array_to_xml($v, $xml->addChild($k))
+            : $xml->addChild($k, $v);
+    }
+    return $xml;
+}
+
 function removeNamespaceFromXML( $xml )
 {
     // Because I know all of the the namespaces that will possibly appear in 
@@ -94,15 +111,4 @@ function XMLToArray($xml)
 {
     // One function to both clean the XML string and return an array
     return json_decode(json_encode(simplexml_load_string(removeNamespaceFromXML($xml))), true);
-}
-
-
-function array_to_xml(array $arr, SimpleXMLElement $xml)
-{
-    foreach ($arr as $k => $v) {
-        is_array($v)
-            ? array_to_xml($v, $xml->addChild($k))
-            : $xml->addChild($k, $v);
-    }
-    return $xml;
 }
