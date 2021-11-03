@@ -3,20 +3,11 @@ namespace Libs;
 
 use Carbon\Carbon;
 
-use Mtc\Dhl\Client\Web;
-
-use Mtc\Dhl\Entity\GB\BookPURequest;
-use Mtc\Dhl\Entity\GB\ShipmentRequest;
-use Mtc\Dhl\Entity\GB\CancelPickupRequest;
-use Mtc\Dhl\Datatype\GB\Piece;
-
-
-use Illuminate\Support\Facades\Http;
-
 use App\Exceptions\CarriersException;
+
 use App\Models\Merchant;
 use App\Models\Pickup;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx\Rels;
+
 use SimpleXMLElement;
 
 class DHL
