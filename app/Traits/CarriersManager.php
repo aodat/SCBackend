@@ -42,23 +42,21 @@ trait CarriersManager {
         return Merchant::findOrFail(Request()->user()->merchant_id);
     }
 
-    public function generateShipment($provider,$shipmentArray)
+    public function generateShipment($provider,$merchantInfo = null ,$shipmentArray)
     {
         $this->loadProvider($provider);
-        $shipments = $this->adapter->createShipment($shipmentArray);
-        
-        $link = mergePDF((collect($shipments)->pluck('file')));
-
+        $shipments = $this->adapter->createShipment($merchantInfo,$shipmentArray);
+        dd($provider,$shipments);
         return [
-            'link' => $link,
-            'id' => collect($shipments)->pluck('id')
+            'link' => collect($shipments)->pluck('file'),
+            'id' => ($provider == 'Aramex') ? collect($shipments)->pluck('id') : $shipments['id']
         ];
     }
 
-    public function generateShipmentArray($provider,$address,$shipmentInfo)
+    public function generateShipmentArray($provider,$shipmentInfo)
     {
         $this->loadProvider($provider);
-        return $this->adapter->shipmentArray($this->merchantInfo,$address,$shipmentInfo);
+        return $this->adapter->shipmentArray($this->merchantInfo,$shipmentInfo);
     }
 
     public function generatePickup($provider,$pickup_date,$address)

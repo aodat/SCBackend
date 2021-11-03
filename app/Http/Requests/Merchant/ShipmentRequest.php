@@ -24,13 +24,15 @@ class ShipmentRequest extends MerchantRequest
         $path = Request()->route()->uri;
         if($this->method() == 'POST' && (strpos($path,'shipments/express/create') !== false || strpos($path,'shipments/domestic/create') !== false)) {
             // Check the type of shipment
-
             $type = '';
-            if(strpos($path,'shipments/domestic/create') !== false)
+            $condition = 'not_in';
+            if(strpos($path,'shipments/domestic/create') !== false) {
+                $condition = 'in';
                 $type = '*.';
+            }
 
             $validation = [
-                    $type.'carrier_id' => 'required|exists:carriers,id',
+                    $type.'carrier_id' => 'required|exists:carriers,id|'.$condition.':1', // it's mean for aramex only
                     $type.'sender_address_id' => 'required',
 
                     $type.'consignee_name' => 'required|min:6|max:255',
