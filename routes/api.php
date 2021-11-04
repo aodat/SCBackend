@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 // Auth
 use App\Http\Controllers\API\AuthController;
 
+// Team
+use App\Http\Controllers\API\TeamController;
+
 // Merchant
 use App\Http\Controllers\API\Merchant\MerchantController;
 use App\Http\Controllers\API\Merchant\AddressesController;
@@ -36,7 +39,6 @@ Route::group(['middleware' => ['json.response']], function () {
 
     Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
-        
     Route::group(['middleware' => ['auth:api']], function () {
         // MerchantController
         Route::group(['prefix' => 'merchant/'], function () {
@@ -88,7 +90,10 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('invoice/create',[InvoiceController::class,'store']);
             Route::delete('invoice/{invoice_id}',[InvoiceController::class,'delete']);
         });
+        Route::group(['prefix' => 'team/'], function () {
+            Route::post('member/invite', [TeamController::class, 'inviteMember']);
 
+        });
         Route::post('auth/logout',[AuthController::class, 'logout']);
     });
     Route::get('process/shipments',[ShipmentController::class, 'shipmentProcessSQS']);

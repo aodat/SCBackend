@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Models\Merchant;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
