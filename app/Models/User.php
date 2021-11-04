@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+
 use App\Notifications\MailResetPasswordNotification as MailResetPasswordNotification;
 
 class User extends Authenticatable
@@ -19,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'merchant_id' , 'name', 'email', 'password','phone', 'pin_code',
+        'merchant_id' , 'name', 'email', 'password','phone', 'pin_code','role','is_owner',
         'is_email_verified' ,'is_phone_verified','email_verified_at','phone_verified_at','merchant_id'
     ];
  
@@ -29,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password' , 'remember_token' , 'pin_code',
+        'password' , 'remember_token' , 'pin_code','role',
         'is_email_verified' ,'is_phone_verified','email_verified_at','phone_verified_at'
     ];
  
@@ -40,6 +41,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'is_owner' => 'boolean'
     ];
 
     public function sendPasswordResetNotification($token)

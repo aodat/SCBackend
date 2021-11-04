@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+
+use Illuminate\Support\Facades\URL;
+use Illuminate\Validation\Rule;
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class TeamRequest extends FormRequest
@@ -16,6 +20,14 @@ class TeamRequest extends FormRequest
         return true;
     }
 
+    public function all($keys = null)
+    {
+        $path = Request()->route()->uri;
+        $data = parent::all($keys);
+        if ($this->method() == 'DELETE' && strpos($path,'team/member/{user_id}') !== false)
+            $data['id'] = $this->route('user_id');
+        return $data;
+    }
     /**
      * Get the validation rules that apply to the request.
      *
@@ -23,12 +35,33 @@ class TeamRequest extends FormRequest
      */
     public function rules()
     {
-        $base_url = Request()->path();
-        if(strpos($base_url,'team/member/invite') !== false) {
+        $path = Request()->route()->uri;
+        if (strpos($path, 'team/member/invite') !== false) {
             return [
                 'email' => 'required|string|email|max:255|unique:users'
             ];
+        } else if (strpos($path, 'team/member/{user_id}') !== false) {
+            return [
+                'id' => [
+                    'required',
+                    Rule::exists('users')->where(function ($query) {
+                        return $query->where('is_owner', false)
+                                ->where('merchant_id',Request()->user()->merchant_id);
+                    }),
+                ]
+            ];
+        } else if ($this->method() == 'PUT' && strpos($path, 'member') !== false) {
+            return [
+                'id' => [
+                    'required',
+                    Rule::exists('users')->where(function ($query) {
+                        return $query->where('merchant_id',Request()->user()->merchant_id)->where('status','active');
+                    }),
+                ],
+                'role' => 'required|in:admin,member'
+            ];
         }
+        dd('xxxx');
         return [];
     }
 }

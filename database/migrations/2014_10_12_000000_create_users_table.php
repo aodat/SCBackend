@@ -24,7 +24,10 @@ class CreateUsersTable extends Migration
             // $table->tinyInteger('is_phone_verified')->default('0');
             $table->timestamp('email_verified_at')->nullable();
             // $table->timestamp('phone_verified_at')->nullable();
-            $table->string('password')->nullable();;
+            $table->string('password')->nullable();
+            $table->enum('role',['admin','member'])->default('member');
+            $table->enum('status',['active','inactive'])->default('active');
+            $table->boolean('is_owner')->default(false);
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');

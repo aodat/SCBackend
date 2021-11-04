@@ -23,7 +23,7 @@ class AuthController extends Controller
 {
     public function login(AuthRequest $request)
     {
-        if (!auth()->attempt(['email' => $request->email,'password' => $request->password])) {
+        if (!auth()->attempt(['email' => $request->email,'password' => $request->password,'status' => 'active'])) {
             return $this->error('Invalid Email or Password',400);
         }
         $userData = auth()->user();
@@ -53,7 +53,9 @@ class AuthController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'phone' => $request->phone
+                'phone' => $request->phone,
+                'is_owner' => true,
+                'role' => 'admin'
             ]
         );
         $user->sendEmailVerificationNotification();

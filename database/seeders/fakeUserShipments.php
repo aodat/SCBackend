@@ -39,6 +39,8 @@ class fakeUserShipments extends Seeder
             'name' => $name,
             'email' => $email,
             'phone' => $phone,
+            'role' => 'admin',
+            'is_owner' => true,
             'password' => Hash::make('123456789'),
             'created_at' => Carbon::now(),
             'updated_at'=> Carbon::now()
