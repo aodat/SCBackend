@@ -1,0 +1,52 @@
+{
+    "originDetail": {
+        "pickupAddressType": "ACCOUNT",
+        "pickupLocation": {
+            "contact": {
+                "companyName": "",
+                "personName": "",
+                "phoneNumber": "",
+                "phoneExtension": ""
+            },
+            "address": {
+                "streetLines": [],
+                "urbanizationCode": "",
+                "city": "",
+                "stateOrProvinceCode": "",
+                "postalCode": "",
+                "countryCode": "",
+                "residential": false,
+                "addressClassification": "MIXED"
+            },
+            "accountNumber": {
+                "value": ""
+            },
+            "deliveryInstructions": "deliveryInstructions"
+        },
+        "readyDateTimestamp": "",
+        "customerCloseTime": "18:00:00",
+        "pickupDateType": "SAME_DAY",
+        "packageLocation": "FRONT",
+        "buildingPart": "APARTMENT",
+        "buildingPartDescription": "",
+        "earlyPickup": false,
+        "suppliesRequested": "",
+        "geographicalPostalCode": "geographicalPostalCode"
+    },
+
+    "carrierCode": "FDXE",
+    "remarks": "",
+    "countryRelationships": "DOMESTIC",
+    "pickupType": "ON_CALL",
+    "trackingNumber": "",
+    "pickupNotificationDetail": {
+        "emailDetails": [
+            {
+                "address": "",
+                "locale": "en_US"
+            }
+        ],
+        "format": "HTML",
+        "userMessage": "This is the user message"
+    }
+}

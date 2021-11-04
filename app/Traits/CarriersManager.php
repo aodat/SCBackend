@@ -46,7 +46,7 @@ trait CarriersManager {
     {
         $this->loadProvider($provider);
         $shipments = $this->adapter->createShipment($merchantInfo,$shipmentArray);
-        dd($provider,$shipments);
+
         return [
             'link' => collect($shipments)->pluck('file'),
             'id' => ($provider == 'Aramex') ? collect($shipments)->pluck('id') : $shipments['id']
