@@ -23,10 +23,18 @@ class AuthController extends Controller
 {
     public function login(AuthRequest $request)
     {
-        if (!auth()->attempt(['email' => $request->email,'password' => $request->password,'status' => 'active'])) {
-            return $this->error('Invalid Email or Password',400);
+        if (!auth()->attempt(['email' => $request->email, 'password' => $request->password, 'status' => 'active'])) {
+            return $this->error('Invalid Email or Password', 400);
         }
+
         $userData = auth()->user();
+
+        if($userData->merchant_id)
+        {
+            $merchant = Merchant::find($userData->merchant_id);
+            if(!$merchant->is_active)
+                return $this->error('Mechant Is In-Active', 403);
+        }
 
         $userData['token'] = $userData->createToken('users', [$userData->role])->accessToken;
 
@@ -46,8 +54,8 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'type' => $request->type,
                 'phone' => $request->phone,
-                'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'),true)),
-                'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'),true))
+                'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'), true)),
+                'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'), true))
             ]
         );
         $user = User::create(
@@ -62,7 +70,7 @@ class AuthController extends Controller
             ]
         );
         $user->sendEmailVerificationNotification();
-        return $this->response([],'User Created Successfully',200);
+        return $this->response([], 'User Created Successfully', 200);
     }
 
     // Forget Password
@@ -77,7 +85,7 @@ class AuthController extends Controller
             $code = 200;
         }
 
-        $this->response([],$msg,$code);
+        $this->response([], $msg, $code);
     }
 
     // Reset password
@@ -103,13 +111,14 @@ class AuthController extends Controller
             $code = 200;
         }
 
-        $this->response([],$msg,$code);
+        $this->response([], $msg, $code);
     }
 
     // Verify Email
-    public function verifyEmail(Request $request) {
+    public function verifyEmail(Request $request)
+    {
         if (!$request->hasValidSignature()) {
-            return $this->response([],'Invalid/Expired url provided',401);
+            return $this->response([], 'Invalid/Expired url provided', 401);
         }
 
         $user = User::findOrFail($request->id);
@@ -117,26 +126,27 @@ class AuthController extends Controller
         if (!$user->hasVerifiedEmail()) {
             $user->markEmailAsVerified();
 
-            User::where('id' , $user->id)->update(['is_email_verified' => true]);
-            Merchant::where('email' , $user->email)->update(['is_email_verified' => true]);
+            User::where('id', $user->id)->update(['is_email_verified' => true]);
+            Merchant::where('email', $user->email)->update(['is_email_verified' => true]);
         }
-        return $this->response([],'Email verified sucessfully',200);
+        return $this->response([], 'Email verified sucessfully', 200);
     }
-    
+
     // Resend Email for verfification
-    public function resend() {
+    public function resend()
+    {
         if (auth()->user()->hasVerifiedEmail())
-            return $this->response([],'Email already verified.',200);
-    
+            return $this->response([], 'Email already verified.', 200);
+
         auth()->user()->sendEmailVerificationNotification();
-    
-        return $this->response([],'Email verification link sent on your email id.',200);
+
+        return $this->response([], 'Email verification link sent on your email id.', 200);
     }
 
     // Logout
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return $this->response([],'User Log Out.',200);
+        return $this->response([], 'User Log Out.', 200);
     }
 }

@@ -47,7 +47,21 @@ class fakeUserShipments extends Seeder
         ];
         DB::table('merchants')->insert($merchant);
         DB::table('users')->insert($user);
-        
+
+
+        $user = [
+            'merchant_id' => null,
+            'name' => 'Super Admin',
+            'email' => 'admin@shipcash.net',
+            'phone' => null,
+            'role' => 'super_admin',
+            'is_owner' => true,
+            'password' => Hash::make('123456789'),
+            'created_at' => Carbon::now(),
+            'updated_at'=> Carbon::now()
+        ];
+        DB::table('users')->insert($user);
+
         $carriersArr = ['aramex','dhl','stripe','fedex'];
         for($i=0;$i<4;$i++){
             $carriers = [

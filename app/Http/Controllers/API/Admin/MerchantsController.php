@@ -3,23 +3,45 @@
 namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Merchant;
+use App\Http\Requests\Admin\MerchantRequest;
 use Illuminate\Http\Request;
+
+use App\Models\Merchant;
+use App\Models\User;
 
 class MerchantsController extends Controller
 {
-    public function index(Request $request)
+    public function index(MerchantRequest $request)
     {
+        $id = $request->id ?? '';
+        $name = $request->name ?? '';
+        $email = $request->email;
 
+        $merchants = Merchant::withTrashed();
+        if ($name)
+            $merchants->where('name', 'like', '%' . $name . '%');
+        if ($email)
+            $merchants->where('email', 'like', '%' . $email . '%');
+        if ($id)
+            $merchants->where('id', $id);
+
+        $paginated = $merchants->paginate(request()->perPage ?? 10);
+        return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
     }
 
-    public function store()
+    public function show(MerchantRequest $request, $id)
     {
-        Merchant::create(
-            [
+        $merchant = Merchant::findOrFail($id);
+        return $this->response($merchant, 'Data Retrieved Successfully', 200, false);
+    }
 
-            ]
-        );
-        $this->successful('Merchant Created Suceffuly');
+    public function update(MerchantRequest $request)
+    {
+        $merchant = Merchant::findOrFail($request->merchant_id);
+        $merchant->type = $request->type;
+        $merchant->is_active = $request->is_active;
+        $merchant->save();
+        
+        return $this->successful('Updated Sucessfully');
     }
 }

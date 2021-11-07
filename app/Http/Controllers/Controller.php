@@ -13,10 +13,9 @@ use App\Traits\CarriersManager;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    use ResponseHandler,CarriersManager;
+    use ResponseHandler, CarriersManager;
     public function unauthenticated()
     {
-        
         return $this->error('unauthenticated', 403);
     }
 }
