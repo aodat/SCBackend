@@ -7,8 +7,8 @@ use App\Http\Requests\Admin\MerchantRequest;
 use Illuminate\Http\Request;
 
 use App\Models\Merchant;
-use App\Models\User;
 
+use Illuminate\Support\Facades\DB;
 class MerchantsController extends Controller
 {
     public function index(MerchantRequest $request)
@@ -17,7 +17,7 @@ class MerchantsController extends Controller
         $name = $request->name ?? '';
         $email = $request->email;
 
-        $merchants = Merchant::withTrashed();
+        $merchants = DB::table('merchants');
         if ($name)
             $merchants->where('name', 'like', '%' . $name . '%');
         if ($email)

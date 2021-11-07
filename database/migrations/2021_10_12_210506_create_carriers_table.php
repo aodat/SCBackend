@@ -15,9 +15,9 @@ class CreateCarriersTable extends Migration
     {
         Schema::create('carriers', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 64);
-            $table->string('email', 64);
-            $table->string('phone', 16);
+            $table->string('name', 64)->unique();
+            $table->string('email', 64)->unique();
+            $table->string('phone', 16)->unique();
             $table->double('balance', 8, 2)->default('0');;
             $table->enum('country_code', ['JO']);
             $table->enum('currency_code', ['JOD']);

@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\Admin\MerchantsController;
-
+use App\Http\Controllers\API\Admin\CarriersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,11 +26,13 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('{merchant_id}/info', [MerchantsController::class, 'show']);
             Route::put('update', [MerchantsController::class, 'update']);
         });
-        Route::group(['prefix' => 'carirese/'], function () {
-            // List
-            // Show
-            // Delete
-            // Edit
+
+        Route::group(['prefix' => 'carriers/'], function () {
+            Route::get('lists', [CarriersController::class, 'index']);
+            Route::get('{carrier_id}/info', [CarriersController::class, 'show']);
+            
+            Route::post('create', [CarriersController::class, 'store']);
+            Route::put('{carrier_id}/update', [CarriersController::class, 'update']);
         });
     });
     Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');

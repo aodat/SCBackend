@@ -28,12 +28,12 @@ class CreateMerchantsTable extends Migration
             $table->json('payment_methods')->nullable();
             $table->json('domestic_rates')->nullable();
             $table->json('express_rates')->nullable();
-            $table->json('senders')->nullable();
+            // $table->json('senders')->nullable();
             $table->enum('type', ['individual','corporate']);
             $table->tinyInteger('is_email_verified')->default('0');
             $table->tinyInteger('is_phone_verified')->default('0');
             $table->tinyInteger('is_documents_verified')->default('0');
-            $table->tinyInteger('is_active')->default('0');
+            $table->tinyInteger('is_active')->default('1');
             $table->tinyInteger('is_instant_payment_active')->default('0');
             $table->timestamps();
         });

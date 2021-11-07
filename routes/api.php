@@ -39,7 +39,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
     Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
-    Route::group(['middleware' => ['auth:api']], function () {
+    Route::group(['middleware' => ['auth:api','check.merchant']], function () {
         // MerchantController
         Route::group(['prefix' => 'merchant/'], function () {
             // Dashboard Information 
