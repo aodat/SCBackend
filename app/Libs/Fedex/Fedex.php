@@ -79,14 +79,60 @@ class Fedex
     {
     }
 
-    public function createShipment()
+    public function createShipment($merchentInfo, $shipmentInfo)
     {
         $payload = $this->bindJsonFile('shipment.create.json');
-        $payload['requestedShipment']['shipDatestamp'] = '';// Dates 
+        $payload['requestedShipment']['shipDatestamp'] = ''; // Dates 
 
-        $payload['totalDeclaredValue']['amount'] = '';//  
-        $payload['totalDeclaredValue']['currency'] = 'USD';//
+        $payload['totalDeclaredValue']['amount'] = $shipmentInfo['cod'] / 0.71; //  
+        $payload['totalDeclaredValue']['currency'] = 'USD';
 
+        $payload['requestedShipment']['shipper']['address'] = [
+            'streetLines' => [
+                $shipmentInfo['sender_address_description']
+            ],
+            'city' => $shipmentInfo['sender_city'],
+            'stateOrProvinceCode' => $merchentInfo->country_code,
+            'postalCode' => '',
+            'countryCode' =>  $merchentInfo->country_code,
+            'residential' => false
+        ];
+        $payload['requestedShipment']['shipper']['contact'] = [
+            'personName' => $shipmentInfo['sender_name'],
+            'emailAddress' => $merchentInfo->email,
+            'phoneExtension' => '',
+            'phoneNumber' => $shipmentInfo['sender_phone'],
+            'companyName' => $shipmentInfo['sender_name']
+        ];
+        
+        $payload['recipients']['address'] = [
+            'streetLines' => [$shipmentInfo['consignee_address_description']],
+            'city' => $shipmentInfo['consignee_city'],
+            'postalCode' => '',
+            'stateOrProvinceCode' => $shipmentInfo['consignee_country'],
+            'residential' => $shipmentInfo['consignee_zip_code'] ?? ''
+        ];
+        
+        $payload['recipients']['contact'] = [
+            'personName' =>  $shipmentInfo['consignee_name'],
+            'emailAddress' => $shipmentInfo['consignee_email'],
+            'phoneExtension' => '',
+            'phoneNumber' => $shipmentInfo['consignee_phone'],
+            'companyName' => $shipmentInfo['consignee_name'],
+            'deliveryInstructions' => ''
+        ];
+        
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json'
+        ])
+            ->withToken($this->access_key)
+            ->asForm()
+            ->put($this->base_url . '/pickup/v1/pickups/cancel', $payload);
+
+        if (!$response->successful())
+            throw new CarriersException('Fedex Create Pickup – Something Went Wrong');
+
+        dd($response->json());
     }
 
     public function bindJsonFile($file)

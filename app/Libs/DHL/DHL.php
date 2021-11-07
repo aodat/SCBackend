@@ -128,7 +128,7 @@ class DHL
         $payload['Consignee']['AddressLine3'] = $shipmentInfo['consignee_address_description'];
         $payload['Consignee']['StreetName'] =  $shipmentInfo['consignee_address_description'];
         $payload['Consignee']['BuildingName'] =  $shipmentInfo['consignee_address_description'];
-        $payload['Consignee']['StreetNumber'] = 'XYZ';
+        $payload['Consignee']['StreetNumber'] = '';
 
         $payload['Consignee']['City'] = $shipmentInfo['consignee_city'];
         $payload['Consignee']['PostalCode'] = $shipmentInfo['consignee_zip_code'] ?? '';
@@ -154,7 +154,7 @@ class DHL
         $payload['Shipper']['CountryName'] = $merchentInfo->country_code;
         $payload['Shipper']['StreetName'] =  $shipmentInfo['sender_area'];
         $payload['Shipper']['BuildingName'] =  $shipmentInfo['sender_area'];
-        $payload['Shipper']['StreetNumber'] = 'XYZ';
+        $payload['Shipper']['StreetNumber'] = '';
 
         $payload['Shipper']['Contact']['PersonName'] = $shipmentInfo['sender_name'];
         $payload['Shipper']['Contact']['PhoneNumber'] = $shipmentInfo['sender_phone'];
