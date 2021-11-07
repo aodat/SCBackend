@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Merchant;
 
 use Illuminate\Support\Facades\DB;
+
 class MerchantsController extends Controller
 {
     public function index(MerchantRequest $request)
@@ -29,6 +30,15 @@ class MerchantsController extends Controller
         return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
     }
 
+    public function merchantConfig(MerchantRequest $request)
+    {
+        $data = $request->validated();
+
+        $merchant = Merchant::findOrFail($data['merchant_id']);
+        $type = $data['type'];
+        return $this->response($merchant->$type, 'Data Retrieved Successfully', 200);
+    }
+
     public function show(MerchantRequest $request, $id)
     {
         $merchant = Merchant::findOrFail($id);
@@ -41,7 +51,7 @@ class MerchantsController extends Controller
         $merchant->type = $request->type;
         $merchant->is_active = $request->is_active;
         $merchant->save();
-        
+
         return $this->successful('Updated Sucessfully');
     }
 }

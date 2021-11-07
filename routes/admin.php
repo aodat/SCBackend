@@ -25,6 +25,15 @@ Route::group(['middleware' => ['json.response']], function () {
 
             Route::get('{merchant_id}/info', [MerchantsController::class, 'show']);
             Route::put('update', [MerchantsController::class, 'update']);
+
+            // type
+            // documents
+            // addresses
+            // payment_methods
+            // domestic_rates
+            // express_rates
+            Route::get('{merchant_id}/{type}',[MerchantsController::class, 'merchantConfig']);
+
         });
 
         Route::group(['prefix' => 'carriers/'], function () {
