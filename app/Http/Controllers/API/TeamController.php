@@ -16,8 +16,10 @@ use Illuminate\Support\Str;
 use Laravel\Passport\Token;
 class TeamController extends Controller
 {
+
     public function inviteMember(TeamRequest $request)
     {
+        dd('xxx');
         DB::transaction(function () use ($request) {
             $password = Str::random(8);
             $user = User::create(

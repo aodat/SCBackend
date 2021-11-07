@@ -27,7 +27,10 @@ class AuthController extends Controller
             return $this->error('Invalid Email or Password',400);
         }
         $userData = auth()->user();
-        $userData['token'] = $userData->createToken('users')->accessToken;
+
+        $userData['token'] = $userData->createToken('users', [$userData->role])->accessToken;
+
+        // $userData['token'] = $userData->createToken('users')->accessToken;
         return $this->response(
             $userData,
             'User Login Successfully',
