@@ -81,6 +81,12 @@ class Fedex
 
     public function createShipment()
     {
+        $payload = $this->bindJsonFile('shipment.create.json');
+        $payload['requestedShipment']['shipDatestamp'] = '';// Dates 
+
+        $payload['totalDeclaredValue']['amount'] = '';//  
+        $payload['totalDeclaredValue']['currency'] = 'USD';//
+
     }
 
     public function bindJsonFile($file)
