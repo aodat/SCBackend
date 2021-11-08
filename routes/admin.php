@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\Admin\MerchantsController;
 use App\Http\Controllers\API\Admin\CarriersController;
 use App\Http\Controllers\API\Admin\DomesticRatesController;
+use App\Http\Controllers\API\Admin\AddressesController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,15 +35,21 @@ Route::group(['middleware' => ['json.response']], function () {
             // payment_methods
             // express_rates
 
-            Route::get('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'index']);
-            Route::post('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'storeOrUpdate']);
+            Route::get('{merchant_id}/domestic_rates', [DomesticRatesController::class, 'index']);
+            Route::post('{merchant_id}/domestic_rates', [DomesticRatesController::class, 'storeOrUpdate']);
 
+            Route::get('{merchant_id}/addresses', [AddressesController::class, 'index']);
+
+            Route::put('{merchant_id}/addresses', [AddressesController::class, 'update']);
+
+
+            // 
         });
 
         Route::group(['prefix' => 'carriers/'], function () {
             Route::get('lists', [CarriersController::class, 'index']);
             Route::get('{carrier_id}/info', [CarriersController::class, 'show']);
-            
+
             Route::post('create', [CarriersController::class, 'store']);
             Route::put('{carrier_id}/update', [CarriersController::class, 'update']);
         });
