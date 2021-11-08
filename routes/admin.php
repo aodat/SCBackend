@@ -8,6 +8,7 @@ use App\Http\Controllers\API\Admin\MerchantsController;
 use App\Http\Controllers\API\Admin\CarriersController;
 use App\Http\Controllers\API\Admin\DomesticRatesController;
 use App\Http\Controllers\API\Admin\ExpressRatesController;
+use App\Http\Controllers\API\Admin\PaymentMethodsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,16 +29,16 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('{merchant_id}/info', [MerchantsController::class, 'show']);
             Route::put('update', [MerchantsController::class, 'update']);
 
-            // type
             // documents
-            // addresses
-            // payment_methods
-
+            
             Route::get('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'index']);
             Route::post('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'update']);
 
             Route::get('{merchant_id}/express_rates',[ExpressRatesController::class, 'index']);
             Route::post('{merchant_id}/express_rates',[ExpressRatesController::class, 'update']);
+
+            Route::get('{merchant_id}/payment_methods',[PaymentMethodsController::class, 'index']);
+            Route::post('{merchant_id}/payment_methods',[PaymentMethodsController::class, 'update']);
         });
 
         Route::group(['prefix' => 'carriers/'], function () {

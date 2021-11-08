@@ -20,8 +20,8 @@ trait ResponseHandler
                 'per_page' => intval($pagination['per_page'])
             ];
         }
-        else if(!empty($data))
-            $response['data'] = $data;
+        else
+            $response['data'] = $data ?? [];
         
         $response['meta']['code'] =  $status;
         $response['meta']['msg'] =  $msg;
