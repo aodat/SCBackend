@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\Admin\MerchantsController;
 use App\Http\Controllers\API\Admin\CarriersController;
+use App\Http\Controllers\API\Admin\DomesticRatesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,9 +31,10 @@ Route::group(['middleware' => ['json.response']], function () {
             // documents
             // addresses
             // payment_methods
-            // domestic_rates
             // express_rates
-            Route::get('{merchant_id}/{type}',[MerchantsController::class, 'merchantConfig']);
+
+            Route::get('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'index']);
+            Route::post('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'storeOrUpdate']);
 
         });
 

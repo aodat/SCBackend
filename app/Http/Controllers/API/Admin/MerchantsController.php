@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MerchantRequest;
-use Illuminate\Http\Request;
 
 use App\Models\Merchant;
 
@@ -30,15 +29,6 @@ class MerchantsController extends Controller
         return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
     }
 
-    public function merchantConfig(MerchantRequest $request)
-    {
-        $data = $request->validated();
-
-        $merchant = Merchant::findOrFail($data['merchant_id']);
-        $type = $data['type'];
-        return $this->response($merchant->$type, 'Data Retrieved Successfully', 200);
-    }
-
     public function show(MerchantRequest $request, $id)
     {
         $merchant = Merchant::findOrFail($id);
@@ -54,4 +44,19 @@ class MerchantsController extends Controller
 
         return $this->successful('Updated Sucessfully');
     }
+
+    public function merchantConfig(MerchantRequest $request)
+    {
+        $data = $request->validated();
+
+        $merchant = Merchant::findOrFail($data['merchant_id']);
+        $type = $data['type'];
+        return $this->response($merchant->$type, 'Data Retrieved Successfully', 200);
+    }
+
+    public function domesticRates(MerchantRequest $request)
+    {
+        dd($request->validated());
+    }
+
 }
