@@ -6,7 +6,7 @@ use Maatwebsite\Excel\Facades\Excel as Excel;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
-function uploadFiles($folder, $data, $type, $isOutput = false)
+function uploadFiles($folder, $data, $type = '', $isOutput = false)
 {
     $path = $folder . "/" . md5(Carbon::now());
     if (!$isOutput) {
