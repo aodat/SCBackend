@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DomesticRatesRequest extends FormRequest
+class ExpressRatesRequest extends FormRequest
 {
     public function all($keys = null)
     {
@@ -30,19 +30,17 @@ class DomesticRatesRequest extends FormRequest
     public function rules()
     {
         $path = Request()->route()->uri;
-        if($this->getMethod() == 'GET' && strpos($path,'{merchant_id}/domestic_rates') !== false) 
+        if ($this->getMethod() == 'GET' && strpos($path, '{merchant_id}/express_rates') !== false)
             return [
                 'merchant_id' => 'required|exists:merchants,id'
             ];
-        else if($this->getMethod() == 'POST' && strpos($path,'{merchant_id}/domestic_rates') !== false) 
+        else if ($this->getMethod() == 'POST' && strpos($path, '{merchant_id}/express_rates') !== false)
             return [
                 'merchant_id' => 'required|exists:merchants,id',
                 'carrier_id' => 'required|exists:carriers,id',
                 'id' => 'required',
-                'code' => 'required',
-                'price' => 'required|numeric',
-                'name_ar' => 'required',
-                'name_en' => 'required'
+                'additional' => 'required|numeric',
+                'basic' => 'required|numeric'
             ];
         return [];
     }

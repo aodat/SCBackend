@@ -2,24 +2,25 @@
 
 namespace App\Http\Controllers\API\Admin;
 
-use App\Exceptions\InternalException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\DomesticRatesRequest;
 
 use App\Models\Merchant;
+use App\Http\Requests\Admin\ExpressRatesRequest;
 
-class DomesticRatesController extends Controller
+use App\Exceptions\InternalException;
+class ExpressRatesController extends Controller
 {
-    public function index(DomesticRatesRequest $request)
+    
+    public function index(ExpressRatesRequest $request)
     {
         $data = $request->validated();
         $merchant = Merchant::findOrFail($data['merchant_id']);
-        return $this->response($merchant->domestic_rates, 'Data Retrieved Successfully', 200);
+        return $this->response($merchant->express_rates, 'Data Retrieved Successfully', 200);
     }
 
-    public function storeOrUpdate(DomesticRatesRequest $request)
+    public function storeOrUpdate(ExpressRatesRequest $request)
     {
-        $data = $request->validated();
+        $data = $request->all();
         $id = $data['id'] ?? null;
         $carrier_id = $data['carrier_id'];
         $merchant_id = $data['merchant_id'];
@@ -28,9 +29,9 @@ class DomesticRatesController extends Controller
         unset($data['merchant_id']);
 
         $merchant = Merchant::findOrFail($merchant_id);
-        $domestic_rates = $merchant->domestic_rates;
+        $express_rates = $merchant->express_rates;
         
-        $rates = collect($domestic_rates[$carrier_id]);
+        $rates = collect($express_rates[$carrier_id]['zones']);
 
         // update rate
         $rate = $rates->where('id', $id);
@@ -40,9 +41,9 @@ class DomesticRatesController extends Controller
         $rate[$current] = $data;
         $rates = $rates->replaceRecursive($rate);
 
-        $domestic_rates[$carrier_id] = $rates;
+        $express_rates[$carrier_id]['zones'] = $rates;
         
-        $merchant->update(['domestic_rates' => $domestic_rates]);
+        $merchant->update(['express_rates' => $express_rates]);
         return $this->successful('Updated Sucessfully');
     }
 }
