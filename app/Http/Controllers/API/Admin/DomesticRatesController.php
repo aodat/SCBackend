@@ -17,7 +17,7 @@ class DomesticRatesController extends Controller
         return $this->response($merchant->domestic_rates, 'Data Retrieved Successfully', 200);
     }
 
-    public function storeOrUpdate(DomesticRatesRequest $request)
+    public function update(DomesticRatesRequest $request)
     {
         $data = $request->validated();
         $id = $data['id'] ?? null;

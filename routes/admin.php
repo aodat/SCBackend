@@ -34,10 +34,10 @@ Route::group(['middleware' => ['json.response']], function () {
             // payment_methods
 
             Route::get('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'index']);
-            Route::post('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'storeOrUpdate']);
+            Route::post('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'update']);
 
             Route::get('{merchant_id}/express_rates',[ExpressRatesController::class, 'index']);
-            Route::post('{merchant_id}/express_rates',[ExpressRatesController::class, 'storeOrUpdate']);
+            Route::post('{merchant_id}/express_rates',[ExpressRatesController::class, 'update']);
         });
 
         Route::group(['prefix' => 'carriers/'], function () {

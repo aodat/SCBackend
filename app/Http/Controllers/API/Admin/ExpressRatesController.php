@@ -18,7 +18,7 @@ class ExpressRatesController extends Controller
         return $this->response($merchant->express_rates, 'Data Retrieved Successfully', 200);
     }
 
-    public function storeOrUpdate(ExpressRatesRequest $request)
+    public function update(ExpressRatesRequest $request)
     {
         $data = $request->all();
         $id = $data['id'] ?? null;
