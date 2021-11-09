@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\API\Admin\MerchantsController;
 use App\Http\Controllers\API\Admin\CarriersController;
 use App\Http\Controllers\API\Admin\DomesticRatesController;
+use App\Http\Controllers\API\Admin\ExpressRatesController;
+use App\Http\Controllers\API\Admin\PaymentMethodsController;
 use App\Http\Controllers\API\Admin\AddressesController;
-
-
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -24,31 +24,28 @@ use App\Http\Controllers\API\Admin\AddressesController;
 Route::group(['middleware' => ['json.response']], function () {
     Route::group(['middleware' => ['auth:api', 'scope:super_admin']], function () {
         Route::group(['prefix' => 'merchant/'], function () {
-            Route::get('lists', [MerchantsController::class, 'index']);
+            Route::get('list', [MerchantsController::class, 'index']);
 
             Route::get('{merchant_id}/info', [MerchantsController::class, 'show']);
             Route::put('update', [MerchantsController::class, 'update']);
+            
+            Route::get('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'index']);
+            Route::post('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'update']);
 
-            // type
-            // documents
-            // addresses
-            // payment_methods
-            // express_rates
+            Route::get('{merchant_id}/express_rates',[ExpressRatesController::class, 'index']);
+            Route::post('{merchant_id}/express_rates',[ExpressRatesController::class, 'update']);
 
-            Route::get('{merchant_id}/domestic_rates', [DomesticRatesController::class, 'index']);
-            Route::post('{merchant_id}/domestic_rates', [DomesticRatesController::class, 'storeOrUpdate']);
+            Route::get('{merchant_id}/payment_methods',[PaymentMethodsController::class, 'index']);
+            Route::post('{merchant_id}/payment_methods',[PaymentMethodsController::class, 'update']);
 
-            #route git addresses spacific merchant
             Route::get('{merchant_id}/addresses', [AddressesController::class, 'index']);
-          
-            #route update addresse spacific merchant
             Route::put('{merchant_id}/addresses', [AddressesController::class, 'update']);
         });
 
         Route::group(['prefix' => 'carriers/'], function () {
-            Route::get('lists', [CarriersController::class, 'index']);
+            Route::get('list', [CarriersController::class, 'index']);
             Route::get('{carrier_id}/info', [CarriersController::class, 'show']);
-
+            
             Route::post('create', [CarriersController::class, 'store']);
             Route::put('{carrier_id}/update', [CarriersController::class, 'update']);
         });
