@@ -34,7 +34,7 @@ class PaymentMethodsRequest extends FormRequest
             return [
                 'merchant_id' => 'required|exists:merchants,id'
             ];
-        else if ($this->getMethod() == 'POST' && strpos($path, '{merchant_id}/payment_methods') !== false)
+        else if ($this->getMethod() == 'PUT' && strpos($path, '{merchant_id}/payment_methods') !== false)
             return [
                 'merchant_id' => 'required|exists:merchants,id',
                 'id' => 'required'

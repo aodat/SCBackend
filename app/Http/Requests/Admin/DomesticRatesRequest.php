@@ -34,7 +34,7 @@ class DomesticRatesRequest extends FormRequest
             return [
                 'merchant_id' => 'required|exists:merchants,id'
             ];
-        else if($this->getMethod() == 'POST' && strpos($path,'{merchant_id}/domestic_rates') !== false) 
+        else if($this->getMethod() == 'PUT' && strpos($path,'{merchant_id}/domestic_rates') !== false) 
             return [
                 'merchant_id' => 'required|exists:merchants,id',
                 'carrier_id' => 'required|exists:carriers,id',

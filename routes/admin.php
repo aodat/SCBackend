@@ -30,13 +30,13 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::put('update', [MerchantsController::class, 'update']);
             
             Route::get('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'index']);
-            Route::post('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'update']);
+            Route::put('{merchant_id}/domestic_rates',[DomesticRatesController::class, 'update']);
 
             Route::get('{merchant_id}/express_rates',[ExpressRatesController::class, 'index']);
-            Route::post('{merchant_id}/express_rates',[ExpressRatesController::class, 'update']);
+            Route::put('{merchant_id}/express_rates',[ExpressRatesController::class, 'update']);
 
             Route::get('{merchant_id}/payment_methods',[PaymentMethodsController::class, 'index']);
-            Route::post('{merchant_id}/payment_methods',[PaymentMethodsController::class, 'update']);
+            Route::put('{merchant_id}/payment_methods',[PaymentMethodsController::class, 'update']);
 
             Route::get('{merchant_id}/addresses', [AddressesController::class, 'index']);
             Route::put('{merchant_id}/addresses', [AddressesController::class, 'update']);
