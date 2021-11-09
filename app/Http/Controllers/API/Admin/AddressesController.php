@@ -26,22 +26,23 @@ class AddressesController extends Controller
     {
         $data = $request->all();
         $id = $data['id'] ?? null;
-        $data['updated_at'] = Carbon::now();
+        $data['updated_at'] = Carbon::now()->format('Y-m-d H:i:s');
         $merchant_id = $data['merchant_id'];
 
         unset($data['merchant_id']);
 
         $merchant = Merchant::findOrFail($merchant_id);
         $addresses = $merchant->addresses;
-        
+            
         $addresses = collect($addresses);
-        $addresses = $addresses->where('id', $id);
-        if ($addresses->first() == null)
-            throw new InternalException('Payment id not Exists');
-        $current = $addresses->keys()->first();
+        $addresse = $addresses->where('id', $id);
+        
+        if ($addresse->first() == null)
+            throw new InternalException('addresse id not Exists');
+
+        $current = $addresse->keys()->first();
         $addresses[$current] = $data;
-        $addresses = $addresses->replaceRecursive($addresses);
-        $merchant->update(['payment_methods' => $addresses]);
+        $merchant->update(['addresses' => $addresses]);
         return $this->successful('Updated Sucessfully');
 
     }

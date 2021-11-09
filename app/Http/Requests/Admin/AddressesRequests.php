@@ -32,8 +32,6 @@ class AddressesRequests extends FormRequest
                 'area' => 'required|string',
                 'phone' => 'required',
                 'description' => 'required',
-        
-
             ];
 
         return [];

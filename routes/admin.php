@@ -38,12 +38,11 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('{merchant_id}/domestic_rates', [DomesticRatesController::class, 'index']);
             Route::post('{merchant_id}/domestic_rates', [DomesticRatesController::class, 'storeOrUpdate']);
 
+            #route git addresses spacific merchant
             Route::get('{merchant_id}/addresses', [AddressesController::class, 'index']);
-
+          
+            #route update addresse spacific merchant
             Route::put('{merchant_id}/addresses', [AddressesController::class, 'update']);
-
-
-            // 
         });
 
         Route::group(['prefix' => 'carriers/'], function () {
