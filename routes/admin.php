@@ -50,5 +50,4 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::put('{carrier_id}/update', [CarriersController::class, 'update']);
         });
     });
-    Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');
 });

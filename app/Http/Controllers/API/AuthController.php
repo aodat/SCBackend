@@ -11,14 +11,17 @@ use App\Http\Requests\RecoveryRequest;
 
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
+
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 
-use Illuminate\Support\Facades\Storage;
-
 use App\Models\Merchant;
 use App\Models\User;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Passport;
 class AuthController extends Controller
 {
     public function login(AuthRequest $request)
@@ -29,16 +32,13 @@ class AuthController extends Controller
 
         $userData = auth()->user();
 
-        if($userData->merchant_id)
-        {
+        if ($userData->merchant_id) {
             $merchant = Merchant::find($userData->merchant_id);
-            if(!$merchant->is_active)
+            if (!$merchant->is_active)
                 return $this->error('Mechant Is In-Active', 403);
         }
 
         $userData['token'] = $userData->createToken('users', [$userData->role])->accessToken;
-
-        // $userData['token'] = $userData->createToken('users')->accessToken;
         return $this->response(
             $userData,
             'User Login Successfully',
@@ -70,7 +70,7 @@ class AuthController extends Controller
             ]
         );
         $user->sendEmailVerificationNotification();
-        return $this->response([], 'User Created Successfully', 200);
+        return $this->successful('User Created Successfully');
     }
 
     // Forget Password
@@ -141,6 +141,34 @@ class AuthController extends Controller
         auth()->user()->sendEmailVerificationNotification();
 
         return $this->response([], 'Email verification link sent on your email id.', 200);
+    }
+
+    // Get Merchant Secret Key
+    public function getSecretKey(Request $request)
+    {
+        $secret_key = Merchant::findOrFail($request->user()->merchant_id)->secret_key;
+        return $this->response(['key' => $secret_key], 'Access Key Retrieved Successfully');
+    }
+
+    // Genrate Access Token
+    function generateSecretKey(Request $request)
+    {
+        $merchant = Merchant::findOrFail($request->user()->merchant_id);
+        $request->request->add([
+            'name' => $merchant->name,
+            'redirect' => 'https://localhost/callback'
+        ]);
+
+        $proxy = Request::create(
+            'oauth/clients',
+            'POST'
+        );
+        $result = Route::dispatch($proxy)->getData();
+
+        $merchant->secret_key = $result->secret;
+        $merchant->save();
+
+        return $this->successful();
     }
 
     // Logout

@@ -40,7 +40,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
     Route::group(['middleware' => ['auth:api','check.merchant']], function () {
-        // MerchantController
+
         Route::group(['prefix' => 'merchant/'], function () {
             // Dashboard Information 
             Route::get('dashboard', [MerchantController::class, 'dashboardInfo']);
@@ -90,15 +90,20 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('invoice/create', [InvoiceController::class, 'store']);
             Route::delete('invoice/{invoice_id}', [InvoiceController::class, 'delete']);
         });
-        Route::group(['prefix' => 'team/'], function () {
-            Route::put('member', [TeamController::class, 'changeMemberRole']);
-            Route::post('member/invite', [TeamController::class, 'inviteMember']);
-            Route::delete('member/{user_id}', [TeamController::class, 'deleteMember']);
+    
+        Route::group(['middleware' => ['scope:admin']], function () {
+            Route::get('auth/secret-key', [AuthController::class, 'getSecretKey']);
+            Route::post('auth/secret-key', [AuthController::class, 'generateSecretKey']);
+
+            Route::group(['prefix' => 'team/'], function () {
+                Route::put('member', [TeamController::class, 'changeMemberRole']);
+                Route::post('member/invite', [TeamController::class, 'inviteMember']);
+                Route::delete('member/{user_id}', [TeamController::class, 'deleteMember']);
+            });
         });
         Route::post('auth/logout', [AuthController::class, 'logout']);
     });
     Route::get('process/shipments', [ShipmentController::class, 'shipmentProcessSQS']);
     Route::get('process/stripe', [InvoiceController::class, 'stripeProcessSQS']);
-
-    Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');
 });
+Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');
