@@ -20,6 +20,21 @@ function uploadFiles($folder, $data, $type = '', $isOutput = false)
     return Storage::disk('s3')->url($path);
 }
 
+
+function uploadFiles2($folder, $data, $type = '', $isOutput = false)
+{
+    $path = $folder . "/" . md5(Carbon::now());
+    if (!$isOutput) {
+        $content = file_get_contents($data);
+        $path .= $data->getClientOriginalExtension();
+    } else
+        $path .= ".$type";
+
+    Storage::disk('s3')->put($path, $content);
+
+    return Storage::disk('s3')->url($path);
+}
+
 function exportPDF($view, $path, $data)
 {
     $pdf = \PDF::loadView("pdf.$view", [$view => $data]);
