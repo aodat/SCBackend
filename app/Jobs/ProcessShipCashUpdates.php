@@ -27,8 +27,6 @@ class ProcessShipCashUpdates implements ShouldQueue
         $this->data = $data;
     }
 
-
-
     /**
      * Execute the job.
      *
@@ -36,7 +34,7 @@ class ProcessShipCashUpdates implements ShouldQueue
      */
     public function handle()
     {
-        $shipmentInfo = Shipment::where('external_awb',$this->data['WaybillNumber'])->first();
-        $this->webhook($shipmentInfo,$this->data['UpdateCode']);
+        $shipmentInfo = Shipment::where('external_awb', $this->data['WaybillNumber'])->first();
+        $this->webhook($shipmentInfo, $this->data['UpdateCode']);
     }
 }

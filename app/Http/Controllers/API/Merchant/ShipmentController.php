@@ -114,7 +114,6 @@ class ShipmentController extends MerchantController
 
             unset($shipment['sender_address_id']);
 
-
             $shipment['group'] = $type;
             if ($type == 'DOM') {
                 $shipment['consignee_country'] = $merchentInfo['country_code'];
@@ -126,7 +125,6 @@ class ShipmentController extends MerchantController
             } else
                 $shipment['fees'] = $this->calculateFees($provider, $shipment['carrier_id'], $shipment['consignee_country'], $shipment['actual_weight']);
 
-            $shipment['external_awb'] = randomNumber();
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
 
@@ -152,12 +150,12 @@ class ShipmentController extends MerchantController
             $links[] = $result['link'];
             $shipment['external_awb'] = $result['id'];
             Shipment::create($shipment);
-        } 
-        
+        }
+
         if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
             $externalAWB = $result['id'];
-            $ships = $shipments->map(function ($value,$key) use($externalAWB){
+            $ships = $shipments->map(function ($value, $key) use ($externalAWB) {
                 $value['external_awb'] = $externalAWB[$key];
                 return $value;
             });
