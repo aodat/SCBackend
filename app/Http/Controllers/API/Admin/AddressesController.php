@@ -11,11 +11,6 @@ use Carbon\Carbon;
 
 class AddressesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(AddressesRequests $request)
     {
         $data  = Merchant::find($request->merchant_id)->addresses;
@@ -26,17 +21,17 @@ class AddressesController extends Controller
     {
         $data = $request->all();
         $id = $data['id'] ?? null;
-        $data['updated_at'] = Carbon::now()->format('Y-m-d H:i:s');
+        $data['updated_at'] = Carbon::now();
         $merchant_id = $data['merchant_id'];
 
         unset($data['merchant_id']);
 
         $merchant = Merchant::findOrFail($merchant_id);
         $addresses = $merchant->addresses;
-            
+
         $addresses = collect($addresses);
         $addresse = $addresses->where('id', $id);
-        
+
         if ($addresse->first() == null)
             throw new InternalException('addresse id not Exists');
 
@@ -44,6 +39,5 @@ class AddressesController extends Controller
         $addresses[$current] = $data;
         $merchant->update(['addresses' => $addresses]);
         return $this->successful('Updated Sucessfully');
-
     }
 }
