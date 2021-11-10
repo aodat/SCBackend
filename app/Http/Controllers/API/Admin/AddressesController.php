@@ -26,7 +26,7 @@ class AddressesController extends Controller
     {
         $data = $request->all();
         $id = $data['id'] ?? null;
-        $data['updated_at'] = Carbon::now()->format('Y-m-d H:i:s');
+        $data['updated_at'] = Carbon::now();
         $merchant_id = $data['merchant_id'];
 
         unset($data['merchant_id']);

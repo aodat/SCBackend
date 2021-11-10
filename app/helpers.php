@@ -6,31 +6,16 @@ use Maatwebsite\Excel\Facades\Excel as Excel;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
-function uploadFiles($folder, $data, $type = '', $isOutput = false)
+function uploadFiles($folder, $file, $type = '', $isOutput = false)
 {
     $path = $folder . "/" . md5(Carbon::now());
     if (!$isOutput) {
-        $data = file_get_contents($data);
-        $path .= $data->getClientOriginalExtension();
+        $path .= $file->getClientOriginalExtension();
+        $data = file_get_contents($file);
     } else
         $path .= ".$type";
 
     Storage::disk('s3')->put($path, $data);
-
-    return Storage::disk('s3')->url($path);
-}
-
-
-function uploadFiles2($folder, $data, $type = '', $isOutput = false)
-{
-    $path = $folder . "/" . md5(Carbon::now());
-    if (!$isOutput) {
-        $content = file_get_contents($data);
-        $path .= $data->getClientOriginalExtension();
-    } else
-        $path .= ".$type";
-
-    Storage::disk('s3')->put($path, $content);
 
     return Storage::disk('s3')->url($path);
 }

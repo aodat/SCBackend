@@ -33,7 +33,7 @@ class DocumentsController extends MerchantController
         $data = [
             'id' => ++$counter,
             'type' => $request->type,
-            'url' => uploadFiles2('documents',$request->file('file')),
+            'url' => uploadFiles('documents',$request->file('file')),
             'created_at' => Carbon::now()
         ];
 

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Http\Requests\Admin\DocumentRequest;
 use App\Models\Merchant;
 use App\Exceptions\InternalException;
@@ -11,24 +10,20 @@ use Carbon\Carbon;
 
 class DocumentController extends Controller
 {
-    //
     public function index(DocumentRequest $request)
     {
-
-        $data  = Merchant::find($request->merchant_id);
-        if ($data !== null)
-            return $this->response($data->documents, "Success get documents to specified merchant");
-        else
-            throw new InternalException('documents id not Exists');
+        $data  = Merchant::find($request->merchant_id)->documents;
+        return $this->response($data, "Success get addresse to specified merchant");
     }
+
     public function update(DocumentRequest $request)
     {
         $data = $request->validated();
 
         $data = $request->all();
         $id = $data['id'] ?? null;
-        $data["status"]="pending";
-        $data['updated_at'] = Carbon::now()->format('Y-m-d H:i:s');
+        $data["status"] = "pending";
+        $data['updated_at'] = Carbon::now();
         $merchant_id = $data['merchant_id'];
 
         unset($data['merchant_id']);
@@ -40,15 +35,9 @@ class DocumentController extends Controller
         $document = $documents->where('id', $id);
 
         if ($document->first() == null)
-            throw new InternalException('addresse id not Exists');
+            throw new InternalException('Document id not Exists');
 
-        if ($request->hasFile('url'))
-            $data['url']  = uploadFiles2('documents', $request->file('url'));
-        else {
-            throw new InternalException(' ');
-            return $this->response($data, "Make sure it's a file");
-        }
-        
+        $data['url']  = uploadFiles('documents', $request->file('url'));
 
         $current = $document->keys()->first();
         $documents[$current] = $data;
