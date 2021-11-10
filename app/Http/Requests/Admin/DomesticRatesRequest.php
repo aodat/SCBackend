@@ -39,10 +39,7 @@ class DomesticRatesRequest extends FormRequest
                 'merchant_id' => 'required|exists:merchants,id',
                 'carrier_id' => 'required|exists:carriers,id',
                 'id' => 'required',
-                'code' => 'required',
                 'price' => 'required|numeric',
-                'name_ar' => 'required',
-                'name_en' => 'required'
             ];
         return [];
     }

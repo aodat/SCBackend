@@ -46,10 +46,6 @@ class CarriersController extends Controller
     {
         $data = $request->validated();
         $carrier = Carriers::findOrFail($data['id']);
-
-        if ($data['balance'])
-            $carrier->balance = $data['balance'];
-
         $carrier->country_code = $data['country_code'];
         $carrier->currency_code = $data['currency_code'];
         $carrier->is_active = $data['is_active'];
