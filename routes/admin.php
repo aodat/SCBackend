@@ -43,9 +43,10 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::put('{merchant_id}/addresses', [AddressesController::class, 'update']);
 
             Route::get('{merchant_id}/document', [DocumentController::class, 'index']);
-            Route::post('{merchant_id}/document', [DocumentController::class, 'update']);
+            Route::post('{merchant_id}/document', [DocumentController::class, 'create']);
+            Route::put('{merchant_id}/document/{id}', [DocumentController::class, 'verifiedDocument']);
 
-
+            
         });
 
         Route::group(['prefix' => 'carriers/'], function () {

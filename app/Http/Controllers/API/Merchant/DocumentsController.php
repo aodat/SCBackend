@@ -6,7 +6,7 @@ use App\Http\Requests\Merchant\DocumentsRequest;
 
 use App\Models\Merchant;
 use Carbon\Carbon;
-
+use App\Exceptions\InternalException;
 class DocumentsController extends MerchantController
 {
 
@@ -23,12 +23,27 @@ class DocumentsController extends MerchantController
     }
 
     public function createDocuments(DocumentsRequest $request)
-    {
-        $merchantID = $request->user()->merchant_id;        
-        $merchant = Merchant::where('id',$merchantID);
+    { 
+        $template = json_decode(file_get_contents(storage_path() . '/app/template/documents.json'), true);
+   
+        $merchant_id = $request->user()->merchant_id;        
 
+        $merchant = Merchant::where('id','=',$merchant_id);
+        
         $result = collect($merchant->select('documents')->first()->documents);
         $counter = $result->max('id') ?? 0;
+        if($request->hasFile('file'))
+          $file_link = uploadFiles('documents',$request->file('file'));
+        else
+          throw new InternalException('file documents not Exists');
+          
+        $template['id']           = ++$counter;
+        $template['type']         = $request->type;
+        $template['url']          = $file_link ;
+        $template['status']       = "pending";
+        $template['updated_at']   = Carbon::now();
+        $template['created_at']   = Carbon::now();
+  
         
         $data = [
             'id' => ++$counter,

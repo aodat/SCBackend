@@ -15,11 +15,29 @@ class DocumentRequest extends FormRequest
     {
         return true;
     }
+    private function checkMethodVerified(){
+         $path = Request()->route()->uri;
+         if ($this->getMethod() == 'PUT' && strpos($path, '{merchant_id}/document/{id}') !== false)
+          return true;
+         
+        return false;  
+    }
 
+    private function checkMethodCreate(){
+        $path = Request()->route()->uri;
+        if ($this->getMethod() == 'POST' && strpos($path, 'merchant/{merchant_id}/document') !== false)
+         return true;
+        
+       return false;  
+    }
     public function all($keys = null)
     {
+        
         $data = parent::all($keys);
         $data['merchant_id'] = $this->route('merchant_id');
+        if($this->checkMethodVerified())
+          $data['id'] = $this->route('id');
+
         return $data;
     }
     /**
@@ -31,14 +49,18 @@ class DocumentRequest extends FormRequest
     {
         $path = Request()->route()->uri;
 
-        if ($this->getMethod() == 'POST' && strpos($path, 'merchant/{merchant_id}/document') !== false)
+        if ($this->checkMethodCreate())
             return [
                 "url" => "required|file",
-                "type"      => "required|string",
-                "verified"      => "required|string",
-                "rejected"      => "required|string",
-                "verified_at"      => "required|string",
+                "type" => "required|string",
             ];
+        
+        if($this->checkMethodVerified())
+            return [
+                "status" => "required|in:verified,rejected",
+              
+            ];    
+        
         return [];
     }
 }
