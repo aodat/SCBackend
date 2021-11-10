@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSecretKeyToUsersTable extends Migration
+class AddIsCollectedIsReturnedShipmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class AddSecretKeyToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('merchants', function (Blueprint $table) {
-            $table->string('secret_key')->nullable()->unique()->after('type');
+        Schema::table('shipments', function (Blueprint $table) {
+            //
+            $table->boolean("is_collected")->default(false)->after('delivered_at');
+            $table->boolean("is_returned")->default(false)->after('delivered_at');
+
         });
     }
 
@@ -25,7 +28,7 @@ class AddSecretKeyToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('merchants', function (Blueprint $table) {
+        Schema::table('shipments', function (Blueprint $table) {
             //
         });
     }

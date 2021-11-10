@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddSecretKeyToUsersTable extends Migration
+class AddIsCodEnabledMerchantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,8 @@ class AddSecretKeyToUsersTable extends Migration
     public function up()
     {
         Schema::table('merchants', function (Blueprint $table) {
-            $table->string('secret_key')->nullable()->unique()->after('type');
+            //
+            $table->boolean("is_cod_enabled")->default(false)->after('express_rates');
         });
     }
 
@@ -27,6 +28,7 @@ class AddSecretKeyToUsersTable extends Migration
     {
         Schema::table('merchants', function (Blueprint $table) {
             //
+            $table->dropColumn('is_cod_enabled');
         });
     }
 }
