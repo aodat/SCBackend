@@ -6,12 +6,12 @@ use Maatwebsite\Excel\Facades\Excel as Excel;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
-function uploadFiles($folder, $data, $type = '', $isOutput = false)
+function uploadFiles($folder, $file, $type = '', $isOutput = false)
 {
     $path = $folder . "/" . md5(Carbon::now());
     if (!$isOutput) {
-        $data = file_get_contents($data);
-        $path .= $data->getClientOriginalExtension();
+        $path .= $file->getClientOriginalExtension();
+        $data = file_get_contents($file);
     } else
         $path .= ".$type";
 
