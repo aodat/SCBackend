@@ -54,7 +54,7 @@ class CarriersController extends Controller
         $carrier->currency_code = $data['currency_code'];
         $carrier->is_active = $data['is_active'];
         $carrier->save();
-        
+
         return $this->successful('Updated Sucessfully');
     }
 }

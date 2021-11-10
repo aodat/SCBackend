@@ -20,10 +20,9 @@ class CarriersRequest extends FormRequest
     {
         $path = Request()->route()->uri;
         $data = parent::all($keys);
-        if ($this->method() == 'PUT' && strpos($path,'admin/carriers/{carrier_id}') !== false)
+        if ($this->method() == 'PUT' && strpos($path, 'admin/carriers/{carrier_id}') !== false)
             $data['id'] = $this->route('carrier_id');
         return $data;
-
     }
 
     /**

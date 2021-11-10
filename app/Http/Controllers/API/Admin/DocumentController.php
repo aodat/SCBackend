@@ -17,7 +17,7 @@ class DocumentController extends Controller
     }
 
 
-    public function create(DocumentRequest $request)
+    public function store(DocumentRequest $request)
     {
         $template = json_decode(file_get_contents(storage_path() . '/app/template/documents.json'), true);
 
@@ -27,14 +27,9 @@ class DocumentController extends Controller
         $result = collect($merchant->select('documents')->first()->documents);
         $counter = $result->max('id') ?? 0;
 
-        if ($request->hasFile('url'))
-            $file_link = uploadFiles('documents', $request->file('url'));
-        else
-            throw new InternalException('file documents not Exists');
-
         $template['id']           = ++$counter;
         $template['type']         = $request->type;
-        $template['url']          = $file_link;
+        $template['url']          = uploadFiles('documents', $request->file('url'));
         $template['status']       = "pending";
         $template['updated_at']   = Carbon::now();
         $template['created_at']   = Carbon::now();
@@ -43,9 +38,7 @@ class DocumentController extends Controller
         return $this->successful();
     }
 
-
-
-    public function verifiedDocument(DocumentRequest $request)
+    public function documentStatus(DocumentRequest $request)
     {
         $data = $request->all();
         $id = $data['id'] ?? null;
@@ -63,13 +56,13 @@ class DocumentController extends Controller
         if ($document->first() == null)
             throw new InternalException('Document id not Exists');
         $current = $document->keys()->first();
-      
+
         $data = $document->toArray()[$current];
         $data['updated_at'] =  Carbon::now();
-        $data['status'] =  "verified";
+        $data['status'] =  $request->status;
         $documents[$current] = $data;
 
         $merchant->update(['documents' => $documents]);
-        return $this->successful("success verified");
+        return $this->successful("success Update");
     }
 }
