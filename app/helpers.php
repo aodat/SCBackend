@@ -68,7 +68,7 @@ function randomNumber($length = 16)
 
 function InternalAWBExists($number)
 {
-    return Shipment::where('internal_awb', $number)->exists();
+    return Shipment::where('external_awb', $number)->exists();
 }
 
 function nestedLowercase($value)

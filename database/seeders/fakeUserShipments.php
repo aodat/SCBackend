@@ -83,7 +83,7 @@ class fakeUserShipments extends Seeder
         $status = ['DRAFT','PROCESSING','COMPLETED'];
         for($i=1;$i<15;$i++){
             $shipments = [
-                'internal_awb' => randomNumber(),
+                'external_awb' => randomNumber(),
 
                 'sender_name' => Str::random(10),
                 'sender_email'=> Str::random(10).'@gmail.com',

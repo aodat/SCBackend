@@ -126,7 +126,7 @@ class ShipmentController extends MerchantController
             } else
                 $shipment['fees'] = $this->calculateFees($provider, $shipment['carrier_id'], $shipment['consignee_country'], $shipment['actual_weight']);
 
-            $shipment['internal_awb'] = randomNumber();
+            $shipment['external_awb'] = randomNumber();
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
 
