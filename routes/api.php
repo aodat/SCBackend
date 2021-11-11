@@ -54,21 +54,22 @@ Route::group(['middleware' => ['json.response']], function () {
             // Payment-methods
             Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
             Route::post('payment-methods/create', [PaymentMethodsController::class, 'createPaymentMethods']);
-            Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'deletePaymentMethods']);
+            Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'deletePaymentMethods'])->where('id', '[0-9]+');
+ 
 
             // Documents
             Route::get('documents', [DocumentsController::class, 'index']);
             Route::post('documents/create', [DocumentsController::class, 'createDocuments']);
-            Route::delete('documents/{id}', [DocumentsController::class, 'deleteDocuments']);
+            Route::delete('documents/{id}', [DocumentsController::class, 'deleteDocuments'])->where('id', '[0-9]+');
 
             // Addresses // Done
             Route::get('addresses', [AddressesController::class, 'index']);
             Route::post('addresses/create', [AddressesController::class, 'createAddresses']);
-            Route::delete('addresses/{id}', [AddressesController::class, 'deleteAddresses']);
+            Route::delete('addresses/{id}', [AddressesController::class, 'deleteAddresses'])->where('id', '[0-9]+');
 
             // Shipments
             Route::post('shipments/filters', [ShipmentController::class, 'index']);
-            Route::get('shipments/{id}', [ShipmentController::class, 'show']);
+            Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
             Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
             Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
             Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
@@ -76,9 +77,10 @@ Route::group(['middleware' => ['json.response']], function () {
 
             // Transactions
             Route::post('transactions', [TransactionsController::class, 'index']);
-            Route::get('transactions/{id}', [TransactionsController::class, 'show']);
+            Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+'); 
             Route::put('transactions/withdraw', [TransactionsController::class, 'withDraw']);
             Route::get('transactions/export/{type}', [TransactionsController::class, 'export']);
+            Route::get('transactions/transactionDate', [TransactionsController::class, 'transactionDate']);
 
             // Pickups
             Route::post('pickups', [PickupsController::class, 'index']);
@@ -88,7 +90,7 @@ Route::group(['middleware' => ['json.response']], function () {
             // Invoice
             Route::get('invoice/finalize/{invoice_id}', [InvoiceController::class, 'finalize']);
             Route::post('invoice/create', [InvoiceController::class, 'store']);
-            Route::delete('invoice/{invoice_id}', [InvoiceController::class, 'delete']);
+            Route::delete('invoice/{invoice_id}', [InvoiceController::class, 'delete'])->where('invoice_id', '[0-9]+');
         });
     
         Route::group(['middleware' => ['scope:admin']], function () {
@@ -99,7 +101,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::group(['prefix' => 'team/'], function () {
                 Route::put('member', [TeamController::class, 'changeMemberRole']);
                 Route::post('member/invite', [TeamController::class, 'inviteMember']);
-                Route::delete('member/{user_id}', [TeamController::class, 'deleteMember']);
+                Route::delete('member/{user_id}', [TeamController::class, 'deleteMember'])->where('user_id', '[0-9]+');
             });
         });
         Route::post('auth/logout', [AuthController::class, 'logout']);
