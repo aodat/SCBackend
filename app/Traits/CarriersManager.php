@@ -81,41 +81,49 @@ trait CarriersManager
         return $this->adapter->trackShipment($shipments_number);
     }
 
-    public function calculateFees($provider, $carrier_id, $country_code, $weight)
+    /*
+        $type : DOM , Express
+    */
+    public function calculateFees($carrier_id, $country_code, $type, $weight)
     {
-        $this->loadProvider($provider);
-        $provider = strtoupper($provider);
-        $express_rates =  collect(
-            json_decode(file_get_contents(storage_path() . '/../App/Libs/express.rates.json'), true)['Countries']
-        )->where('code', $country_code)
-            ->all();
-
-        if (count($express_rates) > 1)
-            throw new CarriersException('Express Rates Json Retrun More Than One Country');
-
-        $list = reset($express_rates);
-
-        $zones = collect($list['zones'])->where('carrier_id', $carrier_id)->all();
-
-        if (count($zones) > 1)
-            throw new CarriersException('Express Rates Json Retrun More Than One zone');
-
-        $zone_id = reset($zones)['zone_id'];
-
-        $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id)->all();
-
-        if (count($zoneRates) != 1)
-            throw new CarriersException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
-
-        $zoneRates = reset($zoneRates);
-        $base = $zoneRates['basic'];
-        $additional = $zoneRates['additional'];
-
-        $fees = 0;
-        if ($weight > 0) {
-            $weights_count = ceil($weight / 0.5);
-            $weight_fees = (($weights_count - 1) * $additional) + $base;
-            $fees += $weight_fees;
+        if($type == 'DOM') 
+        {
+            $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code)->first();
+            $price = $rate->price;
+            $fees = ceil($weight / 10) * $price;
+        } else {
+            $express_rates =  collect(
+                json_decode(file_get_contents(storage_path() . '/../App/Libs/express.rates.json'), true)['Countries']
+            )->where('code', $country_code)
+                ->all();
+    
+            if (count($express_rates) > 1)
+                throw new CarriersException('Express Rates Json Retrun More Than One Country');
+    
+            $list = reset($express_rates);
+    
+            $zones = collect($list['zones'])->where('carrier_id', $carrier_id)->all();
+    
+            if (count($zones) > 1)
+                throw new CarriersException('Express Rates Json Retrun More Than One zone');
+    
+            $zone_id = reset($zones)['zone_id'];
+    
+            $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id)->all();
+    
+            if (count($zoneRates) != 1)
+                throw new CarriersException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
+    
+            $zoneRates = reset($zoneRates);
+            $base = $zoneRates['basic'];
+            $additional = $zoneRates['additional'];
+    
+            $fees = 0;
+            if ($weight > 0) {
+                $weights_count = ceil($weight / 0.5);
+                $weight_fees = (($weights_count - 1) * $additional) + $base;
+                $fees += $weight_fees;
+            }
         }
 
         if ($fees == 0)
@@ -127,8 +135,6 @@ trait CarriersManager
     public function webhook($shipmentInfo, $status)
     {
         $this->loadProvider($shipmentInfo['provider'], true);
-
-
         $ChargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']], true)['ChargeableWeight'] ?? null;
 
         // if($ChargeableWeight)
@@ -136,7 +142,13 @@ trait CarriersManager
 
         $setup = $this->adapter->setup[$status] ?? ['status' => 'PROCESSING'];
         if ($ChargeableWeight)
-            $setup['chargable_weight'] = $this->calculateFees($shipmentInfo['provider'], $shipmentInfo['carrier_id'], $shipmentInfo['consignee_country'], $ChargeableWeight);
+            $setup['chargable_weight'] = $this->calculateFees(
+                $shipmentInfo['provider'],
+                $shipmentInfo['carrier_id'],
+                $shipmentInfo['consignee_country'],
+                $shipmentInfo['group'],
+                $ChargeableWeight
+            );
 
         $shipmentInfo->update($setup);
         return true;
