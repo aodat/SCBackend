@@ -12,16 +12,17 @@ use App\Http\Requests\RecoveryRequest;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Http;
 
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 
 use App\Models\Merchant;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Passport;
+
+use Laravel\Passport\Client;
+use Laravel\Passport\ClientRepository;
+
 class AuthController extends Controller
 {
     public function login(AuthRequest $request)
@@ -146,29 +147,58 @@ class AuthController extends Controller
     // Get Merchant Secret Key
     public function getSecretKey(Request $request)
     {
-        $secret_key = Merchant::findOrFail($request->user()->merchant_id)->secret_key;
-        return $this->response(['key' => $secret_key], 'Access Key Retrieved Successfully');
-    }
-
-    // Genrate Access Token
-    function generateSecretKey(Request $request)
-    {
         $merchant = Merchant::findOrFail($request->user()->merchant_id);
+        $client = Client::where('user_id', $merchant->id)->where('revoked', false)->first();
+
+        if($client == null)
+            $this->error('No Secret Key Created Yet');
+
         $request->request->add([
-            'name' => $merchant->name,
-            'redirect' => 'https://localhost/callback'
+            'grant_type' => 'client_credentials',
+            'client_id' => $client->id,
+            'client_secret' => $merchant->secret_key,
+            'redirect_uri' => 'http://example.com/callback.php',
+            'code' => ''
         ]);
 
         $proxy = Request::create(
-            'oauth/clients',
+            'oauth/token',
             'POST'
         );
-        $result = Route::dispatch($proxy)->getData();
+        $result = json_decode(Route::dispatch($proxy)->getContent());
+        return $this->response(['secret_key' => $merchant->secret_key, 'access_key' => $result->access_token], 'Access Key Retrieved Successfully');
+    }
 
-        $merchant->secret_key = $result->secret;
+    // Genrate Access Token
+    function generateSecretKey(Request $request, ClientRepository $clientRepository)
+    {
+        $merchant = Merchant::findOrFail($request->user()->merchant_id);
+
+        $clients = Client::where('user_id', $merchant->id)->get();
+        $clients->map(function ($client) use ($clientRepository) {
+            $clientRepository->delete($client);
+        });
+
+        $client = $clientRepository->createPasswordGrantClient(
+            $merchant->id,
+            $merchant->name,
+            'http://example.com/callback.php',
+            str_replace(' ', '-', strtolower($merchant->name))
+        );
+        $merchant->secret_key = $client->secret;
         $merchant->save();
 
         return $this->successful();
+    }
+
+    // Delete all Clients Secret
+    public function revokeSecretKey(Request $request, ClientRepository $clientRepository)
+    {
+        $clients = Client::where('user_id', $request->user()->merchant_id)->get();
+        $clients->map(function ($client) use ($clientRepository) {
+            $clientRepository->delete($client);
+        });
+        return $this->successful('Revoked Suceefully');
     }
 
     // Logout
