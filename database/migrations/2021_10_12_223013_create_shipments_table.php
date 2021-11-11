@@ -62,6 +62,8 @@ class CreateShipmentsTable extends Migration
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('merchant_id');
             $table->unsignedBigInteger('carrier_id');
+            
+            $table->enum('source', ['SHIPMENT','CREDITCARD','INVOICE','ORDER'])->default('ORDER');
 
             $table->json('logs')->nullable();
             $table->softDeletes();
