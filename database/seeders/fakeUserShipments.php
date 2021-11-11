@@ -122,7 +122,7 @@ class fakeUserShipments extends Seeder
             $transactions = [
                 'type' => Arr::random($type, 1)[0],
                 'merchant_id' => 1,
-                'fk_id' => rand(1,15),
+                'item_id' => rand(1,15),
                 'amount' => rand(1,2000),
                 'balance_after' => rand(1,2000),
                 'status' => Arr::random($status, 1)[0],

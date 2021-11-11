@@ -17,6 +17,8 @@ use Carbon\Carbon;
 
 use Illuminate\Support\Facades\DB;
 use App\Exceptions\InternalException;
+use App\Models\Merchant;
+use App\Models\Transaction;
 
 class ShipmentController extends MerchantController
 {
@@ -175,5 +177,29 @@ class ShipmentController extends MerchantController
     {
         ProcessShipCashUpdates::dispatch($request->json()->all());
         return $this->successful('Webhook Completed');
+    }
+
+    protected function transactionDeposit($shipment_id, $amount)
+    {
+        return DB::transaction(function () use ($shipment_id, $amount) {
+            $merchent = Merchant::findOrFail(Request()->user()->merchant_id);
+            $actual_balance = $merchent->actual_balance;
+            $merchent->actual_balance = $actual_balance + $amount;
+            $merchent->save();
+
+            $carriers = Carriers::find($shipment_id);
+            $carriers->balance = $carriers->balance - $amount;
+            $carriers->save();
+
+            Transaction::create([
+                "type" => "CASHIN",
+                "item_id" => $shipment_id,
+                "merchant_id" => Request()->user()->merchant_id,
+                "amount" => $merchent->actual_balance,
+                "balance_after" => $actual_balance,
+                "source" => "SHIPMENT",
+                "created_by" => Request()->user()->id
+            ]);
+        });
     }
 }
