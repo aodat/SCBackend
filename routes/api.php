@@ -94,6 +94,7 @@ Route::group(['middleware' => ['json.response']], function () {
         Route::group(['middleware' => ['scope:admin']], function () {
             Route::get('auth/secret-key', [AuthController::class, 'getSecretKey']);
             Route::post('auth/secret-key', [AuthController::class, 'generateSecretKey']);
+            Route::delete('auth/secret-key', [AuthController::class, 'revokeSecretKey']);
 
             Route::group(['prefix' => 'team/'], function () {
                 Route::put('member', [TeamController::class, 'changeMemberRole']);

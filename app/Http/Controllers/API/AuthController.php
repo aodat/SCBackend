@@ -19,9 +19,10 @@ use Illuminate\Support\Str;
 
 use App\Models\Merchant;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Passport;
+use Laravel\Passport\Client;
+use Laravel\Passport\ClientRepository;
+
 class AuthController extends Controller
 {
     public function login(AuthRequest $request)
@@ -151,24 +152,35 @@ class AuthController extends Controller
     }
 
     // Genrate Access Token
-    function generateSecretKey(Request $request)
+    function generateSecretKey(Request $request, ClientRepository $clientRepository)
     {
         $merchant = Merchant::findOrFail($request->user()->merchant_id);
-        $request->request->add([
-            'name' => $merchant->name,
-            'redirect' => 'https://localhost/callback'
-        ]);
 
-        $proxy = Request::create(
-            'oauth/clients',
-            'POST'
+        $clients = Client::where('user_id', $merchant->id)->get();
+        $clients->map(function ($client) use ($clientRepository) {
+            $clientRepository->delete($client);
+        });
+
+        $client = $clientRepository->createPasswordGrantClient(
+            $merchant->id,
+            $merchant->name,
+            'http://example.com/callback.php',
+            str_replace(' ', '-', strtolower($merchant->name))
         );
-        $result = Route::dispatch($proxy)->getData();
-
-        $merchant->secret_key = $result->secret;
+        $merchant->secret_key = $client->secret;
         $merchant->save();
 
         return $this->successful();
+    }
+
+    // Delete all Clients Secret
+    public function revokeSecretKey(Request $request, ClientRepository $clientRepository)
+    {
+        $clients = Client::where('user_id', $request->user()->merchant_id)->get();
+        $clients->map(function ($client) use ($clientRepository) {
+            $clientRepository->delete($client);
+        });
+        return $this->successful('Revoked Suceefully');
     }
 
     // Logout
