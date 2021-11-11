@@ -87,7 +87,8 @@ class TransactionsController extends MerchantController
                 'source' => $request->source,
                 'created_by' => $request->user()->id,
                 'balance_after' => $request->amount,
-                'payment_method' => collect($selectedPayment)
+                'payment_method' => collect($selectedPayment),
+                'resource' => $request->resource
             ]
         );
     }

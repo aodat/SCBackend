@@ -78,6 +78,8 @@ class MerchantController extends Controller
 
     public function dashboardInfo(MerchantRequest $request)
     {
+        dd($request->all());
+
         $shipmentInfo = Shipment::where('merchant_id',$request->user()->merchant_id);
         
         $result['overall']['PROCESSING'] = 0;

@@ -141,7 +141,7 @@ class ShipmentController extends MerchantController
             return $this->generateShipmentArray('Aramex', $data);
         });
 
-
+        $resource = Request()->resource;
         $links = [];
         // for signle Shipment Request
         if ($payloads->isEmpty()) {
@@ -149,14 +149,16 @@ class ShipmentController extends MerchantController
             $result = $this->generateShipment($provider, $this->getMerchentInfo(), $shipment);
             $links[] = $result['link'];
             $shipment['external_awb'] = $result['id'];
+            $shipment['resource'] = $resource;
             Shipment::create($shipment);
         }
 
         if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
             $externalAWB = $result['id'];
-            $ships = $shipments->map(function ($value, $key) use ($externalAWB) {
+            $ships = $shipments->map(function ($value, $key) use ($externalAWB,$resource){
                 $value['external_awb'] = $externalAWB[$key];
+                $value['resource'] = $resource;
                 return $value;
             });
             $links[] = $result['link'];
