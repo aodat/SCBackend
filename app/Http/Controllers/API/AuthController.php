@@ -70,7 +70,7 @@ class AuthController extends Controller
                 'role' => 'admin'
             ]
         );
-        $user->sendEmailVerificationNotification();
+       // $user->sendEmailVerificationNotification();
         return $this->successful('User Created Successfully');
     }
 
