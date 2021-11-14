@@ -56,6 +56,11 @@ class MerchantRequest extends FormRequest
             return [
                 'phone' => 'required'
             ];
+        }else if(strpos($path,'merchant/dashboard') !== false) {
+            return [
+                'since_at' => 'date',
+                'until' => 'date'
+            ];
         }
         return [];
     }

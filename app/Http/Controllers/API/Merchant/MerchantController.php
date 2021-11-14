@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Exceptions\InternalException;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
@@ -78,46 +79,63 @@ class MerchantController extends Controller
     public function dashboardInfo(MerchantRequest $request)
     {
         $merchant_id =  $request->user()->merchant_id;
+
+        if ($request->since_at !== null && $request->until !== null) {
+
+
+            $since_at = date("Y-m-d H:i:s", strtotime($request->input('date') . " " . $request->since_at));
+            $until = date("Y-m-d H:i:s", strtotime($request->input('date') . " " .  $request->until));
+            if ($since_at  >= $until)
+                throw new InternalException("Error since_at Date End until ");
+        } else {
+            $since_at = Carbon::now()->subDays(7);
+            $until = Carbon::now();
+        }
+
         $data['shipment']['defts'] =   DB::table('shipments as shp')
             ->join('transactions as t', 'shp.id', 't.item_id')
             ->where('shp.merchant_id', '=',  $merchant_id)
             ->where('shp.status', '=', "DRAFT")
+            ->whereBetween('t.created_at', [$since_at, $until])
             ->select(DB::raw("sum(t.amount) as amount"))->first();
-        $data['shipment']['defts'] = $data['shipment']['defts']->amount;
+        $data['shipment']['defts'] = $data['shipment']['defts']->amount ?? 0;
 
         $data['shipment']['proccesing'] =   DB::table('shipments as shp')
             ->join('transactions as t', 'shp.id', 't.item_id')
             ->where('shp.merchant_id', '=',  $merchant_id)
             ->where('shp.status', '=', "PROCESSING")
+            ->whereBetween('t.created_at', [$since_at, $until])
             ->select(DB::raw("sum(t.amount) as amount"))->first();
-        $data['shipment']['proccesing'] = $data['shipment']['proccesing']->amount;
+        $data['shipment']['proccesing'] = $data['shipment']['proccesing']->amount ?? 0;
 
         $data['shipment']['delivered']  = DB::table('shipments as shp')
             ->join('transactions as t', 'shp.id', 't.item_id')
             ->where('shp.merchant_id', '=',  $merchant_id)
             ->where('shp.status', '=', "COMPLETED")
+            ->whereBetween('t.created_at', [$since_at, $until])
             ->select(DB::raw("sum(t.amount) as amount"))->first();
-        $data['shipment']['delivered'] = $data['shipment']['delivered']->amount;
+        $data['shipment']['delivered'] = $data['shipment']['delivered']->amount ?? 0;
 
         $data['payment']['income'] = Transaction::where('merchant_id',  $merchant_id)
             ->where("type", "=", "CASHOUT")
+            ->whereBetween('created_at', [$since_at, $until])
             ->select(DB::raw("sum(amount) as amount"))
             ->first();
-        $data['payment']['income'] = $data['payment']['income']->amount;
+        $data['payment']['income'] = $data['payment']['income']->amount ?? 0;
 
         $data['payment']['Outcome'] = Transaction::where('merchant_id', $merchant_id)
             ->where("type", "=", "CASHIN")
+            ->whereBetween('created_at', [$since_at, $until])
             ->select(DB::raw("sum(amount) as amount"))
             ->first();
-        $data['payment']['Outcome'] = $data['payment']['Outcome']->amount;
+        $data['payment']['Outcome'] = $data['payment']['Outcome']->amount ?? 0;
 
         $data['payment']['pending_payment'] = Transaction::where('merchant_id',  $merchant_id)
             ->where("type", "=", "CASHIN")
+            ->whereBetween('created_at', [$since_at, $until])
             ->select(DB::raw("sum(amount) as amount"))
             ->first();
-        $data['payment']['pending_payment'] = $data['payment']['pending_payment']->amount;
-
-
+        $data['payment']['pending_payment'] = $data['payment']['pending_payment']->amount ?? 0;
         return $data;
     }
     public function getMerchentInfo($id = null)
