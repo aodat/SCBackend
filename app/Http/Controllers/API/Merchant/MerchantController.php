@@ -89,51 +89,47 @@ class MerchantController extends Controller
             $since_at = Carbon::now()->subDays(7);
             $until = Carbon::now();
         }
-
-        $data['shipment']['defts'] =   DB::table('shipments as shp')
-            ->join('transactions as t', 'shp.id', 't.item_id')
+        $sql =  DB::table('transactions as t')
+            ->join('shipments as shp', 'shp.id', 't.item_id')
             ->where('shp.merchant_id', '=',  $merchant_id)
-            ->where('shp.status', '=', "DRAFT")
             ->whereBetween('t.created_at', [$since_at, $until])
-            ->select(DB::raw("sum(t.amount) as amount"))->first();
-        $data['shipment']['defts'] = $data['shipment']['defts']->amount ?? 0;
+            ->select('shp.status', DB::raw('sum(amount) as amount'))
+            ->groupBy('shp.status')
+            ->get();
 
-        $data['shipment']['proccesing'] =   DB::table('shipments as shp')
-            ->join('transactions as t', 'shp.id', 't.item_id')
+        $shiping = collect($sql)->pluck('amount', 'status');
+        $sql2 = Transaction::where('merchant_id',  $merchant_id)
+            ->whereBetween('created_at', [$since_at, $until])
+            ->select('type', DB::raw('sum(amount) as amount'))
+            ->groupBy('type')
+            ->get();
+
+
+        $payment = collect($sql2)->pluck('amount', 'type');
+
+        $pending_payment =   DB::table('transactions as t')
+            ->join('shipments as shp', 'shp.id', 't.item_id')
             ->where('shp.merchant_id', '=',  $merchant_id)
-            ->where('shp.status', '=', "PROCESSING")
+            ->where('shp.transaction_id', '=',  null)
             ->whereBetween('t.created_at', [$since_at, $until])
-            ->select(DB::raw("sum(t.amount) as amount"))->first();
-        $data['shipment']['proccesing'] = $data['shipment']['proccesing']->amount ?? 0;
-
-        $data['shipment']['delivered']  = DB::table('shipments as shp')
-            ->join('transactions as t', 'shp.id', 't.item_id')
-            ->where('shp.merchant_id', '=',  $merchant_id)
-            ->where('shp.status', '=', "COMPLETED")
-            ->whereBetween('t.created_at', [$since_at, $until])
-            ->select(DB::raw("sum(t.amount) as amount"))->first();
-        $data['shipment']['delivered'] = $data['shipment']['delivered']->amount ?? 0;
-
-        $data['payment']['income'] = Transaction::where('merchant_id',  $merchant_id)
-            ->where("type", "=", "CASHOUT")
-            ->whereBetween('created_at', [$since_at, $until])
-            ->select(DB::raw("sum(amount) as amount"))
+            ->select( DB::raw('sum(amount) as amount'))
             ->first();
-        $data['payment']['income'] = $data['payment']['income']->amount ?? 0;
+            $pending_payment = collect($pending_payment);
+        $data = [
+            "shiping" => [
+                "defts" => $shiping['DRAFT'] ?? 0,
+                "proccesing" => $shiping['PROCESSING'] ?? 0,
+                "delivered" => $shiping['COMPLETED'] ?? 0,
+                "renturnd" => $shiping['RENTURND'] ?? 0,
+            ],
 
-        $data['payment']['Outcome'] = Transaction::where('merchant_id', $merchant_id)
-            ->where("type", "=", "CASHIN")
-            ->whereBetween('created_at', [$since_at, $until])
-            ->select(DB::raw("sum(amount) as amount"))
-            ->first();
-        $data['payment']['Outcome'] = $data['payment']['Outcome']->amount ?? 0;
+            "payment" => [
+                "Outcome" => $payment['CASHOUT'] ?? 0,
+                "income" => $payment['CASHIN'] ?? 0,
+                "pending_payment" =>$pending_payment['amount'] ?? 0,
 
-        $data['payment']['pending_payment'] = Transaction::where('merchant_id',  $merchant_id)
-            ->where("type", "=", "CASHIN")
-            ->whereBetween('created_at', [$since_at, $until])
-            ->select(DB::raw("sum(amount) as amount"))
-            ->first();
-        $data['payment']['pending_payment'] = $data['payment']['pending_payment']->amount ?? 0;
+            ]
+        ];
         return $data;
     }
     public function getMerchentInfo($id = null)
