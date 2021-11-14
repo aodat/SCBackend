@@ -58,8 +58,8 @@ class MerchantRequest extends FormRequest
             ];
         }else if(strpos($path,'merchant/dashboard') !== false) {
             return [
-                'since_at' => 'date',
-                'until' => 'date'
+                'since_at' => 'date|nullable',
+                'until' => 'date|nullable'
             ];
         }
         return [];

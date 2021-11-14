@@ -81,8 +81,6 @@ class MerchantController extends Controller
         $merchant_id =  $request->user()->merchant_id;
 
         if ($request->since_at !== null && $request->until !== null) {
-
-
             $since_at = date("Y-m-d H:i:s", strtotime($request->input('date') . " " . $request->since_at));
             $until = date("Y-m-d H:i:s", strtotime($request->input('date') . " " .  $request->until));
             if ($since_at  >= $until)

@@ -43,7 +43,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
         Route::group(['prefix' => 'merchant/'], function () {
             // Dashboard Information 
-            Route::get('dashboard', [MerchantController::class, 'dashboardInfo']);
+            Route::post('dashboard', [MerchantController::class, 'dashboardInfo']);
 
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
             // Merchant Profile
