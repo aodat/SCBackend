@@ -12,6 +12,7 @@ class ShipmentRequest extends MerchantRequest
         if ($this->method() == 'GET' && strpos($path,'shipments/export/{type}') !== false)
             $data['type'] = $this->route('type');
         return $data;
+        
     }
     /**
      * Get the validation rules that apply to the request.

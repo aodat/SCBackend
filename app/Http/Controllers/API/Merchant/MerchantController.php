@@ -80,41 +80,32 @@ class MerchantController extends Controller
     {
         $merchant_id =  $request->user()->merchant_id;
 
-        if ($request->since_at !== null && $request->until !== null) {
-            $since_at = date("Y-m-d H:i:s", strtotime($request->input('date') . " " . $request->since_at));
-            $until = date("Y-m-d H:i:s", strtotime($request->input('date') . " " .  $request->until));
-            if ($since_at  >= $until)
-                throw new InternalException("Error since_at Date End until ");
-        } else {
-            $since_at = Carbon::now()->subDays(7);
-            $until = Carbon::now();
-        }
         $sql =  DB::table('transactions as t')
             ->join('shipments as shp', 'shp.id', 't.item_id')
             ->where('shp.merchant_id', '=',  $merchant_id)
-            ->whereBetween('t.created_at', [$since_at, $until])
+            ->whereBetween('t.created_at', [$request->since_at, $request->until])
             ->select('shp.status', DB::raw('sum(amount) as amount'))
             ->groupBy('shp.status')
             ->get();
 
         $shiping = collect($sql)->pluck('amount', 'status');
+
+
         $sql2 = Transaction::where('merchant_id',  $merchant_id)
-            ->whereBetween('created_at', [$since_at, $until])
+            ->whereBetween('created_at', [$request->since_at, $request->until])
             ->select('type', DB::raw('sum(amount) as amount'))
             ->groupBy('type')
             ->get();
-
-
         $payment = collect($sql2)->pluck('amount', 'type');
 
         $pending_payment =   DB::table('transactions as t')
             ->join('shipments as shp', 'shp.id', 't.item_id')
             ->where('shp.merchant_id', '=',  $merchant_id)
             ->where('shp.transaction_id', '=',  null)
-            ->whereBetween('t.created_at', [$since_at, $until])
-            ->select( DB::raw('sum(amount) as amount'))
+            ->whereBetween('t.created_at', [$request->since_at, $request->until])
+            ->select(DB::raw('sum(amount) as amount'))
             ->first();
-            $pending_payment = collect($pending_payment);
+        $pending_payment = collect($pending_payment);
         $data = [
             "shiping" => [
                 "defts" => $shiping['DRAFT'] ?? 0,
@@ -126,7 +117,7 @@ class MerchantController extends Controller
             "payment" => [
                 "Outcome" => $payment['CASHOUT'] ?? 0,
                 "income" => $payment['CASHIN'] ?? 0,
-                "pending_payment" =>$pending_payment['amount'] ?? 0,
+                "pending_payment" => $pending_payment['amount'] ?? 0,
 
             ]
         ];
