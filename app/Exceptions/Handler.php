@@ -35,11 +35,21 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $exception)
     {
+        $response = [
+            'meta' => [
+                'code' => 200,
+                'msg' => 'Unexpected Error'
+            ]
+        ];
         if ($exception instanceof ModelNotFoundException) {
-            return Response::make(null, 404);
+            $response['meta']['code'] = 404;
+            $response['meta']['msg'] = 'File Not Found';
+            return Response::make($response);
         } elseif ($exception instanceof ValidationException) {
-            return Response::json($exception->errors());
-        } else if($exception instanceof AuthorizationException) {
+            $response['error'] = $exception->errors();
+            $response['meta']['code'] = 422;
+            return Response::make($response);
+        } else if ($exception instanceof AuthorizationException) {
             return Response::make(null, 403);
         }
         return parent::render($request, $exception);

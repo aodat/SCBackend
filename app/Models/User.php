@@ -12,7 +12,7 @@ use App\Notifications\MailResetPasswordNotification as MailResetPasswordNotifica
 
 class User extends Authenticatable
 {
-    use Notifiable, HasApiTokens;
+    use HasApiTokens;// Notifiable, 
  
     /**
      * The attributes that are mass assignable.
