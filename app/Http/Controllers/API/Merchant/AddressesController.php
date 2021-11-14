@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Exceptions\InternalException;
 use App\Http\Requests\Merchant\AddressesRequest;
 
 use App\Models\Merchant;
@@ -12,23 +13,27 @@ class AddressesController extends MerchantController
     public function index(AddressesRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
-        $data = Merchant::where('id',$merchantID)->select('addresses')->first();
+        $data = Merchant::where('id', $merchantID)->select('addresses')->first();
 
-      
-        if(collect($data->addresses)->isEmpty())
+
+        if (collect($data->addresses)->isEmpty())
             return $this->notFound();
 
-        return $this->response($data->addresses,'Addresses Retrieved Successfully',200);
+        return $this->response($data->addresses, 'Addresses Retrieved Successfully', 200);
     }
 
     public function createAddresses(AddressesRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $json = $request->json()->all();
-        
-        $merchant = Merchant::where('id',$merchantID);
+
+        $merchant = Merchant::where('id', $merchantID);
 
         $result = collect($merchant->select('addresses')->first()->addresses);
+
+        if ($result->contains("name", $request->name))
+            throw new InternalException(' name is  Exists');
+            
         $counter = $result->max('id') ?? 0;
         $json['id'] = ++$counter;
         $json['country'] = $request->country ?? 'JO';
@@ -37,15 +42,15 @@ class AddressesController extends MerchantController
         return $this->successful();
     }
 
-    public function deleteAddresses($id,AddressesRequest $request)
+    public function deleteAddresses($id, AddressesRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
-        
-        $list = Merchant::where('id',$merchantID);
+
+        $list = Merchant::where('id', $merchantID);
         $result = collect($list->select('addresses')->first()->addresses);
 
-        $json = $result->reject(function ($value) use($id) {
-            if($value['id'] == $id)
+        $json = $result->reject(function ($value) use ($id) {
+            if ($value['id'] == $id)
                 return $value;
         });
         $json = array_values($json->toArray());
