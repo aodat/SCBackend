@@ -21,5 +21,8 @@ return [
     ],
     'fedex' => [
         'ACCOUNT_NUMBER' => env('FEDEX_ACCOUNT_NUMBER', null)
-    ]
+    ],
+    'gatetopay'=> [
+        'AGENT_KEY' => env('GATETOPAY_AGENTKEY', null)
+    ],
 ];

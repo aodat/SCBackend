@@ -37,7 +37,8 @@
             "app/Libs/Stripe",
             "app/Libs/Aramex",
             "app/Libs/DHL",
-            "app/Libs/Fedex"
+            "app/Libs/Fedex",
+            "app/Libs/GateToPay"
         ],
         "files": [
             "app/helpers.php"
