@@ -46,11 +46,11 @@ class Aramex
         $payload['Pickup']['PickupAddress']['Line1'] = $address['description'];
         $payload['Pickup']['PickupAddress']['Line2'] = $address['area'];
         $payload['Pickup']['PickupAddress']['Line3'] = '';
-        $payload['Pickup']['PickupAddress']['City'] = $address['name_en'];
+        $payload['Pickup']['PickupAddress']['City'] = $address['name'];
         $payload['Pickup']['PickupAddress']['CountryCode'] = $address['country_code'];
 
-        $payload['Pickup']['PickupContact']['PersonName'] = $address['name_en'];
-        $payload['Pickup']['PickupContact']['CompanyName'] = $address['name_en'];
+        $payload['Pickup']['PickupContact']['PersonName'] = $address['name'];
+        $payload['Pickup']['PickupContact']['CompanyName'] = $address['name'];
         $payload['Pickup']['PickupContact']['PhoneNumber1'] = $address['phone'];
         $payload['Pickup']['PickupContact']['CellPhone'] = $address['phone'];
         $payload['Pickup']['PickupContact']['EmailAddress'] = $email;

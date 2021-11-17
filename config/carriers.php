@@ -20,6 +20,9 @@ return [
         'ACCOUNT_NUMBER' => env('DHL_ACCOUNT_NUMBER', null)
     ],
     'fedex' => [
-        'ACCOUNT_NUMBER' => env('FEDEX_ACCOUNT_NUMBER', null)
+        'ACCOUNT_NUMBER' => env('FEDEX_ACCOUNT_NUMBER', null),
+        'METER_NUMBER' => env('FEDEX_METER_NUMBER', null),
+        'KEY' => env('FEDEX_KEY', null),
+        'PASSWORD' => env('FEDEX_PASSWORD', null)
     ]
 ];

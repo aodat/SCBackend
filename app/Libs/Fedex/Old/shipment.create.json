@@ -1,0 +1,292 @@
+{
+    "mergeLabelDocOption": "LABELS_AND_DOCS",
+    "requestedShipment": {
+        "shipDatestamp": "2019-10-14",
+        "totalDeclaredValue": {
+            "amount": 0,
+            "currency": "USD"
+        },
+        "shipper": {
+            "address": {
+                "streetLines": [],
+                "city": "",
+                "stateOrProvinceCode": "",
+                "postalCode": "",
+                "countryCode": "",
+                "residential": false
+            },
+            "contact": {
+                "personName": "",
+                "emailAddress": "",
+                "phoneExtension": "",
+                "phoneNumber": "",
+                "companyName": ""
+            }
+        },
+        "recipients": [
+            {
+                "address": {
+                    "streetLines": [],
+                    "city": "",
+                    "stateOrProvinceCode": "",
+                    "postalCode": "",
+                    "countryCode": "",
+                    "residential": false
+                },
+                "contact": {
+                    "personName": "",
+                    "emailAddress": "",
+                    "phoneExtension": "",
+                    "phoneNumber": "",
+                    "companyName": ""
+                },
+                "deliveryInstructions": ""
+            }
+        ],
+        "recipientLocationNumber": "1234567",
+        "pickupType": "USE_SCHEDULED_PICKUP",
+        "serviceType": "PRIORITY_OVERNIGHT",
+        "packagingType": "YOUR_PACKAGING",
+        "totalWeight": 20.6,
+        "origin": {
+            "address": {
+                "streetLines": [
+                    "10 FedEx Parkway",
+                    "Suite 302"
+                ],
+                "city": "Beverly Hills",
+                "stateOrProvinceCode": "CA",
+                "postalCode": "38127",
+                "countryCode": "US",
+                "residential": false
+            },
+            "contact": {
+                "personName": "person name",
+                "emailAddress": "email address",
+                "phoneNumber": "phone number",
+                "phoneExtension": "phone extension",
+                "companyName": "company name",
+                "faxNumber": "fax number"
+            }
+        },
+        "shippingChargesPayment": {
+            "paymentType": "SENDER",
+            "payor": {
+                "responsibleParty": {
+                    "address": {
+                        "streetLines": [
+                            "10 FedEx Parkway",
+                            "Suite 302"
+                        ],
+                        "city": "Beverly Hills",
+                        "stateOrProvinceCode": "CA",
+                        "postalCode": "90210",
+                        "countryCode": "US",
+                        "residential": false
+                    },
+                    "contact": {
+                        "personName": "John Taylor",
+                        "emailAddress": "sample@company.com",
+                        "parsedPersonName": {
+                            "firstName": "first name",
+                            "lastName": "last name",
+                            "middleName": "middle name",
+                            "suffix": "suffix"
+                        },
+                        "phoneNumber": "XXXX567890",
+                        "phoneExtension": "phone extension",
+                        "companyName": "Fedex",
+                        "faxNumber": "fax number"
+                    },
+                    "accountNumber": {
+                        "value": "Your account number"
+                    }
+                }
+            }
+        },
+        "labelSpecification": {
+            "labelFormatType": "COMMON2D",
+            "labelOrder": "SHIPPING_LABEL_FIRST",
+            "customerSpecifiedDetail": {
+                "maskedData": [
+                    "[\"CUSTOMS_VALUE\",\"TOTAL_WEIGHT\"]"
+                ],
+                "regulatoryLabels": [
+                    {
+                        "generationOptions": "CONTENT_ON_SHIPPING_LABEL_ONLY",
+                        "type": "ALCOHOL_SHIPMENT_LABEL"
+                    }
+                ],
+                "additionalLabels": [
+                    {
+                        "type": "CONSIGNEE",
+                        "count": 1
+                    }
+                ],
+                "docTabContent": {
+                    "docTabContentType": "BARCODED",
+                    "zone001": {
+                        "docTabZoneSpecifications": [
+                            {
+                                "zoneNumber": 0,
+                                "header": "string",
+                                "dataField": "string",
+                                "literalValue": "string",
+                                "justification": "RIGHT"
+                            }
+                        ]
+                    },
+                    "barcoded": {
+                        "symbology": "UCC128",
+                        "specification": {
+                            "zoneNumber": 0,
+                            "header": "string",
+                            "dataField": "string",
+                            "literalValue": "string",
+                            "justification": "RIGHT"
+                        }
+                    }
+                }
+            },
+            "printedLabelOrigin": {
+                "address": {
+                    "streetLines": [
+                        "10 FedEx Parkway",
+                        "Suite 302"
+                    ],
+                    "city": "Beverly Hills",
+                    "stateOrProvinceCode": "CA",
+                    "postalCode": "38127",
+                    "countryCode": "US",
+                    "residential": false
+                },
+                "contact": {
+                    "personName": "person name",
+                    "emailAddress": "email address",
+                    "parsedPersonName": {
+                        "firstName": "first name",
+                        "lastName": "last name",
+                        "middleName": "middle name",
+                        "suffix": "suffix"
+                    },
+                    "phoneNumber": "phone number",
+                    "phoneExtension": "phone extension",
+                    "companyName": "company name",
+                    "faxNumber": "fax number"
+                }
+            },
+            "labelStockType": "PAPER_85X11_TOP_HALF_LABEL",
+            "labelRotation": "UPSIDE_DOWN",
+            "imageType": "PDF",
+            "labelPrintingOrientation": "TOP_EDGE_OF_TEXT_FIRST",
+            "returnedDispositionDetail": true
+        },
+        "rateRequestType": [
+            "LIST",
+            "PREFERRED"
+        ],
+        "preferredCurrency": "USD",
+        "totalPackageCount": 25,
+        "requestedPackageLineItems": [
+            {
+                "sequenceNumber": "1",
+                "subPackagingType": "BUCKET",
+                "customerReferences": [
+                    {
+                        "customerReferenceType": "INVOICE_NUMBER",
+                        "value": "3686"
+                    }
+                ],
+                "declaredValue": {
+                    "amount": 12.45,
+                    "currency": "USD"
+                },
+                "weight": {
+                    "units": "KG",
+                    "value": 68
+                },
+                "dimensions": {
+                    "length": 100,
+                    "width": 50,
+                    "height": 30,
+                    "units": "CM"
+                },
+                "groupPackageCount": 2,
+                "itemDescriptionForClearance": "description",
+                "contentRecord": [
+                    {
+                        "itemNumber": "2876",
+                        "receivedQuantity": 256,
+                        "description": "Description",
+                        "partNumber": "456"
+                    }
+                ],
+                "itemDescription": "item description for the package",
+                "variableHandlingChargeDetail": {
+                    "rateType": "PREFERRED_CURRENCY",
+                    "percentValue": 12.45,
+                    "rateLevelType": "INDIVIDUAL_PACKAGE_RATE",
+                    "fixedValue": {
+                        "amount": 24.45,
+                        "currency": "USD"
+                    },
+                    "rateElementBasis": "NET_CHARGE_EXCLUDING_TAXES"
+                },
+                "packageSpecialServices": {
+                    "specialServiceTypes": [
+                        "ALCOHOL",
+                        "NON_STANDARD_CONTAINER"
+                    ],
+                    "signatureOptionType": "SERVICE_DEFAULT",
+                    "priorityAlertDetail": {
+                        "enhancementTypes": [
+                            "PRIORITY_ALERT_PLUS"
+                        ],
+                        "content": [
+                            "string"
+                        ]
+                    },
+                    "signatureOptionDetail": {
+                        "signatureReleaseNumber": "23456"
+                    },
+                    "alcoholDetail": {
+                        "alcoholRecipientType": "LICENSEE",
+                        "shipperAgreementType": "Retailer"
+                    },
+                    "dangerousGoodsDetail": {
+                        "accessibility": "INACCESSIBLE",
+                        "options": [
+                            "LIMITED_QUANTITIES_COMMODITIES",
+                            "ORM_D"
+                        ]
+                    },
+                    "packageCODDetail": {
+                        "codCollectionAmount": {
+                            "amount": 12.45,
+                            "currency": "USD"
+                        }
+                    },
+                    "pieceCountVerificationBoxCount": 0,
+                    "batteryDetails": [
+                        {
+                            "batteryPackingType": "CONTAINED_IN_EQUIPMENT",
+                            "batteryRegulatoryType": "IATA_SECTION_II",
+                            "batteryMaterialType": "LITHIUM_METAL"
+                        }
+                    ],
+                    "dryIceWeight": {
+                        "units": "KG",
+                        "value": 68
+                    }
+                }
+            }
+        ]
+    },
+    "labelResponseOptions": "LABEL",
+    "accountNumber": {
+        "value": "Your account number"
+    },
+    "shipAction": "CONFIRM",
+    "processingOptionType": "ALLOW_ASYNCHRONOUS",
+    "oneLabelAtATime": true
+}

@@ -1,52 +1,74 @@
 {
-    "originDetail": {
-        "pickupAddressType": "ACCOUNT",
-        "pickupLocation": {
-            "contact": {
-                "companyName": "",
-                "personName": "",
-                "phoneNumber": "",
-                "phoneExtension": ""
-            },
-            "address": {
-                "streetLines": [],
-                "urbanizationCode": "",
-                "city": "",
-                "stateOrProvinceCode": "",
-                "postalCode": "",
-                "countryCode": "",
-                "residential": false,
-                "addressClassification": "MIXED"
-            },
-            "accountNumber": {
-                "value": ""
-            },
-            "deliveryInstructions": "deliveryInstructions"
-        },
-        "readyDateTimestamp": "",
-        "customerCloseTime": "18:00:00",
-        "pickupDateType": "SAME_DAY",
-        "packageLocation": "FRONT",
-        "buildingPart": "APARTMENT",
-        "buildingPartDescription": "",
-        "earlyPickup": false,
-        "suppliesRequested": "",
-        "geographicalPostalCode": "geographicalPostalCode"
-    },
-
-    "carrierCode": "FDXE",
-    "remarks": "",
-    "countryRelationships": "DOMESTIC",
-    "pickupType": "ON_CALL",
-    "trackingNumber": "",
-    "pickupNotificationDetail": {
-        "emailDetails": [
-            {
-                "address": "",
-                "locale": "en_US"
+    "CreatePickupRequest": {
+        "WebAuthenticationDetail": {
+            "UserCredential": {
+                "Key": "",
+                "Password": ""
             }
-        ],
-        "format": "HTML",
-        "userMessage": "This is the user message"
+        },
+        "ClientDetail": {
+            "AccountNumber": "",
+            "MeterNumber": ""
+        },
+        "TransactionDetail": {
+            "CustomerTransactionId": "CreatePickupRequest_v17",
+            "Localization": {
+                "LanguageCode": "EN",
+                "LocaleCode": "ES"
+            }
+        },
+        "Version": {
+            "ServiceId": "disp",
+            "Major": "17",
+            "Intermediate": "0",
+            "Minor": "0"
+        },
+        "AssociatedAccountNumber": {
+            "Type": "FEDEX_EXPRESS",
+            "AccountNumber": "XXXXXXXXXXX"
+        },
+        "OriginDetail": {
+            "PickupLocation": {
+                "Contact": {
+                    "ContactId": "KR1059",
+                    "PersonName": "INPUT YOUR INFORMATION",
+                    "Title": "Mr.",
+                    "CompanyName": "DEOYAROHIT0905$",
+                    "PhoneNumber": "INPUT YOUR INFORMATION",
+                    "PhoneExtension": "INPUT YOUR INFORMATION",
+                    "PagerNumber": "XXXXXXXXXX",
+                    "FaxNumber": "XXXXXXXXXX",
+                    "EMailAddress": "kaustubha_ramdasi@syntelinc.com"
+                },
+                "Address": {
+                    "StreetLines": [
+                        "INPUT YOUR INFORMATION",
+                        "INPUT YOUR INFORMATION",
+                        "INPUT YOUR INFORMATION"
+                    ],
+                    "City": "Memphis",
+                    "StateOrProvinceCode": "TN",
+                    "PostalCode": "38125",
+                    "CountryCode": "US"
+                }
+            },
+            "PackageLocation": "FRONT",
+            "BuildingPart": "DEPARTMENT",
+            "BuildingPartDescription": "BuildingPartDescription",
+            "ReadyTimestamp": "${=String.format('%tF', new Date())}T12:34:56-\n06:00",
+            "CompanyCloseTime": "19:00:00",
+            "Location": "NQAA",
+            "SuppliesRequested": "SuppliesRequested"
+        },
+        "PackageCount": "1",
+        "TotalWeight": {
+            "Units": "LB",
+            "Value": "50.0"
+        },
+        "CarrierCode": "FDXE",
+        "OversizePackageCount": "0",
+        "Remarks": "Remarks",
+        "CommodityDescription": "TEST ENVIRONMENT - PLEASE DO NOT PROCESS\nPICKUP",
+        "CountryRelationship": "DOMESTIC"
     }
 }
