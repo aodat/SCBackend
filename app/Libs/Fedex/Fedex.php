@@ -48,11 +48,14 @@ class Fedex
         $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Address']['CountryCode'] = $address['country_code'];
 
         $payload['CreatePickupRequest']['OriginDetail']['BuildingPartDescription'] = $address['area'];
-
+        $payload['CreatePickupRequest']['OriginDetail']['ReadyTimestamp'] = date('c', strtotime($date . ' 03:00 PM'));
 
         $response = $this->call('CreatePickupRequest', $payload);
-        echo ($response);
-        die;
+
+        if (isset($response['HighestSeverity']) && $response['HighestSeverity'])
+            throw new CarriersException('FedEx Create Pickup – Something Went Wrong');
+
+        dd($response);
         // if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
         // throw new CarriersException('DHL Create Pickup – Something Went Wrong');
         // return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
@@ -61,6 +64,8 @@ class Fedex
 
     public function cancelPickup($pickupInfo)
     {
+        $payload = $this->bindJsonFile('pickup.cancel.json', "CreatePickupRequest");
+        $prefix = '##v_id##';
     }
 
     public function printLabel()

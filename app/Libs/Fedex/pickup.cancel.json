@@ -1,0 +1,88 @@
+{
+    "##v_id##CancelPickupRequest": {
+        "##v_id##WebAuthenticationDetail": {
+            "##v_id##ParentCredential": {
+                "##v_id##Key": "A4YlC6CtrGp0oAv7",
+                "##v_id##Password": "GMd9tbHm3tDLUKuYkQQUJAI1a"
+            },
+            "##v_id##UserCredential": {
+                "##v_id##Key": "MzFgqt08rlRz8WAB",
+                "##v_id##Password": "i9yy72V1TfLQfr8gO6wB3Wgsw"
+            }
+        },
+        "##v_id##ClientDetail": {
+            "##v_id##AccountNumber": "150067600",
+            "##v_id##MeterNumber": "7003043",
+            "##v_id##Localization": {
+                "##v_id##LanguageCode": "EN",
+                "##v_id##LocaleCode": "US"
+            }
+        },
+        "##v_id##TransactionDetail": {
+            "##v_id##CustomerTransactionId": "CancelPickupRequest_v22",
+            "##v_id##Localization": {
+                "##v_id##LanguageCode": "EN",
+                "##v_id##LocaleCode": "US"
+            }
+        },
+        "##v_id##Version": {
+            "##v_id##ServiceId": "disp",
+            "##v_id##Major": "22",
+            "##v_id##Intermediate": "0",
+            "##v_id##Minor": "0"
+        },
+        "##v_id##CarrierCode": "FDXE",
+        "##v_id##PickupConfirmationNumber": "2",
+        "##v_id##ScheduledDate": "2019-12-05",
+        "##v_id##Location": "NQAA",
+        "##v_id##Remarks": "Preet",
+        "##v_id##ShippingChargesPayment": {
+            "##v_id##PaymentType": "CASH",
+            "##v_id##Payor": {
+                "##v_id##ResponsibleParty": {
+                    "##v_id##AccountNumber": {
+                        "-self-closing": "true"
+                    },
+                    "##v_id##Tins": {
+                        "##v_id##TinType": "BUSINESS_NATIONAL",
+                        "##v_id##Number": "123456989012345",
+                        "##v_id##Usage": "string"
+                    },
+                    "##v_id##Contact": {
+                        "##v_id##ContactId": "KR1059",
+                        "##v_id##PersonName": "JOHN SMITH",
+                        "##v_id##Title": "Mr.",
+                        "##v_id##CompanyName": "DEOYAROHIT0905$",
+                        "##v_id##PhoneNumber": "9962308621",
+                        "##v_id##PhoneExtension": "XXXXXXXX",
+                        "##v_id##PagerNumber": "XXXXXXXXXX",
+                        "##v_id##FaxNumber": "XXXXXXXXXX",
+                        "##v_id##EMailAddress": "XXXXX@XXXXX.com"
+                    },
+                    "##v_id##Address": {
+                        "##v_id##StreetLines": [
+                            "8321 Championship DR",
+                            "FEDEX PARK",
+                            "DENVER ADDRESS LINE 3"
+                        ],
+                        "##v_id##City": "Memphis",
+                        "##v_id##StateOrProvinceCode": "TN",
+                        "##v_id##PostalCode": "XXXXXX",
+                        "##v_id##CountryCode": "US",
+                        "##v_id##GeographicCoordinates": "aris imponet"
+                    }
+                },
+                "##v_id##AssociatedAccounts": {
+                    "##v_id##Type": "FEDEX_EXPRESS",
+                    "##v_id##AccountNumber": "XXXXXXXXX"
+                }
+            },
+            "##v_id##Amount": {
+                "##v_id##Currency": "USD",
+                "##v_id##Amount": "220000"
+            }
+        },
+        "##v_id##Reason": "TXT",
+        "##v_id##ContactName": "Radhika"
+    }
+}

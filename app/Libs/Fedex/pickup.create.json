@@ -41,7 +41,7 @@
                     "ContactId": "",
                     "PersonName": "",
                     "Title": "Mr.",
-                    "CompanyName": "",
+                    "CompanyName": "DEOYAROHIT0905",
                     "PhoneNumber": "",
                     "PhoneExtension": "",
                     "PagerNumber": "",
@@ -52,15 +52,15 @@
                     "StreetLines": "",
                     "City": "",
                     "StateOrProvinceCode": "",
-                    "PostalCode": "",
+                    "PostalCode": "20000",
                     "CountryCode": ""
                 }
             },
             "PackageLocation": "FRONT",
             "BuildingPart": "DEPARTMENT",
             "BuildingPartDescription": "BuildingPartDescription",
-            "ReadyTimestamp": "XXXX",
-            "CompanyCloseTime": "19:00:00",
+            "ReadyTimestamp": "",
+            "CompanyCloseTime": "16:00:00",
             "Location": "NQAA",
             "SuppliesRequested": "SuppliesRequested"
         },
