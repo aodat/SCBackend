@@ -1,14 +1,22 @@
 {
     "CreatePickupRequest": {
         "WebAuthenticationDetail": {
+            "ParentCredential": {
+                "Key": "",
+                "Password": ""
+            },
             "UserCredential": {
                 "Key": "",
                 "Password": ""
             }
         },
         "ClientDetail": {
-            "AccountNumber": "",
-            "MeterNumber": ""
+            "AccountNumber": "XXXXXXXXX",
+            "MeterNumber": "XXXXXXX",
+            "Localization": {
+                "LanguageCode": "EN",
+                "LocaleCode": "ES"
+            }
         },
         "TransactionDetail": {
             "CustomerTransactionId": "CreatePickupRequest_v17",
@@ -30,45 +38,41 @@
         "OriginDetail": {
             "PickupLocation": {
                 "Contact": {
-                    "ContactId": "KR1059",
-                    "PersonName": "INPUT YOUR INFORMATION",
+                    "ContactId": "",
+                    "PersonName": "",
                     "Title": "Mr.",
-                    "CompanyName": "DEOYAROHIT0905$",
-                    "PhoneNumber": "INPUT YOUR INFORMATION",
-                    "PhoneExtension": "INPUT YOUR INFORMATION",
-                    "PagerNumber": "XXXXXXXXXX",
-                    "FaxNumber": "XXXXXXXXXX",
-                    "EMailAddress": "kaustubha_ramdasi@syntelinc.com"
+                    "CompanyName": "",
+                    "PhoneNumber": "",
+                    "PhoneExtension": "",
+                    "PagerNumber": "",
+                    "FaxNumber": "",
+                    "EMailAddress": ""
                 },
                 "Address": {
-                    "StreetLines": [
-                        "INPUT YOUR INFORMATION",
-                        "INPUT YOUR INFORMATION",
-                        "INPUT YOUR INFORMATION"
-                    ],
-                    "City": "Memphis",
-                    "StateOrProvinceCode": "TN",
-                    "PostalCode": "38125",
-                    "CountryCode": "US"
+                    "StreetLines": "",
+                    "City": "",
+                    "StateOrProvinceCode": "",
+                    "PostalCode": "",
+                    "CountryCode": ""
                 }
             },
             "PackageLocation": "FRONT",
             "BuildingPart": "DEPARTMENT",
             "BuildingPartDescription": "BuildingPartDescription",
-            "ReadyTimestamp": "${=String.format('%tF', new Date())}T12:34:56-\n06:00",
+            "ReadyTimestamp": "XXXX",
             "CompanyCloseTime": "19:00:00",
             "Location": "NQAA",
             "SuppliesRequested": "SuppliesRequested"
         },
         "PackageCount": "1",
         "TotalWeight": {
-            "Units": "LB",
-            "Value": "50.0"
+            "Units": "KG",
+            "Value": "1.0"
         },
         "CarrierCode": "FDXE",
         "OversizePackageCount": "0",
         "Remarks": "Remarks",
-        "CommodityDescription": "TEST ENVIRONMENT - PLEASE DO NOT PROCESS\nPICKUP",
+        "CommodityDescription": "TEST ENVIRONMENT - PLEASE DO NOT PROCESS PICKUP",
         "CountryRelationship": "DOMESTIC"
     }
 }

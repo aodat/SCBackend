@@ -12,9 +12,11 @@ function uploadFiles($folder, $file, $type = '', $isOutput = false)
     if (!$isOutput) {
         $path .= $file->getClientOriginalExtension();
         $data = file_get_contents($file);
-    } else
+    } else {
+        $data = $file;
         $path .= ".$type";
-
+    }
+    
     Storage::disk('s3')->put($path, $data);
 
     return Storage::disk('s3')->url($path);

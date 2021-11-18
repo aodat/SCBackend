@@ -43,11 +43,12 @@ class ShipmentRequest extends MerchantRequest
                     $type.'consignee_city' => 'required',
                     $type.'consignee_area' => 'required',
                     $type.'consignee_address_description' => 'required',
+                    $type.'consignee_zip_code' => '',
 
                     $type.'content' => 'required',
 
                     $type.'cod' => 'required|numeric|between:0,9999',
-                    $type.'pieces' => 'required|integer'
+                    $type.'pieces' => 'required|integer',
                 ];
             if(strpos($path,'shipments/domestic/create') !== false) {
                 $validation['*'] = 'required|array|min:1|max:50';

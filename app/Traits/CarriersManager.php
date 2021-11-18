@@ -7,7 +7,6 @@ use Libs\DHL;
 use Libs\Fedex;
 
 use App\Exceptions\CarriersException;
-
 use App\Models\Merchant;
 
 trait CarriersManager
@@ -86,8 +85,7 @@ trait CarriersManager
     */
     public function calculateFees($carrier_id, $country_code, $type, $weight)
     {
-        if($type == 'DOM') 
-        {
+        if ($type == 'DOM') {
             $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code)->first();
             $price = $rate->price;
             $fees = ceil($weight / 10) * $price;
@@ -96,28 +94,29 @@ trait CarriersManager
                 json_decode(file_get_contents(storage_path() . '/../App/Libs/express.rates.json'), true)['Countries']
             )->where('code', $country_code)
                 ->all();
-    
             if (count($express_rates) > 1)
                 throw new CarriersException('Express Rates Json Retrun More Than One Country');
-    
+
             $list = reset($express_rates);
-    
+
+            if (!$list)
+                throw new CarriersException('List File is empty');
+
             $zones = collect($list['zones'])->where('carrier_id', $carrier_id)->all();
-    
             if (count($zones) > 1)
                 throw new CarriersException('Express Rates Json Retrun More Than One zone');
-    
+
             $zone_id = reset($zones)['zone_id'];
-    
+
             $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id)->all();
-    
+
             if (count($zoneRates) != 1)
                 throw new CarriersException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
-    
+
             $zoneRates = reset($zoneRates);
             $base = $zoneRates['basic'];
             $additional = $zoneRates['additional'];
-    
+
             $fees = 0;
             if ($weight > 0) {
                 $weights_count = ceil($weight / 0.5);

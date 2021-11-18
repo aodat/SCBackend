@@ -6,6 +6,8 @@ use App\Exceptions\CarriersException;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
+use XmlParser;
+
 use SimpleXMLElement;
 
 class Fedex
@@ -14,23 +16,47 @@ class Fedex
 
     private static $stagingUrl = 'https://wsbeta.fedex.com:443/web-services';
 
-    private $base_url;
+
+    private static $xsd = [
+        'CreatePickupRequest' => 'http://fedex.com/ws/pickup/v17',
+        'ProcessShipmentRequest' => 'http://fedex.com/ws/ship/v21'
+    ];
+
+
+    private $end_point;
     function __construct()
     {
         $this->account_number = config('carriers.fedex.ACCOUNT_NUMBER');
         $this->meter_number = config('carriers.fedex.METER_NUMBER');
         $this->key = config('carriers.fedex.KEY');
         $this->password = config('carriers.fedex.PASSWORD');
-        $this->base_url = self::$stagingUrl;
+        $this->end_point = self::$stagingUrl;
     }
 
     public function createPickup($email, $date, $address)
     {
         $payload = $this->bindJsonFile('pickup.create.json', "CreatePickupRequest");
 
-        echo ($this->fedexXMLFile($payload)->asXML());
+        $payload['CreatePickupRequest']['AssociatedAccountNumber']['AccountNumber'] = $this->account_number;
+        $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Contact']['CompanyName'] = $address['name'];
+        $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Contact']['PersonName'] = $address['name'];
+        $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Contact']['PhoneNumber'] = $address['phone'];
+        $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Contact']['EMailAddress'] = $email;
 
+        $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Address']['StreetLines'] = $address['description'];
+        $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Address']['City'] = $address['city'];
+        $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Address']['CountryCode'] = $address['country_code'];
+
+        $payload['CreatePickupRequest']['OriginDetail']['BuildingPartDescription'] = $address['area'];
+
+
+        $response = $this->call('CreatePickupRequest', $payload);
+        echo ($response);
         die;
+        // if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
+        // throw new CarriersException('DHL Create Pickup – Something Went Wrong');
+        // return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
+
     }
 
     public function cancelPickup($pickupInfo)
@@ -43,13 +69,52 @@ class Fedex
 
     public function createShipment($merchentInfo, $shipmentInfo)
     {
+        $payload = $this->bindJsonFile('shipment.create.json', "ProcessShipmentRequest");
+
+        $payload['ProcessShipmentRequest']['TransactionDetail']['CustomerTransactionId'] = randomNumber(32);
+        $payload['ProcessShipmentRequest']['RequestedShipment']['ShipTimestamp'] = Carbon::now()->format(Carbon::ATOM);
+        $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Contact'] = [
+            'PersonName' => $shipmentInfo['sender_name'],
+            'CompanyName' => $shipmentInfo['sender_name'],
+            'PhoneNumber' => $shipmentInfo['sender_phone']
+        ];
+        $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Address'] = [
+            'StreetLines' => $shipmentInfo['sender_address_description'],
+            'City' => $shipmentInfo['sender_city'],
+            'StateOrProvinceCode' => 'GA',
+            'PostalCode' => '20000',
+            'CountryCode' => $merchentInfo->country_code
+        ];
+        $payload['ProcessShipmentRequest']['RequestedShipment']['Recipient']['Contact'] = [
+            'PersonName' => $shipmentInfo['consignee_name'],
+            'CompanyName' => $shipmentInfo['consignee_name'],
+            'PhoneNumber' => $shipmentInfo['consignee_phone']
+        ];
+        $payload['ProcessShipmentRequest']['RequestedShipment']['Recipient']['Address'] = [
+            'StreetLines' => $shipmentInfo['consignee_address_description'],
+            'City' => $shipmentInfo['consignee_city'],
+            'StateOrProvinceCode' => 'GA',
+            'PostalCode' => $shipmentInfo['consignee_zip_code'] ?? '',
+            'CountryCode' => $shipmentInfo['consignee_country']
+        ];
+        $payload['ProcessShipmentRequest']['RequestedShipment']['ShippingChargesPayment']['Payor']['ResponsibleParty']['AccountNumber'] = $this->account_number;
+        $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['Description'] = $shipmentInfo['notes'] ?? 'No Notes';
+        $response = $this->call('ProcessShipmentRequest', $payload);
+
+        if (!isset($response['Notifications']['Severity']))
+            throw new CarriersException('FedEx Create Shipment – Something Went Wrong');
+
+        return [
+            'id' => $response['CompletedShipmentDetail']['CompletedPackageDetails']['TrackingIds']['TrackingNumber'],
+            'file' => uploadFiles('fedex/shipment', base64_decode($response['CompletedShipmentDetail']['CompletedPackageDetails']['Label']['Parts']['Image']), 'pdf', true)
+        ];
     }
 
     public function bindJsonFile($file, $type)
     {
         $payload = json_decode(file_get_contents(storage_path() . '/../App/Libs/Fedex/' . $file), true);
         $payload[$type]['WebAuthenticationDetail']['UserCredential'] = [
-            'key' => $this->key,
+            'Key' => $this->key,
             'Password' => $this->password
         ];
         $payload[$type]['ClientDetail'] = [
@@ -59,22 +124,23 @@ class Fedex
         return $payload;
     }
 
-    private function fedexXMLFile($data)
+    private function fedexXMLFile($type, $data)
     {
-        $xml = new SimpleXMLElement('<SOAP-ENV:Envelope><SOAP-ENV:Body></SOAP-ENV:Body></SOAP-ENV:Envelope>', LIBXML_NOERROR, false, 'ws', true);
-        $xml->addAttribute('xmlns:SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope');
-        $xml->addAttribute('xmlns', 'http://fedex.com/ws/ship/v21');
+        $xml = new SimpleXMLElement('<SOAP-ENV:Envelope></SOAP-ENV:Envelope>', LIBXML_NOERROR, false, 'ws', true);
+        $xml->addAttribute('xmlns:SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope/', 'http://schemas.xmlsoap.org/soap/envelope/');
+        $xml->addAttribute('xmlns', self::$xsd[$type]);
 
-        $body = array_to_xml($data,new SimpleXMLElement('<SOAP-ENV:Body></SOAP-ENV:Body>', LIBXML_NOERROR, false, 'ws', true));
-
-        $xml->addChild("item","Test");
+        $body = array_to_xml($data, new SimpleXMLElement('<SOAP-ENV:Body></SOAP-ENV:Body>', LIBXML_NOERROR, false, 'ws', true));
 
 
-        dd($xml->asXML());
-        $itemsNode->addChild("item", $newValue);
-        $sxe->asXML("myxml.xml"); 
+        $main = dom_import_simplexml($xml);
+        $content = dom_import_simplexml($body);
+        $main->appendChild($main->ownerDocument->importNode($content, true));
 
-        
+        $xml = simplexml_import_dom($main);
+
+
+        return str_replace('xmlns:xmlns="http://schemas.xmlsoap.org/soap/envelope/"', '', $xml->asXML());
     }
 
     private function call($type, $data)
@@ -84,10 +150,15 @@ class Fedex
         curl_setopt($ch, CURLOPT_URL, $this->end_point);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_PORT, 443);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->fedexXMLFile($type, $data)->asXML());
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->fedexXMLFile($type, $data));
         $result = curl_exec($ch);
-        curl_error($ch);
 
-        return XMLToArray($result);
+        curl_error($ch);
+        // Parsing SOAP XML File 
+        $response = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $result);
+        $xml = new SimpleXMLElement($response);
+
+        $body = $xml->xpath('//SOAP-ENV:Body')[0];
+        return last(json_decode(json_encode((array)$body), true));
     }
 }

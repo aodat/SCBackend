@@ -1,11 +1,17 @@
 {
     "ProcessShipmentRequest": {
         "WebAuthenticationDetail": {
-            "UserCredential": {}
+            "UserCredential": {
+                "Key": "",
+                "Password": ""
+            }
         },
-        "ClientDetail": {},
+        "ClientDetail": {
+            "AccountNumber": "",
+            "MeterNumber": ""
+        },
         "TransactionDetail": {
-            "CustomerTransactionId": "International Priority Shipment Rate"
+            "CustomerTransactionId": ""
         },
         "Version": {
             "ServiceId": "ship",
@@ -14,14 +20,13 @@
             "Minor": "0"
         },
         "RequestedShipment": {
-            "ShipTimestamp": "2018-08-06T15:22:34+04:00",
+            "ShipTimestamp": "",
             "DropoffType": "REGULAR_PICKUP",
             "ServiceType": "INTERNATIONAL_PRIORITY",
             "PackagingType": "YOUR_PACKAGING",
-            "#comment": "TOTAL WEIGHT OF SHIPMENT",
             "TotalWeight": {
                 "Units": "KG",
-                "Value": "10"
+                "Value": "1"
             },
             "Shipper": {
                 "Contact": {
@@ -55,7 +60,7 @@
                 "PaymentType": "SENDER",
                 "Payor": {
                     "ResponsibleParty": {
-                        "AccountNumber": "510087160"
+                        "AccountNumber": ""
                     }
                 }
             },
@@ -78,7 +83,7 @@
                     "CountryOfManufacture": "US",
                     "Weight": {
                         "Units": "KG",
-                        "Value": "10"
+                        "Value": "1.0"
                     },
                     "Quantity": "1",
                     "QuantityUnits": "EA",
@@ -98,7 +103,7 @@
                 "SequenceNumber": "1",
                 "Weight": {
                     "Units": "KG",
-                    "Value": "10.0"
+                    "Value": "1.0"
                 },
                 "CustomerReferences": {
                     "CustomerReferenceType": "CUSTOMER_REFERENCE",
