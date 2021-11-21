@@ -3,6 +3,8 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Models\Carriers;
+use App\Models\Merchant;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
@@ -19,11 +21,14 @@ class Fedex
 
     private static $xsd = [
         'CreatePickupRequest' => 'http://fedex.com/ws/pickup/v17',
-        'ProcessShipmentRequest' => 'http://fedex.com/ws/ship/v21'
+        'ProcessShipmentRequest' => 'http://fedex.com/ws/ship/v21',
+        'CancelPickupRequest' => 'http://fedex.com/ws/pickup/v22'
     ];
 
 
     private $end_point;
+    private $prefix = '';
+    private $xmlPrefix = '';
     function __construct()
     {
         $this->account_number = config('carriers.fedex.ACCOUNT_NUMBER');
@@ -55,17 +60,48 @@ class Fedex
         if (isset($response['HighestSeverity']) && $response['HighestSeverity'])
             throw new CarriersException('FedEx Create Pickup – Something Went Wrong');
 
-        dd($response);
-        // if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
-        // throw new CarriersException('DHL Create Pickup – Something Went Wrong');
-        // return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
+        if (!isset($response['Notifications']['Severity']))
+            throw new CarriersException('FedEx Create Shipment – Something Went Wrong');
 
+        dd($response);
+        // return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
     }
 
     public function cancelPickup($pickupInfo)
     {
-        $payload = $this->bindJsonFile('pickup.cancel.json', "CreatePickupRequest");
-        $prefix = '##v_id##';
+        $this->prefix = 'vid-';
+        $this->xmlPrefix = 'v22:';
+
+        $address = Merchant::getAdressInfoByID($pickupInfo->address_id);
+        $payload = $this->bindJsonFile('pickup.cancel.json', "CancelPickupRequest");
+
+        $payload['vid-CancelPickupRequest']['vid-Payor']['vid-ResponsibleParty']['vid-AccountNumber'] = $this->account_number;
+        $payload['vid-CancelPickupRequest']['vid-Payor']['vid-ResponsibleParty']['vid-Tins']['vid-Number'] = $this->account_number;
+        $payload['vid-CancelPickupRequest']['vid-Payor']['vid-ResponsibleParty']['vid-Contact'] = [
+            "vid-ContactId" => "KR1059",
+            "vid-PersonName" => $address->name,
+            "vid-Title" => "Mr.",
+            "vid-CompanyName" => $address->name,
+            "vid-PhoneNumber" => $address->phone,
+            "vid-PhoneExtension" => "",
+            "vid-PagerNumber" => "",
+            "vid-FaxNumber" => "",
+            "vid-EMailAddress" => ""
+        ];
+        $payload['vid-CancelPickupRequest']['vid-Payor']['vid-ResponsibleParty']['vid-Address'] = [
+            "vid-StreetLines" => "",
+            "vid-City" => $address->city_code,
+            "vid-StateOrProvinceCode" => "TN",
+            "vid-PostalCode" => "",
+            "vid-CountryCode" => $address->country_code,
+            "vid-GeographicCoordinates" => ""
+        ];
+        $payload['vid-CancelPickupRequest']['vid-Payor']['vid-AssociatedAccounts']['vid-AccountNumber'] = $this->account_number;
+        $payload['vid-CancelPickupRequest']['vid-ContactName'] = $address->name;
+
+        $this->call('CancelPickupRequest', $payload, true);
+
+        return true;
     }
 
     public function printLabel()
@@ -118,18 +154,18 @@ class Fedex
     public function bindJsonFile($file, $type)
     {
         $payload = json_decode(file_get_contents(storage_path() . '/../App/Libs/Fedex/' . $file), true);
-        $payload[$type]['WebAuthenticationDetail']['UserCredential'] = [
+        $payload[$this->prefix . '' . $type][$this->prefix . '' . 'WebAuthenticationDetail'][$this->prefix . '' . 'UserCredential'] = [
             'Key' => $this->key,
             'Password' => $this->password
         ];
-        $payload[$type]['ClientDetail'] = [
+        $payload[$this->prefix . '' . $type][$this->prefix . '' . 'ClientDetail'] = [
             'AccountNumber' => $this->account_number,
             'MeterNumber' => $this->meter_number
         ];
         return $payload;
     }
 
-    private function fedexXMLFile($type, $data)
+    private function fedexXMLFile($type, $data, $withPrefix)
     {
         $xml = new SimpleXMLElement('<SOAP-ENV:Envelope></SOAP-ENV:Envelope>', LIBXML_NOERROR, false, 'ws', true);
         $xml->addAttribute('xmlns:SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope/', 'http://schemas.xmlsoap.org/soap/envelope/');
@@ -143,22 +179,28 @@ class Fedex
         $main->appendChild($main->ownerDocument->importNode($content, true));
 
         $xml = simplexml_import_dom($main);
-
-
-        return str_replace('xmlns:xmlns="http://schemas.xmlsoap.org/soap/envelope/"', '', $xml->asXML());
+        $xml = str_replace('xmlns:xmlns="http://schemas.xmlsoap.org/soap/envelope/"', '', $xml->asXML());
+        if ($withPrefix) {
+            $xml = str_replace($this->prefix, $this->xmlPrefix, $xml);
+            $xml = str_replace('xmlns="', 'v22:xmlns="', $xml);
+        }
+        return $xml;
     }
 
-    private function call($type, $data)
+    private function call($type, $data, $withPrefix = false)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $this->end_point);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_PORT, 443);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->fedexXMLFile($type, $data));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->fedexXMLFile($type, $data, $withPrefix));
         $result = curl_exec($ch);
 
         curl_error($ch);
+        if ($result == '')
+            throw new CarriersException('FedEx - Something Went Wrong');
+
         // Parsing SOAP XML File 
         $response = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $result);
         $xml = new SimpleXMLElement($response);

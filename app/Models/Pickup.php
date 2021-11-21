@@ -12,7 +12,7 @@ class Pickup extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public static function getPickupCarrires($merchant_id, $pickup_id = null, $carrier_id = null)
+    public static function getPickupCarrires($merchant_id, $pickup_id = null, $carrier_id = null, $all = false)
     {
         $sql = DB::table('pickups as ups')
             ->join('carriers as c', 'ups.carrier_id', 'c.id')
@@ -24,7 +24,9 @@ class Pickup extends Model
 
         if ($carrier_id)
             $sql->where('c.id', '=', $carrier_id);
-            
+
+        if (!$all)
+            return $sql->first();
         return $sql->get();
     }
 }
