@@ -24,10 +24,10 @@ class GateToPay
 
     protected function generatedKey()
     {
-        // $response = Http::get($this->endPoint . 'account/encrypt?Key=' . $this->agentKey);
-        // if (!$response->successful())
-        //     throw new InternalException('Gate To Pay Key in valid', 500);
-        return  'e9xLc/rigzzNlLGON4hdFvp6/6XFjBL7f34GWLzfD3vqwTkfxxcOWMf/uk6VcF2eEGSSQjn6pAyUKqqtC+NvnUULTjg13aNGnZIKJphNZ3A7n//vZ7zEr22kieik9CxExN6JBRYLMPs4qpgLMtkAgIN10kWmecXLryiHWFrz7isfqEI6HTUH0EW7/MmlKwbGvAEqnUVPrKuKM4x/mTdihMbhSIQ25OM56hSUvBaVzX6jMR3F9nXEZI7EKXt//DK34q7HdIAASUj0oAOJkcXgM0Izt/gAF9+joBj7JUIA5LzJq6O25ZyC7Q+g1JbnRou9DJwBOIovsZanp0RTjcYouA=='; // $response->key;
+        $response = Http::get($this->endPoint . 'account/encrypt?Key=' . $this->agentKey);
+        if (!$response->successful())
+            throw new InternalException('Gate To Pay Key in valid', 500);
+        return $response->key;
     }
 
     /*
