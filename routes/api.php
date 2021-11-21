@@ -47,7 +47,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('dashboard', [MerchantController::class, 'dashboardInfo']);
 
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
-            
+
             // Merchant Profile
             Route::get('info', [MerchantController::class, 'merchantProfile']);
             Route::put('update-info', [MerchantController::class, 'updateMerchantProfile']);
@@ -64,8 +64,8 @@ Route::group(['middleware' => ['json.response']], function () {
 
             // Documents
             Route::get('documents', [DocumentsController::class, 'index']);
-            Route::post('documents/create', [DocumentsController::class, 'createDocuments']);
-            Route::delete('documents/{id}', [DocumentsController::class, 'deleteDocuments'])->where('id', '[0-9]+');
+            Route::post('documents/create', [DocumentsController::class, 'store']);
+            Route::delete('documents/{id}', [DocumentsController::class, 'delete'])->where('id', '[0-9]+');
 
             // Addresses // Done
             Route::get('addresses', [AddressesController::class, 'index']);
