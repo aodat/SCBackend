@@ -17,7 +17,8 @@ use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\API\Merchant\PickupsController;
 use App\Http\Controllers\API\Merchant\InvoiceController;
-use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\API\Merchant\DashboardController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -44,10 +45,9 @@ Route::group(['middleware' => ['json.response']], function () {
 
         Route::group(['prefix' => 'merchant/'], function () {
             // Dashboard Information 
-            Route::post('dashboard', [MerchantController::class, 'dashboardInfo']);
-
+            Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
-
+            
             // Merchant Profile
             Route::get('info', [MerchantController::class, 'merchantProfile']);
             Route::put('update-info', [MerchantController::class, 'updateMerchantProfile']);

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Transaction;
 use App\Models\Shipment;
 use App\Models\Invoices;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 
 class MerchantRequest extends FormRequest
@@ -32,21 +31,6 @@ class MerchantRequest extends FormRequest
             return Invoices::where('id', Request::instance()->invoice_id)->where('merchant_id', Request()->user()->merchant_id)->exists();
         return true;
     }
-    public function all($keys = null)
-    {
-        $path = Request()->route()->uri;
-        $data = parent::all($keys);
-        if ($this->method() == 'POST' && strpos($path, 'merchant/dashboard') !== false) {
-            if ($data['since_at'] !== null && $data['until'] !== null) {
-                $data['since_at'] = date("Y-m-d H:i:s", strtotime($data['since_at']));
-                $data['until'] = date("Y-m-d H:i:s", strtotime($data['until']));
-            } else {
-                $data['since_at'] = Carbon::now()->subDays(7);
-                $data['until'] = Carbon::now();
-            }
-        }
-        return $data;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -56,8 +40,6 @@ class MerchantRequest extends FormRequest
     public function rules()
     {
         $path = Request()->path();
-
-        ;
         if (strpos($path, 'merchant/user/update-password') !== false) {
             return [
                 'current' => 'required',
@@ -79,11 +61,6 @@ class MerchantRequest extends FormRequest
         } else if (strpos($path, 'merchant/verify/phone') !== false) {
             return [
                 'phone' => 'required'
-            ];
-        } else if (strpos($path, 'merchant/dashboard') !== false) {
-            return [
-                'since_at' => 'date',
-                'until' => 'date|after:since_at'
             ];
         }
         return [];
