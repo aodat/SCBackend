@@ -2,34 +2,50 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Exceptions\InternalException;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests\Merchant\MerchantRequest;
+
+use App\Http\Controllers\Utilities\SmsService;
+
+use App\Models\Transaction;
 use App\Models\Merchant;
 use App\Models\User;
 
-use App\Http\Controllers\Utilities\SmsService;
-use App\Models\Shipment;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use App\Models\Transaction;
-
 class MerchantController extends Controller
 {
-    public function profile(MerchantRequest $request)
+    // Get Merchant Info
+    public function merchantProfile(MerchantRequest $request)
     {
-        $data = User::whereHas('merchant', function ($query) {
-            return $query->where('users.id', '=', Auth::id());
-        })->get();
-
-        $data = User::with('merchant')->where('users.id', '=', Auth::id())->get();
-        return $this->response($data, 'User Profile Information', 200);
+        $merchant = $this->getMerchentInfo();
+        return $this->response($merchant, 'Merchant Information', 200);
     }
 
+    // Update Merchant Profile
+    public function updateMerchantProfile(MerchantRequest $request)
+    {
+        $merchant = $this->getMerchentInfo();
+        $merchant->type = $request->type;
+        $merchant->name = $request->name;
+        $merchant->phone = $request->phone;
+        $merchant->email = $request->email;
+        $merchant->save();
+
+        return $this->successful('Updated Sucessfully');
+    }
+
+    // User profile info
+    public function profile(MerchantRequest $request)
+    {
+        $user = User::findOrFail(Auth::id());
+        return $this->response($user, 'User Profile Information', 200);
+    }
+
+    // Update User Profile
     public function updateProfile(MerchantRequest $request)
     {
         $user = User::findOrFail(Auth::id());
@@ -53,6 +69,7 @@ class MerchantController extends Controller
         return $this->successful('Profile Updated Successfully');
     }
 
+    // Update User Profile
     public function updatePassword(MerchantRequest $request)
     {
         $user = User::findOrFail(Auth::id());

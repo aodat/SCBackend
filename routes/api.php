@@ -47,16 +47,20 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('dashboard', [MerchantController::class, 'dashboardInfo']);
 
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
+            
             // Merchant Profile
-            Route::get('profile', [MerchantController::class, 'profile']);
-            Route::put('profile/update-profile', [MerchantController::class, 'updateProfile']);
-            Route::put('profile/update-password', [MerchantController::class, 'updatePassword']);
+            Route::get('info', [MerchantController::class, 'merchantProfile']);
+            Route::put('update-info', [MerchantController::class, 'updateMerchantProfile']);
+
+            // User Information
+            Route::get('user/profile', [MerchantController::class, 'profile']);
+            Route::put('user/update-profile', [MerchantController::class, 'updateProfile']);
+            Route::put('user/update-password', [MerchantController::class, 'updatePassword']);
 
             // Payment-methods
             Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
             Route::post('payment-methods/create', [PaymentMethodsController::class, 'createPaymentMethods']);
             Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'deletePaymentMethods'])->where('id', '[0-9]+');
-
 
             // Documents
             Route::get('documents', [DocumentsController::class, 'index']);

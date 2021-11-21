@@ -56,16 +56,25 @@ class MerchantRequest extends FormRequest
     public function rules()
     {
         $path = Request()->path();
-        if (strpos($path, 'merchant/profile/update-password') !== false) {
+
+        ;
+        if (strpos($path, 'merchant/user/update-password') !== false) {
             return [
                 'current' => 'required',
                 'new' => 'required|min:6|max:255',
             ];
-        } else if (strpos($path, 'merchant/profile/update-profile') !== false) {
+        } else if (strpos($path, 'merchant/user/update-profile') !== false) {
             return [
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|email|unique:users,email,' . Auth::id(),
                 'phone' => 'required|unique:users,phone,' . Auth::id()
+            ];
+        } else if (strpos($path, 'merchant/update-info') !== false) {
+            return [
+                'type' => 'required|in:individual,corporate',
+                'name' => 'required|min:6|max:255',
+                'email' => 'required|unique:merchants,email,' . Request()->user()->merchant_id,
+                'phone' => 'required|unique:merchants,phone,' . Request()->user()->merchant_id
             ];
         } else if (strpos($path, 'merchant/verify/phone') !== false) {
             return [
