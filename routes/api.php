@@ -17,8 +17,9 @@ use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\API\Merchant\PickupsController;
 use App\Http\Controllers\API\Merchant\InvoiceController;
-
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +40,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
     Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
-    Route::group(['middleware' => ['auth:api','check.merchant']], function () {
+    Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
 
         Route::group(['prefix' => 'merchant/'], function () {
             // Dashboard Information 
@@ -55,7 +56,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
             Route::post('payment-methods/create', [PaymentMethodsController::class, 'createPaymentMethods']);
             Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'deletePaymentMethods'])->where('id', '[0-9]+');
- 
+
 
             // Documents
             Route::get('documents', [DocumentsController::class, 'index']);
@@ -77,7 +78,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
             // Transactions
             Route::post('transactions', [TransactionsController::class, 'index']);
-            Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+'); 
+            Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+');
             Route::put('transactions/withdraw', [TransactionsController::class, 'withDraw']);
             Route::get('transactions/export/{type}', [TransactionsController::class, 'export']);
             Route::get('transactions/transactionDate', [TransactionsController::class, 'transactionDate']);
@@ -92,7 +93,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('invoice/create', [InvoiceController::class, 'store']);
             Route::delete('invoice/{invoice_id}', [InvoiceController::class, 'delete'])->where('invoice_id', '[0-9]+');
         });
-    
+
         Route::group(['middleware' => ['scope:admin']], function () {
             Route::get('auth/secret-key', [AuthController::class, 'getSecretKey']);
             Route::post('auth/secret-key', [AuthController::class, 'generateSecretKey']);
