@@ -37,24 +37,25 @@ class DashboardController extends MerchantController
             ->where('shp.transaction_id', '=',  null)
             ->whereBetween('t.created_at', [$request->since_at, $request->until])
             ->select(DB::raw('sum(amount) as amount'))
-            ->first();
-        $pending_payment = collect($pending_payment);
-        $data = [
-            "shiping" => [
-                "defts" => $shiping['DRAFT'] ?? 0,
-                "proccesing" => $shiping['PROCESSING'] ?? 0,
-                "delivered" => $shiping['COMPLETED'] ?? 0,
-                "renturnd" => $shiping['RENTURND'] ?? 0,
-            ],
+            ->toSql();
+        // $pending_payment = collect($pending_payment);
+        
+        // $data = [
+        //     "shiping" => [
+        //         "defts" => $shiping['DRAFT'] ?? 0,
+        //         "proccesing" => $shiping['PROCESSING'] ?? 0,
+        //         "delivered" => $shiping['COMPLETED'] ?? 0,
+        //         "renturnd" => $shiping['RENTURND'] ?? 0,
+        //     ],
 
-            "payment" => [
-                "Outcome" => $payment['CASHOUT'] ?? 0,
-                "income" => $payment['CASHIN'] ?? 0,
-                "pending_payment" => $pending_payment['amount'] ?? 0,
+        //     "payment" => [
+        //         "Outcome" => $payment['CASHOUT'] ?? 0,
+        //         "income" => $payment['CASHIN'] ?? 0,
+        //         "pending_payment" => $pending_payment['amount'] ?? 0,
 
-            ]
-        ];
+        //     ]
+        // ];
 
-        return $this->response($data, 'Retrieved Successfully');
+        return $this->response($pending_payment, 'Retrieved Successfully');
     }
 }
