@@ -12,50 +12,84 @@ class DashboardController extends MerchantController
     public function index(DashboardRequest $request)
     {
         $merchant_id =  $request->user()->merchant_id;
+        $shipping = array();
+        $payment = array();
+        $since_at = $request->since_at;
+        $until = $request->until;
 
-        $sql =  DB::table('transactions as t')
+        $sql_shipping =  DB::table('transactions as t')
             ->join('shipments as shp', 'shp.id', 't.item_id')
             ->where('shp.merchant_id', '=',  $merchant_id)
-            ->whereBetween('t.created_at', [$request->since_at, $request->until])
-            ->select('shp.status', DB::raw('sum(amount) as amount'))
-            ->groupBy('shp.status')
+            ->whereBetween('t.created_at', [$since_at, $until])
+            ->select(DB::raw("DATE_FORMAT(shp.created_at,'%Y-%m-%d') as date"), "shp.status", DB::raw('sum(amount) as amount'))
+            ->groupBy("date", "shp.status")
             ->get();
+        $shippingCollect = collect($sql_shipping);
+        foreach ($shippingCollect as  $value)
+            $shipping[$value->status][$value->date] = $value->amount;
 
-        $shiping = collect($sql)->pluck('amount', 'status');
-
-
-        $sql2 = Transaction::where('merchant_id',  $merchant_id)
-            ->whereBetween('created_at', [$request->since_at, $request->until])
-            ->select('type', DB::raw('sum(amount) as amount'))
-            ->groupBy('type')
+        $payment_sql = Transaction::where('merchant_id',  $merchant_id)
+            ->whereBetween('created_at', [$since_at, $until])
+            ->select(DB::raw("DATE_FORMAT(created_at,'%Y-%m-%d') as date"), 'type', DB::raw('sum(amount) as amount'))
+            ->groupBy('date', 'type')
             ->get();
-        $payment = collect($sql2)->pluck('amount', 'type');
+        $paymentCollect = collect($payment_sql);
+        foreach ($paymentCollect as  $value)
+            $payment[$value->type][$value->date] = $value->amount;
 
         $pending_payment =   DB::table('transactions as t')
             ->join('shipments as shp', 'shp.id', 't.item_id')
             ->where('shp.merchant_id', '=',  $merchant_id)
             ->where('shp.transaction_id', '=',  null)
-            ->whereBetween('t.created_at', [$request->since_at, $request->until])
-            ->select(DB::raw('sum(amount) as amount'))
-            ->toSql();
-        // $pending_payment = collect($pending_payment);
-        
-        // $data = [
-        //     "shiping" => [
-        //         "defts" => $shiping['DRAFT'] ?? 0,
-        //         "proccesing" => $shiping['PROCESSING'] ?? 0,
-        //         "delivered" => $shiping['COMPLETED'] ?? 0,
-        //         "renturnd" => $shiping['RENTURND'] ?? 0,
-        //     ],
+            ->whereBetween('t.created_at', [$since_at, $until])
+            ->select(DB::raw("DATE_FORMAT(shp.created_at,'%Y-%m-%d') as date"), DB::raw('sum(amount) as amount'))
+            ->groupBy('date')
+            ->get();
+        $pending_payment = collect($pending_payment)->pluck('amount', 'date');
+        $data = [
+            "chart" => [
+                "shipping" => [
+                    "defts" => $shipping['DRAFT'] ?? 0,
+                    "proccesing" => $shipping['PROCESSING'] ?? 0,
+                    "delivered" => $shipping['COMPLETED'] ?? 0,
+                    "renturnd" => $shipping['RENTURND'] ?? 0,
+                ],
+                "payment" => [
+                    "outcome" => $payment['CASHOUT'] ?? 0,
+                    "income" => $payment['CASHIN'] ?? 0,
+                    "pending_payment" => $pending_payment,
+                ]
+            ],
 
-        //     "payment" => [
-        //         "Outcome" => $payment['CASHOUT'] ?? 0,
-        //         "income" => $payment['CASHIN'] ?? 0,
-        //         "pending_payment" => $pending_payment['amount'] ?? 0,
+            "info" => [
+                "shipping" => [
+                    "drafts" => collect($shipping['DRAFT'])->sum(function ($date) {
+                        return ($date);
+                    }) ?? 0,
+                    "processing" => collect($shipping['PROCESSING'])->sum(function ($date) {
+                        return ($date);
+                    })  ?? 0,
+                    "delivered" => collect($shipping['COMPLETED'])->sum(function ($date) {
+                        return ($date);
+                    }) ?? 0,
+                    "renturnd" => collect($shipping['RENTURND'])->sum(function ($date) {
+                        return ($date);
+                    })  ?? 0,
+                ],
+                "payment" => [
+                    "outcome" =>  collect($payment['CASHOUT'])->sum(function ($date) {
+                        return ($date);
+                    }) ?? 0,
+                    "income" =>  collect($payment['CASHIN'])->sum(function ($date) {
+                        return ($date);
+                    }) ?? 0,
+                    "pending_payment" => $pending_payment->sum(function ($date) {
+                        return ($date);
+                    }),
+                ]
+            ]
+        ];
 
-        //     ]
-        // ];
-
-        return $this->response($pending_payment, 'Retrieved Successfully');
+        return $this->response($data, 'Retrieved Successfully');
     }
 }
