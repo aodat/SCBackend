@@ -14,9 +14,9 @@ class GateToPay
 
     public function __construct()
     {
-        $this->endPoint = "https://cmsopenapitest.gatetopay.com/api/";
-        if (env('APP_ENV') == 'local')
-            $this->endPoint = "https://cmsopenapitest.gatetopay.com/api/";
+        $this->endPoint = "https://cmsopenapi.gatetopay.com/api/";
+        // if (env('APP_ENV') == 'local')
+        //     $this->endPoint = "https://cmsopenapitest.gatetopay.com/api/";
 
         $this->agentKey = env('GATETOPAY_AGENTKEY');
         $this->tokenKey = $this->generatedKey();
@@ -27,17 +27,8 @@ class GateToPay
         $response = Http::get($this->endPoint . 'account/encrypt?Key=' . $this->agentKey);
         if (!$response->successful())
             throw new InternalException('Gate To Pay Key in valid', 500);
-        return $response->key;
+        return $response->json();
     }
-
-    /*
-
-    public function getCustomerCards($customerId)
-    {
-        $this->Url = 'Broker/GetCustomerCards?customerId=' . $customerId;
-        return $this->httpRequest();
-    }
-    */
 
     public function cardDeposit($customerId, $cardId, $cardExpiryDate, $depositAmount)
     {
@@ -52,9 +43,9 @@ class GateToPay
             'transactionId' => floor(time() - 999999999),
             'cardExpiryDate' => $cardExpiryDate
         ]);
-        if ($response->successful())
-            throw new InternalException('Deposit transaction error', 500);
 
+        if (!$response->successful() || !$response->json()['isSuccess'])
+            throw new InternalException('Deposit transaction error', 500);
         return $response->transactionId;
     }
 
@@ -71,7 +62,7 @@ class GateToPay
             'transactionId' => floor(time() - 999999999),
             'cardExpiryDate' => $cardExpiryDate
         ]);
-        if ($response->successful())
+        if (!$response->successful() || !$response->json()['isSuccess'])
             throw new InternalException('WithDraw transaction error', 500);
 
         return $response->transactionId;
