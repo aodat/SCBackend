@@ -40,6 +40,13 @@ class AuthController extends Controller
         }
 
         $userData['token'] = $userData->createToken('users', [$userData->role])->accessToken;
+        
+        $userData['system_config'] = [
+            'domastic' => $this->domastic(),
+            'express' => $this->express(),
+            'countries' => $this->countries()
+        ];
+
         return $this->response(
             $userData,
             'User Login Successfully',
