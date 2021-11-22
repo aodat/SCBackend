@@ -11,9 +11,6 @@ return [
         'VERSION' => env('VERSION', null),
         'SOURCE' => env('SOURCE', null)
     ],
-    'stripe' => [
-        'key' => env('STRIPE_ACCESS_KEY', null)
-    ],
     'dhl' => [
         'SITE_ID' => env('DHL_SITE_ID', null),
         'PASSWORD' => env('DHL_PASSWORD', null),

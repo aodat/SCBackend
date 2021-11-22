@@ -85,29 +85,30 @@ trait CarriersManager
     */
     public function calculateFees($carrier_id, $country_code, $type, $weight)
     {
+        $this->merchantInfo = $this->getMerchantInfo();
         if ($type == 'DOM') {
             $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code)->first();
             $price = $rate->price;
             $fees = ceil($weight / 10) * $price;
         } else {
+
             $express_rates =  collect(
                 json_decode(file_get_contents(storage_path() . '/../App/Libs/express.rates.json'), true)['Countries']
             )->where('code', $country_code)
                 ->all();
+
             if (count($express_rates) > 1)
                 throw new CarriersException('Express Rates Json Retrun More Than One Country');
 
             $list = reset($express_rates);
-
             if (!$list)
                 throw new CarriersException('List File is empty');
 
             $zones = collect($list['zones'])->where('carrier_id', $carrier_id)->all();
-            if (count($zones) > 1)
-                throw new CarriersException('Express Rates Json Retrun More Than One zone');
+            if (empty($zones) || count($zones) > 1)
+                throw new CarriersException('Express Rates Json Retrun More Than One zone Or Empty Value');
 
             $zone_id = reset($zones)['zone_id'];
-
             $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id)->all();
 
             if (count($zoneRates) != 1)

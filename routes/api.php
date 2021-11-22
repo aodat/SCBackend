@@ -47,7 +47,7 @@ Route::group(['middleware' => ['json.response']], function () {
             // Dashboard Information 
             Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
-            
+
             // Merchant Profile
             Route::get('info', [MerchantController::class, 'merchantProfile']);
             Route::put('update-info', [MerchantController::class, 'updateMerchantProfile']);
@@ -73,19 +73,19 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::delete('addresses/{id}', [AddressesController::class, 'deleteAddresses'])->where('id', '[0-9]+');
 
             // Shipments
-            Route::post('shipments/filters', [ShipmentController::class, 'index']);
             Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
+            Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
+            Route::post('shipments/filters', [ShipmentController::class, 'index']);
             Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
             Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
-            Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
             Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
+            Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
 
             // Transactions
             Route::post('transactions', [TransactionsController::class, 'index']);
             Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+');
             Route::put('transactions/withdraw', [TransactionsController::class, 'withDraw']);
             Route::get('transactions/export/{type}', [TransactionsController::class, 'export']);
-            Route::get('transactions/transactionDate', [TransactionsController::class, 'transactionDate']);
 
             // Pickups
             Route::post('pickups', [PickupsController::class, 'index']);

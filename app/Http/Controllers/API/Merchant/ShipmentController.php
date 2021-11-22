@@ -2,23 +2,21 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Merchant\ShipmentRequest;
 
 use App\Jobs\ProcessShipCashUpdates;
 
 use App\Exports\ShipmentExport;
 
-
-use App\Models\Carriers;
-use App\Models\Shipment;
-
 use Carbon\Carbon;
 
-use Illuminate\Support\Facades\DB;
 use App\Exceptions\InternalException;
+
 use App\Models\Merchant;
 use App\Models\Transaction;
+use App\Models\Carriers;
+use App\Models\Shipment;
 
 class ShipmentController extends MerchantController
 {
@@ -158,7 +156,7 @@ class ShipmentController extends MerchantController
         if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
             $externalAWB = $result['id'];
-            $ships = $shipments->map(function ($value, $key) use ($externalAWB,$resource){
+            $ships = $shipments->map(function ($value, $key) use ($externalAWB, $resource) {
                 $value['external_awb'] = $externalAWB[$key];
                 $value['resource'] = $resource;
                 return $value;
@@ -203,5 +201,16 @@ class ShipmentController extends MerchantController
                 "created_by" => Request()->user()->id
             ]);
         });
+    }
+
+    public function calculate(ShipmentRequest $request)
+    {
+        $data = $request->validated();
+        $result = [];
+        Carriers::all()->map(function ($carrier) use ($data, &$result) {
+            $result[$carrier->name] = $this->calculateFees($carrier->id, $data['country_code'], 'Express', $data['weight']);
+        });
+
+        return $this->response($result, 'Fees Calculated Successfully');
     }
 }
