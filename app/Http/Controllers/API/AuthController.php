@@ -44,7 +44,7 @@ class AuthController extends Controller
         $userData['system_config'] = [
             'domastic' => $this->domastic(),
             'express' => $this->express(),
-            'country' => $this->country()
+            'countries' => $this->countries()
         ];
 
         return $this->response(
