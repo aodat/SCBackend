@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 
 use App\Models\Merchant;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -105,17 +106,32 @@ class AuthController extends Controller
             'http://example.com/callback.php',
             str_replace(' ', '-', strtolower(Auth::user()->name))
         );
-        $user = Merchant::find(Auth::user()->merchant_id)
+        Merchant::find(Auth::user()->merchant_id)
             ->update(["secret_key" => $client->secret]);
         return $this->successful();
     }
 
+    // public function personalAccessClient(ClientRepository $clientRepository)
+    // {
+    //     $clients = Client::where('user_id', Auth::user()->merchant_id)->get();
+    //     $clients = $clientRepository->personalAccessClient(Auth::user()->merchant_id);
+    //     return  $clients;
+    // }
+
     public function listClient(ClientRepository $clientRepository)
     {
-
-        $clients = Client::where('user_id', Auth::user()->merchant_id)->get();
-        $clients = $clientRepository->personalAccessClient(Auth::user()->merchant_id);
-        return  $clients;
+       
+        $routes = Route::getRoutes();
+        $new_routes = new Collection();
+        foreach ($routes as $route) {
+            $middleware = $route->middleware();
+            for ($i = 0; $i < count($middleware); $i++) {
+                if ($middleware[$i] == 'scope:'.Auth::user()->role) {
+                    $new_routes ->push(["url" => $route->uri ,"methods" => $route->methods]);
+                }
+            }
+        }
+    return($new_routes );
     }
 
 
