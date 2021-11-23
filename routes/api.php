@@ -18,6 +18,7 @@ use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\API\Merchant\PickupsController;
 use App\Http\Controllers\API\Merchant\InvoiceController;
 use App\Http\Controllers\API\Merchant\DashboardController;
+use App\Http\Controllers\API\Merchant\RulesController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -101,13 +102,16 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('invoice/finalize/{invoice_id}', [InvoiceController::class, 'finalize']);
             Route::post('invoice/create', [InvoiceController::class, 'store']);
             Route::delete('invoice/{invoice_id}', [InvoiceController::class, 'delete'])->where('invoice_id', '[0-9]+');
+
+            Route::group(['middleware' => ['scope:admin']], function () {
+                Route::get('rules', [RulesController::class, 'index']);
+                Route::post('rules/create', [RulesController::class, 'store']);
+                Route::put('rules/edit', [RulesController::class, 'edit']);
+                Route::delete('rules/delete', [RulesController::class, 'delete']);
+            });
         });
 
         Route::group(['middleware' => ['scope:admin']], function () {
-            // Route::get('auth/secret-key', [AuthController::class, 'getSecretKey']);
-            // Route::post('auth/secret-key', [AuthController::class, 'generateSecretKey']);
-            // Route::delete('auth/secret-key', [AuthController::class, 'revokeSecretKey']);
-
             Route::group(['prefix' => 'team/'], function () {
                 Route::put('member', [TeamController::class, 'changeMemberRole']);
                 Route::post('member/invite', [TeamController::class, 'inviteMember']);
