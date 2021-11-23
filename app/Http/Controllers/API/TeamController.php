@@ -8,18 +8,19 @@ use App\Http\Requests\TeamRequest;
 use App\Models\User;
 
 use App\Notifications\InviteUserNotification as InviteUserNotification;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 use Laravel\Passport\Token;
+
 class TeamController extends Controller
 {
 
     public function inviteMember(TeamRequest $request)
     {
-        dd('xxx');
+
         DB::transaction(function () use ($request) {
             $password = Str::random(8);
             $user = User::create(
@@ -31,7 +32,7 @@ class TeamController extends Controller
                     'phone' => null
                 ]
             );
-            $user->notify(new InviteUserNotification($user,$password));
+            $user->notify(new InviteUserNotification($user, $password));
         });
 
         return $this->successful();
@@ -42,13 +43,14 @@ class TeamController extends Controller
         $data = $request->validated();
 
         $user = User::findOrFail($data['id']);
-        $user->role = $data['role'];
+        $user->role = $data['scope'];
+        $user->role_member = implode(',', $data['role']);
         $user->save();
 
         return $this->successful('Updated Sucessfully');
     }
 
-    public function deleteMember($user_id,TeamRequest $request)
+    public function deleteMember($user_id, TeamRequest $request)
     {
         $user = User::findOrFail($user_id);
         $user->status = 'inactive';

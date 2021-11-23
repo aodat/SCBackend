@@ -42,13 +42,9 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
     Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
-
         Route::group(['prefix' => 'merchant/'], function () {
             Route::put('change-secret', [AuthController::class, 'changeSecret']);
-            Route::get('list/Client', [AuthController::class, 'listClient']);
 
-            
-            
             // Dashboard Information 
             Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
@@ -63,28 +59,32 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::put('user/update-password', [MerchantController::class, 'updatePassword']);
 
             // Payment-methods
-            Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
-            Route::post('payment-methods/create', [PaymentMethodsController::class, 'createPaymentMethods']);
-            Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'deletePaymentMethods'])->where('id', '[0-9]+');
+            Route::group(['middleware' => ['scope:payment']], function () {
+                Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
+                Route::post('payment-methods/create', [PaymentMethodsController::class, 'createPaymentMethods']);
+                Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'deletePaymentMethods'])->where('id', '[0-9]+');
+            });
 
             // Documents
             Route::get('documents', [DocumentsController::class, 'index']);
             Route::post('documents/create', [DocumentsController::class, 'store']);
             Route::delete('documents/{id}', [DocumentsController::class, 'delete'])->where('id', '[0-9]+');
 
-            // Addresses // Done
+            // Addresses
             Route::get('addresses', [AddressesController::class, 'index']);
             Route::post('addresses/create', [AddressesController::class, 'createAddresses']);
             Route::delete('addresses/{id}', [AddressesController::class, 'deleteAddresses'])->where('id', '[0-9]+');
 
             // Shipments
-            Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
-            Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
-            Route::post('shipments/filters', [ShipmentController::class, 'index']);
-            Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
-            Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
-            Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
-            Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
+            Route::group(['middleware' => ['scope:shipping']], function () {
+                Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
+                Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
+                Route::post('shipments/filters', [ShipmentController::class, 'index']);
+                Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
+                Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
+                Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
+                Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
+            });
 
             // Transactions
             Route::post('transactions', [TransactionsController::class, 'index']);
@@ -104,9 +104,9 @@ Route::group(['middleware' => ['json.response']], function () {
         });
 
         Route::group(['middleware' => ['scope:admin']], function () {
-            Route::get('auth/secret-key', [AuthController::class, 'getSecretKey']);
-            Route::post('auth/secret-key', [AuthController::class, 'generateSecretKey']);
-            Route::delete('auth/secret-key', [AuthController::class, 'revokeSecretKey']);
+            // Route::get('auth/secret-key', [AuthController::class, 'getSecretKey']);
+            // Route::post('auth/secret-key', [AuthController::class, 'generateSecretKey']);
+            // Route::delete('auth/secret-key', [AuthController::class, 'revokeSecretKey']);
 
             Route::group(['prefix' => 'team/'], function () {
                 Route::put('member', [TeamController::class, 'changeMemberRole']);

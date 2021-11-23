@@ -40,15 +40,17 @@ class AuthController extends Controller
             if (!$merchant->is_active)
                 return $this->error('Mechant Is In-Active', 403);
         }
+        if ($userData->role === "member")
+            $role = explode(",", $userData->role_member);
+        $role[] = $userData->role;
 
-        $userData['token'] = $userData->createToken('users', [$userData->role])->accessToken;
+        $userData['token'] = $userData->createToken('users', $role)->accessToken;
 
         $userData['system_config'] = [
             'domastic' => $this->domastic(),
             'express' => $this->express(),
             'countries' => $this->countries()
         ];
-
         return $this->response(
             $userData,
             'User Login Successfully',
@@ -94,47 +96,24 @@ class AuthController extends Controller
 
     public function changeSecret(ClientRepository $clientRepository)
     {
+        $merchantInfo = Merchant::findOrFail(Request()->user()->merchant_id);
 
-        $clients = Client::where('user_id', Auth::user()->merchant_id)->get();
+        $clients = Client::where('user_id', Request()->user()->merchant_id)->get();
         $clients->map(function ($client) use ($clientRepository) {
             $clientRepository->delete($client);
         });
 
         $client = $clientRepository->createPasswordGrantClient(
-            Auth::user()->id,
-            Auth::user()->name,
+            $merchantInfo->id,
+            $merchantInfo->name,
             'http://example.com/callback.php',
-            str_replace(' ', '-', strtolower(Auth::user()->name))
+            str_replace(' ', '-', strtolower($merchantInfo->name))
         );
-        Merchant::find(Auth::user()->merchant_id)
-            ->update(["secret_key" => $client->secret]);
-        return $this->successful();
+
+        $merchantInfo->secret_key = $client->secret;
+        $merchantInfo->save();
+        return $this->successful('Secret Created Sucessfully');
     }
-
-    // public function personalAccessClient(ClientRepository $clientRepository)
-    // {
-    //     $clients = Client::where('user_id', Auth::user()->merchant_id)->get();
-    //     $clients = $clientRepository->personalAccessClient(Auth::user()->merchant_id);
-    //     return  $clients;
-    // }
-
-    public function listClient(ClientRepository $clientRepository)
-    {
-       
-        $routes = Route::getRoutes();
-        $new_routes = new Collection();
-        foreach ($routes as $route) {
-            $middleware = $route->middleware();
-            for ($i = 0; $i < count($middleware); $i++) {
-                if ($middleware[$i] == 'scope:'.Auth::user()->role) {
-                    $new_routes ->push(["url" => $route->uri ,"methods" => $route->methods]);
-                }
-            }
-        }
-    return($new_routes );
-    }
-
-
 
     // Forget Password
     public function forgetPassword(RecoveryRequest $request)
@@ -229,7 +208,7 @@ class AuthController extends Controller
         );
         $result = json_decode(Route::dispatch($proxy)->getContent());
         return $this->response(['secret_key' => $merchant->secret_key, 'access_key' => $result->access_token], 'Access Key Retrieved Successfully');
-    }
+}
 
     // Genrate Access Token
     function generateSecretKey(Request $request, ClientRepository $clientRepository)
