@@ -40,15 +40,17 @@ class AuthController extends Controller
             if (!$merchant->is_active)
                 return $this->error('Mechant Is In-Active', 403);
         }
+        if ($userData->role === "member")
+            $role = explode(",", $userData->role_member);
+        $role[] = $userData->role;
 
-        $userData['token'] = $userData->createToken('users', [$userData->role])->accessToken;
+        $userData['token'] = $userData->createToken('users', $role)->accessToken;
 
         $userData['system_config'] = [
             'domastic' => $this->domastic(),
             'express' => $this->express(),
             'countries' => $this->countries()
         ];
-
         return $this->response(
             $userData,
             'User Login Successfully',
@@ -111,28 +113,18 @@ class AuthController extends Controller
         return $this->successful();
     }
 
-    // public function personalAccessClient(ClientRepository $clientRepository)
-    // {
-    //     $clients = Client::where('user_id', Auth::user()->merchant_id)->get();
-    //     $clients = $clientRepository->personalAccessClient(Auth::user()->merchant_id);
-    //     return  $clients;
-    // }
 
     public function listClient(ClientRepository $clientRepository)
-    {
-       
-        $routes = Route::getRoutes();
-        $new_routes = new Collection();
-        foreach ($routes as $route) {
-            $middleware = $route->middleware();
-            for ($i = 0; $i < count($middleware); $i++) {
-                if ($middleware[$i] == 'scope:'.Auth::user()->role) {
-                    $new_routes ->push(["url" => $route->uri ,"methods" => $route->methods]);
-                }
-            }
-        }
-    return($new_routes );
+    {   
+        $role =array();
+        if(Auth::user()->role === "member")
+        $role = explode(',', Auth::user()->role_member);
+        $role[] = Auth::user()->role;
+        $msg ="successfully get role ";
+        return $this->response(["scope"=>$role], $msg, 200);
     }
+
+
 
 
 

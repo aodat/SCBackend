@@ -47,8 +47,8 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::put('change-secret', [AuthController::class, 'changeSecret']);
             Route::get('list/Client', [AuthController::class, 'listClient']);
 
-            
-            
+
+
             // Dashboard Information 
             Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
@@ -63,9 +63,11 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::put('user/update-password', [MerchantController::class, 'updatePassword']);
 
             // Payment-methods
-            Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
-            Route::post('payment-methods/create', [PaymentMethodsController::class, 'createPaymentMethods']);
-            Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'deletePaymentMethods'])->where('id', '[0-9]+');
+            Route::group(['middleware' => ['scope:payment']], function () {
+                Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
+                Route::post('payment-methods/create', [PaymentMethodsController::class, 'createPaymentMethods']);
+                Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'deletePaymentMethods'])->where('id', '[0-9]+');
+            });
 
             // Documents
             Route::get('documents', [DocumentsController::class, 'index']);
@@ -78,6 +80,8 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::delete('addresses/{id}', [AddressesController::class, 'deleteAddresses'])->where('id', '[0-9]+');
 
             // Shipments
+            Route::group(['middleware' => ['scope:shipping']], function () {
+
             Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
             Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
             Route::post('shipments/filters', [ShipmentController::class, 'index']);
@@ -85,6 +89,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
             Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
             Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
+            });
 
             // Transactions
             Route::post('transactions', [TransactionsController::class, 'index']);
