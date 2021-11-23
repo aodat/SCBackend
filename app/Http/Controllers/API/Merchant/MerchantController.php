@@ -13,9 +13,16 @@ use App\Http\Controllers\Utilities\SmsService;
 
 use App\Models\Merchant;
 use App\Models\User;
+use Libs\PayTabs;
 
 class MerchantController extends Controller
 {
+    protected $tabs;
+    function __construct(PayTabs $tabs)
+    {
+        $this->tabs = $tabs;
+    }
+
     // Get Merchant Info
     public function merchantProfile(MerchantRequest $request)
     {
