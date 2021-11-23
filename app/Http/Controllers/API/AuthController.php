@@ -96,37 +96,24 @@ class AuthController extends Controller
 
     public function changeSecret(ClientRepository $clientRepository)
     {
+        $merchantInfo = Merchant::findOrFail(Request()->user()->merchant_id);
 
-        $clients = Client::where('user_id', Auth::user()->merchant_id)->get();
+        $clients = Client::where('user_id', Request()->user()->merchant_id)->get();
         $clients->map(function ($client) use ($clientRepository) {
             $clientRepository->delete($client);
         });
 
         $client = $clientRepository->createPasswordGrantClient(
-            Auth::user()->id,
-            Auth::user()->name,
+            $merchantInfo->id,
+            $merchantInfo->name,
             'http://example.com/callback.php',
-            str_replace(' ', '-', strtolower(Auth::user()->name))
+            str_replace(' ', '-', strtolower($merchantInfo->name))
         );
-        Merchant::find(Auth::user()->merchant_id)
-            ->update(["secret_key" => $client->secret]);
-        return $this->successful();
+
+        $merchantInfo->secret_key = $client->secret;
+        $merchantInfo->save();
+        return $this->successful('Secret Created Sucessfully');
     }
-
-
-    public function listClient(ClientRepository $clientRepository)
-    {   
-        $role =array();
-        if(Auth::user()->role === "member")
-        $role = explode(',', Auth::user()->role_member);
-        $role[] = Auth::user()->role;
-        $msg ="successfully get role ";
-        return $this->response(["scope"=>$role], $msg, 200);
-    }
-
-
-
-
 
     // Forget Password
     public function forgetPassword(RecoveryRequest $request)
@@ -221,7 +208,7 @@ class AuthController extends Controller
         );
         $result = json_decode(Route::dispatch($proxy)->getContent());
         return $this->response(['secret_key' => $merchant->secret_key, 'access_key' => $result->access_token], 'Access Key Retrieved Successfully');
-    }
+}
 
     // Genrate Access Token
     function generateSecretKey(Request $request, ClientRepository $clientRepository)

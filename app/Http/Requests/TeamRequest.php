@@ -58,16 +58,12 @@ class TeamRequest extends FormRequest
                         return $query->where('merchant_id', Request()->user()->merchant_id)->where('status', 'active');
                     }),
                 ],
-
                 'scope' => 'required|in:admin,member',
-
-                'role' => [
-
-                    Rule::in("payment", "shipping", "shipping,payment", "payment,shipping"),
+                'role.*' => [
+                    Rule::in("payment", "shipping"),
                 ],
             ];
         }
-
         return [];
     }
 }

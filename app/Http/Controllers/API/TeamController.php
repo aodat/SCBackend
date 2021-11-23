@@ -44,7 +44,7 @@ class TeamController extends Controller
 
         $user = User::findOrFail($data['id']);
         $user->role = $data['scope'];
-        $user->role_member = $data['role'];
+        $user->role_member = implode(',', $data['role']);
         $user->save();
 
         return $this->successful('Updated Sucessfully');
