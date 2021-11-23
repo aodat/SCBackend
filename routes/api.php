@@ -44,6 +44,11 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
 
         Route::group(['prefix' => 'merchant/'], function () {
+            Route::put('change-secret', [AuthController::class, 'changeSecret']);
+            Route::get('list/Client', [AuthController::class, 'listClient']);
+
+            
+            
             // Dashboard Information 
             Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);

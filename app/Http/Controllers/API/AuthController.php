@@ -18,6 +18,8 @@ use Illuminate\Support\Str;
 
 use App\Models\Merchant;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use Laravel\Passport\Client;
@@ -40,7 +42,7 @@ class AuthController extends Controller
         }
 
         $userData['token'] = $userData->createToken('users', [$userData->role])->accessToken;
-        
+
         $userData['system_config'] = [
             'domastic' => $this->domastic(),
             'express' => $this->express(),
@@ -54,7 +56,8 @@ class AuthController extends Controller
         );
     }
 
-    public function register(AuthRequest $request)
+
+    public function register(AuthRequest $request, ClientRepository $clientRepository)
     {
         $merchant = Merchant::create(
             [
@@ -77,9 +80,61 @@ class AuthController extends Controller
                 'role' => 'admin'
             ]
         );
-       // $user->sendEmailVerificationNotification();
+
+        $client = $clientRepository->createPasswordGrantClient(
+            $merchant->id,
+            $merchant->name,
+            'http://example.com/callback.php',
+            str_replace(' ', '-', strtolower($merchant->name))
+        );
+        $merchant->update(["secret_key" => $client->secret]);
+        // $user->sendEmailVerificationNotification();
         return $this->successful('User Created Successfully');
     }
+
+    public function changeSecret(ClientRepository $clientRepository)
+    {
+
+        $clients = Client::where('user_id', Auth::user()->merchant_id)->get();
+        $clients->map(function ($client) use ($clientRepository) {
+            $clientRepository->delete($client);
+        });
+
+        $client = $clientRepository->createPasswordGrantClient(
+            Auth::user()->id,
+            Auth::user()->name,
+            'http://example.com/callback.php',
+            str_replace(' ', '-', strtolower(Auth::user()->name))
+        );
+        Merchant::find(Auth::user()->merchant_id)
+            ->update(["secret_key" => $client->secret]);
+        return $this->successful();
+    }
+
+    // public function personalAccessClient(ClientRepository $clientRepository)
+    // {
+    //     $clients = Client::where('user_id', Auth::user()->merchant_id)->get();
+    //     $clients = $clientRepository->personalAccessClient(Auth::user()->merchant_id);
+    //     return  $clients;
+    // }
+
+    public function listClient(ClientRepository $clientRepository)
+    {
+       
+        $routes = Route::getRoutes();
+        $new_routes = new Collection();
+        foreach ($routes as $route) {
+            $middleware = $route->middleware();
+            for ($i = 0; $i < count($middleware); $i++) {
+                if ($middleware[$i] == 'scope:'.Auth::user()->role) {
+                    $new_routes ->push(["url" => $route->uri ,"methods" => $route->methods]);
+                }
+            }
+        }
+    return($new_routes );
+    }
+
+
 
     // Forget Password
     public function forgetPassword(RecoveryRequest $request)
@@ -157,7 +212,7 @@ class AuthController extends Controller
         $merchant = Merchant::findOrFail($request->user()->merchant_id);
         $client = Client::where('user_id', $merchant->id)->where('revoked', false)->first();
 
-        if($client == null)
+        if ($client == null)
             $this->error('No Secret Key Created Yet');
 
         $request->request->add([
