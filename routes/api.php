@@ -62,8 +62,8 @@ Route::group(['middleware' => ['json.response']], function () {
             // Payment-methods
             Route::group(['middleware' => ['scope:payment']], function () {
                 Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
-                Route::post('payment-methods/create', [PaymentMethodsController::class, 'createPaymentMethods']);
-                Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'deletePaymentMethods'])->where('id', '[0-9]+');
+                Route::post('payment-methods/create', [PaymentMethodsController::class, 'store']);
+                Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'delete'])->where('id', '[0-9]+');
             });
 
             // Documents
@@ -73,8 +73,8 @@ Route::group(['middleware' => ['json.response']], function () {
 
             // Addresses
             Route::get('addresses', [AddressesController::class, 'index']);
-            Route::post('addresses/create', [AddressesController::class, 'createAddresses']);
-            Route::delete('addresses/{id}', [AddressesController::class, 'deleteAddresses'])->where('id', '[0-9]+');
+            Route::post('addresses/create', [AddressesController::class, 'store']);
+            Route::delete('addresses/{id}', [AddressesController::class, 'delete'])->where('id', '[0-9]+');
 
             // Shipments
             Route::group(['middleware' => ['scope:shipping']], function () {
@@ -106,8 +106,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::group(['middleware' => ['scope:admin']], function () {
                 Route::get('rules', [RulesController::class, 'index']);
                 Route::post('rules/create', [RulesController::class, 'store']);
-                Route::put('rules/edit', [RulesController::class, 'edit']);
-                Route::delete('rules/delete', [RulesController::class, 'delete']);
+                Route::delete('rules/{rule_id}', [RulesController::class, 'delete']);
             });
         });
 

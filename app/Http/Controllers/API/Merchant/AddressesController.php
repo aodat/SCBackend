@@ -22,7 +22,7 @@ class AddressesController extends MerchantController
         return $this->response($data->addresses, 'Addresses Retrieved Successfully', 200);
     }
 
-    public function createAddresses(AddressesRequest $request)
+    public function store(AddressesRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
         $json = $request->json()->all();
@@ -42,7 +42,7 @@ class AddressesController extends MerchantController
         return $this->successful();
     }
 
-    public function deleteAddresses($id, AddressesRequest $request)
+    public function delete($id, AddressesRequest $request)
     {
         $merchantID = $request->user()->merchant_id;
 

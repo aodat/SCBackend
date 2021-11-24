@@ -21,7 +21,7 @@ class PaymentMethodsController extends MerchantController
         return $this->response($data->payment_methods, 'Data Retrieved Successfully', 200);
     }
 
-    public function createPaymentMethods(PaymentMethodsRequest $request)
+    public function store(PaymentMethodsRequest $request)
     {
         $json = $request->json()->all();
         $list = $this->getMerchentInfo();
@@ -39,7 +39,7 @@ class PaymentMethodsController extends MerchantController
         return $this->successful();
     }
 
-    public function deletePaymentMethods($id, PaymentMethodsRequest $request)
+    public function delete($id, PaymentMethodsRequest $request)
     {
         $list = $this->getMerchentInfo();
         $result = collect($list->select('payment_methods')->first()->payment_methods);

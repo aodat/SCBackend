@@ -11,8 +11,16 @@ class RulesRequest extends MerchantRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        $path = Request()->path();
+        if (strpos($path, 'rules/create') !== false)
+            return [
+                'name' => 'required',
+                'type' => 'required|in:express,dom',
+                'sub-type' => 'required|in:cod,weight,city',
+                'constraint' => 'required',
+                'value' => 'required'
+
+            ];
+        return [];
     }
 }
