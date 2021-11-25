@@ -120,14 +120,9 @@ class AuthController extends Controller
     {
         $response =  Password::sendResetLink($request->only('email'));
 
-        $msg = "Email could not be sent to this email address";
-        $code = 400;
-        if ($response == Password::RESET_LINK_SENT) {
-            $msg = "Mail send successfully";
-            $code = 200;
-        }
-
-        $this->response([], $msg, $code);
+        if ($response == Password::RESET_LINK_SENT)
+            return $this->successful('Mail send successfully');
+        return $this->error('Email could not be sent to this email address');
     }
 
     // Reset password
