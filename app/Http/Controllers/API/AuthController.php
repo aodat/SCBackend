@@ -168,9 +168,7 @@ class AuthController extends Controller
     {
         if (auth()->user()->hasVerifiedEmail())
             return $this->response([], 'Email already verified.', 200);
-
         auth()->user()->sendEmailVerificationNotification();
-
         return $this->successful('Email verification link sent on your email id');
     }
 
