@@ -1,7 +1,7 @@
 <?php
- 
+
 namespace App\Models;
- 
+
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,28 +12,28 @@ use App\Notifications\MailResetPasswordNotification as MailResetPasswordNotifica
 
 class User extends Authenticatable
 {
-    use HasApiTokens;// Notifiable, 
- 
+    use HasApiTokens, Notifiable;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'merchant_id' , 'name', 'email', 'password','phone', 'pin_code','role','is_owner',
-        'is_email_verified' ,'is_phone_verified','email_verified_at','phone_verified_at','merchant_id'
+        'merchant_id', 'name', 'email', 'password', 'phone', 'pin_code', 'role', 'is_owner',
+        'is_email_verified', 'is_phone_verified', 'email_verified_at', 'phone_verified_at', 'merchant_id'
     ];
- 
+
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
     protected $hidden = [
-        'password' , 'remember_token' , 'pin_code','role',
-        'is_email_verified' ,'is_phone_verified','email_verified_at','phone_verified_at'
+        'password', 'remember_token', 'pin_code', 'role',
+        'is_email_verified', 'is_phone_verified', 'email_verified_at', 'phone_verified_at'
     ];
- 
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -51,6 +51,6 @@ class User extends Authenticatable
 
     public function merchant()
     {
-        return $this->hasOne(Merchant::class,'id','merchant_id');
+        return $this->hasOne(Merchant::class, 'id', 'merchant_id');
     }
 }
