@@ -3,29 +3,40 @@
 namespace App\Traits;
 
 use App\Models\Carriers;
-use App\Models\Merchant;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Facades\App;
 
 trait SystemConfig
 {
     public function domastic()
     {
-        $carriers = Carriers::all()->pluck('name', 'id');
-        $collection = Merchant::find(Auth::user()->merchant_id)->domestic_rates;
-        return collect($collection)->keyBy(function ($value, $key) use ($carriers) {
-            return $carriers[$key];
+       return $enabledCarriers = Carriers::get()->where('is_enabled', 1);
+        if ($enabledCarriers == null)
+            return [];
+        $enabledCarriers = $enabledCarriers->pluck('name', 'id');
+        $domestic_rates = App::make('merchantInfo')->domestic_rates;
+        $domestic_rates = collect($domestic_rates)->reject(function ($value, $key) use ($enabledCarriers) {
+            return !(isset($enabledCarriers[$key]));
+        })->keyBy(function ($value, $key) use ($enabledCarriers) {
+            return $enabledCarriers[$key];
         });
+        return $domestic_rates;
     }
 
     public function express()
     {
-        $carriers = Carriers::all()->pluck('name', 'id');
-        $collection = Merchant::find(Auth::user()->merchant_id)->express_rates;
-        return collect($collection)->keyBy(function ($value, $key) use ($carriers) {
-            return $carriers[$key];
+
+        $enabledCarriers = Carriers::get()->where('is_enabled', 1);
+        if ($enabledCarriers == null)
+            return [];
+        $enabledCarriers = $enabledCarriers->pluck('name', 'id');
+        $express_rates = App::make('merchantInfo')->express_rates;
+        $express_rates = collect($express_rates)->reject(function ($value, $key) use ($enabledCarriers) {
+            return !(isset($enabledCarriers[$key]));
+        })->keyBy(function ($value, $key) use ($enabledCarriers) {
+            return $enabledCarriers[$key];
         });
+        return $express_rates;
     }
 
     public function countries()

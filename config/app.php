@@ -175,6 +175,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\MerchantServiceProvider::class,
 
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Meneses\LaravelMpdf\LaravelMpdfServiceProvider::class
