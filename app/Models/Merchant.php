@@ -20,6 +20,7 @@ class Merchant extends Model
         'senders' => 'array',
         'domestic_rates' => 'array',
         'express_rates' => 'array',
+        'carriers' => 'array',
         'rules' => 'array'
     ];
 
