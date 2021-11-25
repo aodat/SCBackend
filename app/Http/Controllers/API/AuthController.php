@@ -145,15 +145,9 @@ class AuthController extends Controller
                 event(new PasswordReset($user));
             }
         );
-
-        $msg = "Email could not be sent to this email address";
-        $code = 400;
-        if ($response == Password::PASSWORD_RESET) {
-            $msg = "Password reset successfully";
-            $code = 200;
-        }
-
-        $this->response([], $msg, $code);
+        if ($response == Password::PASSWORD_RESET)
+            return $this->successful('Password reset successfully');
+        return $this->error('Email could not be sent to this email address');
     }
 
     // Verify Email
@@ -171,7 +165,7 @@ class AuthController extends Controller
             User::where('id', $user->id)->update(['is_email_verified' => true]);
             Merchant::where('email', $user->email)->update(['is_email_verified' => true]);
         }
-        return $this->response([], 'Email verified sucessfully', 200);
+        return $this->successful('Email verified sucessfully');
     }
 
     // Resend Email for verfification
@@ -182,7 +176,7 @@ class AuthController extends Controller
 
         auth()->user()->sendEmailVerificationNotification();
 
-        return $this->response([], 'Email verification link sent on your email id.', 200);
+        return $this->successful('Email verification link sent on your email id');
     }
 
     // Get Merchant Secret Key
@@ -208,7 +202,7 @@ class AuthController extends Controller
         );
         $result = json_decode(Route::dispatch($proxy)->getContent());
         return $this->response(['secret_key' => $merchant->secret_key, 'access_key' => $result->access_token], 'Access Key Retrieved Successfully');
-}
+    }
 
     // Genrate Access Token
     function generateSecretKey(Request $request, ClientRepository $clientRepository)
@@ -246,6 +240,6 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return $this->response([], 'User Log Out.', 200);
+        return $this->successful('User Log Out');
     }
 }
