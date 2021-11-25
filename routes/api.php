@@ -18,7 +18,7 @@ use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\API\Merchant\PickupsController;
 use App\Http\Controllers\API\Merchant\InvoiceController;
 use App\Http\Controllers\API\Merchant\DashboardController;
-
+use App\Http\Controllers\API\Merchant\CarrierController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -44,6 +44,10 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
         Route::group(['prefix' => 'merchant/'], function () {
             Route::put('change-secret', [AuthController::class, 'changeSecret']);
+
+            Route::get('carrier/list', [CarrierController::class, 'index']);
+            Route::put('carrier/{carrier_id}/update', [CarrierController::class, 'update']);
+
 
             // Dashboard Information 
             Route::post('dashboard', [DashboardController::class, 'index']);

@@ -19,7 +19,8 @@ class Merchant extends Model
         'addresses' => 'array',
         'senders' => 'array',
         'domestic_rates' => 'array',
-        'express_rates' => 'array'
+        'express_rates' => 'array',
+        'carriers' => 'array'
     ];
 
     protected $hidden = [
