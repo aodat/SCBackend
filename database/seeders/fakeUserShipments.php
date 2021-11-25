@@ -63,7 +63,7 @@ class fakeUserShipments extends Seeder
         DB::table('users')->insert($user);
 
         $carriersArr = ['aramex', 'dhl', 'fedex'];
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $carriers = [
                 'name' => $carriersArr[$i],
                 'email' => Str::random(10) . '@gmail.com',
