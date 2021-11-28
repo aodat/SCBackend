@@ -43,7 +43,7 @@ class PayTabs
         );
 
         if (!$response->successful())
-            throw new InternalException('Paytabs Transaction Error', 500);
+            throw new InternalException('Paytabs Transaction Error', 400);
 
         return [
             'payment_url' => $response->json()['redirect_url'],

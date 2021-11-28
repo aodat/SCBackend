@@ -65,7 +65,7 @@ class TransactionsController extends MerchantController
         $paymentMethodID = $request->payment_method_id;
 
         if ($actualBalance < $request->amount)
-            return $this->error('The Actual Balance Not Enough', 500);
+            return $this->error('The Actual Balance Not Enough', 400);
 
 
         $merchecntInfo->actual_balance = $actualBalance - $request->amount;

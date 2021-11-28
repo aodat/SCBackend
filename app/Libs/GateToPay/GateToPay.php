@@ -26,7 +26,7 @@ class GateToPay
     {
         $response = Http::get($this->endPoint . 'account/encrypt?Key=' . $this->agentKey);
         if (!$response->successful())
-            throw new InternalException('Gate To Pay Key in valid', 500);
+            throw new InternalException('Gate To Pay Key in valid', 400);
         return $response->json();
     }
 
@@ -45,7 +45,7 @@ class GateToPay
         ]);
 
         if (!$response->successful() || !$response->json()['isSuccess'])
-            throw new InternalException('Deposit transaction error', 500);
+            throw new InternalException('Deposit transaction error', 400);
         return $response->transactionId;
     }
 
@@ -63,7 +63,7 @@ class GateToPay
             'cardExpiryDate' => $cardExpiryDate
         ]);
         if (!$response->successful() || !$response->json()['isSuccess'])
-            throw new InternalException('WithDraw transaction error', 500);
+            throw new InternalException('WithDraw transaction error', 400);
 
         return $response->transactionId;
     }

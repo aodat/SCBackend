@@ -72,7 +72,7 @@ class MerchantController extends Controller
     {
         $user = User::findOrFail(Auth::id());
         if (Hash::check($request->current, $user->password) == false)
-            return $this->error('Current Password Is Wrong', 500);
+            return $this->error('Current Password Is Wrong', 400);
 
         $user->password = Hash::make($request->new);
         $user->save();
