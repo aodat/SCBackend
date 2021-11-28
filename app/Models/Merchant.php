@@ -24,6 +24,14 @@ class Merchant extends Model
         'rules' => 'array'
     ];
 
+    protected function castAttribute($key, $value)
+    {
+        if ($this->getCastType($key) == 'array' && is_null($value)) {
+            return [];
+        }
+
+        return parent::castAttribute($key, $value);
+    }
     protected $hidden = [
         'is_email_verified', 'is_phone_verified',
         'is_documents_verified', 'is_active', 'is_instant_payment_active'

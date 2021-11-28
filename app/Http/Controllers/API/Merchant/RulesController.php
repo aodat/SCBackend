@@ -26,7 +26,7 @@ class RulesController extends MerchantController
         $data['update_at'] = null;
 
         $merchant->update(['rules' => $result->merge([$data])]);
-        return $this->successful();
+        return $this->successful('Create Successfully');
     }
 
     public function delete($id, RulesRequest $request)

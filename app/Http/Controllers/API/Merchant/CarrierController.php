@@ -33,7 +33,7 @@ class CarrierController extends MerchantController
             return $carrier;
         });
 
-        return $this->response($collection, 'Successfully return info ');
+        return $this->response($collection, 'Data Retrieved Successfully');
     }
 
     public function update($carrier_id, CarrierRequest  $request)
@@ -69,6 +69,6 @@ class CarrierController extends MerchantController
         $merchant->update(['carriers' => $result]);
 
 
-        return $this->successful();
+        return $this->successful('Updated Successfully');
     }
 }

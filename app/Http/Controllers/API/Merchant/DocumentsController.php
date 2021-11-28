@@ -13,14 +13,10 @@ class DocumentsController extends MerchantController
 
     public function index(DocumentsRequest $request)
     {
+    
         $merchantID = $request->user()->merchant_id;
         $data = Merchant::where('id', $merchantID)->select('documents')->first();
-
-
-        if (collect($data->documents)->isEmpty())
-            return $this->notFound();
-
-        return $this->response($data->documents, 'Payment Methods Retrieved Successfully', 200);
+        return $this->response($data->documents, 'Data Retrieved Successfully', 200);
     }
 
     public function store(DocumentsRequest $request)
@@ -39,7 +35,7 @@ class DocumentsController extends MerchantController
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);
-        return $this->successful();
+        return $this->successful('Create Successfully');
     }
 
     public function delete($id, DocumentsRequest $request)
@@ -54,6 +50,6 @@ class DocumentsController extends MerchantController
         });
         $json = array_values($json->toArray());
         $list->update(['documents' => collect($json)]);
-        return $this->successful('Deleted Sucessfully');
+        return $this->successful('Deleted Successfully');
     }
 }

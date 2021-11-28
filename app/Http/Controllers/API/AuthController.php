@@ -112,7 +112,7 @@ class AuthController extends Controller
 
         $merchantInfo->secret_key = $client->secret;
         $merchantInfo->save();
-        return $this->successful('Secret Created Sucessfully');
+        return $this->successful('Secret Created Successfully');
     }
 
     // Forget Password
@@ -149,7 +149,7 @@ class AuthController extends Controller
     public function verifyEmail(Request $request)
     {
         if (!$request->hasValidSignature()) {
-            return $this->response([], 'Invalid/Expired url provided', 401);
+            return $this->error('Invalid/Expired url provided', 400);
         }
 
         $user = User::findOrFail($request->id);
@@ -160,16 +160,17 @@ class AuthController extends Controller
             User::where('id', $user->id)->update(['is_email_verified' => true]);
             Merchant::where('email', $user->email)->update(['is_email_verified' => true]);
         }
-        return $this->successful('Email verified sucessfully');
+        return $this->successful('Email verified Successfully');
     }
 
     // Resend Email for verfification
     public function resend()
     {
         if (auth()->user()->hasVerifiedEmail())
-            return $this->response([], 'Email already verified.', 200);
+            return $this->error('Email already verified.', 400);
+
         auth()->user()->sendEmailVerificationNotification();
-        return $this->successful('Email verification link sent on your email id');
+        return $this->successful('Check your email');
     }
 
     // Get Merchant Secret Key

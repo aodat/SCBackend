@@ -46,6 +46,7 @@ class DashboardController extends MerchantController
             ->groupBy('date')
             ->get();
         $pending_payment = collect($pending_payment)->pluck('amount', 'date');
+        
         $data = [
             "chart" => [
                 "shipping" => [
@@ -63,26 +64,26 @@ class DashboardController extends MerchantController
 
             "info" => [
                 "shipping" => [
-                    "drafts" => collect($shipping['DRAFT'])->sum(function ($date) {
+                    "drafts" => collect($shipping['DRAFT'] ?? 0)->sum(function ($date) {
                         return ($date);
-                    }) ?? 0,
-                    "processing" => collect($shipping['PROCESSING'])->sum(function ($date) {
+                    }),
+                    "processing" => collect($shipping['PROCESSING'] ?? 0)->sum(function ($date) {
                         return ($date);
-                    })  ?? 0,
-                    "delivered" => collect($shipping['COMPLETED'])->sum(function ($date) {
+                    }),
+                    "delivered" => collect($shipping['COMPLETED'] ?? 0)->sum(function ($date) {
                         return ($date);
-                    }) ?? 0,
-                    "renturnd" => collect($shipping['RENTURND'])->sum(function ($date) {
+                    }),
+                    "renturnd" => collect($shipping['RENTURND'] ?? 0)->sum(function ($date) {
                         return ($date);
-                    })  ?? 0,
+                    }),
                 ],
                 "payment" => [
-                    "outcome" =>  collect($payment['CASHOUT'])->sum(function ($date) {
+                    "outcome" =>  collect($payment['CASHOUT'] ?? 0)->sum(function ($date) {
                         return ($date);
-                    }) ?? 0,
-                    "income" =>  collect($payment['CASHIN'])->sum(function ($date) {
+                    }),
+                    "income" =>  collect($payment['CASHIN'] ?? 0)->sum(function ($date) {
                         return ($date);
-                    }) ?? 0,
+                    }),
                     "pending_payment" => $pending_payment->sum(function ($date) {
                         return ($date);
                     }),
@@ -90,6 +91,6 @@ class DashboardController extends MerchantController
             ]
         ];
 
-        return $this->response($data, 'Retrieved Successfully');
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 }

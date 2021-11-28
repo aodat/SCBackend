@@ -14,10 +14,6 @@ class PaymentMethodsController extends MerchantController
     {
         $merchantID = $request->user()->merchant_id;
         $data = Merchant::where('id', $merchantID)->select('payment_methods')->first();
-
-        if (collect($data->payment_methods)->isEmpty())
-            return $this->notFound();
-
         return $this->response($data->payment_methods, 'Data Retrieved Successfully', 200);
     }
 
@@ -36,7 +32,7 @@ class PaymentMethodsController extends MerchantController
         if (isset($json['pin_code']))
             unset($json['pin_code']);
         $list->update(['payment_methods' => $result->merge([$json])]);
-        return $this->successful();
+        return $this->successful('Create Successfully');
     }
 
     public function delete($id, PaymentMethodsRequest $request)
@@ -50,6 +46,6 @@ class PaymentMethodsController extends MerchantController
         });
         $json = array_values($json->toArray());
         $list->update(['payment_methods' => collect($json)]);
-        return $this->successful('Deleted Sucessfully');
+        return $this->successful('Deleted Successfully');
     }
 }

@@ -14,12 +14,7 @@ class AddressesController extends MerchantController
     {
         $merchantID = $request->user()->merchant_id;
         $data = Merchant::where('id', $merchantID)->select('addresses')->first();
-
-
-        if (collect($data->addresses)->isEmpty())
-            return $this->notFound();
-
-        return $this->response($data->addresses, 'Addresses Retrieved Successfully', 200);
+        return $this->response($data->addresses, 'Data Retrieved Successfully');
     }
 
     public function store(AddressesRequest $request)
@@ -32,14 +27,14 @@ class AddressesController extends MerchantController
         $result = collect($merchant->select('addresses')->first()->addresses);
 
         if ($result->contains("name", $request->name))
-            throw new InternalException(' name is  Exists');
+            throw new InternalException('name is Exists');
             
         $counter = $result->max('id') ?? 0;
         $json['id'] = ++$counter;
         $json['country'] = $request->country ?? 'JO';
         $json['created_at'] = Carbon::now();
         $merchant->update(['addresses' => $result->merge([$json])]);
-        return $this->successful();
+        return $this->successful('Create Successfully');
     }
 
     public function delete($id, AddressesRequest $request)

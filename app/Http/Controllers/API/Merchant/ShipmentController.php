@@ -51,13 +51,13 @@ class ShipmentController extends MerchantController
 
         $paginated = $shipments->paginate(request()->perPage ?? 10);
 
-        return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
+        return $this->pagination($paginated);
     }
 
     public function show($id, ShipmentRequest $request)
     {
         $data = Shipment::findOrFail($id);
-        return $this->response($data, 'Data Retrieved Sucessfully', 200);
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 
     public function export($type, ShipmentRequest $request)
@@ -71,7 +71,7 @@ class ShipmentController extends MerchantController
         } else {
             $url = exportPDF('shipments', $path, $shipments);
         }
-        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+        return $this->response(['link' => $url], 'Data Retrieved Successfully');
     }
 
     // Create Express Shipment will be one by one only 
@@ -165,12 +165,12 @@ class ShipmentController extends MerchantController
             DB::table('shipments')->insert($ships->toArray());
         }
 
-        return $this->response(['link' => mergePDF($links)]);
+        return $this->response(['link' => mergePDF($links)],"Data Retrieved Successfully");
     }
 
     public function printLabel(ShipmentRequest $request)
     {
-        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)]);
+        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)],"Data Retrieved Successfully");
     }
 
     public function shipmentProcessSQS(ShipmentRequest $request)

@@ -20,7 +20,7 @@ class MerchantController extends Controller
     public function merchantProfile(MerchantRequest $request)
     {
         $merchant = $this->getMerchentInfo();
-        return $this->response($merchant, 'Merchant Information', 200);
+        return $this->response($merchant, 'Data Retrieved Successfully');
     }
 
     // Update Merchant Profile
@@ -33,14 +33,14 @@ class MerchantController extends Controller
         $merchant->email = $request->email;
         $merchant->save();
 
-        return $this->successful('Updated Sucessfully');
+        return $this->successful('Updated Successfully');
     }
 
     // User profile info
     public function profile(MerchantRequest $request)
     {
         $user = User::findOrFail(Auth::id());
-        return $this->response($user, 'User Profile Information', 200);
+        return $this->response($user, 'Data Retrieved Successfully');
     }
 
     // Update User Profile
@@ -64,7 +64,7 @@ class MerchantController extends Controller
         }
         $user->save();
 
-        return $this->successful('Profile Updated Successfully');
+        return $this->successful('Updated Successfully');
     }
 
     // Update User Profile
@@ -77,7 +77,7 @@ class MerchantController extends Controller
         $user->password = Hash::make($request->new);
         $user->save();
 
-        return $this->successful('Password Updated Successfully');
+        return $this->successful('Updated Successfully');
     }
 
     public function verifyPhoneNumber(MerchantRequest $request)
@@ -88,7 +88,7 @@ class MerchantController extends Controller
 
         $merchantID = $request->user()->merchant_id;
         Merchant::where('id', $merchantID)->update(['pin_code' => $randomPinCode]);
-        return $this->successful('Check Your Mobile');
+        return $this->successful('Pin code was sent check your mobile');
     }
 
     public function getMerchentInfo($id = null)

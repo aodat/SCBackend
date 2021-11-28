@@ -1,30 +1,34 @@
 <?php
+
 namespace App\Traits;
+
 use Illuminate\Support\Facades\Response;
 
 trait ResponseHandler
-{  
-    public static function response($data = [], $msg = '', $status = 200,$isPagination = false)
+{
+
+    public static function response($data, $msg, $code = 200)
     {
-        $response = null;
-        if($isPagination) {
-            $pagination = $data->toArray();
-            
-            $response['data'] = $pagination['data'];
-            $response['pagination_meta'] = [
-                'current_page' => $pagination['current_page'],
-                'last_page' => $pagination['last_page'],
-                'total' => $pagination['total'],
-                'first_page_url' => $pagination['first_page_url'],
-                'next_page_url' => $pagination['next_page_url'],
-                'per_page' => intval($pagination['per_page'])
-            ];
-        }
-        else
-            $response['data'] = $data ?? [];
-        
-        $response['meta']['code'] =  $status;
+        $response['data'] = $data;
         $response['meta']['msg'] =  $msg;
+        $response['meta']['code'] =  $code;
+        return Response::make($response, 200);
+    }
+
+    public static function pagination($data)
+    {
+        $pagination = $data->toArray();
+        $response['data'] = $pagination['data'];
+        $response['pagination_meta'] = [
+            'current_page' => $pagination['current_page'],
+            'last_page' => $pagination['last_page'],
+            'total' => $pagination['total'],
+            'first_page_url' => $pagination['first_page_url'],
+            'next_page_url' => $pagination['next_page_url'],
+            'per_page' => intval($pagination['per_page'])
+        ];
+        $response['meta']['code'] = 200;
+        $response['meta']['msg'] = "Data retrieved successfully";
         return Response::make($response, 200);
     }
 
@@ -33,7 +37,7 @@ trait ResponseHandler
         $response = [
             'meta' => [
                 'code' => 200,
-                'msg' => ($msg != '') ? $msg : 'Created Sucessfully'
+                'msg' => ($msg != '') ? $msg : 'Created Successfully'
             ]
         ];
 
@@ -44,19 +48,19 @@ trait ResponseHandler
     {
         $response = [
             'meta' => [
-                'code' => 400,
+                'code' => 404,
                 'msg' => 'Not Found'
             ]
         ];
         return Response::make($response, 200);
     }
 
-    public static function error($msg, $status_code = 400)
+    public static function error($msg, $code = 400)
     {
         $response = [
             'meta' => [
-                'code' => $status_code,
-                'msg' => ($msg != '') ? $msg : 'Unexpected Error'
+                'code' => $code,
+                'msg' => $msg
             ]
         ];
         return Response::make($response, 200);

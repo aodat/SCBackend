@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 class TransactionsController extends MerchantController
 {
+
     public function index(TransactionRequest $request)
     {
         $filters = $request->json()->all();
@@ -22,14 +23,11 @@ class TransactionsController extends MerchantController
         $sources = $filters['sources'] ?? [];
         $amount = $filters['amount']['val'] ?? null;
         $operation = $filters['amount']['operation'] ?? null;
-        $transaction2 = Transaction::select('created_at')->groupBy('created_at')->paginate(request()->per_page ?? 10);
+        $transaction2 = Transaction::where('merchant_id', $request->user()->merchant_id)->select('created_at')->groupBy('created_at')->paginate(request()->per_page ?? 10);
         $paginated = array();
 
         foreach ($transaction2 as $key => $value) {
-            $transaction = Transaction::where("created_at", "=", $value->created_at)->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"])
-                ->where('merchant_id', $request->user()->merchant_id);
-
-
+            $transaction = Transaction::where("created_at", "=", $value->created_at)->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
             if (count($statuses))
                 $transaction->whereIn('status', $statuses);
 
@@ -48,14 +46,14 @@ class TransactionsController extends MerchantController
             $paginated[$created_at] = $transaction->get();
         }
 
-
-        return $this->response($paginated, 'Data Retrieved Successfully', 200, false);
+        return $this->response($paginated,'Data Retrieved Successfully');
     }
 
     public function show($id, TransactionRequest $request)
     {
+
         $data = Transaction::findOrFail($id);
-        return $this->response($data, 'Transaction Retrived Sucessfully', 200);
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 
     public function withDraw(TransactionRequest $request)
@@ -67,7 +65,7 @@ class TransactionsController extends MerchantController
         $paymentMethodID = $request->payment_method_id;
 
         if ($actualBalance < $request->amount)
-            return $this->response([], 'The Actual Balance Not Enough', 500);
+            return $this->error('The Actual Balance Not Enough', 500);
 
 
         $merchecntInfo->actual_balance = $actualBalance - $request->amount;

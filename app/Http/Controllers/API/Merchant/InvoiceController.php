@@ -30,7 +30,7 @@ class InvoiceController extends MerchantController
         $data['resource'] = $request->resource;
         Invoices::create($data);
 
-        return $this->successful();
+        return $this->successful('Create Successfully');
     }
 
     public function finalize($invoiceID, InvoiceRequest $request)
@@ -41,7 +41,7 @@ class InvoiceController extends MerchantController
         $invoiceInfo->link = $link;
         $invoiceInfo->save();
 
-        $this->response(['link' => $link]);
+        $this->response(['link' => $link],'Data Retrieved Successfully');
     }
 
     public function delete($invoiceID, InvoiceRequest $request)
@@ -53,7 +53,7 @@ class InvoiceController extends MerchantController
         $invoiceInfo->delete();
 
 
-        return $this->successful('Deleted Sucessfully');
+        return $this->successful('Deleted Successfully');
     }
 
     public function stripeProcessSQS(InvoiceRequest $request)

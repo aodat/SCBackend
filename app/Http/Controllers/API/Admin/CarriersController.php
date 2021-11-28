@@ -26,20 +26,20 @@ class CarriersController extends Controller
             $carriers->where('id', $id);
 
         $paginated = $carriers->paginate(request()->perPage ?? 10);
-        return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
+        return $this->pagination($paginated);
     }
 
     public function show($carrier_id, CarriersRequest $request)
     {
         $carrier = Carriers::findOrFail($carrier_id);
-        return $this->response($carrier, 'Data Retrieved Successfully', 200);
+        return $this->response($carrier, 'Data Retrieved Successfully');
     }
 
     public function store(CarriersRequest $request)
     {
         $data = $request->validated();
         Carriers::create($data);
-        return $this->successful();
+        return $this->successful('Create Successfully');
     }
 
     public function update(CarriersRequest $request)
@@ -51,6 +51,6 @@ class CarriersController extends Controller
         $carrier->is_active = $data['is_active'];
         $carrier->save();
 
-        return $this->successful('Updated Sucessfully');
+        return $this->successful('Updated Successfully');
     }
 }

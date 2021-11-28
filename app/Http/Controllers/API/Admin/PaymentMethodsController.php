@@ -15,7 +15,7 @@ class PaymentMethodsController extends Controller
     {
         $data = $request->validated();
         $merchant = Merchant::findOrFail($data['merchant_id']);
-        return $this->response($merchant->payment_methods, 'Data Retrieved Successfully', 200);
+        return $this->response($merchant->payment_methods, 'Data Retrieved Successfully');
     }
 
     public function update(PaymentMethodsRequest $request)
@@ -38,6 +38,6 @@ class PaymentMethodsController extends Controller
         $payment[$current] = $data;
         $payment_methods = $payments->replaceRecursive($payment);
         $merchant->update(['payment_methods' => $payment_methods]);
-        return $this->successful('Updated Sucessfully');
+        return $this->successful('Updated Successfully');
     }
 }

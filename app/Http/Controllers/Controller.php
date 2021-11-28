@@ -16,7 +16,7 @@ class Controller extends BaseController
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     use ResponseHandler, CarriersManager;
     use SystemConfig;
-    
+
     public function unauthenticated()
     {
         return $this->error('unauthenticated', 403);

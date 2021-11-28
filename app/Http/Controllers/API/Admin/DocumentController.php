@@ -13,7 +13,7 @@ class DocumentController extends Controller
     public function index(DocumentRequest $request)
     {
         $data  = Merchant::find($request->merchant_id)->documents;
-        return $this->response($data, "Success get addresse to specified merchant");
+        return $this->response($data, "Data Retrieved Successfully");
     }
 
     public function store(DocumentRequest $request)
@@ -34,7 +34,7 @@ class DocumentController extends Controller
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);
-        return $this->successful();
+        return $this->successful('Create Successfully');
     }
 
     public function status(DocumentRequest $request)

@@ -24,7 +24,7 @@ class CheckMerchant
 
         $Merchaninfo = Merchant::findOrFail(auth()->user()->merchant_id);
         if (auth()->user()->status == 'in_active' || (!$Merchaninfo->is_active))
-            throw new InternalException('Your Account is in active please contact us', 403);
+            throw new InternalException('Your Account is inactive please contact us', 403);
 
         $header = $request->header('agent') ?? 'API';
         if (!in_array($header, $allowedPlatform))

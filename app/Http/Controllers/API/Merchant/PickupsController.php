@@ -30,7 +30,7 @@ class PickupsController extends MerchantController
         $pickup->where('merchant_id', $request->user()->id);
 
         $paginated = $pickup->paginate(request()->perPage ?? 10);
-        return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
+        return $this->pagination($paginated);
     }
 
     public function store(PickuptRequest $request)
@@ -56,7 +56,7 @@ class PickupsController extends MerchantController
             );
         });
 
-        return $this->successful();
+        return $this->successful('Created-Updated Successfully');
     }
 
     public function cancel(PickuptRequest $request)

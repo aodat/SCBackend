@@ -47,7 +47,7 @@ class TeamController extends Controller
         $user->role_member = implode(',', $data['role']);
         $user->save();
 
-        return $this->successful('Updated Sucessfully');
+        return $this->successful('Updated Successfully');
     }
 
     public function deleteMember($user_id, TeamRequest $request)
@@ -59,6 +59,6 @@ class TeamController extends Controller
         // Delete all user session
         Token::where('user_id', $user_id)->update(['revoked' => true]);
 
-        return $this->successful('Deleted Sucessfully');
+        return $this->successful('Deleted Successfully');
     }
 }
