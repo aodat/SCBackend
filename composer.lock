@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad4ebe63e9fab43efbe87ab2e041b327",
+    "content-hash": "53e757830a769b294acd5f2d62d1f2b6",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3608,6 +3608,70 @@
                 "source": "https://github.com/paragonie/random_compat"
             },
             "time": "2020-10-15T08:29:30+00:00"
+        },
+        {
+            "name": "petercoles/multilingual-country-list",
+            "version": "1.2.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/petercoles/Multilingual-Country-List.git",
+                "reference": "44064e30be0481eb10b2d55b2dd90bcf11731a28"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/petercoles/Multilingual-Country-List/zipball/44064e30be0481eb10b2d55b2dd90bcf11731a28",
+                "reference": "44064e30be0481eb10b2d55b2dd90bcf11731a28",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "~5|~6|~7|~8",
+                "php": ">=7.2"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1",
+                "phpunit/phpunit": ">=8"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PeterColes\\Countries\\CountriesServiceProvider"
+                    ],
+                    "aliases": {
+                        "Countries": "PeterColes\\Countries\\CountriesFacade"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PeterColes\\Countries\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Peter Coles",
+                    "email": "peterdcoles@gmail.com",
+                    "homepage": "https://petercoles.com"
+                }
+            ],
+            "description": "Lookup Objects for ISO 3166 Country Names and Codes",
+            "homepage": "https://github.com/petercoles/multilingualcountry-list",
+            "keywords": [
+                "ISO 3166",
+                "country codes",
+                "country lists",
+                "country lookup",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/petercoles/multilingual-country-list/issues",
+                "source": "https://github.com/petercoles/Multilingual-Country-List/tree/1.2.8"
+            },
+            "time": "2021-02-02T15:45:46+00:00"
         },
         {
             "name": "php-http/message-factory",

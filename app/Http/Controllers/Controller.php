@@ -10,12 +10,13 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Traits\ResponseHandler;
 use App\Traits\CarriersManager;
 use App\Traits\SystemConfig;
+use App\Traits\SystemRules;
 
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     use ResponseHandler, CarriersManager;
-    use SystemConfig;
+    use SystemConfig, SystemRules;
 
     public function unauthenticated()
     {

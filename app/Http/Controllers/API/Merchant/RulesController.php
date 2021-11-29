@@ -16,15 +16,17 @@ class RulesController extends MerchantController
 
     function store(RulesRequest $request)
     {
-        $data = $request->validated();
-        $merchant = $this->getMerchantInfo();
-        $result = collect($merchant->select('rules')->first()->rules);
-        $counter = $result->max('id') ?? 0;
+        $merchantID = $request->user()->merchant_id;
+        $json = $request->json()->all();
 
+        $merchant = Merchant::where('id', $merchantID);
+        $result = collect($merchant->select('rules')->first()->rules);            
+        $counter = $result->max('id') ?? 0;
+        
+        $data = $request->validated();
         $data['id'] = ++$counter;
         $data['created_at'] = Carbon::now();
-        $data['update_at'] = null;
-
+        
         $merchant->update(['rules' => $result->merge([$data])]);
         return $this->successful('Create Successfully');
     }
