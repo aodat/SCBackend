@@ -18,6 +18,8 @@ use App\Models\Transaction;
 use App\Models\Carriers;
 use App\Models\Shipment;
 
+use Illuminate\Support\Facades\App;
+
 class ShipmentController extends MerchantController
 {
 
@@ -210,7 +212,40 @@ class ShipmentController extends MerchantController
         Carriers::all()->map(function ($carrier) use ($data, &$result) {
             $result[$carrier->name] = $this->calculateFees($carrier->id, $data['country_code'], 'Express', $data['weight']);
         });
-
         return $this->response($result, 'Fees Calculated Successfully');
+    }
+
+    public function salla(ShipmentRequest $request)
+    {
+        $data = $request->data;
+
+        $shipper = App::make('merchantInfo');
+        $address = App::make('merchantAddresses')->where('is_default', true)->first();
+
+        $shipment = [];
+        $shipment['sender_name'] = $shipper->name;
+        $shipment['sender_email'] = $shipper->email;
+        $shipment['sender_phone'] = $shipper->phone;
+        $shipment['sender_country'] = $shipper->country_code;
+        $shipment['sender_city'] = $address['city'];
+        $shipment['sender_area'] = $address['area'];
+        $shipment['sender_address_description'] = $address['area'];
+        
+        $shipment['consignee_name'] = $data['customer']['name'];
+        $shipment['consignee_email']  = $data['customer']['email'] ?? 'salla@shipcash.net';
+        $shipment['consignee_phone']  = $data['customer']['mobile'];
+        $shipment['consignee_second_phone'] = '';
+        $shipment['consignee_country'] = $data['address']['country'];
+        $shipment['consignee_city'] = $data['address']['city'];
+        $shipment['consignee_area'] = $data['address']['shipping_address'];
+        $shipment['consignee_zip_code'] = '';
+        $shipment['consignee_address_description'] = $data['address']['shipping_address'];
+        $shipment['content'] = 'Salla Webhook';
+        $shipment['cod'] = $data['amounts']['total']['amount'];
+        $shipment['currency'] = $data['amounts']['total']['currency'];
+        $shipment['actual_weight'] = collect($data['items'])->sum('weight');
+        $shipment['pieces'] = collect($data['items'])->count();
+
+        $this->getActionShipments($shipment);
     }
 }

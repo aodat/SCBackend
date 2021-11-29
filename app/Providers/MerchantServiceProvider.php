@@ -18,15 +18,29 @@ class MerchantServiceProvider extends ServiceProvider
         $this->app->singleton('merchantInfo', function () {
             if (!Auth::user())
                 return [];
-            return Merchant::find(Auth::user()->merchant_id);
+            return Merchant::findOrFail(Auth::user()->merchant_id);
         });
 
 
         $this->app->singleton('merchantCarriers', function () {
             if (!Auth::user())
                 return [];
-            return collect(Merchant::find(Auth::user()->merchant_id)->carriers);
+            return collect(Merchant::findOrFail(Auth::user()->merchant_id)->carriers);
         });
+
+
+        $this->app->singleton('merchantAddresses', function () {
+            if (!Auth::user())
+                return [];
+            return collect(Merchant::findOrFail(Auth::user()->merchant_id)->addresses);
+        });
+
+        $this->app->singleton('merchantRules', function () {
+            if (!Auth::user())
+                return [];
+            return Merchant::findOrFail(Auth::user()->merchant_id)->rules;
+        });
+
     }
 
     /**

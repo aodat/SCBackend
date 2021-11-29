@@ -50,7 +50,6 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('carrier/list', [CarrierController::class, 'index']);
             Route::put('carrier/{carrier_id}/update', [CarrierController::class, 'update']);
 
-
             // Dashboard Information 
             Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);

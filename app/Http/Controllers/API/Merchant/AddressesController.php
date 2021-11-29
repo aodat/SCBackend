@@ -32,6 +32,7 @@ class AddressesController extends MerchantController
         $counter = $result->max('id') ?? 0;
         $json['id'] = ++$counter;
         $json['country'] = $request->country ?? 'JO';
+        $json['is_default'] = $request->is_default ?? false;
         $json['created_at'] = Carbon::now();
         $merchant->update(['addresses' => $result->merge([$json])]);
         return $this->successful('Create Successfully');
