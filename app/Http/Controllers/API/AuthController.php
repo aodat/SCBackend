@@ -18,8 +18,6 @@ use Illuminate\Support\Str;
 
 use App\Models\Merchant;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 use Laravel\Passport\Client;
@@ -45,12 +43,6 @@ class AuthController extends Controller
         $role[] = $userData->role;
 
         $userData['token'] = $userData->createToken('users', $role)->accessToken;
-
-        $userData['system_config'] = [
-            'domastic' => $this->domastic(),
-            'express' => $this->express(),
-            'countries' => $this->countries()
-        ];
         return $this->response(
             $userData,
             'User Login Successfully',
