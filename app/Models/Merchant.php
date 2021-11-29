@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 
 class Merchant extends Model
 {
@@ -24,6 +25,24 @@ class Merchant extends Model
         'rules' => 'array'
     ];
 
+    protected $hidden = [
+        'is_email_verified', 'is_phone_verified',
+        'is_documents_verified', 'is_active', 'is_instant_payment_active',
+        'domestic_rates',
+        'express_rates'
+    ];
+
+    protected $appends  = [];
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+        $path = Request()->path();
+        if (strpos($path, 'admin/merchant/lists'))
+            array_push($this->hidden, 'payment_methods', 'documents', 'addresses', 'senders', 'domestic_rates', 'express_rates');
+        else if (strpos($path, 'merchant/info'))
+            array_push($this->appends, 'domastic', 'express', 'config');
+    }
+
     protected function castAttribute($key, $value)
     {
         if ($this->getCastType($key) == 'array' && is_null($value)) {
@@ -32,17 +51,15 @@ class Merchant extends Model
 
         return parent::castAttribute($key, $value);
     }
-    protected $hidden = [
-        'is_email_verified', 'is_phone_verified',
-        'is_documents_verified', 'is_active', 'is_instant_payment_active'
-    ];
 
-    public function __construct(array $attributes = array())
+    public function getDomasticAttribute()
     {
-        parent::__construct($attributes);
-        $path = Request()->path();
-        if (strpos($path, 'admin/merchant/lists'))
-            array_push($this->hidden, 'payment_methods', 'documents', 'addresses', 'senders', 'domestic_rates', 'express_rates');
+        return $this->domastic();
+    }
+
+    public function getExpressAttribute()
+    {
+        return $this->express();
     }
 
     public function user()
@@ -58,5 +75,44 @@ class Merchant extends Model
             ->first()
             ->addresses;
         return collect(json_decode($addresses))->where('id', '=', $id)->first();
+    }
+
+
+    protected function domastic()
+    {
+        $enabledCarriers = Carriers::get()->where('is_enabled', 1);
+        if ($enabledCarriers == null)
+            return [];
+        $enabledCarriers = $enabledCarriers->pluck('name', 'id');
+        $domestic_rates = App::make('merchantInfo')->domestic_rates;
+        $domestic_rates = collect($domestic_rates)->reject(function ($value, $key) use ($enabledCarriers) {
+            return !(isset($enabledCarriers[$key]));
+        })->keyBy(function ($value, $key) use ($enabledCarriers) {
+            return $enabledCarriers[$key];
+        });
+        return $domestic_rates;
+    }
+
+    protected function express()
+    {
+        $enabledCarriers = Carriers::get()->where('is_enabled', 1);
+        if ($enabledCarriers == null)
+            return [];
+        $enabledCarriers = $enabledCarriers->pluck('name', 'id');
+        $express_rates = App::make('merchantInfo')->express_rates;
+        $express_rates = collect($express_rates)->reject(function ($value, $key) use ($enabledCarriers) {
+            return !(isset($enabledCarriers[$key]));
+        })->keyBy(function ($value, $key) use ($enabledCarriers) {
+            return $enabledCarriers[$key];
+        });
+        return $express_rates;
+    }
+
+    public function getConfigAttribute()
+    {
+        return [
+            'countries' => [],
+            'payment_providers' => []
+        ];
     }
 }

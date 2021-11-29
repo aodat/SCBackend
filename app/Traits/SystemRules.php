@@ -10,12 +10,11 @@ trait SystemRules
     public function getActionShipments($shipmentInfo)
     {
         $merchantRules = collect(App::make('merchantRules'));
-
         $rules = $merchantRules->pluck('rules', 'id');
         $actions = $rules->reject(function ($rule) use ($shipmentInfo) {
             foreach ($rule as $key => $value) {
                 if ($value['sub-type'] == 'weight')
-                    return eval('return ' . $value['value'] . ' ' . $value['constraint'] . ' ' . $shipmentInfo['actual_weight'] . ';');
+                    return !eval('return ' . $value['value'] . ' ' . $value['constraint'] . ' ' . $shipmentInfo['actual_weight'] . ';');
                 else if ($value['sub-type'] == 'cod')
                     return true;
                 else if ($value['type'] == $shipmentInfo['type']) {
@@ -29,6 +28,9 @@ trait SystemRules
 
         if ($actions->isEmpty())
             throw new InternalException('No rules applied', 400);
-        return $merchantRules->whereIn('id',$actions->keys())->pluck('action', 'id');
+
+
+        $provider = $merchantRules->whereIn('id', $actions->keys())->pluck('action', 'id')->first()['0']['create_shipment'];
+        return $provider;
     }
 }

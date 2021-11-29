@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Exceptions\InternalException;
 use App\Http\Requests\Merchant\RulesRequest;
 use App\Models\Merchant;
 use Carbon\Carbon;
@@ -16,17 +17,37 @@ class RulesController extends MerchantController
 
     function store(RulesRequest $request)
     {
-        $data = $request->validated();
-        $merchant = $this->getMerchantInfo();
+        $merchantID = $request->user()->merchant_id;
+        $merchant = Merchant::where('id', $merchantID);
         $result = collect($merchant->select('rules')->first()->rules);
         $counter = $result->max('id') ?? 0;
 
+        $data = $request->validated();
         $data['id'] = ++$counter;
+        $data['is_active'] = true;
         $data['created_at'] = Carbon::now();
-        $data['update_at'] = null;
 
         $merchant->update(['rules' => $result->merge([$data])]);
         return $this->successful('Create Successfully');
+    }
+
+    public function status($id, RulesRequest $request)
+    {
+        $merchant = Merchant::findOrFail($request->user()->merchant_id);
+        $rules = collect($merchant->rules);
+        $rule = $rules->where('id', $id);
+
+        if ($rule->first() == null)
+            throw new InternalException('Rule id not Exists', 400);
+
+        $current = $rule->keys()->first();
+        $data = $rule->toArray()[$current];
+        $data['updated_at'] =  Carbon::now();
+        $data['is_active'] =  $request->is_active;
+        $rules[$current] = $data;
+        
+        $merchant->update(['rules' => $rules]);
+        return $this->successful("Success Update");
     }
 
     public function delete($id, RulesRequest $request)

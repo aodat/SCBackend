@@ -44,6 +44,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
     Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
+
         Route::group(['prefix' => 'merchant/'], function () {
             Route::put('change-secret', [AuthController::class, 'changeSecret']);
 
@@ -110,6 +111,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::group(['middleware' => ['scope:admin']], function () {
                 Route::get('rules', [RulesController::class, 'index']);
                 Route::post('rules/create', [RulesController::class, 'store']);
+                Route::put('rules/{rule_id}', [RulesController::class, 'status']);
                 Route::delete('rules/{rule_id}', [RulesController::class, 'delete']);
             });
         });

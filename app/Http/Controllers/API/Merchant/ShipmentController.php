@@ -20,6 +20,8 @@ use App\Models\Shipment;
 
 use Illuminate\Support\Facades\App;
 
+use PeterColes\Countries\CountriesFacade as Countries;
+
 class ShipmentController extends MerchantController
 {
 
@@ -53,13 +55,13 @@ class ShipmentController extends MerchantController
 
         $paginated = $shipments->paginate(request()->perPage ?? 10);
 
-        return $this->pagination($paginated);
+        return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
     }
 
     public function show($id, ShipmentRequest $request)
     {
         $data = Shipment::findOrFail($id);
-        return $this->response($data, 'Data Retrieved Successfully');
+        return $this->response($data, 'Data Retrieved Sucessfully', 200);
     }
 
     public function export($type, ShipmentRequest $request)
@@ -73,7 +75,7 @@ class ShipmentController extends MerchantController
         } else {
             $url = exportPDF('shipments', $path, $shipments);
         }
-        return $this->response(['link' => $url], 'Data Retrieved Successfully');
+        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
     }
 
     // Create Express Shipment will be one by one only 
@@ -125,7 +127,7 @@ class ShipmentController extends MerchantController
                 if ($shipment == 0)
                     throw new InternalException('Domestic Rates Is Zero');
             } else
-                $shipment['fees'] = $this->calculateFees($provider, $shipment['carrier_id'], $shipment['consignee_country'], $shipment['actual_weight']);
+                $shipment['fees'] = $this->calculateFees($provider, $shipment['sender_country'], $shipment['consignee_country'], $shipment['actual_weight']);
 
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
@@ -167,12 +169,12 @@ class ShipmentController extends MerchantController
             DB::table('shipments')->insert($ships->toArray());
         }
 
-        return $this->response(['link' => mergePDF($links)],"Data Retrieved Successfully");
+        return $this->response(['link' => mergePDF($links)]);
     }
 
     public function printLabel(ShipmentRequest $request)
     {
-        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)],"Data Retrieved Successfully");
+        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)]);
     }
 
     public function shipmentProcessSQS(ShipmentRequest $request)
@@ -215,10 +217,9 @@ class ShipmentController extends MerchantController
         return $this->response($result, 'Fees Calculated Successfully');
     }
 
-    public function salla(ShipmentRequest $request)
+    public function test(ShipmentRequest $request)
     {
         $data = $request->data;
-
         $shipper = App::make('merchantInfo');
         $address = App::make('merchantAddresses')->where('is_default', true)->first();
 
@@ -230,7 +231,7 @@ class ShipmentController extends MerchantController
         $shipment['sender_city'] = $address['city'];
         $shipment['sender_area'] = $address['area'];
         $shipment['sender_address_description'] = $address['area'];
-        
+
         $shipment['consignee_name'] = $data['customer']['name'];
         $shipment['consignee_email']  = $data['customer']['email'] ?? 'salla@shipcash.net';
         $shipment['consignee_phone']  = $data['customer']['mobile'];
@@ -246,6 +247,12 @@ class ShipmentController extends MerchantController
         $shipment['actual_weight'] = collect($data['items'])->sum('weight');
         $shipment['pieces'] = collect($data['items'])->count();
 
-        $this->getActionShipments($shipment);
+        $provider = $this->getActionShipments($shipment);
+        $shipment['fees'] = $this->calculateFees($provider, $shipment['sender_country'], $shipment['consignee_country'], $shipment['actual_weight']);
+        $shipment['merchant_id'] = Request()->user()->merchant_id;
+        $shipment['created_by'] = Request()->user()->id;
+
+
+        return $this->createShipmentDB($shipment, $provider);
     }
 }

@@ -11,7 +11,7 @@ class RulesRequest extends MerchantRequest
      */
     public function rules()
     {
-        $path = Request()->path();
+        $path = Request()->route()->uri;
         if (strpos($path, 'rules/create') !== false)
             return [
                 'name' => 'required',
@@ -20,6 +20,10 @@ class RulesRequest extends MerchantRequest
                 'rules.*.constraint' => 'required',
                 'rules.*.value' => 'required',
                 'action' => 'required|array'
+            ];
+        else if (strpos($path, 'rules/{rule_id}') !== false)
+            return [
+                'is_active' => 'required|boolean'
             ];
         return [];
     }
