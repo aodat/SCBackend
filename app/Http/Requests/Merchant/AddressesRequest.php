@@ -20,7 +20,7 @@ class AddressesRequest extends MerchantRequest
                 "country" => "required",
                 "country_code" => "required",
                 "area" => "required",
-                "phone" => "required",
+                "phone" => "required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14",
                 "description" => "required"
             ];
         return [];

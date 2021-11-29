@@ -37,7 +37,7 @@ class ShipmentRequest extends MerchantRequest
 
                 $type . 'consignee_name' => 'required|min:6|max:255',
                 $type . 'consignee_email' => 'required|email',
-                $type . 'consignee_phone' => 'required',
+                $type . 'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 $type . 'consignee_second_phone' => 'required',
                 $type . 'consignee_city' => 'required',
                 $type . 'consignee_area' => 'required',
@@ -61,9 +61,9 @@ class ShipmentRequest extends MerchantRequest
             return [
                 'created_at.since' => 'nullable|date|date_format:Y-m-d',
                 'created_at.until' => 'nullable|date|date_format:Y-m-d|after:created_at.since',
-                'external' => 'Array',
-                'statuses' => 'Array',
-                'phone' => 'Array',
+                'external' => 'array',
+                'statuses' => 'array',
+                'phone' => 'array',
                 'cod.val' =>  'nullable|numeric|between:1,999',
                 'cod.operation' => 'nullable'
             ];

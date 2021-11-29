@@ -49,18 +49,18 @@ class MerchantRequest extends FormRequest
             return [
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|email|unique:users,email,' . Auth::id(),
-                'phone' => 'required|unique:users,phone,' . Auth::id()
+                'phone' => 'required|unique:users,phone,' . Auth::id().',required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
             ];
         } else if (strpos($path, 'merchant/update-info') !== false) {
             return [
                 'type' => 'required|in:individual,corporate',
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|unique:merchants,email,' . Request()->user()->merchant_id,
-                'phone' => 'required|unique:merchants,phone,' . Request()->user()->merchant_id
+                'phone' => 'required|unique:merchants,phone,' . Request()->user()->merchant_id.'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
             ];
         } else if (strpos($path, 'merchant/verify/phone') !== false) {
             return [
-                'phone' => 'required'
+                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14'
             ];
         }
         return [];

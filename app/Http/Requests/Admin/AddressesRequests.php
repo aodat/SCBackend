@@ -30,7 +30,7 @@ class AddressesRequests extends FormRequest
                 'country' => 'required|string',
                 'country_code' => 'required|string',
                 'area' => 'required|string',
-                'phone' => 'required',
+                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
                 'description' => 'required',
             ];
 
