@@ -38,9 +38,8 @@ class MerchantServiceProvider extends ServiceProvider
         $this->app->singleton('merchantRules', function () {
             if (!Auth::user())
                 return [];
-            return collect(Merchant::findOrFail(Auth::user()->merchant_id)->rules);
+            return collect(Merchant::findOrFail(Auth::user()->merchant_id)->rules)->where('is_active', true);
         });
-
     }
 
     /**

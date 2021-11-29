@@ -111,6 +111,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::group(['middleware' => ['scope:admin']], function () {
                 Route::get('rules', [RulesController::class, 'index']);
                 Route::post('rules/create', [RulesController::class, 'store']);
+                Route::put('rules/{rule_id}', [RulesController::class, 'status']);
                 Route::delete('rules/{rule_id}', [RulesController::class, 'delete']);
             });
         });
