@@ -37,7 +37,7 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof ModelNotFoundException) {
             $response['meta']['code'] = 404;
-            $response['meta']['msg'] = 'File not found';
+            $response['meta']['msg'] = class_basename($exception->getModel()) . ' ID Not Found';
             return Response::make($response);
         } elseif ($exception instanceof ValidationException) {
             $response['error'] = $exception->errors();

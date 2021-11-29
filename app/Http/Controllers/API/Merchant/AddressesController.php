@@ -25,10 +25,10 @@ class AddressesController extends MerchantController
         $merchant = Merchant::where('id', $merchantID);
 
         $result = collect($merchant->select('addresses')->first()->addresses);
-
+        
         if ($result->contains("name", $request->name))
-            throw new InternalException('name is Exists');
-            
+            throw new InternalException('name already Exists',400);
+
         $counter = $result->max('id') ?? 0;
         $json['id'] = ++$counter;
         $json['country'] = $request->country ?? 'JO';

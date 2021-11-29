@@ -9,10 +9,11 @@ trait ResponseHandler
 
     public static function response($data, $msg, $code = 200)
     {
+        $code = !empty($data) ? $code : 204;
         $response['data'] = $data;
         $response['meta']['msg'] =  $msg;
         $response['meta']['code'] =  $code;
-        return Response::make($response, 200);
+        return Response::make($response,  200);
     }
 
     public static function pagination($data)

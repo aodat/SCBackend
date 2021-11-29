@@ -7,6 +7,8 @@ use Closure;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Mockery\Expectation;
+use Mpdf\Tag\Tr;
 
 class DBTransaction
 {
@@ -19,15 +21,19 @@ class DBTransaction
      */
     public function handle(Request $request, Closure $next)
     {
-
-
-        DB::beginTransaction();
         $response = $next($request);
-        if ($response->getStatusCode() == 500) {
-            DB::rollBack();
-            throw new InternalException('Unexpected Error', 500);
+        if ($request->method() != 'GET') {
+            DB::beginTransaction();
+            if (
+                isset(json_decode($response->getContent())->meta->code) &&
+                json_decode($response->getContent())->meta->code > 399
+            )
+                DB::rollBack();
+            else if ($response->getStatusCode() == 500) {
+                DB::rollBack();
+                throw new InternalException('Internal Server Error', 500);
+            }
         }
-
         return  $response;
     }
 }
