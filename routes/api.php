@@ -44,7 +44,6 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
     Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
-        Route::get('test', [ShipmentController::class, 'test']);
 
         Route::group(['prefix' => 'merchant/'], function () {
             Route::put('change-secret', [AuthController::class, 'changeSecret']);
