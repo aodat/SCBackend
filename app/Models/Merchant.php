@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class Merchant extends Model
 {
@@ -111,8 +112,8 @@ class Merchant extends Model
     public function getConfigAttribute()
     {
         return [
-            'countries' => [],
-            'payment_providers' => []
+            'countries' => collect(json_decode(Storage::disk('local')->get('template/countries.json'), true)),
+            'payment_providers' => collect(json_decode(Storage::disk('local')->get('template/payment_providers.json'), true)),
         ];
     }
 }
