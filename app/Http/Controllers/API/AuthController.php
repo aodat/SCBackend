@@ -59,6 +59,8 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'type' => $request->type,
                 'phone' => $request->phone,
+                'country_code' => $request->country_code,
+                'currency_code' => ($request->country_code == 'JO') ? 'JOD' : 'SAR',
                 'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'), true)),
                 'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'), true))
             ]

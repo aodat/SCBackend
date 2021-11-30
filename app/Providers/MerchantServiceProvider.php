@@ -51,12 +51,10 @@ class MerchantServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('country', function () {
-
             return collect(json_decode(Storage::disk('local')->get('template/city.json'), true));
         });
 
         $this->app->singleton('Countrieslookup', function () {
-
             return Countries::lookup('en', true);
         });
     }
