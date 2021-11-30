@@ -29,7 +29,7 @@ class AuthRequest extends FormRequest
                 'type' => 'in:individual,corporate',
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|email|unique:users',
-                'phone' => 'required|unique:users',
+                'phone' => 'required|unique:users|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
                 'password' => 'required|min:6|max:255'
             ];
         } else if(strpos($base_url,'auth/login') !== false)
