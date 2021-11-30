@@ -50,7 +50,7 @@ class DBTransaction
         $code = json_decode($response->getContent())->meta->code;
 
         if ($code <= 204)
-            Log::path('info')->info('Sucess : ', ['request' => $data, 'response' => json_decode($response->getContent())]);
+            Log::info('Sucess : ', ['request' => $data, 'response' => json_decode($response->getContent())]);
         else if ($code > 300 && $code < 499)
             Log::debug('Shipcash Error : ', ['request' => $data, 'response' => json_decode($response->getContent())]);
         else
