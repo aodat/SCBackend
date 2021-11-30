@@ -30,7 +30,6 @@ class CountryCode implements Rule
         $Countries =  App::make('Countrieslookup');
         $reqCountry = Request('country');
         $countryCode = isset($Countries[$reqCountry]) ? $Countries[$reqCountry] : null;
-
         return  $value ===  $countryCode;
     }
 
@@ -41,6 +40,6 @@ class CountryCode implements Rule
      */
     public function message()
     {
-        return 'Country Code does not valid.';
+        return 'invalid Country Code  attribute :attribute  ' ;
     }
 }

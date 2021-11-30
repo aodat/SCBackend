@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Rules\city;
+use App\Rules\City;
 use App\Rules\CountryCode;
-use App\Rules\country;
+use App\Rules\Country;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddressesRequests extends FormRequest
@@ -27,9 +27,9 @@ class AddressesRequests extends FormRequest
         if ($this->getMethod() == 'PUT' && strpos($path, 'merchant/{merchant_id}/addresses') !== false)
             return [
                 'merchant_id' => 'required|exists:merchants,id',
-                'country' => ['required', new country()],
+                'country' => ['required', new Country()],
                 'country_code' => ['required', new CountryCode()],
-                'city' => ['required', new city()],
+                'city' => ['required', new City()],
                 'name' => 'required|string',
                 'city_code' => 'required|string',
                 'area' => 'required|string',

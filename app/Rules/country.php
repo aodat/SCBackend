@@ -4,8 +4,9 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\App;
-class country implements Rule
+class Country implements Rule
 {
+    
     /**
      * Create a new rule instance.
      *
@@ -38,6 +39,6 @@ class country implements Rule
      */
     public function message()
     {
-        return 'Countrie does not exist ';
+        return 'invalid Country attribute :attribute  ';
     }
 }

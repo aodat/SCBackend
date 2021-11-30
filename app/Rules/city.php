@@ -3,12 +3,12 @@
 namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Illuminate\Support\Facades\Storage;
-use Countries;
 use Illuminate\Support\Facades\App;
 
-class city implements Rule
+class City implements Rule
 {
+
+
     /**
      * Create a new rule instance.
      *
@@ -28,7 +28,6 @@ class city implements Rule
      */
     public function passes($attribute, $value)
     {
-
         $country =  App::make('country');
         $reqCountry = Request('country');
         $city = ($country->has($reqCountry)) ? $country[$reqCountry] : false;
@@ -45,6 +44,6 @@ class city implements Rule
      */
     public function message()
     {
-        return 'City does not exist ';
+        return 'invalid City  attribute :attribute ';
     }
 }
