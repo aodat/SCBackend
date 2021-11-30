@@ -18,6 +18,7 @@ use Illuminate\Support\Str;
 
 use App\Models\Merchant;
 use App\Models\User;
+
 use Illuminate\Support\Facades\Route;
 
 use Laravel\Passport\Client;
@@ -41,7 +42,6 @@ class AuthController extends Controller
         if ($userData->role === "member")
             $role = explode(",", $userData->role_member);
         $role[] = $userData->role;
-
         $userData['token'] = $userData->createToken('users', $role)->accessToken;
         return $this->response(
             $userData,
@@ -82,7 +82,7 @@ class AuthController extends Controller
             str_replace(' ', '-', strtolower($merchant->name))
         );
         $merchant->update(["secret_key" => $client->secret]);
-        // $user->sendEmailVerificationNotification();
+        $user->sendEmailVerificationNotification();
         return $this->successful('User Created Successfully');
     }
 
