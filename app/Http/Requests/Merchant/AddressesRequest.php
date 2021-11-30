@@ -20,7 +20,7 @@ class AddressesRequest extends MerchantRequest
             return [
                 "name" => "required",
                 "country" => ["required", new Country()],
-                "country_code" => ["required", new  CountryCode()],
+                "country_code" => ["required", new CountryCode()],
                 "city" => ["required", new City()],
                 "city_code" => "required",
                 "area" => "required",

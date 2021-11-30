@@ -4,20 +4,9 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\App;
+
 class Country implements Rule
 {
-    
-    /**
-     * Create a new rule instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-
-    }
-
     /**
      * Determine if the validation rule passes.
      *
@@ -39,6 +28,6 @@ class Country implements Rule
      */
     public function message()
     {
-        return 'invalid Country attribute :attribute  ';
+        return 'Invalid country name';
     }
 }
