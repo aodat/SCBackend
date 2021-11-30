@@ -22,6 +22,7 @@ class DBTransaction
     public function handle(Request $request, Closure $next)
     {
         $response = $next($request);
+        return $response;
         if ($request->method() != 'GET') {
             DB::beginTransaction();
             if (

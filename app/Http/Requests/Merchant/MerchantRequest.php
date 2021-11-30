@@ -39,6 +39,7 @@ class MerchantRequest extends FormRequest
      */
     public function rules()
     {
+        
         $path = Request()->path();
         if (strpos($path, 'merchant/user/update-password') !== false) {
             return [
@@ -49,7 +50,7 @@ class MerchantRequest extends FormRequest
             return [
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|email|unique:users,email,' . Auth::id(),
-                'phone' => 'required|unique:users,phone,' . Auth::id().',required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
+                'phone' => 'required|unique:users,phone,' . Auth::id().'|required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
             ];
         } else if (strpos($path, 'merchant/update-info') !== false) {
             return [
