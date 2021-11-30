@@ -66,7 +66,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::put('user/update-password', [MerchantController::class, 'updatePassword']);
 
             // Payment-methods
-            Route::group(['middleware' => ['scope:payment']], function () {
+            Route::group(['middleware' => ['scope:payment,admin']], function () {
                 Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
                 Route::post('payment-methods/create', [PaymentMethodsController::class, 'store']);
                 Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'delete'])->where('id', '[0-9]+');
@@ -83,7 +83,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::delete('addresses/{id}', [AddressesController::class, 'delete'])->where('id', '[0-9]+');
 
             // Shipments
-            Route::group(['middleware' => ['scope:shipping']], function () {
+            Route::group(['middleware' => ['scope:shipping,admin']], function () {
                 Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
                 Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
                 Route::post('shipments/filters', [ShipmentController::class, 'index']);

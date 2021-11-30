@@ -20,8 +20,6 @@ use App\Models\Shipment;
 
 use Illuminate\Support\Facades\App;
 
-use PeterColes\Countries\CountriesFacade as Countries;
-
 class ShipmentController extends MerchantController
 {
 
@@ -131,10 +129,13 @@ class ShipmentController extends MerchantController
 
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
-
+            $shipment['logs'][] = [
+                'UpdateDateTime' => Carbon::now(),
+                'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
+                'UpdateDescription' => 'Create Shipment'
+            ];
             return $shipment;
         });
-
         return $this->createShipmentDB($shipments, $provider);
     }
 
@@ -169,12 +170,15 @@ class ShipmentController extends MerchantController
             DB::table('shipments')->insert($ships->toArray());
         }
 
-        return $this->response(['link' => mergePDF($links)]);
+        return $this->response(
+            ['link' => mergePDF($links)],
+            'Shipment Created Successfully'
+        );
     }
 
     public function printLabel(ShipmentRequest $request)
     {
-        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)]);
+        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)],'Labels returned successfully');
     }
 
     public function shipmentProcessSQS(ShipmentRequest $request)
