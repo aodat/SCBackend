@@ -36,15 +36,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => ['json.response']], function () {
-    Route::post('auth/login', [AuthController::class, 'login']);
-    Route::post('auth/register', [AuthController::class, 'register']);
-    Route::post('auth/forget-password', [AuthController::class, 'forgetPassword']);
-    Route::post('auth/reset-password', [AuthController::class, 'resetPassword']);
+    Route::middleware(['throttle:ip_address'])->group(function () {
+        Route::post('auth/login', [AuthController::class, 'login']);
+        Route::post('auth/register', [AuthController::class, 'register']);
+        Route::post('auth/forget-password', [AuthController::class, 'forgetPassword']);
+        Route::post('auth/reset-password', [AuthController::class, 'resetPassword']);
+    });
 
     Route::get('email/verify', [AuthController::class, 'verifyEmail'])->name('verification.verify');
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
     Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
-
         Route::group(['prefix' => 'merchant/'], function () {
             Route::put('change-secret', [AuthController::class, 'changeSecret']);
 
