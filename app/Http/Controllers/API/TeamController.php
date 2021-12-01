@@ -27,17 +27,24 @@ class TeamController extends Controller
     public function inviteMember(TeamRequest $request)
     {
         DB::transaction(function () use ($request) {
-            $password = Str::random(8);
-            $user = User::create(
-                [
-                    'merchant_id' => $request->user()->merchant_id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => Hash::make($password),
-                    'phone' => null
-                ]
-            );
-            $user->notify(new InviteUserNotification($user, $password));
+            // Check if the user active on not 
+            $check = User::where('email', $request->email)->first();
+            if ($check == null) {
+                $password = Str::random(8);
+                $user = User::create(
+                    [
+                        'merchant_id' => $request->user()->merchant_id,
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'password' => Hash::make($password),
+                        'phone' => null
+                    ]
+                );
+                $user->notify(new InviteUserNotification($user, $password));
+            } else {
+                $check->status = 'active';
+                $check->save();
+            }
         });
 
         return $this->successful();

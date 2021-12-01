@@ -38,7 +38,7 @@ class TeamRequest extends FormRequest
         $path = Request()->route()->uri;
         if (strpos($path, 'team/member/invite') !== false) {
             return [
-                'email' => 'required|string|email|max:255|unique:users'
+                'email' => 'required|string|email|max:255'
             ];
         } else if (strpos($path, 'team/member/{user_id}') !== false) {
             return [

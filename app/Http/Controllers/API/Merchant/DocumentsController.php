@@ -40,10 +40,8 @@ class DocumentsController extends MerchantController
 
     public function delete($id, DocumentsRequest $request)
     {
-        $merchantID = $request->user()->merchant_id;
-        $list = Merchant::where('id', $merchantID);
-        $result = collect($list->select('documents')->first()->documents);
-
+        $list = $this->getMerchentInfo();
+        $result = collect($list->documents);
         $json = $result->reject(function ($value) use ($id) {
             if ($value['id'] == $id && $value['verified_at'] == null)
                 return $value;

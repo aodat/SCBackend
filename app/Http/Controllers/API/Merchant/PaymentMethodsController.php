@@ -42,8 +42,7 @@ class PaymentMethodsController extends MerchantController
     public function delete($id, PaymentMethodsRequest $request)
     {
         $list = $this->getMerchentInfo();
-        $result = collect($list->select('payment_methods')->first()->payment_methods);
-
+        $result = collect($list->payment_methods);
         $json = $result->reject(function ($value) use ($id) {
             if ($value['id'] == $id)
                 return $value;
