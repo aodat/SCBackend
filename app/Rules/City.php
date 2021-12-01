@@ -16,6 +16,7 @@ class City implements Rule
      */
     public function passes($attribute, $value)
     {
+        return true;
         $country =  App::make('country');
         $reqCountry = Request('country');
         $city = ($country->has($reqCountry)) ? $country[$reqCountry] : false;
