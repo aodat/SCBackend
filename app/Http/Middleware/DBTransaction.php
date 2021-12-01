@@ -31,7 +31,7 @@ class DBTransaction
                 DB::rollBack();
             else if ($response->getStatusCode() == 500) {
                 DB::rollBack();
-                // throw new InternalException('Internal Server Error', 500);
+                throw new InternalException('Internal Server Error', 500);
             }
         }
         return  $response;
