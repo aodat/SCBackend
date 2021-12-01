@@ -40,8 +40,10 @@ class Merchant extends Model
         $path = Request()->path();
         if (strpos($path, 'admin/merchant/lists'))
             array_push($this->hidden, 'payment_methods', 'documents', 'addresses', 'senders', 'domestic_rates', 'express_rates');
-        else if (strpos($path, 'merchant/info'))
+        else if (strpos($path, 'merchant/info')) {
             array_push($this->appends, 'domastic', 'express');
+            array_push($this->hidden, 'payment_methods', 'documents', 'addresses');
+        }
     }
 
     protected function castAttribute($key, $value)
