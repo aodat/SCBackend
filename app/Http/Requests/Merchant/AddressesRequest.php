@@ -19,9 +19,9 @@ class AddressesRequest extends MerchantRequest
         if (strpos($path, 'addresses/create') !== false)
             return [
                 "name" => "required",
-                "country" => ["required", new Country()],
+                "country" => ["required"],
                 "country_code" => ["required", new CountryCode()],
-                "city" => ["required", new City()],
+                "city" => ["required"],
                 "city_code" => "required",
                 "area" => "required",
                 "phone" => "required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14",
