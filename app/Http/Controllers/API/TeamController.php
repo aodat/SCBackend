@@ -8,7 +8,7 @@ use App\Http\Requests\TeamRequest;
 use App\Models\User;
 
 use App\Notifications\InviteUserNotification as InviteUserNotification;
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -18,9 +18,14 @@ use Laravel\Passport\Token;
 class TeamController extends Controller
 {
 
+    public function index(TeamRequest $request)
+    {
+        $users = User::where('merchant_id',$request->user()->merchant_id)->paginate(request()->perPage ?? 10);
+        return $this->pagination($users);
+    }
+
     public function inviteMember(TeamRequest $request)
     {
-
         DB::transaction(function () use ($request) {
             $password = Str::random(8);
             $user = User::create(

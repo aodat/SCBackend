@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Exceptions\InternalException;
 use App\Models\Merchant;
 
 use App\Http\Requests\Merchant\PaymentMethodsRequest;
@@ -19,14 +20,17 @@ class PaymentMethodsController extends MerchantController
 
     public function store(PaymentMethodsRequest $request)
     {
-        $json = $request->json()->all();
+        $json = $request->validated();
         $list = $this->getMerchentInfo();
+
         $result = collect($list->payment_methods);
         $counter = $result->max('id') ?? 0;
+        $provider = collect($list->config['payment_providers'])->where('code', strtolower($json['provider_code']))->first();
 
-        // Get Merchants Template 
-        $paymentMthodsTemplate = collect(json_decode(Storage::disk('local')->get('template/payment_methods.json'), true));
-        $json += $paymentMthodsTemplate->where('provider_code', strtolower($json['provider_code']))->first();
+        if ($provider == null)
+            throw new InternalException('Provider Code Not Valid Or Not Available At This Country', 400);
+
+        $json += $provider;
         $json['id'] = ++$counter;
         $json['created_at'] = Carbon::now();
         if (isset($json['pin_code']))

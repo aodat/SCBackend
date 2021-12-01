@@ -119,6 +119,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
         Route::group(['middleware' => ['scope:admin']], function () {
             Route::group(['prefix' => 'team/'], function () {
+                Route::get('list', [TeamController::class, 'index']);
                 Route::put('member', [TeamController::class, 'changeMemberRole']);
                 Route::post('member/invite', [TeamController::class, 'inviteMember']);
                 Route::delete('member/{user_id}', [TeamController::class, 'deleteMember'])->where('user_id', '[0-9]+');

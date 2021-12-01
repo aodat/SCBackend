@@ -33,7 +33,7 @@ class Merchant extends Model
         'express_rates'
     ];
 
-    protected $appends  = [];
+    protected $appends  = ['config'];
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
@@ -41,7 +41,7 @@ class Merchant extends Model
         if (strpos($path, 'admin/merchant/lists'))
             array_push($this->hidden, 'payment_methods', 'documents', 'addresses', 'senders', 'domestic_rates', 'express_rates');
         else if (strpos($path, 'merchant/info'))
-            array_push($this->appends, 'domastic', 'express', 'config');
+            array_push($this->appends, 'domastic', 'express');
     }
 
     protected function castAttribute($key, $value)
@@ -111,9 +111,14 @@ class Merchant extends Model
 
     public function getConfigAttribute()
     {
+        $payment_providers = collect(json_decode(Storage::disk('local')->get('template/payment_providers.json'), true));
+        $payment_providers = $payment_providers->filter(function ($collection) {
+            return in_array($this->country_code, collect($collection)->keys()->toArray());
+        });
+
         return [
             'countries' => collect(json_decode(Storage::disk('local')->get('template/countries.json'), true)),
-            'payment_providers' => collect(json_decode(Storage::disk('local')->get('template/payment_providers.json'), true)),
+            'payment_providers' => (!$payment_providers->isEmpty()) ? collect($payment_providers)->first()[$this->country_code] : []
         ];
     }
 }
