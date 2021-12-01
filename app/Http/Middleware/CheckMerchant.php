@@ -20,17 +20,10 @@ class CheckMerchant
 
     public function handle(Request $request, Closure $next)
     {
-        $allowedPlatform = ['WEB', 'PLUGIN', 'API'];
 
         $Merchaninfo = Merchant::findOrFail(auth()->user()->merchant_id);
         if (auth()->user()->status == 'in_active' || (!$Merchaninfo->is_active))
             throw new InternalException('Your Account is inactive please contact us', 403);
-
-        $header = $request->header('agent') ?? 'API';
-        if (!in_array($header, $allowedPlatform))
-            $header = 'API';
-
-        $request->request->add(['resource' => $header]);
         return $next($request);
     }
 }

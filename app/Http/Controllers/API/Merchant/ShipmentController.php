@@ -146,7 +146,7 @@ class ShipmentController extends MerchantController
             return $this->generateShipmentArray('Aramex', $data);
         });
 
-        $resource = Request()->resource;
+        $resource = Request()->header('agent') ?? 'API';
         $links = [];
         // for signle Shipment Request
         if ($payloads->isEmpty()) {

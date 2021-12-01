@@ -3,12 +3,12 @@
 namespace App\Http\Middleware;
 
 use App\Exceptions\InternalException;
-use Carbon\Carbon;
 use Closure;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class DBTransaction
 {
@@ -21,21 +21,32 @@ class DBTransaction
      */
     public function handle(Request $request, Closure $next)
     {
-        $response = $next($request);
-        if ($request->method() != 'GET') {
-            DB::beginTransaction();
-            if (
-                isset(json_decode($response->getContent())->meta->code) &&
-                json_decode($response->getContent())->meta->code > 399
-            )
-                DB::rollBack();
-            else if ($response->getStatusCode() == 500) {
-                DB::rollBack();
-                throw new InternalException('Internal Server Error', 500);
-            }
+        DB::beginTransaction();
+
+        try {
+            $response = $next($request);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
         }
-        return  $response;
+        
+        if (
+            $response instanceof Response &&
+            ($response->getStatusCode() == 500
+                || (isset(json_decode($response->getContent())->meta->code) &&
+                    json_decode($response->getContent())->meta->code > 399))
+
+        ) {
+            DB::rollBack();
+        } else {
+            DB::commit();
+        }
+
+        if ($response->getStatusCode() == 500)
+            throw new InternalException('Internal Server Error', 500);
+        return $response;
     }
+
 
     public function terminate($request, $response)
     {

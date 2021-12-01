@@ -6,14 +6,18 @@ use Exception;
 
 class InternalException extends Exception
 {
-    public function render($request)
+    protected $msg, $code, $requested, $response;
+    public function __construct($msg, $code, $requested = [], $response = [])
     {
-        $response = [
-            'meta' => [
-                'code' => $this->getCode(),
-                'msg' => $this->getMessage()
-            ]
-        ];
+        $this->msg = $msg;
+        $this->code = $code;
+        $this->requested = $requested;
+        $this->response = $response;
+    }
+
+    public function render($rquest)
+    {
+        $response = ['meta' => ['code' => $this->code, 'msg' => $this->msg]];
         return response()->json($response);
     }
 }
