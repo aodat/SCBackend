@@ -48,12 +48,9 @@ class DBTransaction
 
         $data['body'] = $request->all();
         $code = json_decode($response->getContent())->meta->code;
-
-        if ($code <= 204)
-            Log::info('Sucess : ', ['request' => $data, 'response' => json_decode($response->getContent())]);
-        else if ($code > 300 && $code < 499)
+        if ($code > 300 && $code < 499)
             Log::debug('Shipcash Error : ', ['request' => $data, 'response' => json_decode($response->getContent())]);
-        else
+        else if ($code == 500 || $response->getStatusCode() == 500)
             Log::error('Inernal server Error :', ['request' => $data, 'response' => json_decode($response->getContent())]);
     }
 }
