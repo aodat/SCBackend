@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\RecoveryRequest;
-
+use App\Jobs\Send;
+use App\Jobs\SendMails;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -84,7 +85,9 @@ class AuthController extends Controller
             str_replace(' ', '-', strtolower($merchant->name))
         );
         $merchant->update(["secret_key" => $client->secret]);
-        $user->sendEmailVerificationNotification();
+
+        $SendMails = Send::dispatch($user);
+
         return $this->successful('User Created Successfully');
     }
 
@@ -162,8 +165,8 @@ class AuthController extends Controller
     {
         if (auth()->user()->hasVerifiedEmail())
             return $this->error('Email already verified.', 400);
-
-        auth()->user()->sendEmailVerificationNotification();
+        
+        Send::dispatch(auth()->user());
         return $this->successful('Check your email');
     }
 
