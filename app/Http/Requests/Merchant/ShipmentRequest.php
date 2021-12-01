@@ -78,7 +78,9 @@ class ShipmentRequest extends MerchantRequest
         else if ($this->method() == 'POST' && strpos($path, 'shipments/calculate/fees'))
             return [
                 'weight' => 'required|numeric|between:0,9999',
-                'country_code' => 'required'
+                'country_code' => 'required',
+                'type'=>'required|in:express,dom',
+                'is_cod'=>'required|boolean',
             ];
         return [];
     }

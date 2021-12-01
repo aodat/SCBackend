@@ -178,7 +178,7 @@ class ShipmentController extends MerchantController
 
     public function printLabel(ShipmentRequest $request)
     {
-        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)],'Labels returned successfully');
+        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)], 'Labels returned successfully');
     }
 
     public function shipmentProcessSQS(ShipmentRequest $request)
@@ -215,8 +215,8 @@ class ShipmentController extends MerchantController
     {
         $data = $request->validated();
         $result = [];
-        Carriers::all()->map(function ($carrier) use ($data, &$result) {
-            $result[$carrier->name] = $this->calculateFees($carrier->id, $data['country_code'], 'Express', $data['weight']);
+        Carriers::all()->where('is_cod', $data['is_cod'])->map(function ($carrier) use ($data, &$result) {
+            $result[$carrier->name] = $this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']);
         });
         return $this->response($result, 'Fees Calculated Successfully');
     }
