@@ -4,11 +4,14 @@ namespace App\Http\Requests\Merchant;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Request;
 
 use App\Models\Transaction;
 use App\Models\Shipment;
 use App\Models\Invoices;
-use Illuminate\Support\Facades\Request;
+use App\Models\Merchant;
+use App\Rules\Phone;
+use Illuminate\Support\Facades\App;
 
 class MerchantRequest extends FormRequest
 {
@@ -39,7 +42,7 @@ class MerchantRequest extends FormRequest
      */
     public function rules()
     {
-        
+
         $path = Request()->path();
         if (strpos($path, 'merchant/user/update-password') !== false) {
             return [
@@ -50,14 +53,23 @@ class MerchantRequest extends FormRequest
             return [
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|email|unique:users,email,' . Auth::id(),
-                'phone' => 'required|unique:users,phone,' . Auth::id().'|required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
+                'phone' => 'required|unique:users,phone,' . Auth::id() . '|required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
             ];
         } else if (strpos($path, 'merchant/update-info') !== false) {
             return [
                 'type' => 'required|in:individual,corporate',
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|unique:merchants,email,' . Request()->user()->merchant_id,
-                'phone' => 'required|unique:merchants,phone,' . Request()->user()->merchant_id.'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
+                'phone' =>
+                [
+                    'required',
+                    'unique:merchants,phone,' . Request()->user()->merchant_id,
+                    'regex:/^([0-9\s\-\+\(\)]*)$/',
+                    'min:10',
+                    'max:14',
+                    new Phone(App::make('merchantInfo')->country_code)
+
+                ]
             ];
         } else if (strpos($path, 'merchant/verify/phone') !== false) {
             return [
