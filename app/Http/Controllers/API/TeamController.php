@@ -37,12 +37,14 @@ class TeamController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($password),
+                        'role_member' => implode(',', $request->scope),
                         'phone' => null
                     ]
                 );
                 $user->notify(new InviteUserNotification($user, $password));
             } else {
                 $check->status = 'active';
+                $check->role_member = implode(',', $request->scope);
                 $check->save();
             }
         });
@@ -55,8 +57,8 @@ class TeamController extends Controller
         $data = $request->validated();
 
         $user = User::findOrFail($data['id']);
-        $user->role = $data['scope'];
-        $user->role_member = implode(',', $data['role']);
+        $user->role = $data['role'];
+        $user->role_member = implode(',', $data['scope']);
         $user->save();
 
         return $this->successful('Updated Successfully');
