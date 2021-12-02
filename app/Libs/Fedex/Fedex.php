@@ -150,7 +150,7 @@ class Fedex
 
     public function bindJsonFile($file, $type)
     {
-        $payload = json_decode(file_get_contents(storage_path() . '/../App/Libs/Fedex/' . $file), true);
+        $payload = json_decode(file_get_contents(app_path() . '/Libs/Fedex/' . $file), true);
         $payload[$this->prefix . '' . $type][$this->prefix . '' . 'WebAuthenticationDetail'][$this->prefix . '' . 'UserCredential'] = [
             'Key' => $this->key,
             'Password' => $this->password

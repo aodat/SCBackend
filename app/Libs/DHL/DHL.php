@@ -174,7 +174,7 @@ class DHL
 
     public function bindJsonFile($file)
     {
-        $payload = json_decode(file_get_contents(storage_path() . '/../App/Libs/DHL/' . $file), true);
+        $payload = json_decode(file_get_contents(app_path() . '/Libs/DHL/' . $file), true);
         $payload['Request']['ServiceHeader'] = $this->config;
 
         return $payload;

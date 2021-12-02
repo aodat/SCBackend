@@ -223,6 +223,6 @@ class Aramex
 
     public function bindJsonFile($file)
     {
-        return json_decode(file_get_contents(storage_path() . '/../App/Libs/Aramex/' . $file), true);
+        return json_decode(file_get_contents(app_path() . '/Libs/Aramex/' . $file), true);
     }
 }
