@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\Merchant\MerchantRequest;
 
 use App\Http\Controllers\Utilities\SmsService;
+use Illuminate\Support\Facades\Storage;
 use App\Jobs\Send;
 use App\Jobs\Sms;
 use App\Models\Merchant;
@@ -84,10 +85,22 @@ class MerchantController extends Controller
     {
         $randomPinCode = mt_rand(111111, 999999);
         // SmsService::sendSMS($request->phone, $randomPinCode);
-        Sms::dispatch( $randomPinCode, $request->phone,);
+        Sms::dispatch($randomPinCode, $request->phone);
         $merchantID = $request->user()->merchant_id;
         Merchant::where('id', $merchantID)->update(['pin_code' => $randomPinCode]);
         return $this->successful('Pin code was sent check your mobile');
+    }
+
+    public function getCountries()
+    {
+        $data = collect(json_decode(Storage::disk('local')->get('template/city.json')))->pluck('name', 'code');
+        return $this->response($data, "Data Retrieved Successfully");
+    }
+
+    public function getCities($code)
+    {
+        $data = collect(json_decode(Storage::disk('local')->get('template/city.json')))->where('code', strtoupper($code))->first() ?: [];
+        return $this->response($data, "Data Retrieved Successfully");
     }
 
     public function getMerchentInfo($id = null)

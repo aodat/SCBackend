@@ -115,6 +115,9 @@ Route::group(['middleware' => ['json.response']], function () {
                 Route::put('rules/{rule_id}', [RulesController::class, 'status']);
                 Route::delete('rules/{rule_id}', [RulesController::class, 'delete']);
             });
+
+            Route::get('countries', [MerchantController::class, 'getCountries']);
+            Route::get('cities/{city_code}', [MerchantController::class, 'getCities']);    
         });
 
         Route::group(['middleware' => ['scope:admin']], function () {
@@ -126,8 +129,6 @@ Route::group(['middleware' => ['json.response']], function () {
             });
         });
 
-        Route::get('country/list', [Controller::class, 'country']);
-        Route::get('country/{city_code}/list', [Controller::class, 'city']);
 
         Route::post('auth/logout', [AuthController::class, 'logout']);
     });
