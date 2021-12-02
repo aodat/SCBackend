@@ -125,6 +125,10 @@ Route::group(['middleware' => ['json.response']], function () {
                 Route::delete('member/{user_id}', [TeamController::class, 'deleteMember'])->where('user_id', '[0-9]+');
             });
         });
+
+        Route::get('country/list', [Controller::class, 'country']);
+        Route::get('country/{city_code}/list', [Controller::class, 'city']);
+
         Route::post('auth/logout', [AuthController::class, 'logout']);
     });
     Route::get('process/shipments', [ShipmentController::class, 'shipmentProcessSQS']);
