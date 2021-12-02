@@ -24,26 +24,28 @@ class PayTabs
 
     public function transaction($amount, $transaction_type, $transacton_ref = '', $currancy = 'JOD')
     {
+        $request = [
+            'profile_id' => $this->profileID,
+            'tran_type' => $transaction_type,
+            'tran_class' => 'ecom',
+            'tran_ref' => $transacton_ref,
+            'cart_id' => $this->client,
+            'cart_description' => "Order",
+            'cart_currency' => $currancy,
+            'cart_amount' => $amount,
+            'return' => 'none'
+        ];
+
         $response = Http::withHeaders([
             'authorization' => $this->server,
             'content-type' =>  'application/json'
         ])->post(
             $this->endPoint,
-            [
-                'profile_id' => $this->profileID,
-                'tran_type' => $transaction_type,
-                'tran_class' => 'ecom',
-                'tran_ref' => $transacton_ref,
-                'cart_id' => $this->client,
-                'cart_description' => "Order",
-                'cart_currency' => $currancy,
-                'cart_amount' => $amount,
-                'return' => 'none'
-            ]
+            $request
         );
 
         if (!$response->successful())
-            throw new InternalException('Paytabs Transaction Error', 400);
+            throw new InternalException('Paytabs Transaction Error', 400, $request, $response);
 
         return [
             'payment_url' => $response->json()['redirect_url'],

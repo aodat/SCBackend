@@ -35,7 +35,9 @@ class Stripe
             ]);
 
         if (!$response->successful())
-            throw new CarriersException('Stripe Create Invoice – Something Went Wrong');
+            throw new CarriersException('Stripe Create Invoice – Something Went Wrong', [
+                'customer' => $custmerID
+            ], $response);
 
         return [
             'fk_id' => $response->json()['id'],
@@ -44,20 +46,21 @@ class Stripe
 
     public function invoiceItem($custmerID, $description, $amount)
     {
+        $request = [
+            'customer' => $custmerID,
+            'description' => $description ?? '',
+            'amount' => $amount * 1000,
+            'currency' => 'USD'
+        ];
         $response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded'
         ])
             ->withToken($this->access_key)
             ->asForm()
-            ->post(self::$INVOICE_ITEM, [
-                'customer' => $custmerID,
-                'description' => $description ?? '',
-                'amount' => $amount * 1000,
-                'currency' => 'USD'
-            ]);
+            ->post(self::$INVOICE_ITEM, $request);
 
         if (!$response->successful())
-            throw new CarriersException('Stripe Create Invoice Item – Something Went Wrong');
+            throw new CarriersException('Stripe Create Invoice Item – Something Went Wrong', $request, $response);
 
         return true;
     }
@@ -73,7 +76,7 @@ class Stripe
             ->post($url);
 
         if (!$response->successful())
-            throw new CarriersException('Stripe Finalize Invoice – Something Went Wrong');
+            throw new CarriersException('Stripe Finalize Invoice – Something Went Wrong', ['invoice-id' => $invoiceID], $response);
         return $response->json()['hosted_invoice_url'];
     }
 
@@ -90,7 +93,10 @@ class Stripe
             ]);
 
         if (!$response->successful())
-            throw new CarriersException('Stripe Create Customer – Something Went Wrong');
+            throw new CarriersException('Stripe Create Customer – Something Went Wrong', [
+                'name'  => $name,
+                'email' => $email
+            ], $response);
         return $response->json()['id'];
     }
 
@@ -103,7 +109,7 @@ class Stripe
             ->delete(self::$DELETE_INVOICE . '/' . $invoiceID);
 
         if (!$response->successful())
-            throw new CarriersException('Stripe Delete Invoice – Something Went Wrong');
+            throw new CarriersException('Stripe Delete Invoice – Something Went Wrong', ['invoice-id' => $invoiceID], $response);
 
         return true;
     }

@@ -88,7 +88,8 @@ class DHL
         $response = $this->call('BookPURequest', $payload);
 
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
-            throw new CarriersException('DHL Create Pickup – Something Went Wrong');
+            throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
+
         return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
     }
 
@@ -106,7 +107,8 @@ class DHL
 
         $response = $this->call('CancelPURequest', $payload);
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
-            throw new CarriersException('DHL Cancel Pickup – Something Went Wrong');
+            throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
+
 
         return true;
     }
@@ -115,7 +117,7 @@ class DHL
     {
     }
 
-    public function createShipment($merchentInfo,$shipmentInfo)
+    public function createShipment($merchentInfo, $shipmentInfo)
     {
         $payload = $this->bindJsonFile('shipment.create.json');
 
@@ -162,7 +164,7 @@ class DHL
         $payload['Shipper']['Contact']['Email'] = $merchentInfo->email;
         $response = $this->call('ShipmentRequest', $payload);
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
-            throw new CarriersException('DHL Create Shipment – Something Went Wrong');
+            throw new CarriersException('DHL Create Shipment – Something Went Wrong', $payload, $response);
 
         return [
             'id' => $response['DHLRoutingCode'],

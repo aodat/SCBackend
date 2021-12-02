@@ -58,10 +58,7 @@ class Fedex
         $response = $this->call('CreatePickupRequest', $payload);
 
         if (isset($response['HighestSeverity']) && $response['HighestSeverity'])
-            throw new CarriersException('FedEx Create Pickup – Something Went Wrong');
-
-        if (!isset($response['Notifications']['Severity']))
-            throw new CarriersException('FedEx Create Shipment – Something Went Wrong');
+            throw new CarriersException('FedEx Create pickup – Something Went Wrong', $payload, $response);
 
         dd($response);
         // return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
@@ -143,7 +140,7 @@ class Fedex
         $response = $this->call('ProcessShipmentRequest', $payload);
 
         if (!isset($response['Notifications']['Severity']))
-            throw new CarriersException('FedEx Create Shipment – Something Went Wrong');
+            throw new CarriersException('FedEx Create Shipment – Something Went Wrong', $payload, $response);
 
         return [
             'id' => $response['CompletedShipmentDetail']['CompletedPackageDetails']['TrackingIds']['TrackingNumber'],
@@ -189,17 +186,18 @@ class Fedex
 
     private function call($type, $data, $withPrefix = false)
     {
+        $request = $this->fedexXMLFile($type, $data, $withPrefix);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $this->end_point);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_PORT, 443);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->fedexXMLFile($type, $data, $withPrefix));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $request);
         $result = curl_exec($ch);
 
         curl_error($ch);
         if ($result == '')
-            throw new CarriersException('FedEx - Something Went Wrong');
+            throw new CarriersException('FedEx - Something Went Wrong', $request, $result);
 
         // Parsing SOAP XML File 
         $response = preg_replace("/(<\/?)(\w+):([^>]*>)/", "$1$2$3", $result);

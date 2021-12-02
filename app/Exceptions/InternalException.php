@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\App;
 class InternalException extends Exception
 {
     protected $msg, $code, $requested, $response;
-    public function __construct($msg, $code = 422, $requested = [], $response = [])
+    public function __construct($msg, $code = 400, $requested = [], $response = [])
     {
         $this->msg = $msg;
         $this->code = $code;
