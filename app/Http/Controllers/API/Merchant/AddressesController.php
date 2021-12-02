@@ -12,8 +12,10 @@ class AddressesController extends MerchantController
 {
     public function index(AddressesRequest $request)
     {
-        $merchantID = $request->user()->merchant_id;
-        $data = Merchant::where('id', $merchantID)->select('addresses')->first();
+
+        // $merchantID = $request->user()->merchant_id;
+  
+        $data = Merchant::select('addresses')->first();
         return $this->response($data->addresses, 'Data Retrieved Successfully');
     }
 

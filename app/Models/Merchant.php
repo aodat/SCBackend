@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class Merchant extends Model
@@ -33,6 +35,15 @@ class Merchant extends Model
         'express_rates'
     ];
 
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::addGlobalScope(function (Builder $builder) {
+            $builder->where('id', '=',Auth::user()->merchant_id);
+        });
+  
+    }
     protected $appends  = ['config'];
     public function __construct(array $attributes = array())
     {
