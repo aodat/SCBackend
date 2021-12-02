@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Support\Facades\App;
 
 class CarriersException extends Exception
 {
@@ -23,6 +24,6 @@ class CarriersException extends Exception
 
     public function context()
     {
-        return ['requested' => $this->requested, 'response' => $this->response];
+        return ['request_id' => App::make('request_id'), 'requested' => $this->requested, 'response' => $this->response];
     }
 }

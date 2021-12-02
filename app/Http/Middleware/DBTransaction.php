@@ -6,6 +6,7 @@ use App\Exceptions\InternalException;
 use Closure;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
@@ -29,7 +30,7 @@ class DBTransaction
             DB::rollBack();
             throw $e;
         }
-        
+
         if (
             $response instanceof Response &&
             ($response->getStatusCode() == 500
@@ -43,7 +44,7 @@ class DBTransaction
         }
 
         if ($response->getStatusCode() == 500)
-            throw new InternalException('Internal Server Error', 500);
+            throw new InternalException('Internal Server Error - ' . App::make('request_id'), 500);
         return $response;
     }
 
@@ -54,7 +55,8 @@ class DBTransaction
             'ip' => $request->ip(),
             'user_id' => $request->user()->id ?? null,
             'merchant_id' => $request->user()->merchant_id ?? null,
-            'token' => $request->bearerToken() ?? null
+            'token' => $request->bearerToken() ?? null,
+            'request_id' => App::make('request_id')
         ];
 
         $data['body'] = $request->all();

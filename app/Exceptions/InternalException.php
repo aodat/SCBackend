@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Support\Facades\App;
 
 class InternalException extends Exception
 {
@@ -23,7 +24,6 @@ class InternalException extends Exception
 
     public function context()
     {
-        return ['requested' => $this->requested, 'response' => $this->response];
+        return ['request_id' => App::make('request_id'), 'requested' => $this->requested, 'response' => $this->response];
     }
-
 }

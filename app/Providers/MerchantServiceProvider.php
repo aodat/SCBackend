@@ -6,6 +6,9 @@ use App\Models\Merchant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Countries;
+
+use Illuminate\Support\Str;
+
 use Illuminate\Support\Facades\Storage;
 
 class MerchantServiceProvider extends ServiceProvider
@@ -56,6 +59,10 @@ class MerchantServiceProvider extends ServiceProvider
 
         $this->app->singleton('Countrieslookup', function () {
             return Countries::lookup('en', true);
+        });
+        
+        $this->app->singleton('request_id' ,function () {
+            return Str::orderedUuid()->toString();
         });
     }
 
