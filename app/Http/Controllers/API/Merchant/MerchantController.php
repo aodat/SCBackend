@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Http\Requests\Merchant\MerchantRequest;
 
-use App\Http\Controllers\Utilities\SmsService;
-use Illuminate\Support\Facades\Storage;
 use App\Jobs\Send;
 use App\Jobs\Sms;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\User;
 
@@ -93,14 +93,17 @@ class MerchantController extends Controller
 
     public function getCountries()
     {
-        $data = collect(json_decode(Storage::disk('local')->get('template/city.json')))->pluck('name', 'code');
-        return $this->response($data, "Data Retrieved Successfully");
+        return $this->response(Country::all(), "Data Retrieved Successfully");
     }
 
     public function getCities($code)
     {
-        $data = collect(json_decode(Storage::disk('local')->get('template/city.json')))->where('code', strtoupper($code))->first() ?: [];
-        return $this->response($data, "Data Retrieved Successfully");
+        return $this->response(Country::getCities($code), "Data Retrieved Successfully");
+    }
+
+    public function getAreas($code)
+    {
+        return $this->response(City::getAreas($code), "Data Retrieved Successfully");
     }
 
     public function getMerchentInfo($id = null)

@@ -9,7 +9,7 @@ trait ResponseHandler
 
     public static function response($data, $msg, $code = 200)
     {
-        $code = !empty($data) ? $code : 204;
+        $code = (!collect($data)->isEmpty()) ? $code : 204;
         $response['data'] = $data;
         $response['meta']['msg'] =  $msg;
         $response['meta']['code'] =  $code;

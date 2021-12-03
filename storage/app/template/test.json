@@ -1,0 +1,5181 @@
+{
+	"Amman": [{
+		"id": 6721,
+		"cityId": 59,
+		"name": "1st Circle",
+		"name_arabic": "\u0627\u0644\u062f\u0648\u0627\u0631 \u0627\u0644\u0623\u0648\u0644",
+		"name_english": "1st Circle",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6723,
+		"cityId": 59,
+		"name": "2nd Circle",
+		"name_arabic": "\u0627\u0644\u062f\u0648\u0627\u0631 \u0627\u0644\u062b\u0627\u0646\u064a",
+		"name_english": "2nd Circle",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6725,
+		"cityId": 59,
+		"name": "3rd Circle",
+		"name_arabic": "\u0627\u0644\u062f\u0648\u0627\u0631 \u0627\u0644\u062b\u0627\u0644\u062b",
+		"name_english": "3rd Circle",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6727,
+		"cityId": 59,
+		"name": "4th Circle",
+		"name_arabic": "\u0627\u0644\u062f\u0648\u0627\u0631 \u0627\u0644\u0631\u0627\u0628\u0639",
+		"name_english": "4th Circle",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6729,
+		"cityId": 59,
+		"name": "5th Circle",
+		"name_arabic": "\u0627\u0644\u062f\u0648\u0627\u0631 \u0627\u0644\u062e\u0627\u0645\u0633",
+		"name_english": "5th Circle",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6731,
+		"cityId": 59,
+		"name": "6th Circle",
+		"name_arabic": "\u0627\u0644\u062f\u0648\u0627\u0631 \u0627\u0644\u0633\u0627\u062f\u0633",
+		"name_english": "6th Circle",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6733,
+		"cityId": 59,
+		"name": "7th Circle",
+		"name_arabic": "\u0627\u0644\u062f\u0648\u0627\u0631 \u0627\u0644\u0633\u0627\u0628\u0639",
+		"name_english": "7th Circle",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6735,
+		"cityId": 59,
+		"name": "8th Circle",
+		"name_arabic": "\u0627\u0644\u062f\u0648\u0627\u0631 \u0627\u0644\u062b\u0627\u0645\u0646",
+		"name_english": "8th Circle",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6737,
+		"cityId": 59,
+		"name": "Abdali",
+		"name_arabic": "\u0627\u0644\u0639\u0628\u062f\u0644\u064a",
+		"name_english": "Abdali",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6739,
+		"cityId": 59,
+		"name": "Abdoun",
+		"name_arabic": "\u0639\u0628\u062f\u0648\u0646",
+		"name_english": "Abdoun",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6741,
+		"cityId": 59,
+		"name": "Abu Alanda",
+		"name_arabic": "\u0627\u0628\u0648 \u0639\u0644\u0646\u062f\u0627",
+		"name_english": "Abu Alanda",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6743,
+		"cityId": 59,
+		"name": "Abu Nsair",
+		"name_arabic": "\u0627\u0628\u0648 \u0646\u0635\u064a\u0631",
+		"name_english": "Abu Nsair",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6745,
+		"cityId": 59,
+		"name": "Airport Road - Dunes Bridge",
+		"name_arabic": "\u0637\u0631\u064a\u0642 \u0627\u0644\u0645\u0637\u0627\u0631 - \u062c\u0633\u0631 \u062f\u064a\u0648\u0646\u0632",
+		"name_english": "Airport Road - Dunes Bridge",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6747,
+		"cityId": 59,
+		"name": "Airport Road - Madaba Bridge",
+		"name_arabic": "\u0637\u0631\u064a\u0642 \u0627\u0644\u0645\u0637\u0627\u0631 - \u062c\u0633\u0631 \u0645\u0627\u062f\u0628\u0627",
+		"name_english": "Airport Road - Madaba Bridge",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6749,
+		"cityId": 59,
+		"name": "Airport Road - Manaseer Gs",
+		"name_arabic": "\u0637\u0631\u064a\u0642 \u0627\u0644\u0645\u0637\u0627\u0631",
+		"name_english": "Airport Road - Manaseer Gs",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6751,
+		"cityId": 59,
+		"name": "Airport Road - Nakheel Village",
+		"name_arabic": "\u0637\u0631\u064a\u0642 \u0627\u0644\u0645\u0637\u0627\u0631 - \u0642\u0631\u064a\u0629 \u0627\u0644\u0646\u062e\u064a\u0644",
+		"name_english": "Airport Road - Nakheel Village",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6753,
+		"cityId": 59,
+		"name": "Al Bayader",
+		"name_arabic": "\u0627\u0644\u0628\u064a\u0627\u062f\u0631",
+		"name_english": "Al Bayader",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6755,
+		"cityId": 59,
+		"name": "Al Bnayyat",
+		"name_arabic": "\u0627\u0644\u0628\u0646\u064a\u0627\u062a",
+		"name_english": "Al Bnayyat",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6757,
+		"cityId": 59,
+		"name": "Al-Fuhais",
+		"name_arabic": "\u0627\u0644\u0641\u062d\u064a\u0635",
+		"name_english": "Al-Fuhais",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6759,
+		"cityId": 59,
+		"name": "Al Gardens",
+		"name_arabic": "\u0627\u0644\u062c\u0627\u0631\u062f\u0646\u0632",
+		"name_english": "Al Gardens",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6761,
+		"cityId": 59,
+		"name": "Al Hashmi Al Janobi",
+		"name_arabic": "\u0627\u0644\u0647\u0627\u0634\u0645\u064a \u0627\u0644\u062c\u0646\u0648\u0628\u064a",
+		"name_english": "Al Hashmi Al Janobi",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6763,
+		"cityId": 59,
+		"name": "Al Hashmi Al Shamali",
+		"name_arabic": "\u0627\u0644\u0647\u0627\u0634\u0645\u064a \u0627\u0644\u0634\u0645\u0627\u0644\u064a",
+		"name_english": "Al Hashmi Al Shamali",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6765,
+		"cityId": 59,
+		"name": "Al Hummar",
+		"name_arabic": "\u0627\u0644\u062d\u0645\u0631",
+		"name_english": "Al Hummar",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6767,
+		"cityId": 59,
+		"name": "Al Jandaweel",
+		"name_arabic": "\u0627\u0644\u062c\u0646\u062f\u0648\u064a\u0644",
+		"name_english": "Al Jandaweel",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6769,
+		"cityId": 59,
+		"name": "Al Kamaliya",
+		"name_arabic": "\u0627\u0644\u0643\u0645\u0627\u0644\u064a\u0629",
+		"name_english": "Al Kamaliya",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6771,
+		"cityId": 59,
+		"name": "Al Kursi",
+		"name_arabic": "\u0627\u0644\u0643\u0631\u0633\u064a",
+		"name_english": "Al Kursi",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6773,
+		"cityId": 59,
+		"name": "Al Muqabalain",
+		"name_arabic": "\u0627\u0644\u0645\u0642\u0627\u0628\u0644\u064a\u0646",
+		"name_english": "Al Muqabalain",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6775,
+		"cityId": 59,
+		"name": "Al Qwaismeh",
+		"name_arabic": "\u0627\u0644\u0642\u0648\u064a\u0633\u0645\u0629",
+		"name_english": "Al Qwaismeh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6777,
+		"cityId": 59,
+		"name": "Al Rabiah",
+		"name_arabic": "\u0627\u0644\u0631\u0627\u0628\u064a\u0629",
+		"name_english": "Al Rabiah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6779,
+		"cityId": 59,
+		"name": "Al Rajeeb",
+		"name_arabic": "\u0627\u0644\u0631\u062c\u064a\u0628",
+		"name_english": "Al Rajeeb",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6781,
+		"cityId": 59,
+		"name": "Al Rawabi",
+		"name_arabic": "\u0627\u0644\u0631\u0648\u0627\u0628\u064a",
+		"name_english": "Al Rawabi",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6783,
+		"cityId": 59,
+		"name": "Al Rawnaq",
+		"name_arabic": "\u0627\u0644\u0631\u0648\u0646\u0642",
+		"name_english": "Al Rawnaq",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6785,
+		"cityId": 59,
+		"name": "Al Ridwan",
+		"name_arabic": "\u0627\u0644\u0631\u0636\u0648\u0627\u0646",
+		"name_english": "Al Ridwan",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6787,
+		"cityId": 59,
+		"name": "Al Sahl",
+		"name_arabic": "\u0627\u0644\u0633\u0647\u0644",
+		"name_english": "Al Sahl",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6789,
+		"cityId": 59,
+		"name": "Al Sina'a",
+		"name_arabic": "\u0627\u0644\u0635\u0646\u0627\u0639\u0629",
+		"name_english": "Al Sina'a",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6791,
+		"cityId": 59,
+		"name": "Arjan",
+		"name_arabic": "\u0639\u0631\u062c\u0627\u0646",
+		"name_english": "Arjan",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6793,
+		"cityId": 59,
+		"name": "Basman",
+		"name_arabic": "\u0628\u0633\u0645\u0627\u0646",
+		"name_english": "Basman",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6795,
+		"cityId": 59,
+		"name": "Dabouq",
+		"name_arabic": "\u062f\u0627\u0628\u0648\u0642",
+		"name_english": "Dabouq",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6797,
+		"cityId": 59,
+		"name": "Daheit Al Ameer Hasan",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u0627\u0645\u064a\u0631 \u062d\u0633\u0646",
+		"name_english": "Daheit Al Ameer Hasan",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6799,
+		"cityId": 59,
+		"name": "Daheit Al Aqsa",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u0627\u0642\u0635\u0649",
+		"name_english": "Daheit Al Aqsa",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6801,
+		"cityId": 59,
+		"name": "Daheit Al Rasheed",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u0631\u0634\u064a\u062f",
+		"name_english": "Daheit Al Rasheed",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6803,
+		"cityId": 59,
+		"name": "Daheit Al Yasmeen",
+		"name_arabic": "\u0627\u0644\u064a\u0627\u0633\u0645\u064a\u0646",
+		"name_english": "Daheit Al Yasmeen",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6805,
+		"cityId": 59,
+		"name": "Dahiet Al Ameer Rashed",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u0627\u0645\u064a\u0631 \u0631\u0627\u0634\u062f",
+		"name_english": "Dahiet Al Ameer Rashed",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6807,
+		"cityId": 59,
+		"name": "Dahiet Al Hussain",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u062d\u0633\u064a\u0646",
+		"name_english": "Dahiet Al Hussain",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6809,
+		"cityId": 59,
+		"name": "Deir Ghbar",
+		"name_arabic": "\u062f\u064a\u0631 \u063a\u0628\u0627\u0631",
+		"name_english": "Deir Ghbar",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6811,
+		"cityId": 59,
+		"name": "Downtown",
+		"name_arabic": "\u0648\u0633\u0637 \u0627\u0644\u0628\u0644\u062f",
+		"name_english": "Downtown",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6815,
+		"cityId": 59,
+		"name": "Hay Al Rahmanieh",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0631\u062d\u0645\u0627\u0646\u064a\u0629",
+		"name_english": "Hay Al Rahmanieh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6817,
+		"cityId": 59,
+		"name": "Hay Albarakeh",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0628\u0631\u0643\u0629",
+		"name_english": "Hay Albarakeh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6819,
+		"cityId": 59,
+		"name": "Hay Alkhaledeen",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u062e\u0627\u0644\u062f\u064a\u0646",
+		"name_english": "Hay Alkhaledeen",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6821,
+		"cityId": 59,
+		"name": "Hay Alsaleheen",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0635\u0627\u0644\u062d\u064a\u0646",
+		"name_english": "Hay Alsaleheen",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6823,
+		"cityId": 59,
+		"name": "Iraq Al Ameer",
+		"name_arabic": "\u0639\u0631\u0627\u0642 \u0627\u0644\u0627\u0645\u064a\u0631",
+		"name_english": "Iraq Al Ameer",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6825,
+		"cityId": 59,
+		"name": "Jabal Al Hussain",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u062d\u0633\u064a\u0646",
+		"name_english": "Jabal Al Hussain",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6827,
+		"cityId": 59,
+		"name": "Jabal Al-Lweibdeh",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0644\u0648\u064a\u0628\u062f\u0629",
+		"name_english": "Jabal Al-Lweibdeh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6829,
+		"cityId": 59,
+		"name": "Jabal Al Zohor",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0632\u0647\u0648\u0631",
+		"name_english": "Jabal Al Zohor",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6831,
+		"cityId": 59,
+		"name": "Jabal Amman",
+		"name_arabic": "\u062c\u0628\u0644 \u0639\u0645\u0627\u0646",
+		"name_english": "Jabal Amman",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6833,
+		"cityId": 59,
+		"name": "Jubaiha",
+		"name_arabic": "\u0627\u0644\u062c\u0628\u064a\u0647\u0629",
+		"name_english": "Jubaiha",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6835,
+		"cityId": 59,
+		"name": "Khalda",
+		"name_arabic": "\u062e\u0644\u062f\u0627",
+		"name_english": "Khalda",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6837,
+		"cityId": 59,
+		"name": "Mahes",
+		"name_arabic": "\u0645\u0627\u062d\u0635",
+		"name_english": "Mahes",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6839,
+		"cityId": 59,
+		"name": "Marj El Hamam",
+		"name_arabic": "\u0645\u0631\u062c \u0627\u0644\u062d\u0645\u0627\u0645",
+		"name_english": "Marj El Hamam",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6841,
+		"cityId": 59,
+		"name": "Marka",
+		"name_arabic": "\u0645\u0627\u0631\u0643\u0627",
+		"name_english": "Marka",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6843,
+		"cityId": 59,
+		"name": "Mecca Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0645\u0643\u0629",
+		"name_english": "Mecca Street",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6845,
+		"cityId": 59,
+		"name": "Medina Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0645\u062f\u064a\u0646\u0629",
+		"name_english": "Medina Street",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6847,
+		"cityId": 59,
+		"name": "Naour",
+		"name_arabic": "\u0646\u0627\u0639\u0648\u0631",
+		"name_english": "Naour",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6849,
+		"cityId": 59,
+		"name": "Ras El Ain",
+		"name_arabic": "\u0631\u0627\u0633 \u0627\u0644\u0639\u064a\u0646",
+		"name_english": "Ras El Ain",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6851,
+		"cityId": 59,
+		"name": "Shafa Badran",
+		"name_arabic": "\u0634\u0641\u0627 \u0628\u062f\u0631\u0627\u0646",
+		"name_english": "Shafa Badran",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6853,
+		"cityId": 59,
+		"name": "Shmaisani",
+		"name_arabic": "\u0634\u0645\u064a\u0633\u0627\u0646\u064a",
+		"name_english": "Shmaisani",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6855,
+		"cityId": 59,
+		"name": "Sports City",
+		"name_arabic": "\u0627\u0644\u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0631\u064a\u0627\u0636\u064a\u0629",
+		"name_english": "Sports City",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6857,
+		"cityId": 59,
+		"name": "Swefieh",
+		"name_arabic": "\u0627\u0644\u0635\u0648\u064a\u0641\u064a\u0629",
+		"name_english": "Swefieh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6859,
+		"cityId": 59,
+		"name": "Swelieh",
+		"name_arabic": "\u0635\u0648\u064a\u0644\u062d",
+		"name_english": "Swelieh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6861,
+		"cityId": 59,
+		"name": "Tabarboor",
+		"name_arabic": "\u0637\u0628\u0631\u0628\u0648\u0631",
+		"name_english": "Tabarboor",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6863,
+		"cityId": 59,
+		"name": "Tla' Ali",
+		"name_arabic": "\u062a\u0644\u0627\u0639 \u0627\u0644\u0639\u0644\u064a",
+		"name_english": "Tla' Ali",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6865,
+		"cityId": 59,
+		"name": "Um El Summaq",
+		"name_arabic": "\u0627\u0645 \u0627\u0644\u0633\u0645\u0627\u0642",
+		"name_english": "Um El Summaq",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6867,
+		"cityId": 59,
+		"name": "Um Uthaiena",
+		"name_arabic": "\u0627\u0645 \u0627\u0630\u064a\u0646\u0629",
+		"name_english": "Um Uthaiena",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6869,
+		"cityId": 59,
+		"name": "University Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u062c\u0627\u0645\u0639\u0629",
+		"name_english": "University Street",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6871,
+		"cityId": 59,
+		"name": "Wadi El Seer",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0627\u0644\u0633\u064a\u0631",
+		"name_english": "Wadi El Seer",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 6873,
+		"cityId": 59,
+		"name": "Wadi Saqra",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0635\u0642\u0631\u0629",
+		"name_english": "Wadi Saqra",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 8927,
+		"cityId": 59,
+		"name": "Al-Thuheir",
+		"name_arabic": "\u0627\u0644\u0638\u0647\u064a\u0631",
+		"name_english": "Al-Thuheir",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10968,
+		"cityId": 59,
+		"name": "Yajouz",
+		"name_arabic": "\u064a\u0627\u062c\u0648\u0632",
+		"name_english": "Yajouz",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10970,
+		"cityId": 59,
+		"name": "Rajm Amesh",
+		"name_arabic": "\u0631\u062c\u0645 \u0639\u0645\u064a\u0634",
+		"name_english": "Rajm Amesh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10972,
+		"cityId": 59,
+		"name": "Al Qastal",
+		"name_arabic": "\u0627\u0644\u0642\u0633\u0637\u0644",
+		"name_english": "Al Qastal",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10974,
+		"cityId": 59,
+		"name": "Birayn",
+		"name_arabic": "\u0628\u064a\u0631\u064a\u0646",
+		"name_english": "Birayn",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10976,
+		"cityId": 59,
+		"name": "Sahab",
+		"name_arabic": "\u0633\u062d\u0627\u0628",
+		"name_english": "Sahab",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10978,
+		"cityId": 59,
+		"name": "Al Lubban",
+		"name_arabic": "\u0627\u0644\u0644\u0628\u0651\u0646",
+		"name_english": "Al Lubban",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10980,
+		"cityId": 59,
+		"name": "Al Jizah",
+		"name_arabic": "\u0627\u0644\u062c\u064a\u0632\u0629",
+		"name_english": "Al Jizah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10982,
+		"cityId": 59,
+		"name": "Al Tuneib",
+		"name_arabic": "\u0627\u0644\u0637\u0646\u064a\u0628",
+		"name_english": "Al Tuneib",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10984,
+		"cityId": 59,
+		"name": "Al Hurryeh",
+		"name_arabic": "\u0627\u0644\u062d\u0631\u0651\u064a\u0651\u0629",
+		"name_english": "Al Hurryeh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10986,
+		"cityId": 59,
+		"name": "Al-Jabal Al-Akhdar",
+		"name_arabic": "\u0627\u0644\u062c\u0628\u0644 \u0627\u0644\u0623\u062e\u0636\u0631",
+		"name_english": "Al-Jabal Al-Akhdar",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10988,
+		"cityId": 59,
+		"name": "Al-Mustanada",
+		"name_arabic": "\u0627\u0644\u0645\u0633\u062a\u0646\u062f\u0629",
+		"name_english": "Al-Mustanada",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10990,
+		"cityId": 59,
+		"name": "Rujm ash Shami",
+		"name_arabic": "\u0631\u062c\u0645 \u0627\u0644\u0634\u0627\u0645\u064a",
+		"name_english": "Rujm ash Shami",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10717,
+		"cityId": 59,
+		"name": "Badr",
+		"name_arabic": "\u0628\u062f\u0631",
+		"name_english": "Badr",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10719,
+		"cityId": 59,
+		"name": "Badr Jdedeh",
+		"name_arabic": "\u0628\u062f\u0631 \u0627\u0644\u062c\u062f\u064a\u062f\u0629",
+		"name_english": "Badr Jdedeh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10721,
+		"cityId": 59,
+		"name": "Baqa'a Camp",
+		"name_arabic": "\u0627\u0644\u0628\u0642\u0639\u0647",
+		"name_english": "Baqa'a Camp",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10723,
+		"cityId": 59,
+		"name": "Jawa",
+		"name_arabic": "\u062c\u0627\u0648\u0627",
+		"name_english": "Jawa",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10725,
+		"cityId": 59,
+		"name": "Khirbet Sooq",
+		"name_arabic": "\u062e\u0631\u0628\u0629 \u0627\u0644\u0633\u0648\u0642",
+		"name_english": "Khirbet Sooq",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10886,
+		"cityId": 59,
+		"name": "Al Urdon Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0623\u0631\u062f\u0646",
+		"name_english": "Al Urdon Street",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10928,
+		"cityId": 59,
+		"name": "Al Manarah",
+		"name_arabic": "\u0627\u0644\u0645\u0646\u0627\u0631\u0647",
+		"name_english": "Al Manarah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10930,
+		"cityId": 59,
+		"name": "Al-Wehdat",
+		"name_arabic": "\u0627\u0644\u0648\u062d\u062f\u0627\u062a",
+		"name_english": "Al-Wehdat",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10932,
+		"cityId": 59,
+		"name": "Al Yadudah",
+		"name_arabic": "\u0627\u0644\u064a\u0627\u062f\u0648\u062f\u0629",
+		"name_english": "Al Yadudah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10934,
+		"cityId": 59,
+		"name": "Umm Nowarah",
+		"name_arabic": "\u0627\u0645 \u0646\u0648\u0627\u0631\u0629",
+		"name_english": "Umm Nowarah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10936,
+		"cityId": 59,
+		"name": "Al Ashrafyeh",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0623\u0634\u0631\u0641\u064a\u0629",
+		"name_english": "Al Ashrafyeh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10938,
+		"cityId": 59,
+		"name": "Jabal Al Naser",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0646\u0635\u0631",
+		"name_english": "Jabal Al Naser",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10940,
+		"cityId": 59,
+		"name": "Al-Jweideh",
+		"name_arabic": "\u0627\u0644\u062c\u0648\u064a\u062f\u0629",
+		"name_english": "Al-Jweideh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10942,
+		"cityId": 59,
+		"name": "Husban",
+		"name_arabic": "\u062d\u0633\u0628\u0627\u0646",
+		"name_english": "Husban",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10944,
+		"cityId": 59,
+		"name": "Hai Nazzal",
+		"name_arabic": "\u062d\u064a \u0646\u0632\u0627\u0644",
+		"name_english": "Hai Nazzal",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 10946,
+		"cityId": 59,
+		"name": "Safut",
+		"name_arabic": "\u0635\u0627\u0641\u0648\u0637",
+		"name_english": "Safut",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 12761,
+		"cityId": 59,
+		"name": "Jabal Al Nuzha",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0646\u0632\u0647\u0629",
+		"name_english": "Jabal Al Nuzha",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13318,
+		"cityId": 59,
+		"name": "Al-Oroubah",
+		"name_arabic": "\u0627\u0644\u0639\u0631\u0648\u0628\u0629",
+		"name_english": "Al-Oroubah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13320,
+		"cityId": 59,
+		"name": "Jabal Al-Jofah",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u062c\u0648\u0641\u0629",
+		"name_english": "Jabal Al-Jofah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13322,
+		"cityId": 59,
+		"name": "Al-Qusour",
+		"name_arabic": "\u0627\u0644\u0642\u0635\u0648\u0631",
+		"name_english": "Al-Qusour",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13324,
+		"cityId": 59,
+		"name": "Wadi Al Haddadeh",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0627\u0644\u062d\u062f\u0627\u062f\u0629",
+		"name_english": "Wadi Al Haddadeh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13326,
+		"cityId": 59,
+		"name": "Al-Thra",
+		"name_arabic": "\u0627\u0644\u0630\u0631\u0627\u0639",
+		"name_english": "Al-Thra",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13328,
+		"cityId": 59,
+		"name": "Jabal Al-Nathif",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0646\u0638\u064a\u0641",
+		"name_english": "Jabal Al-Nathif",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13330,
+		"cityId": 59,
+		"name": "Jabal Al-Taj",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u062a\u0627\u062c",
+		"name_english": "Jabal Al-Taj",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13332,
+		"cityId": 59,
+		"name": "Hettin",
+		"name_arabic": "\u062d\u0637\u064a\u0646",
+		"name_english": "Hettin",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13334,
+		"cityId": 59,
+		"name": "Al-Khaznah",
+		"name_arabic": "\u0627\u0644\u062e\u0632\u0646\u0629",
+		"name_english": "Al-Khaznah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13336,
+		"cityId": 59,
+		"name": "Al-Mansour",
+		"name_arabic": "\u0627\u0644\u0645\u0646\u0635\u0648\u0631",
+		"name_english": "Al-Mansour",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13338,
+		"cityId": 59,
+		"name": "Al-Amir Hamzah",
+		"name_arabic": "\u0627\u0644\u0623\u0645\u064a\u0631 \u062d\u0645\u0632\u0629",
+		"name_english": "Al-Amir Hamzah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13340,
+		"cityId": 59,
+		"name": "Al-Qasabat",
+		"name_arabic": "\u0627\u0644\u0642\u0635\u0628\u0627\u062a",
+		"name_english": "Al-Qasabat",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13342,
+		"cityId": 59,
+		"name": "Al-Diyar",
+		"name_arabic": "\u0627\u0644\u062f\u064a\u0627\u0631",
+		"name_english": "Al-Diyar",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13344,
+		"cityId": 59,
+		"name": "Umm Al-Usoud",
+		"name_arabic": "\u0623\u0645 \u0627\u0644\u0623\u0633\u0648\u062f",
+		"name_english": "Umm Al-Usoud",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13505,
+		"cityId": 59,
+		"name": "Abu Al-Sous",
+		"name_arabic": "\u0623\u0628\u0648 \u0627\u0644\u0633\u0648\u0633",
+		"name_english": "Abu Al-Sous",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13507,
+		"cityId": 59,
+		"name": "Umm Shterat",
+		"name_arabic": "\u0623\u0645 \u0634\u0637\u064a\u0631\u0627\u062a",
+		"name_english": "Umm Shterat",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13509,
+		"cityId": 59,
+		"name": "Al-Rabwa",
+		"name_arabic": "\u0627\u0644\u0631\u0628\u0648\u0629",
+		"name_english": "Al-Rabwa",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13511,
+		"cityId": 59,
+		"name": "Al-Rjoum",
+		"name_arabic": "\u0627\u0644\u0631\u062c\u0648\u0645",
+		"name_english": "Al-Rjoum",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13513,
+		"cityId": 59,
+		"name": "Al-Zahra",
+		"name_arabic": "\u0627\u0644\u0632\u0647\u0631\u0627\u0621",
+		"name_english": "Al-Zahra",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13515,
+		"cityId": 59,
+		"name": "Al-Dia'",
+		"name_arabic": "\u0627\u0644\u0636\u064a\u0627\u0621",
+		"name_english": "Al-Dia'",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13517,
+		"cityId": 59,
+		"name": "Al-Adlyeh",
+		"name_arabic": "\u0627\u0644\u0639\u062f\u0644\u064a\u0629",
+		"name_english": "Al-Adlyeh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13519,
+		"cityId": 59,
+		"name": "Al-Awdeh",
+		"name_arabic": "\u0627\u0644\u0639\u0648\u062f\u0629",
+		"name_english": "Al-Awdeh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13521,
+		"cityId": 59,
+		"name": "Al-Feisal",
+		"name_arabic": "\u0627\u0644\u0641\u064a\u0635\u0644",
+		"name_english": "Al-Feisal",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13523,
+		"cityId": 59,
+		"name": "Al-Kom Al-Sharqi",
+		"name_arabic": "\u0627\u0644\u0643\u0648\u0645 \u0627\u0644\u0634\u0631\u0642\u064a",
+		"name_english": "Al-Kom Al-Sharqi",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13525,
+		"cityId": 59,
+		"name": "Al-Kom Al-Gharbi",
+		"name_arabic": "\u0627\u0644\u0643\u0648\u0645 \u0627\u0644\u063a\u0631\u0628\u064a",
+		"name_english": "Al-Kom Al-Gharbi",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13527,
+		"cityId": 59,
+		"name": "Al-Ma'adi",
+		"name_arabic": "\u0627\u0644\u0645\u0639\u0627\u062f\u064a",
+		"name_english": "Al-Ma'adi",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13529,
+		"cityId": 59,
+		"name": "Al-Naharyah",
+		"name_arabic": "\u0627\u0644\u0646\u0647\u0627\u0631\u064a\u0629",
+		"name_english": "Al-Naharyah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13531,
+		"cityId": 59,
+		"name": "Al-Yarmouk",
+		"name_arabic": "\u0627\u0644\u064a\u0631\u0645\u0648\u0643",
+		"name_english": "Al-Yarmouk",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13533,
+		"cityId": 59,
+		"name": "Jabal Al-Marrikh",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0645\u0631\u064a\u062e",
+		"name_english": "Jabal Al-Marrikh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13535,
+		"cityId": 59,
+		"name": "Salihiyat Al-Abid",
+		"name_arabic": "\u0635\u0627\u0644\u062d\u064a\u0629 \u0627\u0644\u0639\u0627\u0628\u062f",
+		"name_english": "Salihiyat Al-Abid",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13537,
+		"cityId": 59,
+		"name": "Ayn Rbat",
+		"name_arabic": "\u0639\u064a\u0646 \u0631\u0628\u0627\u0637",
+		"name_english": "Ayn Rbat",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13539,
+		"cityId": 59,
+		"name": "Uyun Al-Dhib",
+		"name_arabic": "\u0639\u064a\u0648\u0646 \u0627\u0644\u0630\u064a\u0628",
+		"name_english": "Uyun Al-Dhib",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13541,
+		"cityId": 59,
+		"name": "Wadi Al-Srour",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0627\u0644\u0633\u0631\u0648\u0631",
+		"name_english": "Wadi Al-Srour",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13597,
+		"cityId": 59,
+		"name": "Al-Shabah",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0635\u062d\u0627\u0628\u0629",
+		"name_english": "Al-Shabah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13599,
+		"cityId": 59,
+		"name": "Al-Muwaqqar",
+		"name_arabic": "\u0627\u0644\u0645\u0648\u0642\u0631",
+		"name_english": "Al-Muwaqqar",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13657,
+		"cityId": 59,
+		"name": "Umm al Kundum",
+		"name_arabic": "\u0623\u0645 \u0627\u0644\u0643\u0646\u062f\u0645",
+		"name_english": "Umm al Kundum",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13658,
+		"cityId": 59,
+		"name": "Um al Basateen",
+		"name_arabic": "\u0627\u0645 \u0627\u0644\u0628\u0633\u0627\u062a\u064a\u0646",
+		"name_english": "Um al Basateen",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13660,
+		"cityId": 59,
+		"name": "Bilal",
+		"name_arabic": "\u0628\u0644\u0627\u0644",
+		"name_english": "Bilal",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13661,
+		"cityId": 59,
+		"name": "Hjar Al Nawabilseh",
+		"name_arabic": "\u062d\u062c\u0627\u0631 \u0627\u0644\u0646\u0648\u0627\u0628\u0644\u0633\u0629",
+		"name_english": "Hjar Al Nawabilseh",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13662,
+		"cityId": 59,
+		"name": "Dahiet Al Ameer Ali",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u0623\u0645\u064a\u0631 \u0639\u0644\u064a",
+		"name_english": "Dahiet Al Ameer Ali",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13708,
+		"cityId": 59,
+		"name": "Um Rummanah",
+		"name_arabic": "\u0623\u0645 \u0631\u0645\u0627\u0646\u0629",
+		"name_english": "Um Rummanah",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 13709,
+		"cityId": 59,
+		"name": "Tloo' Al-Misdar",
+		"name_arabic": "\u0637\u0644\u0648\u0639 \u0627\u0644\u0645\u0635\u062f\u0627\u0631",
+		"name_english": "Tloo' Al-Misdar",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 15528,
+		"cityId": 59,
+		"name": "Salem",
+		"name_arabic": "\u0633\u0627\u0644\u0645",
+		"name_english": "Salem",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 16463,
+		"cityId": 59,
+		"name": "Daheit Al-Haj Hassan",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u062d\u0627\u062c \u062d\u0633\u0646",
+		"name_english": "Daheit Al-Haj Hassan",
+		"is_other": false,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}, {
+		"id": 14812,
+		"cityId": 59,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 31.953949,
+		"lng": 35.910635
+	}],
+	"Irbid": [{
+		"id": 6875,
+		"cityId": 60,
+		"name": "30 Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u062b\u0644\u0627\u062b\u064a\u0646",
+		"name_english": "30 Street",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6877,
+		"cityId": 60,
+		"name": "Al Balad",
+		"name_arabic": "\u0627\u0644\u0628\u0644\u062f",
+		"name_english": "Al Balad",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6879,
+		"cityId": 60,
+		"name": "Al Barha",
+		"name_arabic": "\u0627\u0644\u0628\u0627\u0631\u062d\u0629",
+		"name_english": "Al Barha",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6881,
+		"cityId": 60,
+		"name": "Al Barha Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0628\u0627\u0631\u062d\u0629",
+		"name_english": "Al Barha Street",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6883,
+		"cityId": 60,
+		"name": "Al Dorra Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0627\u0644\u062f\u0631\u0629",
+		"name_english": "Al Dorra Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6885,
+		"cityId": 60,
+		"name": "Al Eiadat Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0627\u0644\u0639\u064a\u0627\u062f\u0627\u062a",
+		"name_english": "Al Eiadat Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6887,
+		"cityId": 60,
+		"name": "Al Hashmy",
+		"name_arabic": "\u0627\u0644\u0647\u0627\u0634\u0645\u064a",
+		"name_english": "Al Hashmy",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6889,
+		"cityId": 60,
+		"name": "Al Hay Al Gharby",
+		"name_arabic": "\u0627\u0644\u062d\u064a \u0627\u0644\u063a\u0631\u0628\u064a",
+		"name_english": "Al Hay Al Gharby",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6891,
+		"cityId": 60,
+		"name": "Al Hay Al Janooby",
+		"name_arabic": "\u0627\u0644\u062d\u064a \u0627\u0644\u062c\u0646\u0648\u0628\u064a",
+		"name_english": "Al Hay Al Janooby",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6893,
+		"cityId": 60,
+		"name": "Al Hay Al Sharqy",
+		"name_arabic": "\u0627\u0644\u062d\u064a \u0627\u0644\u0634\u0631\u0642\u064a",
+		"name_english": "Al Hay Al Sharqy",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6895,
+		"cityId": 60,
+		"name": "Al Hisbeh Al Markizeya",
+		"name_arabic": "\u0627\u0644\u062d\u0633\u0628\u0629 \u0627\u0644\u0645\u0631\u0643\u0632\u064a\u0629",
+		"name_english": "Al Hisbeh Al Markizeya",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6897,
+		"cityId": 60,
+		"name": "Al Husn",
+		"name_arabic": "\u0627\u0644\u062d\u0635\u0646",
+		"name_english": "Al Husn",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6899,
+		"cityId": 60,
+		"name": "Al Huson Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u062d\u0635\u0646",
+		"name_english": "Al Huson Street",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6901,
+		"cityId": 60,
+		"name": "Al Lawazem Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0627\u0644\u0644\u0648\u0627\u0632\u0645",
+		"name_english": "Al Lawazem Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6903,
+		"cityId": 60,
+		"name": "Al Madinah Al Sena'eiah",
+		"name_arabic": "\u0627\u0644\u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0635\u0646\u0627\u0639\u064a\u0629",
+		"name_english": "Al Madinah Al Sena'eiah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6905,
+		"cityId": 60,
+		"name": "Al Madrase Al Shamela",
+		"name_arabic": "\u0627\u0644\u0645\u062f\u0631\u0633\u0629 \u0627\u0644\u0634\u0627\u0645\u0644\u0629",
+		"name_english": "Al Madrase Al Shamela",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6907,
+		"cityId": 60,
+		"name": "Al Mal'ab Al Baladi",
+		"name_arabic": "\u0627\u0644\u0645\u0644\u0639\u0628 \u0627\u0644\u0628\u0644\u062f\u064a",
+		"name_english": "Al Mal'ab Al Baladi",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6909,
+		"cityId": 60,
+		"name": "Al Matla'",
+		"name_arabic": "\u0627\u0644\u0645\u0637\u0644\u0639",
+		"name_english": "Al Matla'",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6911,
+		"cityId": 60,
+		"name": "Al Naseem Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0627\u0644\u0646\u0633\u064a\u0645",
+		"name_english": "Al Naseem Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6913,
+		"cityId": 60,
+		"name": "Al Nuzha",
+		"name_arabic": "\u0627\u0644\u0646\u0632\u0647\u0629",
+		"name_english": "Al Nuzha",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6915,
+		"cityId": 60,
+		"name": "Al Qubeh Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0627\u0644\u0642\u0628\u0629",
+		"name_english": "Al Qubeh Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6917,
+		"cityId": 60,
+		"name": "Al Quds Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0642\u062f\u0633",
+		"name_english": "Al Quds Street",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6919,
+		"cityId": 60,
+		"name": "Al Rabiah",
+		"name_arabic": "\u0627\u0644\u0631\u0627\u0628\u064a\u0629",
+		"name_english": "Al Rabiah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6921,
+		"cityId": 60,
+		"name": "Al Rahebat Al Wardiah",
+		"name_arabic": "\u0627\u0644\u0631\u0627\u0647\u0628\u0627\u062a \u0627\u0644\u0648\u0631\u062f\u064a\u0629",
+		"name_english": "Al Rahebat Al Wardiah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6923,
+		"cityId": 60,
+		"name": "Al Sareeh",
+		"name_arabic": "\u0627\u0644\u0635\u0631\u064a\u062d",
+		"name_english": "Al Sareeh",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6925,
+		"cityId": 60,
+		"name": "Al Sonbola",
+		"name_arabic": "\u0627\u0644\u0633\u0646\u0628\u0644\u0629",
+		"name_english": "Al Sonbola",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6927,
+		"cityId": 60,
+		"name": "Al Souq",
+		"name_arabic": "\u0627\u0644\u0633\u0648\u0642",
+		"name_english": "Al Souq",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6929,
+		"cityId": 60,
+		"name": "Al Thaqafa Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0627\u0644\u062b\u0642\u0627\u0641\u0629",
+		"name_english": "Al Thaqafa Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6931,
+		"cityId": 60,
+		"name": "Albayyada Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0627\u0644\u0628\u064a\u0627\u0636\u0629",
+		"name_english": "Albayyada Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6933,
+		"cityId": 60,
+		"name": "Bait Ras",
+		"name_arabic": "\u0628\u064a\u062a \u0631\u0627\u0633",
+		"name_english": "Bait Ras",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6935,
+		"cityId": 60,
+		"name": "Behind Safeway",
+		"name_arabic": "\u062e\u0644\u0641 \u0627\u0644\u0633\u064a\u0641\u0648\u064a",
+		"name_english": "Behind Safeway",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6937,
+		"cityId": 60,
+		"name": "Bushra",
+		"name_arabic": "\u0628\u0634\u0631\u0649",
+		"name_english": "Bushra",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6939,
+		"cityId": 60,
+		"name": "Daheit Al Ameer Rashed",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u0623\u0645\u064a\u0631 \u0631\u0627\u0634\u062f",
+		"name_english": "Daheit Al Ameer Rashed",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6941,
+		"cityId": 60,
+		"name": "Daheit Al Hussain",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u062d\u0633\u064a\u0646",
+		"name_english": "Daheit Al Hussain",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6943,
+		"cityId": 60,
+		"name": "Aydoun",
+		"name_arabic": "\u0627\u064a\u062f\u0648\u0646",
+		"name_english": "Aydoun",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6945,
+		"cityId": 60,
+		"name": "Eidoon Military Hospital",
+		"name_arabic": "\u0645\u0633\u062a\u0634\u0641\u0649 \u0627\u064a\u062f\u0648\u0646 \u0627\u0644\u0639\u0633\u0643\u0631\u064a",
+		"name_english": "Eidoon Military Hospital",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6947,
+		"cityId": 60,
+		"name": "Fo'ara Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0641\u0648\u0639\u0631\u0629",
+		"name_english": "Fo'ara Street",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6949,
+		"cityId": 60,
+		"name": "Ghorfat Al Tejara",
+		"name_arabic": "\u063a\u0631\u0641\u0629 \u0627\u0644\u062a\u062c\u0627\u0631\u0629",
+		"name_english": "Ghorfat Al Tejara",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6951,
+		"cityId": 60,
+		"name": "Hakama",
+		"name_arabic": "\u062d\u0643\u0645\u0627",
+		"name_english": "Hakama",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6953,
+		"cityId": 60,
+		"name": "Hakama Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u062d\u0643\u0645\u0627",
+		"name_english": "Hakama Street",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6955,
+		"cityId": 60,
+		"name": "Hasan Al Tal Mosque",
+		"name_arabic": "\u0645\u0633\u062c\u062f \u062d\u0633\u0646 \u0627\u0644\u062a\u0644",
+		"name_english": "Hasan Al Tal Mosque",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6957,
+		"cityId": 60,
+		"name": "Hay Al Abraar",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0623\u0628\u0631\u0627\u0631",
+		"name_english": "Hay Al Abraar",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6959,
+		"cityId": 60,
+		"name": "Hay Al Qaselah",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0642\u0635\u064a\u0644\u0629",
+		"name_english": "Hay Al Qaselah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6961,
+		"cityId": 60,
+		"name": "Hay Al Turokman",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u062a\u0631\u0643\u0645\u0627\u0646",
+		"name_english": "Hay Al Turokman",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6963,
+		"cityId": 60,
+		"name": "Hay Al Worood",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0648\u0631\u0648\u062f",
+		"name_english": "Hay Al Worood",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6965,
+		"cityId": 60,
+		"name": "Hay Al Zohoor",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0632\u0647\u0648\u0631",
+		"name_english": "Hay Al Zohoor",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6967,
+		"cityId": 60,
+		"name": "Hay Alia",
+		"name_arabic": "\u062d\u064a \u0639\u0627\u0644\u064a\u0629",
+		"name_english": "Hay Alia",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6969,
+		"cityId": 60,
+		"name": "Hay Altlool",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u062a\u0644\u0648\u0644",
+		"name_english": "Hay Altlool",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6971,
+		"cityId": 60,
+		"name": "Hay Twaal",
+		"name_arabic": "\u062d\u064a \u0637\u0648\u0627\u0644",
+		"name_english": "Hay Twaal",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6973,
+		"cityId": 60,
+		"name": "Honaina",
+		"name_arabic": "\u062d\u0646\u064a\u0646\u0627",
+		"name_english": "Honaina",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6975,
+		"cityId": 60,
+		"name": "Howara",
+		"name_arabic": "\u062d\u0648\u0627\u0631\u0629",
+		"name_english": "Howara",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6977,
+		"cityId": 60,
+		"name": "Irbid Girl's College",
+		"name_arabic": "\u0643\u0644\u064a\u0629 \u0628\u0646\u0627\u062a \u0627\u0631\u0628\u062f",
+		"name_english": "Irbid Girl's College",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6979,
+		"cityId": 60,
+		"name": "Irbid Mall",
+		"name_arabic": "\u0627\u0631\u0628\u062f \u0645\u0648\u0644",
+		"name_english": "Irbid Mall",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6981,
+		"cityId": 60,
+		"name": "Isharet Al Darawshe",
+		"name_arabic": "\u0627\u0634\u0627\u0631\u0629 \u0627\u0644\u062f\u0631\u0627\u0648\u0634\u0629",
+		"name_english": "Isharet Al Darawshe",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6983,
+		"cityId": 60,
+		"name": "Isharet Al Iskan",
+		"name_arabic": "\u0627\u0634\u0627\u0631\u0629 \u0627\u0644\u0627\u0633\u0643\u0627\u0646",
+		"name_english": "Isharet Al Iskan",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6985,
+		"cityId": 60,
+		"name": "Isharet Al Malika Noor",
+		"name_arabic": "\u0627\u0634\u0627\u0631\u0629 \u0627\u0644\u0645\u0644\u0643\u0629 \u0646\u0648\u0631",
+		"name_english": "Isharet Al Malika Noor",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6987,
+		"cityId": 60,
+		"name": "Iskan Al A'mileen",
+		"name_arabic": "\u0627\u0633\u0643\u0627\u0646 \u0627\u0644\u0639\u0627\u0645\u0644\u064a\u0646",
+		"name_english": "Iskan Al A'mileen",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6989,
+		"cityId": 60,
+		"name": "Iskan Al Atiba'",
+		"name_arabic": "\u0627\u0633\u0643\u0627\u0646 \u0627\u0644\u0623\u0637\u0628\u0627\u0621",
+		"name_english": "Iskan Al Atiba'",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6991,
+		"cityId": 60,
+		"name": "Iskan Al Dobbat",
+		"name_arabic": "\u0627\u0633\u0643\u0627\u0646 \u0627\u0644\u0636\u0628\u0627\u0637",
+		"name_english": "Iskan Al Dobbat",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6993,
+		"cityId": 60,
+		"name": "Iskan Al Mohandeseen",
+		"name_arabic": "\u0627\u0633\u0643\u0627\u0646 \u0627\u0644\u0645\u0647\u0646\u062f\u0633\u064a\u0646",
+		"name_english": "Iskan Al Mohandeseen",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6997,
+		"cityId": 60,
+		"name": "Kherbet Qasem",
+		"name_arabic": "\u062e\u0631\u0628\u0629 \u0642\u0627\u0633\u0645",
+		"name_english": "Kherbet Qasem",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 6999,
+		"cityId": 60,
+		"name": "King Abdullah University Hospital",
+		"name_arabic": "\u0645\u0633\u062a\u0634\u0641\u0649 \u0627\u0644\u0645\u0644\u0643 \u0639\u0628\u062f\u0627\u0644\u0644\u0647",
+		"name_english": "King Abdullah University Hospital",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7001,
+		"cityId": 60,
+		"name": "Kofor Youba",
+		"name_arabic": "\u0643\u0641\u0631 \u064a\u0648\u0628\u0627",
+		"name_english": "Kofor Youba",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7003,
+		"cityId": 60,
+		"name": "Mojamma' Al Aghwaar Al Jadeed",
+		"name_arabic": "\u0645\u062c\u0645\u0639 \u0627\u0644\u0623\u063a\u0648\u0627\u0631 \u0627\u0644\u062c\u062f\u064a\u062f",
+		"name_english": "Mojamma' Al Aghwaar Al Jadeed",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7005,
+		"cityId": 60,
+		"name": "Mojamma' Al Shamal",
+		"name_arabic": "\u0645\u062c\u0645\u0639 \u0627\u0644\u0634\u0645\u0627\u0644",
+		"name_english": "Mojamma' Al Shamal",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7007,
+		"cityId": 60,
+		"name": "Mojamma' Alshaikh Khaleel",
+		"name_arabic": "\u0645\u062c\u0645\u0639 \u0627\u0644\u0634\u064a\u062e \u062e\u0644\u064a\u0644",
+		"name_english": "Mojamma' Alshaikh Khaleel",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7009,
+		"cityId": 60,
+		"name": "Mojamma' Amman Al Jadeed",
+		"name_arabic": "\u0645\u062c\u0645\u0639 \u0639\u0645\u0627\u0646 \u0627\u0644\u062c\u062f\u064a\u062f",
+		"name_english": "Mojamma' Amman Al Jadeed",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7011,
+		"cityId": 60,
+		"name": "Palestine Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0641\u0644\u0633\u0637\u064a\u0646",
+		"name_english": "Palestine Street",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7013,
+		"cityId": 60,
+		"name": "Petra Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0628\u062a\u0631\u0627\u0621",
+		"name_english": "Petra Street",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7015,
+		"cityId": 60,
+		"name": "Princess Basma Hospital",
+		"name_arabic": "\u0645\u0633\u062a\u0634\u0641\u0649 \u0627\u0644\u0623\u0645\u064a\u0631\u0629 \u0628\u0633\u0645\u0629",
+		"name_english": "Princess Basma Hospital",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7019,
+		"cityId": 60,
+		"name": "Sahara Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0635\u062d\u0627\u0631\u0649",
+		"name_english": "Sahara Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7021,
+		"cityId": 60,
+		"name": "Sal Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0633\u0627\u0644",
+		"name_english": "Sal Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7023,
+		"cityId": 60,
+		"name": "Salet Al Sharq",
+		"name_arabic": "\u0635\u0627\u0644\u0629 \u0627\u0644\u0634\u0631\u0642",
+		"name_english": "Salet Al Sharq",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7025,
+		"cityId": 60,
+		"name": "Sharekat Al Kahraba Circle",
+		"name_arabic": "\u062f\u0648\u0627\u0631 \u0634\u0631\u0643\u0629 \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0621",
+		"name_english": "Sharekat Al Kahraba Circle",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7029,
+		"cityId": 60,
+		"name": "University of Science and Technology",
+		"name_arabic": "\u062c\u0627\u0645\u0639\u0629 \u0627\u0644\u0639\u0644\u0648\u0645 \u0648\u0627\u0644\u062a\u0643\u0646\u0648\u0644\u0648\u062c\u064a\u0627",
+		"name_english": "University of Science and Technology",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7031,
+		"cityId": 60,
+		"name": "University Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u062c\u0627\u0645\u0639\u0629",
+		"name_english": "University Street",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 7033,
+		"cityId": 60,
+		"name": "Zabda",
+		"name_arabic": "\u0632\u0628\u062f\u0629",
+		"name_english": "Zabda",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10739,
+		"cityId": 60,
+		"name": "Der Abi Saeed",
+		"name_arabic": "\u062f\u064a\u0631 \u0623\u0628\u064a \u0633\u0639\u064a\u062f",
+		"name_english": "Der Abi Saeed",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10741,
+		"cityId": 60,
+		"name": "Kufr Ma'",
+		"name_arabic": "\u0643\u0641\u0631 \u0627\u0644\u0645\u0627\u0621",
+		"name_english": "Kufr Ma'",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10743,
+		"cityId": 60,
+		"name": "Tibneh",
+		"name_arabic": "\u062a\u0628\u0646\u0647",
+		"name_english": "Tibneh",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10745,
+		"cityId": 60,
+		"name": "Kufr Rakeb",
+		"name_arabic": "\u0643\u0641\u0631 \u0631\u0627\u0643\u0628",
+		"name_english": "Kufr Rakeb",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10747,
+		"cityId": 60,
+		"name": "Bayt Idis",
+		"name_arabic": "\u0628\u064a\u062a \u0623\u062f\u064a\u0633",
+		"name_english": "Bayt Idis",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10749,
+		"cityId": 60,
+		"name": "Kufr Awan",
+		"name_arabic": "\u0643\u0641\u0631\u0639\u0648\u0627\u0646",
+		"name_english": "Kufr Awan",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10751,
+		"cityId": 60,
+		"name": "Kufr Abeel",
+		"name_arabic": "\u0643\u0641\u0631 \u0627\u0628\u064a\u0644",
+		"name_english": "Kufr Abeel",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10753,
+		"cityId": 60,
+		"name": "Judayta",
+		"name_arabic": "\u062c\u062f\u064a\u062a\u0627",
+		"name_english": "Judayta",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10755,
+		"cityId": 60,
+		"name": "Zubiya",
+		"name_arabic": "\u0632\u0648\u0628\u064a\u0627",
+		"name_english": "Zubiya",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10757,
+		"cityId": 60,
+		"name": "Arhaba",
+		"name_arabic": "\u0627\u0631\u062d\u0627\u0628\u0627",
+		"name_english": "Arhaba",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10759,
+		"cityId": 60,
+		"name": "Shatna",
+		"name_arabic": "\u0634\u0637\u0646\u0627",
+		"name_english": "Shatna",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10761,
+		"cityId": 60,
+		"name": "Kharja",
+		"name_arabic": "\u062e\u0631\u062c\u0627",
+		"name_english": "Kharja",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10763,
+		"cityId": 60,
+		"name": "Shajara",
+		"name_arabic": "\u0627\u0644\u0634\u062c\u0631\u0629",
+		"name_english": "Shajara",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10765,
+		"cityId": 60,
+		"name": "Kuraimah",
+		"name_arabic": "\u0643\u0631\u064a\u0645\u0629",
+		"name_english": "Kuraimah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10767,
+		"cityId": 60,
+		"name": "Maru",
+		"name_arabic": "\u0645\u0631\u0648",
+		"name_english": "Maru",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10769,
+		"cityId": 60,
+		"name": "Kufr Sowm",
+		"name_arabic": "\u0643\u0641\u0631 \u0633\u0648\u0645",
+		"name_english": "Kufr Sowm",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10771,
+		"cityId": 60,
+		"name": "Sahm",
+		"name_arabic": "\u0633\u062d\u0645",
+		"name_english": "Sahm",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10773,
+		"cityId": 60,
+		"name": "Hartha",
+		"name_arabic": "\u062d\u0631\u062b\u0627",
+		"name_english": "Hartha",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10892,
+		"cityId": 60,
+		"name": "An-Nuayyimah",
+		"name_arabic": "\u0627\u0644\u0646\u0639\u064a\u0645\u0629",
+		"name_english": "An-Nuayyimah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 10894,
+		"cityId": 60,
+		"name": "Malka",
+		"name_arabic": "\u0645\u0644\u0643\u0627",
+		"name_english": "Malka",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 11240,
+		"cityId": 60,
+		"name": "Al Andalus",
+		"name_arabic": "\u0627\u0644\u0623\u0646\u062f\u0644\u0633",
+		"name_english": "Al Andalus",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 11242,
+		"cityId": 60,
+		"name": "Al Afrah",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0623\u0641\u0631\u0627\u062d",
+		"name_english": "Al Afrah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13585,
+		"cityId": 60,
+		"name": "Qum",
+		"name_arabic": "\u0642\u0645",
+		"name_english": "Qum",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13587,
+		"cityId": 60,
+		"name": "Hofa",
+		"name_arabic": "\u062d\u0648\u0641\u0627",
+		"name_english": "Hofa",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13589,
+		"cityId": 60,
+		"name": "Qumaym",
+		"name_arabic": "\u0642\u0645\u064a\u0645",
+		"name_english": "Qumaym",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13591,
+		"cityId": 60,
+		"name": "Saidour",
+		"name_arabic": "\u0635\u064a\u062f\u0648\u0631",
+		"name_english": "Saidour",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13593,
+		"cityId": 60,
+		"name": "Al-Kharaj",
+		"name_arabic": "\u0627\u0644\u062e\u0631\u0627\u062c",
+		"name_english": "Al-Kharaj",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13595,
+		"cityId": 60,
+		"name": "Kufr Asad",
+		"name_arabic": "\u0643\u0641\u0631 \u0623\u0633\u062f",
+		"name_english": "Kufr Asad",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13664,
+		"cityId": 60,
+		"name": "Hatim village",
+		"name_arabic": "\u0642\u0631\u064a\u0629 \u062d\u0627\u062a\u0645",
+		"name_english": "Hatim village",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13696,
+		"cityId": 60,
+		"name": "Al Ashrafiyah",
+		"name_arabic": "\u0627\u0644\u0623\u0634\u0631\u0641\u064a\u0629",
+		"name_english": "Al Ashrafiyah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13697,
+		"cityId": 60,
+		"name": "Al Mazar Al-Shamali",
+		"name_arabic": "\u0627\u0644\u0645\u0632\u0627\u0631 \u0627\u0644\u0634\u0645\u0627\u0644\u064a",
+		"name_english": "Al Mazar Al-Shamali",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13698,
+		"cityId": 60,
+		"name": "Dayr as Si'nah",
+		"name_arabic": "\u062f\u064a\u0631 \u0627\u0644\u0633\u0639\u0646\u0629",
+		"name_english": "Dayr as Si'nah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13699,
+		"cityId": 60,
+		"name": "Makhraba",
+		"name_arabic": "\u0645\u062e\u0631\u0628\u0627",
+		"name_english": "Makhraba",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13700,
+		"cityId": 60,
+		"name": "Mandah",
+		"name_arabic": "\u0645\u0646\u062f\u062d",
+		"name_english": "Mandah",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13701,
+		"cityId": 60,
+		"name": "North Shuna",
+		"name_arabic": "\u0627\u0644\u0634\u0648\u0646\u0629 \u0627\u0644\u0634\u0645\u0627\u0644\u064a\u0629",
+		"name_english": "North Shuna",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13702,
+		"cityId": 60,
+		"name": "Smma",
+		"name_arabic": "\u0635\u0645\u0627",
+		"name_english": "Smma",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13703,
+		"cityId": 60,
+		"name": "Taybeh District",
+		"name_arabic": "\u0644\u0648\u0627\u0621 \u0627\u0644\u0637\u064a\u0628\u0629",
+		"name_english": "Taybeh District",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13711,
+		"cityId": 60,
+		"name": "Sammou",
+		"name_arabic": "\u0633\u0645\u0648\u0639",
+		"name_english": "Sammou",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 13759,
+		"cityId": 60,
+		"name": "Inba",
+		"name_arabic": "\u0639\u0646\u0628\u0629",
+		"name_english": "Inba",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 15212,
+		"cityId": 60,
+		"name": "Samad",
+		"name_arabic": "\u0635\u0645\u062f",
+		"name_english": "Samad",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16465,
+		"cityId": 60,
+		"name": "Al-Baqoura",
+		"name_arabic": "\u0627\u0644\u0628\u0627\u0642\u0648\u0631\u0629",
+		"name_english": "Al-Baqoura",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16467,
+		"cityId": 60,
+		"name": "Al-Adasiya",
+		"name_arabic": "\u0627\u0644\u0639\u062f\u0633\u064a\u0629",
+		"name_english": "Al-Adasiya",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16469,
+		"cityId": 60,
+		"name": "Al-Manshiya",
+		"name_arabic": "\u0627\u0644\u0645\u0646\u0634\u064a\u0629",
+		"name_english": "Al-Manshiya",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16471,
+		"cityId": 60,
+		"name": "Waqqas",
+		"name_arabic": "\u0648\u0642\u0627\u0635",
+		"name_english": "Waqqas",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16473,
+		"cityId": 60,
+		"name": "Shaykh Hussein",
+		"name_arabic": "\u0627\u0644\u0634\u064a\u062e \u062d\u0633\u064a\u0646",
+		"name_english": "Shaykh Hussein",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16475,
+		"cityId": 60,
+		"name": "Al-Tal",
+		"name_arabic": "\u0627\u0644\u062a\u0644",
+		"name_english": "Al-Tal",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16477,
+		"cityId": 60,
+		"name": "Basila",
+		"name_arabic": "\u0628\u0635\u064a\u0644\u0629",
+		"name_english": "Basila",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16479,
+		"cityId": 60,
+		"name": "Al-Zamaliya",
+		"name_arabic": "\u0627\u0644\u0632\u0645\u0627\u0644\u064a\u0629",
+		"name_english": "Al-Zamaliya",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16481,
+		"cityId": 60,
+		"name": "Seil Al-Himma",
+		"name_arabic": "\u0633\u064a\u0644 \u0627\u0644\u062d\u0645\u0629",
+		"name_english": "Seil Al-Himma",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16483,
+		"cityId": 60,
+		"name": "Al-Mahari'a",
+		"name_arabic": "\u0627\u0644\u0645\u0634\u0627\u0631\u0639",
+		"name_english": "Al-Mahari'a",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16485,
+		"cityId": 60,
+		"name": "Tabaqet Fahel",
+		"name_arabic": "\u0637\u0628\u0642\u0629 \u0641\u062d\u0644",
+		"name_english": "Tabaqet Fahel",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16487,
+		"cityId": 60,
+		"name": "Wadi Al-Rayyan",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0627\u0644\u0631\u064a\u0627\u0646",
+		"name_english": "Wadi Al-Rayyan",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16489,
+		"cityId": 60,
+		"name": "Abu Sidu",
+		"name_arabic": "\u0623\u0628\u0648 \u0633\u064a\u062f\u0648",
+		"name_english": "Abu Sidu",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 16491,
+		"cityId": 60,
+		"name": "Al-Mughayer",
+		"name_arabic": "\u0627\u0644\u0645\u063a\u064a\u0631",
+		"name_english": "Al-Mughayer",
+		"is_other": false,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}, {
+		"id": 14813,
+		"cityId": 60,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 32.55681,
+		"lng": 35.846887
+	}],
+	"Zarqa": [{
+		"id": 7035,
+		"cityId": 83,
+		"name": "Al Autostrad",
+		"name_arabic": "\u0627\u062a\u0648\u0633\u062a\u0631\u0627\u062f",
+		"name_english": "Al Autostrad",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7037,
+		"cityId": 83,
+		"name": "Al ghweariyyeh",
+		"name_arabic": "\u0627\u0644\u063a\u0648\u064a\u0631\u064a\u0629",
+		"name_english": "Al ghweariyyeh",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7039,
+		"cityId": 83,
+		"name": "Al Hashemieh",
+		"name_arabic": "\u0627\u0644\u0647\u0627\u0634\u0645\u064a\u0629",
+		"name_english": "Al Hashemieh",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7041,
+		"cityId": 83,
+		"name": "Al Hawooz",
+		"name_arabic": "\u0627\u0644\u062d\u0627\u0648\u0648\u0632",
+		"name_english": "Al Hawooz",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7043,
+		"cityId": 83,
+		"name": "Al Jaish Street",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u062c\u064a\u0634",
+		"name_english": "Al Jaish Street",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7045,
+		"cityId": 83,
+		"name": "Al mantika Al Hurra",
+		"name_arabic": "\u0627\u0644\u0645\u0646\u0637\u0642\u0629 \u0627\u0644\u062d\u0631\u0629",
+		"name_english": "Al mantika Al Hurra",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7047,
+		"cityId": 83,
+		"name": "Al Souq",
+		"name_arabic": "\u0627\u0644\u0633\u0648\u0642",
+		"name_english": "Al Souq",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7049,
+		"cityId": 83,
+		"name": "Al Sukhneh",
+		"name_arabic": "\u0627\u0644\u0633\u062e\u0646\u0629",
+		"name_english": "Al Sukhneh",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7051,
+		"cityId": 83,
+		"name": "Al Tatweer Al Hadari",
+		"name_arabic": "\u0627\u0644\u062a\u0637\u0648\u064a\u0631 \u0627\u0644\u062d\u0636\u0631\u064a",
+		"name_english": "Al Tatweer Al Hadari",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7053,
+		"cityId": 83,
+		"name": "Al Tatweer Al Hadari Rusaifah",
+		"name_arabic": "\u0627\u0644\u062a\u0637\u0648\u064a\u0631 \u0627\u0644\u062d\u0636\u0631\u064a-\u0627\u0644\u0631\u0635\u064a\u0641\u0629",
+		"name_english": "Al Tatweer Al Hadari Rusaifah",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7055,
+		"cityId": 83,
+		"name": "Al Zarqa Al Jadeedeh",
+		"name_arabic": "\u0627\u0644\u0632\u0631\u0642\u0627\u0621 \u0627\u0644\u062c\u062f\u064a\u062f\u0629",
+		"name_english": "Al Zarqa Al Jadeedeh",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7057,
+		"cityId": 83,
+		"name": "Al Zawahra",
+		"name_arabic": "\u0627\u0644\u0632\u0648\u0627\u0647\u0631\u0629",
+		"name_english": "Al Zawahra",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7059,
+		"cityId": 83,
+		"name": "Al-Qadisyeh - Rusaifeh",
+		"name_arabic": "\u0627\u0644\u0642\u0627\u062f\u0633\u064a\u0629-\u0627\u0644\u0631\u0635\u064a\u0641\u0629",
+		"name_english": "Al-Qadisyeh - Rusaifeh",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7061,
+		"cityId": 83,
+		"name": "Awajan",
+		"name_arabic": "\u0639\u0648\u062c\u0627\u0646",
+		"name_english": "Awajan",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7063,
+		"cityId": 83,
+		"name": "Dahiet Al Amera Haya",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u0623\u0645\u064a\u0631\u0629 \u0647\u064a\u0627",
+		"name_english": "Dahiet Al Amera Haya",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7065,
+		"cityId": 83,
+		"name": "Dahiet Al Madena Al Monawwara",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0645\u0646\u0648\u0631\u0629",
+		"name_english": "Dahiet Al Madena Al Monawwara",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7067,
+		"cityId": 83,
+		"name": "Hay Al Ameer Mohammad",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0623\u0645\u064a\u0631 \u0645\u062d\u0645\u062f",
+		"name_english": "Hay Al Ameer Mohammad",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7069,
+		"cityId": 83,
+		"name": "Hay Al Hussain",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u062d\u0633\u064a\u0646",
+		"name_english": "Hay Al Hussain",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7071,
+		"cityId": 83,
+		"name": "Hay Al Iskan",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0627\u0633\u0643\u0627\u0646",
+		"name_english": "Hay Al Iskan",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7073,
+		"cityId": 83,
+		"name": "Hay Al Jundi",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u062c\u0646\u062f\u064a",
+		"name_english": "Hay Al Jundi",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7075,
+		"cityId": 83,
+		"name": "Hay Al Nuzha",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0646\u0632\u0647\u0629",
+		"name_english": "Hay Al Nuzha",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7077,
+		"cityId": 83,
+		"name": "Hay Al-Rasheed - Rusaifah",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0631\u0634\u064a\u062f-\u0627\u0644\u0631\u0635\u064a\u0641\u0629",
+		"name_english": "Hay Al-Rasheed - Rusaifah",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7079,
+		"cityId": 83,
+		"name": "Hay Ja'far Al-Tayyar",
+		"name_arabic": "\u062d\u064a \u062c\u0639\u0641\u0631 \u0627\u0644\u0637\u064a\u0627\u0631",
+		"name_english": "Hay Ja'far Al-Tayyar",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7081,
+		"cityId": 83,
+		"name": "Hay Ma'soom",
+		"name_arabic": "\u062d\u064a \u0645\u0639\u0635\u0648\u0645",
+		"name_english": "Hay Ma'soom",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7083,
+		"cityId": 83,
+		"name": "Hay Ramzi",
+		"name_arabic": "\u062d\u064a \u0631\u0645\u0632\u064a",
+		"name_english": "Hay Ramzi",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7085,
+		"cityId": 83,
+		"name": "Hay Shaker",
+		"name_arabic": "\u062d\u064a \u0634\u0627\u0643\u0631",
+		"name_english": "Hay Shaker",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7087,
+		"cityId": 83,
+		"name": "Iskan Al Batrawi",
+		"name_arabic": "\u0627\u0633\u0643\u0627\u0646 \u0627\u0644\u0628\u062a\u0631\u0627\u0648\u064a",
+		"name_english": "Iskan Al Batrawi",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7089,
+		"cityId": 83,
+		"name": "Iskan Talal - Rusaifeh",
+		"name_arabic": "\u0627\u0633\u0643\u0627\u0646 \u0637\u0644\u0627\u0644-\u0627\u0644\u0631\u0635\u064a\u0641\u0629",
+		"name_english": "Iskan Talal - Rusaifeh",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7091,
+		"cityId": 83,
+		"name": "Jabal Al Abyad",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0623\u0628\u064a\u0636",
+		"name_english": "Jabal Al Abyad",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7093,
+		"cityId": 83,
+		"name": "Jabal Al Ameer Hamza",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0623\u0645\u064a\u0631 \u062d\u0645\u0632\u0629",
+		"name_english": "Jabal Al Ameer Hamza",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7095,
+		"cityId": 83,
+		"name": "Jabal Al Ameer Hasan",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0623\u0645\u064a\u0631 \u062d\u0633\u0646",
+		"name_english": "Jabal Al Ameer Hasan",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7097,
+		"cityId": 83,
+		"name": "Jabal Al Amera Rahma",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0627\u0645\u064a\u0631\u0629 \u0631\u062d\u0645\u0629",
+		"name_english": "Jabal Al Amera Rahma",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7099,
+		"cityId": 83,
+		"name": "Jabal El Shamali  Rusaifeh",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0634\u0645\u0627\u0644\u064a-\u0627\u0644\u0631\u0635\u064a\u0641\u0629",
+		"name_english": "Jabal El Shamali  Rusaifeh",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7101,
+		"cityId": 83,
+		"name": "Jabal Tareq",
+		"name_arabic": "\u062c\u0628\u0644 \u0637\u0627\u0631\u0642",
+		"name_english": "Jabal Tareq",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7103,
+		"cityId": 83,
+		"name": "Jana'a",
+		"name_arabic": "\u062c\u0646\u0627\u0639\u0629",
+		"name_english": "Jana'a",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7105,
+		"cityId": 83,
+		"name": "Madinet El Sharq",
+		"name_arabic": "\u0645\u062f\u064a\u0646\u0629 \u0627\u0644\u0634\u0631\u0642",
+		"name_english": "Madinet El Sharq",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7107,
+		"cityId": 83,
+		"name": "Rusaifeh El Janoobi",
+		"name_arabic": "\u0627\u0644\u0631\u0635\u064a\u0641\u0629 \u0627\u0644\u062c\u0646\u0648\u0628\u064a",
+		"name_english": "Rusaifeh El Janoobi",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7111,
+		"cityId": 83,
+		"name": "Wadi Al Aash",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0627\u0644\u0639\u0634",
+		"name_english": "Wadi Al Aash",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7113,
+		"cityId": 83,
+		"name": "Wadi Al Hajar",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0627\u0644\u062d\u062c\u0631",
+		"name_english": "Wadi Al Hajar",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 7115,
+		"cityId": 83,
+		"name": "Zarqa Private University",
+		"name_arabic": "\u062c\u0627\u0645\u0639\u0629 \u0627\u0644\u0632\u0631\u0642\u0627\u0621 \u0627\u0644\u062e\u0627\u0635\u0629",
+		"name_english": "Zarqa Private University",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 10713,
+		"cityId": 83,
+		"name": "Shomer",
+		"name_arabic": "\u0634\u0648\u0645\u0631",
+		"name_english": "Shomer",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 10885,
+		"cityId": 83,
+		"name": "Graiba",
+		"name_arabic": "\u062c\u0631\u064a\u0628\u0627",
+		"name_english": "Graiba",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 10898,
+		"cityId": 83,
+		"name": "Birayn",
+		"name_arabic": "\u0628\u064a\u0631\u064a\u0646",
+		"name_english": "Birayn",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 10900,
+		"cityId": 83,
+		"name": "Rajm Al Shawk",
+		"name_arabic": "\u0631\u062c\u0645 \u0627\u0644\u0634\u0648\u0643",
+		"name_english": "Rajm Al Shawk",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 10902,
+		"cityId": 83,
+		"name": "Russayfah",
+		"name_arabic": "\u0627\u0644\u0631\u0635\u064a\u0641\u0629",
+		"name_english": "Russayfah",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 12743,
+		"cityId": 83,
+		"name": "Dhlail",
+		"name_arabic": "\u0627\u0644\u0636\u0644\u064a\u0644",
+		"name_english": "Dhlail",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 12745,
+		"cityId": 83,
+		"name": "Qasr al-Hallabat Al-Sharqi",
+		"name_arabic": "\u0642\u0635\u0631 \u0627\u0644\u062d\u0644\u0627\u0628\u0627\u062a \u0627\u0644\u0634\u0631\u0642\u064a",
+		"name_english": "Qasr al-Hallabat Al-Sharqi",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 12747,
+		"cityId": 83,
+		"name": "Azraq",
+		"name_arabic": "\u0627\u0644\u0623\u0632\u0631\u0642",
+		"name_english": "Azraq",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 12763,
+		"cityId": 83,
+		"name": "Qasr al-Hallabat Al-Gharbi",
+		"name_arabic": "\u0642\u0635\u0631 \u0627\u0644\u062d\u0644\u0627\u0628\u0627\u062a \u0627\u0644\u063a\u0631\u0628\u064a",
+		"name_english": "Qasr al-Hallabat Al-Gharbi",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 12765,
+		"cityId": 83,
+		"name": "Jabal Al Mugheir",
+		"name_arabic": "\u062c\u0628\u0644 \u0627\u0644\u0645\u063a\u064a\u0631",
+		"name_english": "Jabal Al Mugheir",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13715,
+		"cityId": 83,
+		"name": "Abu Al-Zighan",
+		"name_arabic": "\u0623\u0628\u0648 \u0627\u0644\u0632\u064a\u063a\u0627\u0646",
+		"name_english": "Abu Al-Zighan",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13716,
+		"cityId": 83,
+		"name": "Al-Alouk",
+		"name_arabic": "\u0627\u0644\u0639\u0627\u0644\u0648\u0643",
+		"name_english": "Al-Alouk",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13717,
+		"cityId": 83,
+		"name": "Al-Kamsha",
+		"name_arabic": "\u0627\u0644\u0643\u0645\u0634\u0629",
+		"name_english": "Al-Kamsha",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13718,
+		"cityId": 83,
+		"name": "Al-Misfat st.",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0645\u0635\u0641\u0627\u0629",
+		"name_english": "Al-Misfat st.",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13719,
+		"cityId": 83,
+		"name": "Al-Qnaiya",
+		"name_arabic": "\u0627\u0644\u0642\u0646\u064a\u0629",
+		"name_english": "Al-Qnaiya",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13720,
+		"cityId": 83,
+		"name": "Douqara",
+		"name_arabic": "\u062f\u0648\u0642\u0631\u0629",
+		"name_english": "Douqara",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13721,
+		"cityId": 83,
+		"name": "Graisa",
+		"name_arabic": "\u063a\u0631\u064a\u0633\u0627",
+		"name_english": "Graisa",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13722,
+		"cityId": 83,
+		"name": "Khou",
+		"name_arabic": "\u062e\u0648",
+		"name_english": "Khou",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13723,
+		"cityId": 83,
+		"name": "Daheit Makka Al-Mokarameh",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0645\u0643\u0629 \u0627\u0644\u0645\u0643\u0631\u0645\u0629",
+		"name_english": "Daheit Makka Al-Mokarameh",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13724,
+		"cityId": 83,
+		"name": "Sarout",
+		"name_arabic": "\u0635\u0631\u0648\u062a",
+		"name_english": "Sarout",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 13725,
+		"cityId": 83,
+		"name": "Umm Sleih",
+		"name_arabic": "\u0623\u0645 \u0635\u0644\u064a\u062d",
+		"name_english": "Umm Sleih",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 15232,
+		"cityId": 83,
+		"name": "Al-Saadeh st.",
+		"name_arabic": "\u0634\u0627\u0631\u0639 \u0627\u0644\u0633\u0639\u0627\u062f\u0629",
+		"name_english": "Al-Saadeh st.",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 14835,
+		"cityId": 83,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}, {
+		"id": 15530,
+		"cityId": 83,
+		"name": "Um Rummanah",
+		"name_arabic": "\u0623\u0645 \u0631\u0645\u0627\u0646\u0629",
+		"name_english": "Um Rummanah",
+		"is_other": false,
+		"lat": 32.060819,
+		"lng": 36.09418
+	}],
+	"Jerash": [{
+		"id": 7289,
+		"cityId": 91,
+		"name": "Al-Hashimiyyah",
+		"name_arabic": "\u0627\u0644\u0647\u0627\u0634\u0645\u064a\u0629",
+		"name_english": "Al-Hashimiyyah",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 7291,
+		"cityId": 91,
+		"name": "Al-Mastaba",
+		"name_arabic": "\u0627\u0644\u0645\u0635\u0637\u0628\u0629",
+		"name_english": "Al-Mastaba",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 7293,
+		"cityId": 91,
+		"name": "Al-Msherifeh",
+		"name_arabic": "\u0627\u0644\u0645\u0634\u064a\u0631\u0641\u0629",
+		"name_english": "Al-Msherifeh",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 7295,
+		"cityId": 91,
+		"name": "Kufor Khal",
+		"name_arabic": "\u0643\u0641\u0631 \u062e\u0644",
+		"name_english": "Kufor Khal",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 7297,
+		"cityId": 91,
+		"name": "Marsa'",
+		"name_arabic": "\u0645\u0631\u0635\u0639",
+		"name_english": "Marsa'",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 7299,
+		"cityId": 91,
+		"name": "Sakib",
+		"name_arabic": "\u0633\u0627\u0643\u0628",
+		"name_english": "Sakib",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 7301,
+		"cityId": 91,
+		"name": "Salhoub",
+		"name_arabic": "\u0633\u0644\u062d\u0648\u0628",
+		"name_english": "Salhoub",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 7303,
+		"cityId": 91,
+		"name": "Soof",
+		"name_arabic": "\u0633\u0648\u0641",
+		"name_english": "Soof",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 7305,
+		"cityId": 91,
+		"name": "Tal Al-Rumman",
+		"name_arabic": "\u062a\u0644 \u0627\u0644\u0631\u0645\u0627\u0646",
+		"name_english": "Tal Al-Rumman",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 10881,
+		"cityId": 91,
+		"name": "Kufair",
+		"name_arabic": "\u0643\u0641\u064a\u0631",
+		"name_english": "Kufair",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 12749,
+		"cityId": 91,
+		"name": "Al-Majdal",
+		"name_arabic": "\u0627\u0644\u0645\u062c\u062f\u0644",
+		"name_english": "Al-Majdal",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 12751,
+		"cityId": 91,
+		"name": "Borma",
+		"name_arabic": "\u0628\u0631\u0645\u0627",
+		"name_english": "Borma",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 12753,
+		"cityId": 91,
+		"name": "Al-Rashaida",
+		"name_arabic": "\u0627\u0644\u0631\u0634\u0627\u064a\u062f\u0629",
+		"name_english": "Al-Rashaida",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 12755,
+		"cityId": 91,
+		"name": "Debbin",
+		"name_arabic": "\u062f\u0628\u064a\u0646",
+		"name_english": "Debbin",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 12757,
+		"cityId": 91,
+		"name": "Amamah",
+		"name_arabic": "\u0639\u0645\u0627\u0645\u0647",
+		"name_english": "Amamah",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 12759,
+		"cityId": 91,
+		"name": "Unaybah",
+		"name_arabic": "\u0639\u0646\u064a\u0628\u0629",
+		"name_english": "Unaybah",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 13663,
+		"cityId": 91,
+		"name": "Dahl",
+		"name_arabic": "\u062f\u062d\u0644",
+		"name_english": "Dahl",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 13704,
+		"cityId": 91,
+		"name": "Al-Kittah",
+		"name_arabic": "\u0627\u0644\u0643\u062a\u0647",
+		"name_english": "Al-Kittah",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 13705,
+		"cityId": 91,
+		"name": "Al-Naseem",
+		"name_arabic": "\u0627\u0644\u0646\u0633\u064a\u0645",
+		"name_english": "Al-Naseem",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 13706,
+		"cityId": 91,
+		"name": "Qafqafa",
+		"name_arabic": "\u0642\u0641\u0642\u0641\u0627",
+		"name_english": "Qafqafa",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 13757,
+		"cityId": 91,
+		"name": "Al-Haddadeh",
+		"name_arabic": "\u0627\u0644\u062d\u062f\u0627\u062f\u0629",
+		"name_english": "Al-Haddadeh",
+		"is_other": false,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}, {
+		"id": 14842,
+		"cityId": 91,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 32.274651,
+		"lng": 35.896076
+	}],
+	"Salt": [{
+		"id": 7161,
+		"cityId": 92,
+		"name": "A'llan",
+		"name_arabic": "\u0639\u0644\u0627\u0646",
+		"name_english": "A'llan",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7163,
+		"cityId": 92,
+		"name": "Al Balqa'",
+		"name_arabic": "\u0627\u0644\u0628\u0644\u0642\u0627\u0621",
+		"name_english": "Al Balqa'",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7165,
+		"cityId": 92,
+		"name": "Al I'zariyyeh",
+		"name_arabic": "\u0627\u0644\u0639\u064a\u0632\u0631\u064a\u0629",
+		"name_english": "Al I'zariyyeh",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7167,
+		"cityId": 92,
+		"name": "Al Jada'a",
+		"name_arabic": "\u0627\u0644\u062c\u062f\u0639\u0629",
+		"name_english": "Al Jada'a",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7169,
+		"cityId": 92,
+		"name": "Al Jadoor",
+		"name_arabic": "\u0627\u0644\u062c\u0627\u062f\u0648\u0631",
+		"name_english": "Al Jadoor",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7171,
+		"cityId": 92,
+		"name": "Al Khader",
+		"name_arabic": "\u0627\u0644\u062e\u0636\u0631",
+		"name_english": "Al Khader",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7173,
+		"cityId": 92,
+		"name": "Al Khandaq",
+		"name_arabic": "\u0627\u0644\u062e\u0646\u062f\u0642",
+		"name_english": "Al Khandaq",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7175,
+		"cityId": 92,
+		"name": "Al Maghareeb",
+		"name_arabic": "\u0627\u0644\u0645\u063a\u0627\u0631\u064a\u0628",
+		"name_english": "Al Maghareeb",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7177,
+		"cityId": 92,
+		"name": "Al Manshiyyeh",
+		"name_arabic": "\u0627\u0644\u0645\u0646\u0634\u064a\u0629",
+		"name_english": "Al Manshiyyeh",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7179,
+		"cityId": 92,
+		"name": "Al Midan",
+		"name_arabic": "\u0627\u0644\u0645\u064a\u062f\u0627\u0646",
+		"name_english": "Al Midan",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7181,
+		"cityId": 92,
+		"name": "Al NAqab",
+		"name_arabic": "\u0627\u0644\u0646\u0642\u0628",
+		"name_english": "Al NAqab",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7183,
+		"cityId": 92,
+		"name": "Al Qala'a",
+		"name_arabic": "\u0627\u0644\u0642\u0644\u0639\u0629",
+		"name_english": "Al Qala'a",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7185,
+		"cityId": 92,
+		"name": "Al Remeimeen",
+		"name_arabic": "\u0627\u0644\u0631\u0645\u064a\u0645\u064a\u0646",
+		"name_english": "Al Remeimeen",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7187,
+		"cityId": 92,
+		"name": "Al Salalem",
+		"name_arabic": "\u0627\u0644\u0633\u0644\u0627\u0644\u0645",
+		"name_english": "Al Salalem",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7189,
+		"cityId": 92,
+		"name": "Al Saro",
+		"name_arabic": "\u0627\u0644\u0633\u0631\u0648",
+		"name_english": "Al Saro",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7191,
+		"cityId": 92,
+		"name": "Al Sawarfeh",
+		"name_arabic": "\u0627\u0644\u0635\u0648\u0627\u0631\u0641\u0629",
+		"name_english": "Al Sawarfeh",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7193,
+		"cityId": 92,
+		"name": "Al Subeihi",
+		"name_arabic": "\u0627\u0644\u0635\u0628\u064a\u062d\u064a",
+		"name_english": "Al Subeihi",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7195,
+		"cityId": 92,
+		"name": "Al Zohour",
+		"name_arabic": "\u0627\u0644\u0632\u0647\u0648\u0631",
+		"name_english": "Al Zohour",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7197,
+		"cityId": 92,
+		"name": "Hay Al Kharabsheh",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u062e\u0631\u0627\u0628\u0634\u0629",
+		"name_english": "Hay Al Kharabsheh",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7199,
+		"cityId": 92,
+		"name": "I'ra",
+		"name_arabic": "\u0639\u064a\u0631\u0627",
+		"name_english": "I'ra",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7201,
+		"cityId": 92,
+		"name": "Jala'd",
+		"name_arabic": "\u062c\u0644\u0639\u062f",
+		"name_english": "Jala'd",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7203,
+		"cityId": 92,
+		"name": "Naqb Al Daboor",
+		"name_arabic": "\u0646\u0642\u0628 \u0627\u0644\u062f\u0628\u0648\u0631",
+		"name_english": "Naqb Al Daboor",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7205,
+		"cityId": 92,
+		"name": "Seehan",
+		"name_arabic": "\u0633\u064a\u062d\u0627\u0646",
+		"name_english": "Seehan",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7207,
+		"cityId": 92,
+		"name": "Um Jozeh",
+		"name_arabic": "\u0623\u0645 \u062c\u0648\u0632\u0629",
+		"name_english": "Um Jozeh",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7209,
+		"cityId": 92,
+		"name": "Wadi Shua'ib",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0634\u0639\u064a\u0628",
+		"name_english": "Wadi Shua'ib",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7211,
+		"cityId": 92,
+		"name": "Yarga",
+		"name_arabic": "\u064a\u0631\u0642\u0627",
+		"name_english": "Yarga",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 7213,
+		"cityId": 92,
+		"name": "Zay",
+		"name_arabic": "\u0632\u064a",
+		"name_english": "Zay",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 10904,
+		"cityId": 92,
+		"name": "Ein Al-Basha",
+		"name_arabic": "\u0639\u064a\u0646 \u0627\u0644\u0628\u0627\u0634\u0627",
+		"name_english": "Ein Al-Basha",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 10906,
+		"cityId": 92,
+		"name": "Kafr Hooda",
+		"name_arabic": "\u0643\u0641\u0631\u0647\u0648\u062f\u0627",
+		"name_english": "Kafr Hooda",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 13656,
+		"cityId": 92,
+		"name": "South Shuna",
+		"name_arabic": "\u0627\u0644\u0634\u0648\u0646\u0647 \u0627\u0644\u062c\u0646\u0648\u0628\u064a\u0647",
+		"name_english": "South Shuna",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 13707,
+		"cityId": 92,
+		"name": "Swemeh",
+		"name_arabic": "\u0633\u0648\u064a\u0645\u0629",
+		"name_english": "Swemeh",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 16459,
+		"cityId": 92,
+		"name": "Abu Nsair",
+		"name_arabic": "\u0642\u0631\u064a\u0629 \u0623\u0628\u0648 \u0646\u0635\u064a\u0631",
+		"name_english": "Abu Nsair",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 16461,
+		"cityId": 92,
+		"name": "Shafa Al-Amriya",
+		"name_arabic": "\u0634\u0641\u0627 \u0627\u0644\u0639\u0627\u0645\u0631\u064a\u0629",
+		"name_english": "Shafa Al-Amriya",
+		"is_other": false,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}, {
+		"id": 14843,
+		"cityId": 92,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 32.034579,
+		"lng": 35.726908
+	}],
+	"Madaba": [{
+		"id": 7269,
+		"cityId": 128,
+		"name": "Al-Faisaliyyah",
+		"name_arabic": "\u0627\u0644\u0641\u064a\u0635\u0644\u064a\u0629",
+		"name_english": "Al-Faisaliyyah",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 7271,
+		"cityId": 128,
+		"name": "Al-Fayha'",
+		"name_arabic": "\u0627\u0644\u0641\u064a\u062d\u0627\u0621",
+		"name_english": "Al-Fayha'",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 7273,
+		"cityId": 128,
+		"name": "Al-Jbeil",
+		"name_arabic": "\u0627\u0644\u062c\u0628\u064a\u0644",
+		"name_english": "Al-Jbeil",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 7277,
+		"cityId": 128,
+		"name": "Dalilet Al-Hamaideh",
+		"name_arabic": "\u062f\u0644\u064a\u0644\u0647 \u0627\u0644\u062d\u0645\u0627\u064a\u062f\u0647",
+		"name_english": "Dalilet Al-Hamaideh",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 7279,
+		"cityId": 128,
+		"name": "Hanina Al-Gharbiyyah",
+		"name_arabic": "\u062d\u0646\u064a\u0646\u0627 \u0627\u0644\u063a\u0631\u0628\u064a\u0647",
+		"name_english": "Hanina Al-Gharbiyyah",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 7281,
+		"cityId": 128,
+		"name": "lob",
+		"name_arabic": "\u0644\u0628",
+		"name_english": "lob",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 7283,
+		"cityId": 128,
+		"name": "Madaba Center",
+		"name_arabic": "\u0648\u0633\u0637 \u0645\u0627\u062f\u0628\u0627",
+		"name_english": "Madaba Center",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 7285,
+		"cityId": 128,
+		"name": "Mkawer",
+		"name_arabic": "\u0645\u0643\u0627\u0648\u0631",
+		"name_english": "Mkawer",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 7287,
+		"cityId": 128,
+		"name": "Thiban",
+		"name_arabic": "\u0630\u064a\u0628\u0627\u0646",
+		"name_english": "Thiban",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 10948,
+		"cityId": 128,
+		"name": "Manja",
+		"name_arabic": "\u0645\u0646\u062c\u0627",
+		"name_english": "Manja",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 10992,
+		"cityId": 128,
+		"name": "Mai'n",
+		"name_arabic": "\u0645\u0627\u0639\u064a\u0646",
+		"name_english": "Mai'n",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 11244,
+		"cityId": 128,
+		"name": "Jelul",
+		"name_arabic": "\u062c\u0644\u0648\u0644",
+		"name_english": "Jelul",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 13583,
+		"cityId": 128,
+		"name": "Al-Zafaran",
+		"name_arabic": "\u0627\u0644\u0632\u0639\u0641\u0631\u0627\u0646",
+		"name_english": "Al-Zafaran",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 13659,
+		"cityId": 128,
+		"name": "Umm Al Amad",
+		"name_arabic": "\u0627\u0645 \u0627\u0644\u0639\u0645\u062f",
+		"name_english": "Umm Al Amad",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 13712,
+		"cityId": 128,
+		"name": "Hanina",
+		"name_arabic": "\u062d\u0646\u064a\u0646\u0627",
+		"name_english": "Hanina",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 15230,
+		"cityId": 128,
+		"name": "Al-Mokhayam",
+		"name_arabic": "\u0645\u062e\u064a\u0645 \u0645\u0627\u062f\u0628\u0627",
+		"name_english": "Al-Mokhayam",
+		"is_other": false,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}, {
+		"id": 14873,
+		"cityId": 128,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 31.719341,
+		"lng": 35.793243
+	}],
+	"Aqaba": [{
+		"id": 7117,
+		"cityId": 61,
+		"name": "Al Atiba'",
+		"name_arabic": "\u0627\u0644\u0623\u0637\u0628\u0627\u0621",
+		"name_english": "Al Atiba'",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7119,
+		"cityId": 61,
+		"name": "Al Balad Al Qadeemeh",
+		"name_arabic": "\u0627\u0644\u0628\u0644\u062f \u0627\u0644\u0642\u062f\u064a\u0645\u0629",
+		"name_english": "Al Balad Al Qadeemeh",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7121,
+		"cityId": 61,
+		"name": "Al Herafeyeh",
+		"name_arabic": "\u0627\u0644\u062d\u0631\u0641\u064a\u0629",
+		"name_english": "Al Herafeyeh",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7123,
+		"cityId": 61,
+		"name": "Al Mahdood Al Gharby",
+		"name_arabic": "\u0627\u0644\u0645\u062d\u062f\u0648\u062f \u0627\u0644\u063a\u0631\u0628\u064a",
+		"name_english": "Al Mahdood Al Gharby",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7125,
+		"cityId": 61,
+		"name": "Al Mahdood Al Sharqy",
+		"name_arabic": "\u0627\u0644\u0645\u062d\u062f\u0648\u062f \u0627\u0644\u0634\u0631\u0642\u064a",
+		"name_english": "Al Mahdood Al Sharqy",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7127,
+		"cityId": 61,
+		"name": "Al Mahdood Al Wasat",
+		"name_arabic": "\u0627\u0644\u0645\u062d\u062f\u0648\u062f \u0627\u0644\u0648\u0633\u0637",
+		"name_english": "Al Mahdood Al Wasat",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7129,
+		"cityId": 61,
+		"name": "Al Manarah",
+		"name_arabic": "\u0627\u0644\u0645\u0646\u0627\u0631\u0629",
+		"name_english": "Al Manarah",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7131,
+		"cityId": 61,
+		"name": "Al Rimaal",
+		"name_arabic": "\u0627\u0644\u0631\u0645\u0627\u0644",
+		"name_english": "Al Rimaal",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7135,
+		"cityId": 61,
+		"name": "Al Sakaneyeh (10)",
+		"name_arabic": "\u0627\u0644\u0633\u0643\u0646\u064a\u0629 10",
+		"name_english": "Al Sakaneyeh (10)",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7139,
+		"cityId": 61,
+		"name": "Al Sakaneyeh (3)",
+		"name_arabic": "\u0627\u0644\u0633\u0643\u0646\u064a\u0629 3",
+		"name_english": "Al Sakaneyeh (3)",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7143,
+		"cityId": 61,
+		"name": "Al Sakaneyeh (5)",
+		"name_arabic": "\u0627\u0644\u0633\u0643\u0646\u064a\u0629 5",
+		"name_english": "Al Sakaneyeh (5)",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7145,
+		"cityId": 61,
+		"name": "Al Sakaneyeh (6)",
+		"name_arabic": "\u0627\u0644\u0633\u0643\u0646\u064a\u0629 6",
+		"name_english": "Al Sakaneyeh (6)",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7147,
+		"cityId": 61,
+		"name": "Al Sakaneyeh (7)",
+		"name_arabic": "\u0627\u0644\u0633\u0643\u0646\u064a\u0629 7",
+		"name_english": "Al Sakaneyeh (7)",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7151,
+		"cityId": 61,
+		"name": "Al Sakaneyeh (9)",
+		"name_arabic": "\u0627\u0644\u0633\u0643\u0646\u064a\u0629 9",
+		"name_english": "Al Sakaneyeh (9)",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7153,
+		"cityId": 61,
+		"name": "Al Shalalah",
+		"name_arabic": "\u0627\u0644\u0634\u0644\u0627\u0644\u0629",
+		"name_english": "Al Shalalah",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7157,
+		"cityId": 61,
+		"name": "Sakan Al Asmedah",
+		"name_arabic": "\u0633\u0643\u0646 \u0627\u0644\u0623\u0633\u0645\u062f\u0629",
+		"name_english": "Sakan Al Asmedah",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 7159,
+		"cityId": 61,
+		"name": "Tala Bay",
+		"name_arabic": "\u062a\u0627\u0644\u0627 \u0628\u0627\u064a",
+		"name_english": "Tala Bay",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 8971,
+		"cityId": 61,
+		"name": "Wadi Rum",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0631\u0645",
+		"name_english": "Wadi Rum",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 8973,
+		"cityId": 61,
+		"name": "Al Ridwan",
+		"name_arabic": "\u0627\u0644\u0631\u0636\u0648\u0627\u0646",
+		"name_english": "Al Ridwan",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 8975,
+		"cityId": 61,
+		"name": "Qweira",
+		"name_arabic": "\u0627\u0644\u0642\u0648\u064a\u0631\u0629",
+		"name_english": "Qweira",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13543,
+		"cityId": 61,
+		"name": "Al-Shamiyah",
+		"name_arabic": "\u0627\u0644\u0634\u0627\u0645\u064a\u0629",
+		"name_english": "Al-Shamiyah",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13545,
+		"cityId": 61,
+		"name": "Al-Alamiya",
+		"name_arabic": "\u0627\u0644\u0639\u0627\u0644\u0645\u064a\u0629",
+		"name_english": "Al-Alamiya",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13547,
+		"cityId": 61,
+		"name": "Karama",
+		"name_arabic": "\u0627\u0644\u0643\u0631\u0627\u0645\u0629",
+		"name_english": "Karama",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13549,
+		"cityId": 61,
+		"name": "Al-Nakhil",
+		"name_arabic": "\u0627\u0644\u0646\u062e\u064a\u0644",
+		"name_english": "Al-Nakhil",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13577,
+		"cityId": 61,
+		"name": "Al-Sakaneyeh 8",
+		"name_arabic": "\u0627\u0644\u0633\u0643\u0646\u064a\u0629 8",
+		"name_english": "Al-Sakaneyeh 8",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13579,
+		"cityId": 61,
+		"name": "Al-Shaabiyah",
+		"name_arabic": "\u0627\u0644\u0634\u0639\u0628\u064a\u0629",
+		"name_english": "Al-Shaabiyah",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13601,
+		"cityId": 61,
+		"name": "Al Mulqan",
+		"name_arabic": "\u0627\u0644\u0645\u0644\u0642\u0627\u0646",
+		"name_english": "Al Mulqan",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13693,
+		"cityId": 61,
+		"name": "Al-Markaziya",
+		"name_arabic": "\u0627\u0644\u0645\u0631\u0643\u0632\u064a\u0629",
+		"name_english": "Al-Markaziya",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13694,
+		"cityId": 61,
+		"name": "Mulqan Janoubi",
+		"name_arabic": "\u0645\u0644\u0642\u0627\u0646 \u0627\u0644\u062c\u0646\u0648\u0628\u064a",
+		"name_english": "Mulqan Janoubi",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 13695,
+		"cityId": 61,
+		"name": "Mulqan Shamali",
+		"name_arabic": "\u0645\u0644\u0642\u0627\u0646 \u0627\u0644\u0634\u0645\u0627\u0644\u064a",
+		"name_english": "Mulqan Shamali",
+		"is_other": false,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}, {
+		"id": 14814,
+		"cityId": 61,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 29.532052,
+		"lng": 35.006321
+	}],
+	"Mafraq": [{
+		"id": 7321,
+		"cityId": 87,
+		"name": "Al Ghadeer Al Abyad",
+		"name_arabic": "\u0627\u0644\u063a\u062f\u064a\u0631 \u0627\u0644\u0623\u0628\u064a\u0636",
+		"name_english": "Al Ghadeer Al Abyad",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7323,
+		"cityId": 87,
+		"name": "Al Mazzeh",
+		"name_arabic": "\u0627\u0644\u0645\u0632\u0629",
+		"name_english": "Al Mazzeh",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7325,
+		"cityId": 87,
+		"name": "Bala'ama",
+		"name_arabic": "\u0628\u0644\u0639\u0645\u0627",
+		"name_english": "Bala'ama",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7327,
+		"cityId": 87,
+		"name": "Bowaydet Al Hawamdeh",
+		"name_arabic": "\u0628\u0648\u064a\u0636\u0629 \u0627\u0644\u062d\u0648\u0627\u0645\u062f\u0629",
+		"name_english": "Bowaydet Al Hawamdeh",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7329,
+		"cityId": 87,
+		"name": "Hayyan Al Moshref",
+		"name_arabic": "\u062d\u064a\u0627\u0646 \u0627\u0644\u0645\u0634\u0631\u0641",
+		"name_english": "Hayyan Al Moshref",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7331,
+		"cityId": 87,
+		"name": "Idoun",
+		"name_arabic": "\u0627\u064a\u062f\u0648\u0646",
+		"name_english": "Idoun",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7333,
+		"cityId": 87,
+		"name": "Manshiyyet Bani Hassan",
+		"name_arabic": "\u0645\u0646\u0634\u064a\u0629 \u0628\u0646\u064a \u062d\u0633\u0646",
+		"name_english": "Manshiyyet Bani Hassan",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7335,
+		"cityId": 87,
+		"name": "Rhab",
+		"name_arabic": "\u0627\u0631\u062d\u0627\u0628",
+		"name_english": "Rhab",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7337,
+		"cityId": 87,
+		"name": "Sabha",
+		"name_arabic": "\u0635\u0628\u062d\u0627",
+		"name_english": "Sabha",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7339,
+		"cityId": 87,
+		"name": "Um Al Jimal",
+		"name_arabic": "\u0623\u0645 \u0627\u0644\u062c\u0645\u0627\u0644",
+		"name_english": "Um Al Jimal",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7341,
+		"cityId": 87,
+		"name": "Um Al Na'am Al Gharbiyyeh",
+		"name_arabic": "\u0623\u0645 \u0627\u0644\u0646\u0639\u0627\u0645 \u0627\u0644\u063a\u0631\u0628\u064a",
+		"name_english": "Um Al Na'am Al Gharbiyyeh",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 7343,
+		"cityId": 87,
+		"name": "Um Al Na'am Al Sharqiyyeh",
+		"name_arabic": "\u0623\u0645 \u0627\u0644\u0646\u0639\u0627\u0645 \u0627\u0644\u0634\u0631\u0642\u064a\u0629",
+		"name_english": "Um Al Na'am Al Sharqiyyeh",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 10888,
+		"cityId": 87,
+		"name": "Ain wa Al-Ma'mariyyeh",
+		"name_arabic": "\u0639\u064a\u0646 \u0648\u0627\u0644\u0645\u0639\u0645\u0631\u064a\u0629",
+		"name_english": "Ain wa Al-Ma'mariyyeh",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 10916,
+		"cityId": 87,
+		"name": "Al-Khalidya",
+		"name_arabic": "\u0627\u0644\u062e\u0627\u0644\u062f\u064a\u0647",
+		"name_english": "Al-Khalidya",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13551,
+		"cityId": 87,
+		"name": "Umm Al-Quttayn",
+		"name_arabic": "\u0623\u0645 \u0627\u0644\u0642\u0637\u064a\u0646",
+		"name_english": "Umm Al-Quttayn",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13553,
+		"cityId": 87,
+		"name": "Al-Badiah Ash-Shamaliyah",
+		"name_arabic": "\u0627\u0644\u0628\u0627\u062f\u064a\u0629 \u0627\u0644\u0634\u0645\u0627\u0644\u064a\u0629",
+		"name_english": "Al-Badiah Ash-Shamaliyah",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13555,
+		"cityId": 87,
+		"name": "Al-Badiah Ash-Shamaliyah Al-Gharbiya",
+		"name_arabic": "\u0627\u0644\u0628\u0627\u062f\u064a\u0629 \u0627\u0644\u0634\u0645\u0627\u0644\u064a\u0629 \u0627\u0644\u063a\u0631\u0628\u064a\u0629",
+		"name_english": "Al-Badiah Ash-Shamaliyah Al-Gharbiya",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13557,
+		"cityId": 87,
+		"name": "Mansoura",
+		"name_arabic": "\u0627\u0644\u0645\u0646\u0635\u0648\u0631\u0629",
+		"name_english": "Mansoura",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13559,
+		"cityId": 87,
+		"name": "Hawshah",
+		"name_arabic": "\u062d\u0648\u0634\u0627",
+		"name_english": "Hawshah",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13561,
+		"cityId": 87,
+		"name": "Dayr Al-Kahf",
+		"name_arabic": "\u062f\u064a\u0631 \u0627\u0644\u0643\u0647\u0641",
+		"name_english": "Dayr Al-Kahf",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13563,
+		"cityId": 87,
+		"name": "Ruwaished",
+		"name_arabic": "\u0631\u0648\u064a\u0634\u064a\u062f",
+		"name_english": "Ruwaished",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13565,
+		"cityId": 87,
+		"name": "Sama As-Sirhan",
+		"name_arabic": "\u0633\u0645\u0627 \u0627\u0644\u0633\u0631\u062d\u0627\u0646",
+		"name_english": "Sama As-Sirhan",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13567,
+		"cityId": 87,
+		"name": "Dahiyat Al-Jamaa",
+		"name_arabic": "\u0636\u0627\u062d\u064a\u0629 \u0627\u0644\u062c\u0627\u0645\u0639\u0629",
+		"name_english": "Dahiyat Al-Jamaa",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13569,
+		"cityId": 87,
+		"name": "Koum Al-Ahmar",
+		"name_arabic": "\u0643\u0648\u0645 \u0627\u0644\u0623\u062d\u0645\u0631",
+		"name_english": "Koum Al-Ahmar",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13713,
+		"cityId": 87,
+		"name": "Al-Khirba Al-Samra",
+		"name_arabic": "\u0627\u0644\u062e\u0631\u0628\u0629 \u0627\u0644\u0633\u0645\u0631\u0627",
+		"name_english": "Al-Khirba Al-Samra",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13714,
+		"cityId": 87,
+		"name": "Hai Nowarah",
+		"name_arabic": "\u062d\u064a \u0646\u0648\u0627\u0631\u0629",
+		"name_english": "Hai Nowarah",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13763,
+		"cityId": 87,
+		"name": "Tayeb Isim",
+		"name_arabic": "\u0637\u064a\u0628 \u0627\u0633\u0645",
+		"name_english": "Tayeb Isim",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13764,
+		"cityId": 87,
+		"name": "Znaya",
+		"name_arabic": "\u0627\u0644\u0632\u0646\u064a\u0629",
+		"name_english": "Znaya",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13765,
+		"cityId": 87,
+		"name": "Hayyan Rwaibed",
+		"name_arabic": "\u062d\u064a\u0627\u0646 \u0627\u0644\u0631\u0648\u064a\u0628\u0636",
+		"name_english": "Hayyan Rwaibed",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13766,
+		"cityId": 87,
+		"name": "Al-Bustan",
+		"name_arabic": "\u0627\u0644\u0628\u0633\u062a\u0627\u0646",
+		"name_english": "Al-Bustan",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13767,
+		"cityId": 87,
+		"name": "Al-Zaytouna",
+		"name_arabic": "\u0627\u0644\u0632\u064a\u062a\u0648\u0646\u0629",
+		"name_english": "Al-Zaytouna",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13768,
+		"cityId": 87,
+		"name": "Al-Nithamiya",
+		"name_arabic": "\u0627\u0644\u0646\u0638\u0627\u0645\u064a\u0629",
+		"name_english": "Al-Nithamiya",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13769,
+		"cityId": 87,
+		"name": "Al-Marajim",
+		"name_arabic": "\u0627\u0644\u0645\u0631\u0627\u062c\u0645",
+		"name_english": "Al-Marajim",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13770,
+		"cityId": 87,
+		"name": "Um Sweiweina",
+		"name_arabic": "\u0623\u0645 \u0635\u0648\u064a\u0648\u064a\u0646\u0629",
+		"name_english": "Um Sweiweina",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13771,
+		"cityId": 87,
+		"name": "Al-Dajaniya",
+		"name_arabic": "\u0627\u0644\u062f\u062c\u0646\u064a\u0629",
+		"name_english": "Al-Dajaniya",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13772,
+		"cityId": 87,
+		"name": "Hweishan",
+		"name_arabic": "\u0647\u0648\u064a\u0634\u0627\u0646",
+		"name_english": "Hweishan",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13773,
+		"cityId": 87,
+		"name": "Bweida Al-Ilimat",
+		"name_arabic": "\u0628\u0648\u064a\u0636\u0629 \u0627\u0644\u0639\u0644\u064a\u0645\u0627\u062a",
+		"name_english": "Bweida Al-Ilimat",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13774,
+		"cityId": 87,
+		"name": "Al-Daqusma",
+		"name_arabic": "\u0627\u0644\u062f\u0642\u0633\u0645\u0629",
+		"name_english": "Al-Daqusma",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13775,
+		"cityId": 87,
+		"name": "Nadira",
+		"name_arabic": "\u0646\u0627\u062f\u0631\u0629",
+		"name_english": "Nadira",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13776,
+		"cityId": 87,
+		"name": "Um Batima",
+		"name_arabic": "\u0623\u0645 \u0628\u0637\u064a\u0645\u0629",
+		"name_english": "Um Batima",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13777,
+		"cityId": 87,
+		"name": "Dahl",
+		"name_arabic": "\u062f\u062d\u0644",
+		"name_english": "Dahl",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13778,
+		"cityId": 87,
+		"name": "Al-Rashada",
+		"name_arabic": "\u0627\u0644\u0631\u0634\u0627\u062f\u0629",
+		"name_english": "Al-Rashada",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13779,
+		"cityId": 87,
+		"name": "Um Al-Lulu",
+		"name_arabic": "\u0623\u0645 \u0627\u0644\u0644\u0648\u0644\u0648",
+		"name_english": "Um Al-Lulu",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13780,
+		"cityId": 87,
+		"name": "Safawi",
+		"name_arabic": "\u0627\u0644\u0635\u0641\u0627\u0648\u064a",
+		"name_english": "Safawi",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13781,
+		"cityId": 87,
+		"name": "Al-Salhiya",
+		"name_arabic": "\u0627\u0644\u0635\u0627\u0644\u062d\u064a\u0629",
+		"name_english": "Al-Salhiya",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13782,
+		"cityId": 87,
+		"name": "rahbat Rakad",
+		"name_arabic": "\u0631\u062d\u0628\u0629 \u0631\u0643\u0627\u062f",
+		"name_english": "rahbat Rakad",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13783,
+		"cityId": 87,
+		"name": "Nayfa",
+		"name_arabic": "\u0646\u0627\u064a\u0641\u0647",
+		"name_english": "Nayfa",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13784,
+		"cityId": 87,
+		"name": "Zamlat Al-Amir Ghazi",
+		"name_arabic": "\u0632\u0645\u0644\u0629 \u0627\u0644\u0623\u0645\u064a\u0631 \u063a\u0627\u0632\u064a",
+		"name_english": "Zamlat Al-Amir Ghazi",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13785,
+		"cityId": 87,
+		"name": "Al-Dafyana",
+		"name_arabic": "\u0627\u0644\u062f\u0641\u064a\u0627\u0646\u0629",
+		"name_english": "Al-Dafyana",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13786,
+		"cityId": 87,
+		"name": "Al-Rfa'iyat",
+		"name_arabic": "\u0627\u0644\u0631\u0641\u0627\u0639\u064a\u0627\u062a",
+		"name_english": "Al-Rfa'iyat",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13787,
+		"cityId": 87,
+		"name": "Al-Za'atari",
+		"name_arabic": "\u0627\u0644\u0632\u0639\u062a\u0631\u064a",
+		"name_english": "Al-Za'atari",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13788,
+		"cityId": 87,
+		"name": "Al-Mabruka",
+		"name_arabic": "\u0627\u0644\u0645\u0628\u0631\u0648\u0643\u0629",
+		"name_english": "Al-Mabruka",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13789,
+		"cityId": 87,
+		"name": "Fa'",
+		"name_arabic": "\u0641\u0627\u0639",
+		"name_english": "Fa'",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13790,
+		"cityId": 87,
+		"name": "Al-Ba'ij",
+		"name_arabic": "\u0627\u0644\u0628\u0627\u0639\u062c",
+		"name_english": "Al-Ba'ij",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13791,
+		"cityId": 87,
+		"name": "Thaghrat Al-Gub",
+		"name_arabic": "\u062b\u063a\u0631\u0629 \u0627\u0644\u062c\u0628",
+		"name_english": "Thaghrat Al-Gub",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 13792,
+		"cityId": 87,
+		"name": "Mughayyer Al-Sarhan",
+		"name_arabic": "\u0645\u063a\u064a\u0631 \u0627\u0644\u0633\u0631\u062d\u0627\u0646",
+		"name_english": "Mughayyer Al-Sarhan",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 15196,
+		"cityId": 87,
+		"name": "Al-Hamra",
+		"name_arabic": "\u0627\u0644\u062d\u0645\u0631\u0627\u0621",
+		"name_english": "Al-Hamra",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 15214,
+		"cityId": 87,
+		"name": "Hay Al-Hussein",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u062d\u0633\u064a\u0646",
+		"name_english": "Hay Al-Hussein",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 15216,
+		"cityId": 87,
+		"name": "Hay Al-Dobbat",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0636\u0628\u0627\u0637",
+		"name_english": "Hay Al-Dobbat",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 15218,
+		"cityId": 87,
+		"name": "Al-Hay Al-Janoubi",
+		"name_arabic": "\u0627\u0644\u062d\u064a \u0627\u0644\u062c\u0646\u0648\u0628\u064a",
+		"name_english": "Al-Hay Al-Janoubi",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 15220,
+		"cityId": 87,
+		"name": "Al-Hay Al-Hashmi",
+		"name_arabic": "\u0627\u0644\u062d\u064a \u0627\u0644\u0647\u0627\u0634\u0645\u064a",
+		"name_english": "Al-Hay Al-Hashmi",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 15222,
+		"cityId": 87,
+		"name": "Hay Al-Zohoor",
+		"name_arabic": "\u062d\u064a \u0627\u0644\u0632\u0647\u0648\u0631",
+		"name_english": "Hay Al-Zohoor",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 16457,
+		"cityId": 87,
+		"name": "Al-Mazraa",
+		"name_arabic": "\u0627\u0644\u0645\u0632\u0631\u0639\u0629",
+		"name_english": "Al-Mazraa",
+		"is_other": false,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}, {
+		"id": 14838,
+		"cityId": 87,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 32.341673,
+		"lng": 36.202003
+	}],
+	"Karak": [{
+		"id": 7215,
+		"cityId": 89,
+		"name": "A'i",
+		"name_arabic": "\u0639\u064a",
+		"name_english": "A'i",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7217,
+		"cityId": 89,
+		"name": "Ader",
+		"name_arabic": "\u0623\u062f\u0631",
+		"name_english": "Ader",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7219,
+		"cityId": 89,
+		"name": "Al Msherifeh",
+		"name_arabic": "\u0627\u0644\u0645\u0634\u064a\u0631\u0641\u0629",
+		"name_english": "Al Msherifeh",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7221,
+		"cityId": 89,
+		"name": "Al-Marj",
+		"name_arabic": "\u0627\u0644\u0645\u0631\u062c",
+		"name_english": "Al-Marj",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7223,
+		"cityId": 89,
+		"name": "Al-Qasr",
+		"name_arabic": "\u0627\u0644\u0642\u0635\u0631",
+		"name_english": "Al-Qasr",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7225,
+		"cityId": 89,
+		"name": "Al-Qatraneh",
+		"name_arabic": "\u0627\u0644\u0642\u0637\u0631\u0627\u0646\u0629",
+		"name_english": "Al-Qatraneh",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7227,
+		"cityId": 89,
+		"name": "Al-Rabba",
+		"name_arabic": "\u0627\u0644\u0631\u0628\u0629",
+		"name_english": "Al-Rabba",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7229,
+		"cityId": 89,
+		"name": "Al-Smeikhiyyeh",
+		"name_arabic": "\u0627\u0644\u0633\u0645\u064a\u0643\u064a\u0629",
+		"name_english": "Al-Smeikhiyyeh",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7231,
+		"cityId": 89,
+		"name": "Al-Thaniyyah",
+		"name_arabic": "\u0627\u0644\u062b\u0646\u064a\u0629",
+		"name_english": "Al-Thaniyyah",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7233,
+		"cityId": 89,
+		"name": "Mu'ta",
+		"name_arabic": "\u0645\u0624\u062a\u0629",
+		"name_english": "Mu'ta",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7235,
+		"cityId": 89,
+		"name": "Qusoor Bashir",
+		"name_arabic": "\u0642\u0635\u0648\u0631 \u0628\u0634\u064a\u0631",
+		"name_english": "Qusoor Bashir",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 7237,
+		"cityId": 89,
+		"name": "That Ras",
+		"name_arabic": "\u0630\u0627\u062a \u0631\u0627\u0633",
+		"name_english": "That Ras",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 13503,
+		"cityId": 89,
+		"name": "Manshiyyet Abu Hammour",
+		"name_arabic": "\u0645\u0646\u0634\u064a\u0629 \u0623\u0628\u0648 \u062d\u0645\u0648\u0631",
+		"name_english": "Manshiyyet Abu Hammour",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 13754,
+		"cityId": 89,
+		"name": "Al-Adnanya",
+		"name_arabic": "\u0627\u0644\u0639\u062f\u0646\u0627\u0646\u064a\u0629",
+		"name_english": "Al-Adnanya",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 13755,
+		"cityId": 89,
+		"name": "Al-Mazar Al-Janoubi",
+		"name_arabic": "\u0627\u0644\u0645\u0632\u0627\u0631 \u0627\u0644\u062c\u0646\u0648\u0628\u064a",
+		"name_english": "Al-Mazar Al-Janoubi",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 13756,
+		"cityId": 89,
+		"name": "Zohoom",
+		"name_arabic": "\u0632\u062d\u0648\u0645",
+		"name_english": "Zohoom",
+		"is_other": false,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}, {
+		"id": 14840,
+		"cityId": 89,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 31.18535,
+		"lng": 35.704773
+	}],
+	"Ajloon": [{
+		"id": 7249,
+		"cityId": 174,
+		"name": "A'anjara",
+		"name_arabic": "\u0639\u0646\u062c\u0631\u0629",
+		"name_english": "A'anjara",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 7251,
+		"cityId": 174,
+		"name": "A'fna",
+		"name_arabic": "\u0639\u0641\u0646\u0629",
+		"name_english": "A'fna",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 7253,
+		"cityId": 174,
+		"name": "Al-Hashimiyyah",
+		"name_arabic": "\u0627\u0644\u0647\u0627\u0634\u0645\u064a\u0629",
+		"name_english": "Al-Hashimiyyah",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 7255,
+		"cityId": 174,
+		"name": "Alqala'a",
+		"name_arabic": "\u0627\u0644\u0642\u0644\u0639\u0629",
+		"name_english": "Alqala'a",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 7257,
+		"cityId": 174,
+		"name": "Barqash",
+		"name_arabic": "\u0628\u0631\u0642\u0634",
+		"name_english": "Barqash",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 7259,
+		"cityId": 174,
+		"name": "Downtown",
+		"name_arabic": "\u0627\u0644\u0628\u0644\u062f",
+		"name_english": "Downtown",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 7261,
+		"cityId": 174,
+		"name": "E'in Jana",
+		"name_arabic": "\u0639\u064a\u0646 \u062c\u0646\u0627",
+		"name_english": "E'in Jana",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 7263,
+		"cityId": 174,
+		"name": "I'bbeen",
+		"name_arabic": "\u0639\u0628\u064a\u0646",
+		"name_english": "I'bbeen",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 7265,
+		"cityId": 174,
+		"name": "Kuforanja",
+		"name_arabic": "\u0643\u0641\u0631\u0646\u062c\u0627",
+		"name_english": "Kuforanja",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 7267,
+		"cityId": 174,
+		"name": "Sakhra",
+		"name_arabic": "\u0635\u062e\u0631\u0629",
+		"name_english": "Sakhra",
+		"is_other": false,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}, {
+		"id": 14895,
+		"cityId": 174,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 32.33256,
+		"lng": 35.751742
+	}],
+	"Ma'An": [{
+		"id": 7239,
+		"cityId": 62,
+		"name": "Al-Hussainiyyah",
+		"name_arabic": "\u0627\u0644\u062d\u0633\u064a\u0646\u064a\u0629",
+		"name_english": "Al-Hussainiyyah",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 7241,
+		"cityId": 62,
+		"name": "Al-Shobak",
+		"name_arabic": "\u0627\u0644\u0634\u0648\u0628\u0643",
+		"name_english": "Al-Shobak",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 7243,
+		"cityId": 62,
+		"name": "Petra",
+		"name_arabic": "\u0627\u0644\u0628\u062a\u0631\u0627\u0621",
+		"name_english": "Petra",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 7245,
+		"cityId": 62,
+		"name": "Sath Ma'an",
+		"name_arabic": "\u0633\u0637\u062d \u0645\u0639\u0627\u0646",
+		"name_english": "Sath Ma'an",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 7247,
+		"cityId": 62,
+		"name": "Wadi Musa",
+		"name_arabic": "\u0648\u0627\u062f\u064a \u0645\u0648\u0633\u0649",
+		"name_english": "Wadi Musa",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 10727,
+		"cityId": 62,
+		"name": "Jafr",
+		"name_arabic": "\u0627\u0644\u062c\u0641\u0631",
+		"name_english": "Jafr",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 10729,
+		"cityId": 62,
+		"name": "Najl",
+		"name_arabic": "\u0646\u062c\u0644",
+		"name_english": "Najl",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 10731,
+		"cityId": 62,
+		"name": "Shmakh",
+		"name_arabic": "\u0634\u0645\u0627\u062e",
+		"name_english": "Shmakh",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 10733,
+		"cityId": 62,
+		"name": "Jaya",
+		"name_arabic": "\u0627\u0644\u062c\u0627\u064a\u0629",
+		"name_english": "Jaya",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 10735,
+		"cityId": 62,
+		"name": "Bayda",
+		"name_arabic": "\u0627\u0644\u0628\u064a\u0636\u0627",
+		"name_english": "Bayda",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 10737,
+		"cityId": 62,
+		"name": "Um Sayhoon",
+		"name_arabic": "\u0623\u0645 \u0635\u064a\u062d\u0648\u0646",
+		"name_english": "Um Sayhoon",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 13760,
+		"cityId": 62,
+		"name": "Ayl",
+		"name_arabic": "\u0623\u064a\u0644",
+		"name_english": "Ayl",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 13761,
+		"cityId": 62,
+		"name": "Al-Mraigha",
+		"name_arabic": "\u0627\u0644\u0645\u0631\u064a\u063a\u0629",
+		"name_english": "Al-Mraigha",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 13762,
+		"cityId": 62,
+		"name": "Ma'an Qasabah",
+		"name_arabic": "\u0642\u0635\u0628\u0629 \u0645\u0639\u0627\u0646",
+		"name_english": "Ma'an Qasabah",
+		"is_other": false,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}, {
+		"id": 14815,
+		"cityId": 62,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 30.192664,
+		"lng": 35.724941
+	}],
+	"Ramtha": [{
+		"id": 7345,
+		"cityId": 214,
+		"name": "Al Bweida",
+		"name_arabic": "\u0627\u0644\u0628\u0648\u064a\u0636\u0629",
+		"name_english": "Al Bweida",
+		"is_other": false,
+		"lat": 32.56101,
+		"lng": 36.006741
+	}, {
+		"id": 7347,
+		"cityId": 214,
+		"name": "Al Shajara",
+		"name_arabic": "\u0627\u0644\u0634\u062c\u0631\u0629",
+		"name_english": "Al Shajara",
+		"is_other": false,
+		"lat": 32.56101,
+		"lng": 36.006741
+	}, {
+		"id": 7349,
+		"cityId": 214,
+		"name": "Al Thneibeh",
+		"name_arabic": "\u0627\u0644\u0630\u0646\u064a\u0628\u0629",
+		"name_english": "Al Thneibeh",
+		"is_other": false,
+		"lat": 32.56101,
+		"lng": 36.006741
+	}, {
+		"id": 7351,
+		"cityId": 214,
+		"name": "Al Torra",
+		"name_arabic": "\u0627\u0644\u0637\u0631\u0629",
+		"name_english": "Al Torra",
+		"is_other": false,
+		"lat": 32.56101,
+		"lng": 36.006741
+	}, {
+		"id": 7353,
+		"cityId": 214,
+		"name": "Amrawa",
+		"name_arabic": "\u0639\u0645\u0631\u0627\u0648\u0629",
+		"name_english": "Amrawa",
+		"is_other": false,
+		"lat": 32.56101,
+		"lng": 36.006741
+	}, {
+		"id": 13573,
+		"cityId": 214,
+		"name": "Romtha",
+		"name_arabic": "\u0627\u0644\u0631\u0645\u062b\u0627",
+		"name_english": "Romtha",
+		"is_other": false,
+		"lat": 32.56101,
+		"lng": 36.006741
+	}, {
+		"id": 14908,
+		"cityId": 214,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 32.56101,
+		"lng": 36.006741
+	}],
+	"Tafileh": [{
+		"id": 7307,
+		"cityId": 175,
+		"name": "Al-Hasa",
+		"name_arabic": "\u0627\u0644\u062d\u0633\u0627",
+		"name_english": "Al-Hasa",
+		"is_other": false,
+		"lat": 30.833706,
+		"lng": 35.616056
+	}, {
+		"id": 7309,
+		"cityId": 175,
+		"name": "Al-Qadisiyyah",
+		"name_arabic": "\u0627\u0644\u0642\u0627\u062f\u0633\u064a\u0629",
+		"name_english": "Al-Qadisiyyah",
+		"is_other": false,
+		"lat": 30.833706,
+		"lng": 35.616056
+	}, {
+		"id": 7311,
+		"cityId": 175,
+		"name": "Al-Qasr",
+		"name_arabic": "\u0627\u0644\u0642\u0635\u0631",
+		"name_english": "Al-Qasr",
+		"is_other": false,
+		"lat": 30.833706,
+		"lng": 35.616056
+	}, {
+		"id": 7313,
+		"cityId": 175,
+		"name": "Al-Rashadiyyah",
+		"name_arabic": "\u0627\u0644\u0631\u0634\u0627\u062f\u064a\u0629",
+		"name_english": "Al-Rashadiyyah",
+		"is_other": false,
+		"lat": 30.833706,
+		"lng": 35.616056
+	}, {
+		"id": 7315,
+		"cityId": 175,
+		"name": "Bseira",
+		"name_arabic": "\u0628\u0635\u064a\u0631\u0629",
+		"name_english": "Bseira",
+		"is_other": false,
+		"lat": 30.833706,
+		"lng": 35.616056
+	}, {
+		"id": 7317,
+		"cityId": 175,
+		"name": "Dana",
+		"name_arabic": "\u0636\u0627\u0646\u0627",
+		"name_english": "Dana",
+		"is_other": false,
+		"lat": 30.833706,
+		"lng": 35.616056
+	}, {
+		"id": 7319,
+		"cityId": 175,
+		"name": "Jurf Al-Daraweesh",
+		"name_arabic": "\u062c\u0631\u0641 \u0627\u0644\u062f\u0631\u0627\u0648\u064a\u0634",
+		"name_english": "Jurf Al-Daraweesh",
+		"is_other": false,
+		"lat": 30.833706,
+		"lng": 35.616056
+	}, {
+		"id": 13575,
+		"cityId": 175,
+		"name": "Al-Ayes",
+		"name_arabic": "\u0627\u0644\u0639\u064a\u0635",
+		"name_english": "Al-Ayes",
+		"is_other": false,
+		"lat": 30.833706,
+		"lng": 35.616056
+	}, {
+		"id": 14896,
+		"cityId": 175,
+		"name": "Other",
+		"name_arabic": "\u0623\u062e\u0631\u0649",
+		"name_english": "Other",
+		"is_other": true,
+		"lat": 30.833706,
+		"lng": 35.616056
+	}]
+}

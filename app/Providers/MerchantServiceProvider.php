@@ -53,10 +53,6 @@ class MerchantServiceProvider extends ServiceProvider
             return collect(Merchant::findOrFail(Auth::user()->merchant_id)->rules)->where('is_active', true);
         });
 
-        $this->app->singleton('country', function () {
-            return collect(json_decode(Storage::disk('local')->get('template/city.json'), true));
-        });
-
         $this->app->singleton('Countrieslookup', function () {
             return Countries::lookup('en', true);
         });
