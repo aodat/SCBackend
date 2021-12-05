@@ -76,7 +76,7 @@ class DatabaseSeeder extends Seeder
 
 
         DB::transaction(function () {
-            $tempCity = (json_decode(Storage::disk('local')->get('template/test.json'), true));
+            $tempCity = (json_decode(Storage::disk('local')->get('template/areas/jo.json'), true));
             $CountryID = (Country::where('code', 'JO')->first()->id);
             $cities = City::where('country_id', $CountryID)->pluck('name_en', 'id');
             $cities->map(function ($name, $cityID) use ($tempCity) {

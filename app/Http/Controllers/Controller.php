@@ -22,9 +22,4 @@ class Controller extends BaseController
     {
         return $this->error('unauthenticated', 403);
     }
-
-    public function second()
-    {
-        
-    }
 }
