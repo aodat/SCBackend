@@ -35,7 +35,7 @@ class InvoiceController extends MerchantController
 
     public function finalize($invoiceID, InvoiceRequest $request)
     {
-        $invoiceInfo = Invoices::where('id', $invoiceID)->where('merchant_id', $request->user()->merchant_id)->first();
+        $invoiceInfo = Invoices::where('id', $invoiceID)->first();
 
         $link = $this->stripe->finalizeInvoice($invoiceInfo->fk_id);
         $invoiceInfo->link = $link;
@@ -46,7 +46,7 @@ class InvoiceController extends MerchantController
 
     public function delete($invoiceID, InvoiceRequest $request)
     {
-        $invoiceInfo = Invoices::where('id', $invoiceID)->where('merchant_id', $request->user()->merchant_id)->first();
+        $invoiceInfo = Invoices::where('id', $invoiceID)->first();
         if ($invoiceInfo->status != 'DRAFT')
             return $this->error('you cant delete this invoice');
         $this->stripe->deleteInvoice($invoiceInfo->fk_id);

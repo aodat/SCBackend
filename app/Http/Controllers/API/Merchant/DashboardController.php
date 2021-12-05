@@ -98,8 +98,7 @@ class DashboardController extends MerchantController
             "CASHOUT" => $this->arrayDays,
             "CASHIN" => $this->arrayDays,
         ];
-        $payment_sql = Transaction::where('merchant_id',  $this->merchant_id)
-            ->whereBetween('created_at', [$this->since_at, $this->until])
+        $payment_sql = Transaction::whereBetween('created_at', [$this->since_at, $this->until])
             ->select(DB::raw("DATE_FORMAT(created_at,'%Y-%m-%d') as date"), 'type', DB::raw('sum(amount) as amount'))
             ->groupBy('date', 'type')
             ->get();

@@ -36,9 +36,6 @@ class PickupsController extends MerchantController
         if ($carrierID != null)
             $pickup->where('carrier_id', $carrierID);
 
-        $pickup->where('merchant_id', $request->user()->id);
-
-
         $paginated = $pickup->paginate(request()->per_page ?? 10);
 
         $tabs = DB::table('pickups')

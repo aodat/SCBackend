@@ -30,7 +30,7 @@ class TransactionsController extends MerchantController
         $sources = $filters['sources'] ?? [];
         $amount = $filters['amount']['val'] ?? null;
         $operation = $filters['amount']['operation'] ?? null;
-        $transaction2 = Transaction::where('merchant_id', $request->user()->merchant_id)->select('created_at')->groupBy('created_at')->paginate(request()->per_page ?? 10);
+        $transaction2 = Transaction::select('created_at')->groupBy('created_at')->paginate(request()->per_page ?? 10);
         $paginated = array();
 
         foreach ($transaction2 as $key => $value) {

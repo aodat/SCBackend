@@ -24,14 +24,14 @@ class MerchantRequest extends FormRequest
     {
         $path = Request()->route()->uri;
         if ($this->getMethod() == 'GET' && strpos($path, 'transactions/{id}') !== false)
-            return Transaction::where('id', Request::instance()->id)->where('merchant_id', Request()->user()->merchant_id)->exists();
+            return Transaction::where('id', Request::instance()->id)->exists();
         else if ($this->getMethod() == 'GET' && strpos($path, 'shipments/{id}') !== false)
-            return Shipment::where('id', Request::instance()->id)->where('merchant_id', Request()->user()->merchant_id)->exists();
+            return Shipment::where('id', Request::instance()->id)->exists();
         else if (
             ($this->getMethod() == 'DELETE' && strpos($path, 'invoice/{invoice_id}') !== false) ||
             ($this->getMethod() == 'GET' && strpos($path, 'invoice/finalize/{invoice_id}') !== false)
         )
-            return Invoices::where('id', Request::instance()->invoice_id)->where('merchant_id', Request()->user()->merchant_id)->exists();
+            return Invoices::where('id', Request::instance()->invoice_id)->exists();
         return true;
     }
 

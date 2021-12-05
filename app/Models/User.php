@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 use App\Notifications\MailResetPasswordNotification as MailResetPasswordNotification;
+
 
 class User extends Authenticatable
 {
@@ -49,5 +51,13 @@ class User extends Authenticatable
     public function merchant()
     {
         return $this->hasOne(Merchant::class, 'id', 'merchant_id');
+    }
+
+    protected static function booted()
+    {
+        if (Request()->user())
+            static::addGlobalScope('ancient', function (Builder $builder) {
+                $builder->where('merchant_id', Request()->user()->merchant_id);
+            });
     }
 }
