@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Carriers;
 use App\Models\Merchant;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
@@ -59,6 +60,11 @@ class MerchantServiceProvider extends ServiceProvider
         
         $this->app->singleton('request_id' ,function () {
             return Str::orderedUuid()->toString();
+        });
+
+
+        $this->app->singleton('carriers' ,function () {
+            return Carriers::all();
         });
     }
 

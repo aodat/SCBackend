@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\Pickup;
 use App\Models\Carriers;
+use Carbon\Carbon;
 
 class PickupsController extends MerchantController
 {
@@ -14,13 +15,13 @@ class PickupsController extends MerchantController
     {
         $filters = $request->json()->all();
 
-        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');;
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
 
         $pickupID = $request->pickup_id ?? null;
         $carrierID = $request->carrier_id ?? null;
 
-        $pickup = Pickup::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"])->where('merchant_id', $request->user()->merchant_id);
+        $pickup = Pickup::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
 
         if ($pickupID != null)
             $pickup->where('id', $pickupID);
@@ -28,8 +29,7 @@ class PickupsController extends MerchantController
         if ($carrierID != null)
             $pickup->where('carrier_id', $carrierID);
         $pickup->where('merchant_id', $request->user()->id);
-
-        $paginated = $pickup->paginate(request()->perPage ?? 10);
+        $paginated = $pickup->paginate(request()->per_page ?? 10);
         return $this->pagination($paginated);
     }
 

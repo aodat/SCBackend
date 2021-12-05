@@ -16,7 +16,7 @@ trait ResponseHandler
         return Response::make($response,  200);
     }
 
-    public static function pagination($data)
+    public static function pagination($data, $additional = [])
     {
         $pagination = $data->toArray();
         $response['data'] = $pagination['data'];
@@ -28,6 +28,10 @@ trait ResponseHandler
             'next_page_url' => $pagination['next_page_url'],
             'per_page' => intval($pagination['per_page'])
         ];
+
+        if (!empty($additional))
+            $response['additional'] = $additional;
+
         $response['meta']['code'] = 200;
         $response['meta']['msg'] = "Data retrieved successfully";
         return Response::make($response, 200);

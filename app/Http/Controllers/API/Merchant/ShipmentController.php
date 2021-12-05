@@ -27,7 +27,7 @@ class ShipmentController extends MerchantController
     {
         $filters = $request->json()->all();
 
-        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');;
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
 
         $external = $filters['external'] ?? [];
@@ -35,7 +35,9 @@ class ShipmentController extends MerchantController
         $phone = $filters['phone'] ?? [];
         $cod    = $filters['cod']['val'] ?? null;
         $operation    = $filters['cod']['operation'] ?? null;
-        $shipments = Shipment::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"])->where('merchant_id', $request->user()->merchant_id);
+
+        $shipments = Shipment::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+
 
         if (count($external))
             $shipments->whereIn('external_awb', $external);
@@ -51,15 +53,22 @@ class ShipmentController extends MerchantController
         else if ($cod)
             $shipments->whereBetween('cod', [intval($cod), intval($cod) . '.99']);
 
-        $paginated = $shipments->paginate(request()->perPage ?? 10);
 
-        return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
+        $tabs = DB::table('shipments')
+            ->where('merchant_id', Request()->user()->merchant_id)
+            ->select('status', DB::raw(
+                'count(status) as counter'
+            ))
+            ->groupBy('status')
+            ->pluck('counter','status');
+
+        return $this->pagination($shipments->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
     }
 
     public function show($id, ShipmentRequest $request)
     {
         $data = Shipment::findOrFail($id);
-        return $this->response($data, 'Data Retrieved Sucessfully', 200);
+        return $this->response($data, 'Data Retrieved Sucessfully');
     }
 
     public function export($type, ShipmentRequest $request)
