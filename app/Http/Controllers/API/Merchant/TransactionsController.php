@@ -6,7 +6,6 @@ use App\Http\Requests\Merchant\TransactionRequest;
 
 use App\Models\Transaction;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 
 class TransactionsController extends MerchantController
 {
@@ -46,7 +45,7 @@ class TransactionsController extends MerchantController
             $paginated[$created_at] = $transaction->get();
         }
 
-        return $this->response($paginated,'Data Retrieved Successfully');
+        return $this->response($paginated, 'Data Retrieved Successfully');
     }
 
     public function show($id, TransactionRequest $request)

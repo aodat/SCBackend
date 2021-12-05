@@ -11,6 +11,10 @@ use Carbon\Carbon;
 
 class PickupsController extends MerchantController
 {
+    private $status = [
+        'DONE' => 0, 'PROCESSING' => 0, 'CANCELD' => 0
+    ];
+
     public function index(PickuptRequest $request)
     {
         $filters = $request->json()->all();
@@ -20,17 +24,33 @@ class PickupsController extends MerchantController
 
         $pickupID = $request->pickup_id ?? null;
         $carrierID = $request->carrier_id ?? null;
+        $status = $request->status ?? null;
 
         $pickup = Pickup::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
-
         if ($pickupID != null)
             $pickup->where('id', $pickupID);
 
+        if ($status != null)
+            $pickup->whereIn('status', $status);
+
         if ($carrierID != null)
             $pickup->where('carrier_id', $carrierID);
+
         $pickup->where('merchant_id', $request->user()->id);
+
+
         $paginated = $pickup->paginate(request()->per_page ?? 10);
-        return $this->pagination($paginated);
+
+        $tabs = DB::table('pickups')
+            ->where('merchant_id', Request()->user()->merchant_id)
+            ->select('status', DB::raw(
+                'count(status) as counter'
+            ))
+            ->groupBy('status')
+            ->pluck('counter', 'status');
+        // Merage
+        $tabs = collect($this->status)->merge(collect($tabs));
+        return $this->pagination($paginated, ['tabs' => $tabs]);
     }
 
     public function store(PickuptRequest $request)

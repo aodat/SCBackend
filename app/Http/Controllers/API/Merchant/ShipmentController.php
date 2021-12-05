@@ -23,6 +23,10 @@ use Illuminate\Support\Facades\App;
 class ShipmentController extends MerchantController
 {
 
+    private $status = [
+        'DRAFT' => 0, 'PROCESSING' => 0, 'COMPLETED' => 0, 'RENTURND' => 0
+    ];
+
     public function index(ShipmentRequest $request)
     {
         $filters = $request->json()->all();
@@ -60,8 +64,9 @@ class ShipmentController extends MerchantController
                 'count(status) as counter'
             ))
             ->groupBy('status')
-            ->pluck('counter','status');
-
+            ->pluck('counter', 'status');
+        // Merage
+        $tabs = collect($this->status)->merge(collect($tabs));
         return $this->pagination($shipments->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
     }
 
