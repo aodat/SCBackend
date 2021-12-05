@@ -56,6 +56,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
 
+
             // Merchant Profile
             Route::get('info', [MerchantController::class, 'merchantProfile']);
             Route::put('update-info', [MerchantController::class, 'updateMerchantProfile']);
@@ -97,6 +98,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('transactions', [TransactionsController::class, 'index']);
             Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+');
             Route::put('transactions/withdraw', [TransactionsController::class, 'withDraw']);
+            Route::put('transactions/deposit', [TransactionsController::class, 'deposit']);
             Route::get('transactions/export/{type}', [TransactionsController::class, 'export']);
 
             // Pickups
@@ -117,8 +119,8 @@ Route::group(['middleware' => ['json.response']], function () {
             });
 
             Route::get('countries', [MerchantController::class, 'getCountries']);
-            Route::get('cities/{city_code}', [MerchantController::class, 'getCities']);    
-            Route::get('areas/{area_code}', [MerchantController::class, 'getAreas']);    
+            Route::get('cities/{city_code}', [MerchantController::class, 'getCities']);
+            Route::get('areas/{area_code}', [MerchantController::class, 'getAreas']);
         });
 
         Route::group(['middleware' => ['scope:admin']], function () {
@@ -129,7 +131,6 @@ Route::group(['middleware' => ['json.response']], function () {
                 Route::delete('member/{user_id}', [TeamController::class, 'deleteMember'])->where('user_id', '[0-9]+');
             });
         });
-
 
         Route::post('auth/logout', [AuthController::class, 'logout']);
     });

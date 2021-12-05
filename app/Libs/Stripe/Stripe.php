@@ -21,9 +21,9 @@ class Stripe
         $this->access_key = env('STRIPE_ACCESS_KEY');
     }
 
-    public function invoice($custmerID, $description, $amount)
+    public function invoice($custmerID, $description, $amount, $currancy_code = 'USD')
     {
-        $this->invoiceItem($custmerID, $description, $amount);
+        $this->invoiceItem($custmerID, $description, $amount, $currancy_code);
 
         $response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded'
@@ -44,13 +44,13 @@ class Stripe
         ];
     }
 
-    public function invoiceItem($custmerID, $description, $amount)
+    public function invoiceItem($custmerID, $description, $amount, $currency = 'USD')
     {
         $request = [
             'customer' => $custmerID,
             'description' => $description ?? '',
-            'amount' => $amount * 1000,
-            'currency' => 'USD'
+            'amount' => ($currency == 'USD') ? $amount * 1000 : $amount,
+            'currency' => $currency
         ];
         $response = Http::withHeaders([
             'Content-Type' => 'application/x-www-form-urlencoded'

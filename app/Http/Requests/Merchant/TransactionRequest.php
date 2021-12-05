@@ -20,6 +20,12 @@ class TransactionRequest extends MerchantRequest
                 'payment_method_id' => 'required',
                 'source' => 'required|in:shipment,creditcard,invoice,order'
             ];
+        else if (
+            $this->getMethod() == 'PUT' && strpos($path, 'transactions/deposit') !== false
+        )
+            return [
+                'amount' => 'required|numeric'
+            ];
         return [];
     }
 }

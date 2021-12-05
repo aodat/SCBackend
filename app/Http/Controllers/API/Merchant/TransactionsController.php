@@ -3,12 +3,20 @@
 namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Requests\Merchant\TransactionRequest;
-
+use App\Models\Invoices;
 use App\Models\Transaction;
 use Carbon\Carbon;
 
+use Libs\Stripe;
+
 class TransactionsController extends MerchantController
 {
+
+    protected $stripe;
+    public function __construct()
+    {
+        $this->stripe = new Stripe();
+    }
 
     public function index(TransactionRequest $request)
     {
@@ -88,6 +96,26 @@ class TransactionsController extends MerchantController
                 'resource' => $request->resource
             ]
         );
+    }
+
+    public function deposit(TransactionRequest $request)
+    {
+        $data = $request->validated();
+        $merchecntInfo = $this->getMerchentInfo();
+
+        $customerID = $this->stripe->createCustomer($merchecntInfo->name, $merchecntInfo->email);
+        $receipt = $this->stripe->invoice($customerID, 'Deposit Transaction', $data['amount'], $merchecntInfo->currency_code);
+        $link = $this->stripe->finalizeInvoice($receipt['fk_id']);
+
+        $data['customer_name'] = $merchecntInfo->name;
+        $data['customer_email'] = $merchecntInfo->email;
+        $data['fk_id'] = $receipt['fk_id'];
+        $data['merchant_id'] = $request->user()->merchant_id;
+        $data['user_id'] = $request->user()->id;
+        $data['resource'] = 'WEB';
+        Invoices::create($data);
+
+        return $this->response(['link' => $link], 'Payment request');
     }
 
     public function export(TransactionRequest $request)
