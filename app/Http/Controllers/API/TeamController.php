@@ -20,7 +20,8 @@ class TeamController extends Controller
 
     public function index(TeamRequest $request)
     {
-        $users = User::where('status', 'active')->paginate(request()->per_page ?? 10);
+        $users = User::where('merchant_id', Request()->user()->merchant_id)
+            ->where('status', 'active')->paginate(request()->per_page ?? 10);
         return $this->pagination($users);
     }
 
@@ -28,7 +29,7 @@ class TeamController extends Controller
     {
         DB::transaction(function () use ($request) {
             // Check if the user active on not 
-            $check = User::where('email', $request->email)->first();
+            $check = User::where('merchant_id', Request()->user()->merchant_id)->where('email', $request->email)->first();
             if ($check == null) {
                 $password = Str::random(8);
                 $user = User::create(
