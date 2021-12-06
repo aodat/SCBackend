@@ -140,4 +140,3 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('process/stripe', [InvoiceController::class, 'stripeProcessSQS']);
 });
 Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');
-Route::get('test', [Controller::class, 'test']);
