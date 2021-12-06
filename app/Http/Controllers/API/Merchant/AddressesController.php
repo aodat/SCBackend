@@ -16,7 +16,8 @@ class AddressesController extends MerchantController
 {
     public function index(AddressesRequest $request)
     {
-        return $this->response(Merchant::findOrFail(Request()->user()->merchant_id)->addresses, 'Data Retrieved Successfully');
+        $data  =  $this->getMerchentInfo()->addresses;
+        return $this->response($data, "Data Retrieved Successfully");
     }
 
     public function store(AddressesRequest $request)
@@ -61,7 +62,7 @@ class AddressesController extends MerchantController
         $merchantID = $request->user()->merchant_id;
 
         $list = $this->getMerchentInfo();
-        $result = collect($list->select('addresses')->first()->addresses);
+        $result = collect(Merchant::where('id', $merchantID)->select('addresses')->first()->addresses);
 
         $json = $result->reject(function ($value) use ($id) {
             if ($value['id'] == $id)

@@ -19,7 +19,7 @@ class DocumentController extends Controller
     public function store(DocumentRequest $request)
     {
         $merchant = $this->getMerchentInfo();
-        $result = collect($merchant->select('documents')->first()->documents);
+        $result = collect(Merchant::where('id',$merchant->id)->select('documents')->first()->documents);
         $counter = $result->max('id') ?? 0;
         $data = [
             'id' => ++$counter,

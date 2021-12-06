@@ -6,13 +6,15 @@ use App\Exceptions\InternalException;
 use App\Models\Merchant;
 
 use App\Http\Requests\Merchant\PaymentMethodsRequest;
+use AWS\CRT\HTTP\Request;
 use Carbon\Carbon;
 
 class PaymentMethodsController extends MerchantController
 {
     public function index(PaymentMethodsRequest $request)
     {
-        $data = $this->getMerchentInfo()->select('payment_methods')->first();
+        $merchantID =Request()->user()->merchant_id;
+        $data = Merchant::where('id', $merchantID)->select('payment_methods')->first();
         return $this->response($data->payment_methods, 'Data Retrieved Successfully', 200);
     }
 
@@ -21,7 +23,7 @@ class PaymentMethodsController extends MerchantController
         $json = $request->validated();
         $list = $this->getMerchentInfo();
 
-        $result = collect($list->payment_methods);
+        $result = collect(Merchant::where('id', $list->id)->payment_methods);
         $counter = $result->max('id') ?? 1;
         $provider = collect($list->config['payment_providers'])->where('code', strtolower($json['provider_code']))->first();
 
