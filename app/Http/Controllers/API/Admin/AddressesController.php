@@ -13,7 +13,7 @@ class AddressesController extends Controller
 {
     public function index(AddressesRequests $request)
     {
-        $data  = Merchant::find ($request->merchant_id)->addresses;
+        $data  =  $this->getMerchentInfo()->addresses;
         return $this->response($data, "Data Retrieved Successfully");
     }
 
