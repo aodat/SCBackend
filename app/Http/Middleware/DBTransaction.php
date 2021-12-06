@@ -22,26 +22,27 @@ class DBTransaction
      */
     public function handle(Request $request, Closure $next)
     {
-        DB::beginTransaction();
+        $response = $next($request);
+        // DB::beginTransaction();
 
-        try {
-            $response = $next($request);
-        } catch (\Exception $e) {
-            DB::rollBack();
-            throw $e;
-        }
+        // try {
+        //     $response = $next($request);
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
+        //     throw $e;
+        // }
 
-        if (
-            $response instanceof Response &&
-            ($response->getStatusCode() == 500
-                || (isset(json_decode($response->getContent())->meta->code) &&
-                    json_decode($response->getContent())->meta->code > 399))
+        // if (
+        //     $response instanceof Response &&
+        //     ($response->getStatusCode() == 500
+        //         || (isset(json_decode($response->getContent())->meta->code) &&
+        //             json_decode($response->getContent())->meta->code > 399))
 
-        ) {
-            DB::rollBack();
-        } else {
-            DB::commit();
-        }
+        // ) {
+        //     DB::rollBack();
+        // } else {
+        //     DB::commit();
+        // }
 
         // if ($response->getStatusCode() == 500)
         //     throw new InternalException('Internal Server Error - ' . App::make('request_id'), 500);
