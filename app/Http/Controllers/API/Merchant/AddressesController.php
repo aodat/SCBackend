@@ -9,14 +9,13 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Merchant;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 
 class AddressesController extends MerchantController
 {
     public function index(AddressesRequest $request)
     {
-
-        $data = $this->getMerchentInfo()->select('addresses')->first();
-        return $this->response($data->addresses, 'Data Retrieved Successfully');
+        return $this->response(App::make('merchantAddresses'), 'Data Retrieved Successfully');
     }
 
     public function store(AddressesRequest $request)
@@ -34,7 +33,7 @@ class AddressesController extends MerchantController
 
 
         $result = collect($merchant->select('addresses')->first()->addresses);
-        $counter = $result->max('id') ?? 0;
+        $counter = $result->max('id') ?? 1;
 
         if ($result->contains("name", $request->name))
             throw new InternalException('name already Exists', 400);
@@ -48,7 +47,7 @@ class AddressesController extends MerchantController
             'area' => $area->name_en,
             'phone' => $request->phone,
             'description' => $request->phone,
-            'is_default' => $request->is_default,
+            'is_default' => $request->is_default ?? false,
             'created_at' => Carbon::now()
         ];
 

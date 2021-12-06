@@ -22,7 +22,7 @@ class PaymentMethodsController extends MerchantController
         $list = $this->getMerchentInfo();
 
         $result = collect($list->payment_methods);
-        $counter = $result->max('id') ?? 0;
+        $counter = $result->max('id') ?? 1;
         $provider = collect($list->config['payment_providers'])->where('code', strtolower($json['provider_code']))->first();
 
         if ($provider == null)
