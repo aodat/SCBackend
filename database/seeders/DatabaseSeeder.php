@@ -74,10 +74,31 @@ class DatabaseSeeder extends Seeder
             });
         });
 
-
         DB::transaction(function () {
             $tempCity = (json_decode(Storage::disk('local')->get('template/areas/jo.json'), true));
             $CountryID = (Country::where('code', 'JO')->first()->id);
+            $cities = City::where('country_id', $CountryID)->pluck('name_en', 'id');
+            $cities->map(function ($name, $cityID) use ($tempCity) {
+                $list = $tempCity[$name] ?? [];
+                if (count($list) > 0) {
+                    $area = [];
+                    collect($list)->map(function ($data) use (&$area, $cityID) {
+                        $area[] = [
+                            'city_id' => $cityID,
+                            'name_en' =>  $data['name_english'],
+                            'name_ar' =>  $data['name_arabic'],
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now()
+                        ];
+                    });
+                    DB::table('areas')->insert($area);
+                }
+            });
+        });
+
+        DB::transaction(function () {
+            $tempCity = (json_decode(Storage::disk('local')->get('template/areas/ksa.json'), true));
+            $CountryID = (Country::where('code', 'SA')->first()->id);
             $cities = City::where('country_id', $CountryID)->pluck('name_en', 'id');
             $cities->map(function ($name, $cityID) use ($tempCity) {
                 $list = $tempCity[$name] ?? [];
