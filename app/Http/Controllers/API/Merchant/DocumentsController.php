@@ -14,8 +14,8 @@ class DocumentsController extends MerchantController
     public function index(DocumentsRequest $request)
     {
     
-        $merchantID = $request->user()->merchant_id;
-        $data = Merchant::where('id', $merchantID)->select('documents')->first();
+
+        $data = $this->getMerchentInfo()->select('documents')->first();
         return $this->response($data->documents, 'Data Retrieved Successfully', 200);
     }
 

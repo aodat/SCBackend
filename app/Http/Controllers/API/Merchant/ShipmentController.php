@@ -204,7 +204,7 @@ class ShipmentController extends MerchantController
     protected function transactionDeposit($shipment_id, $amount)
     {
         return DB::transaction(function () use ($shipment_id, $amount) {
-            $merchent = Merchant::findOrFail(Request()->user()->merchant_id);
+            $merchent = $this->getMerchentInfo();
             $actual_balance = $merchent->actual_balance;
             $merchent->actual_balance = $actual_balance + $amount;
             $merchent->save();

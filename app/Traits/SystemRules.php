@@ -33,4 +33,9 @@ trait SystemRules
         $provider = $merchantRules->whereIn('id', $actions->keys())->pluck('action', 'id')->first()['0']['create_shipment'];
         return $provider;
     }
+
+    public function merchantInfo(){
+        
+        return App::make('merchantInfo');
+    }
 }

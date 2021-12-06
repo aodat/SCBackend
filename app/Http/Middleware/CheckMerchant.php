@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Merchant;
 use App\Exceptions\InternalException;
+use Illuminate\Support\Facades\App;
 
 class CheckMerchant
 {
@@ -21,7 +22,7 @@ class CheckMerchant
     public function handle(Request $request, Closure $next)
     {
 
-        $Merchaninfo = Merchant::findOrFail(auth()->user()->merchant_id);
+        $Merchaninfo = App::make('merchantInfo');
         if (auth()->user()->status == 'in_active' || (!$Merchaninfo->is_active))
             throw new InternalException('Your Account is inactive please contact us', 403);
         return $next($request);

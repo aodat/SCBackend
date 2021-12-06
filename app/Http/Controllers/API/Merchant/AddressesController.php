@@ -14,15 +14,15 @@ class AddressesController extends MerchantController
 {
     public function index(AddressesRequest $request)
     {
-        $merchantID = $request->user()->merchant_id;
-        $data = Merchant::where('id', $merchantID)->select('addresses')->first();
+
+        $data = $this->getMerchentInfo()->select('addresses')->first();
         return $this->response($data->addresses, 'Data Retrieved Successfully');
     }
 
     public function store(AddressesRequest $request)
     {
         $json = $request->validated();
-        $merchant = Merchant::where('id', $request->user()->merchant_id);
+        $merchant = $this->getMerchentInfo();
 
         $county_id = $request->county_id;
         $city_id = $request->city_id;
@@ -60,7 +60,7 @@ class AddressesController extends MerchantController
     {
         $merchantID = $request->user()->merchant_id;
 
-        $list = Merchant::where('id', $merchantID);
+        $list = $this->getMerchentInfo();
         $result = collect($list->select('addresses')->first()->addresses);
 
         $json = $result->reject(function ($value) use ($id) {

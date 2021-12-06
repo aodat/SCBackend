@@ -132,8 +132,6 @@ class MerchantController extends Controller
 
     public function getMerchentInfo($id = null)
     {
-        if ($id == null)
-            $id = Request()->user()->merchant_id;
-        return Merchant::findOrFail($id);
+        return App::make('merchantInfo');
     }
 }

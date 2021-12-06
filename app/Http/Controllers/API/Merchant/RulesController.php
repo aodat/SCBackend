@@ -17,8 +17,7 @@ class RulesController extends MerchantController
 
     function store(RulesRequest $request)
     {
-        $merchantID = $request->user()->merchant_id;
-        $merchant = Merchant::where('id', $merchantID);
+        $merchant = $this->getMerchentInfo();
         $result = collect($merchant->select('rules')->first()->rules);
         $counter = $result->max('id') ?? 0;
 
@@ -33,7 +32,7 @@ class RulesController extends MerchantController
 
     public function status($id, RulesRequest $request)
     {
-        $merchant = Merchant::findOrFail($request->user()->merchant_id);
+        $merchant = $this->getMerchentInfo();
         $rules = collect($merchant->rules);
         $rule = $rules->where('id', $id);
 

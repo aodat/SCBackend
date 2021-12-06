@@ -93,7 +93,7 @@ class AuthController extends Controller
 
     public function changeSecret(ClientRepository $clientRepository)
     {
-        $merchantInfo = Merchant::findOrFail(Request()->user()->merchant_id);
+        $merchantInfo =$this->getMerchentInfo();
 
         $clients = Client::where('user_id', Request()->user()->merchant_id)->get();
         $clients->map(function ($client) use ($clientRepository) {
@@ -173,7 +173,7 @@ class AuthController extends Controller
     // Get Merchant Secret Key
     public function getSecretKey(Request $request)
     {
-        $merchant = Merchant::findOrFail($request->user()->merchant_id);
+        $merchant = $this->getMerchentInfo();
         $client = Client::where('user_id', $merchant->id)->where('revoked', false)->first();
 
         if ($client == null)
@@ -198,7 +198,7 @@ class AuthController extends Controller
     // Genrate Access Token
     function generateSecretKey(Request $request, ClientRepository $clientRepository)
     {
-        $merchant = Merchant::findOrFail($request->user()->merchant_id);
+        $merchant =$this->getMerchentInfo();
 
         $clients = Client::where('user_id', $merchant->id)->get();
         $clients->map(function ($client) use ($clientRepository) {

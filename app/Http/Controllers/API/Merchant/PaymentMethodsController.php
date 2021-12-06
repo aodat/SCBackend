@@ -12,8 +12,7 @@ class PaymentMethodsController extends MerchantController
 {
     public function index(PaymentMethodsRequest $request)
     {
-        $merchantID = $request->user()->merchant_id;
-        $data = Merchant::where('id', $merchantID)->select('payment_methods')->first();
+        $data = $this->getMerchentInfo()->select('payment_methods')->first();
         return $this->response($data->payment_methods, 'Data Retrieved Successfully', 200);
     }
 
