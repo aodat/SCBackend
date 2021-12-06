@@ -130,10 +130,8 @@ class MerchantController extends Controller
         return $this->response(City::getAreas($code), "Data Retrieved Successfully");
     }
 
-    public function getMerchentInfo($id = null)
+    public function getMerchentInfo()
     {
-        if ($id == null)
-            $id = Request()->user()->merchant_id;
-        return Merchant::findOrFail($id);
+        return App::make('merchantInfo');
     }
 }

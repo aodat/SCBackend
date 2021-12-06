@@ -8,6 +8,7 @@ use Libs\Fedex;
 
 use App\Exceptions\CarriersException;
 use App\Models\Merchant;
+use Illuminate\Support\Facades\App;
 
 trait CarriersManager
 {
@@ -36,7 +37,7 @@ trait CarriersManager
 
     public function getMerchantInfo()
     {
-        return Merchant::findOrFail(Request()->user()->merchant_id);
+           return App::make('merchantInfo');
     }
 
     public function generateShipment($provider, $merchantInfo = null, $shipmentArray)
