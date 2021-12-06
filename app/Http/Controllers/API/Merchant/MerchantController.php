@@ -130,7 +130,7 @@ class MerchantController extends Controller
         return $this->response(City::getAreas($code), "Data Retrieved Successfully");
     }
 
-    public function getMerchentInfo($id = null)
+    public function getMerchentInfo()
     {
         return App::make('merchantInfo');
     }
