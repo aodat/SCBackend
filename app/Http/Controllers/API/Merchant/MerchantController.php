@@ -15,6 +15,8 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\User;
+use App\Models\PinCode;
+use Carbon\Carbon;
 
 class MerchantController extends Controller
 {
@@ -25,16 +27,22 @@ class MerchantController extends Controller
         return $this->response($merchant, 'Data Retrieved Successfully');
     }
 
+    public function verifyUpdateProfile($merchant_id, $type)
+    {
+        return  $this->verifyMerchantPhoneNumber($merchant_id, $type);
+    }
     // Update Merchant Profile
     public function updateMerchantProfile(MerchantRequest $request)
     {
         $merchant = $this->getMerchentInfo();
+        $PinCode = $this->cheakVerifyMerchantPhoneNumber($request->pin_code, $merchant->id, 'Merchant_update_info');
+        if (!$PinCode)
+            return $this->error('this code in correct');
         $merchant->type = $request->type;
         $merchant->name = $request->name;
         $merchant->phone = $request->phone;
         $merchant->email = $request->email;
         $merchant->save();
-
         return $this->successful('Updated Successfully');
     }
 
@@ -48,6 +56,7 @@ class MerchantController extends Controller
     // Update User Profile
     public function updateProfile(MerchantRequest $request)
     {
+
         $user = User::findOrFail(Auth::id());
         $user->email = $request->email;
         if ($user->isDirty('email')) {

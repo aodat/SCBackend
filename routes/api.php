@@ -21,6 +21,7 @@ use App\Http\Controllers\API\Merchant\DashboardController;
 use App\Http\Controllers\API\Merchant\RulesController;
 
 use App\Http\Controllers\API\Merchant\CarrierController;
+use App\Models\Merchant;
 use Illuminate\Support\Facades\Route;
 
 
@@ -47,7 +48,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
     Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
         Route::group(['prefix' => 'merchant/'], function () {
-            Route::put('change-secret', [AuthController::class, 'changeSecret']);
+            Route::put('change-secret/{pin_code}', [AuthController::class, 'changeSecret']);
 
             Route::get('carrier/list', [CarrierController::class, 'index']);
             Route::put('carrier/{carrier_id}/update', [CarrierController::class, 'update']);
@@ -55,11 +56,12 @@ Route::group(['middleware' => ['json.response']], function () {
             // Dashboard Information 
             Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
+            Route::get('verifySend/{merchant_id}/{type}', [MerchantController::class, 'verifyUpdateProfile']);
+            Route::put('update-info', [MerchantController::class, 'updateMerchantProfile']);
 
 
             // Merchant Profile
             Route::get('info', [MerchantController::class, 'merchantProfile']);
-            Route::put('update-info', [MerchantController::class, 'updateMerchantProfile']);
 
             // User Information
             Route::get('user/profile', [MerchantController::class, 'profile']);
@@ -70,7 +72,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::group(['middleware' => ['scope:payment,admin']], function () {
                 Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
                 Route::post('payment-methods/create', [PaymentMethodsController::class, 'store']);
-                Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'delete'])->where('id', '[0-9]+');
+                Route::delete('payment-methods/{id}/{pin_code}', [PaymentMethodsController::class, 'delete'])->where('id', '[0-9]+');
             });
 
             // Documents

@@ -20,8 +20,13 @@ class PaymentMethodsController extends MerchantController
 
     public function store(PaymentMethodsRequest $request)
     {
+      
         $json = $request->validated();
         $list = $this->getMerchentInfo();
+
+        $PinCode = $this->cheakVerifyMerchantPhoneNumber($request->pin_code,  $list->id , 'payment_methods_create');
+        if (!$PinCode)
+        return $this->error('this code in correct');
 
         $result = collect($list->payment_methods);
         $counter = $result->max('id') ?? 0;
@@ -39,9 +44,13 @@ class PaymentMethodsController extends MerchantController
         return $this->successful('Create Successfully');
     }
 
-    public function delete($id, PaymentMethodsRequest $request)
+    public function delete($id,$pin_code, PaymentMethodsRequest $request)
     {
         $list = $this->getMerchentInfo();
+
+        $PinCode = $this->cheakVerifyMerchantPhoneNumber($pin_code,  $list->id , 'payment_methods_delete');
+        if (!$PinCode)
+        return $this->error('this code in correct');
         $result = collect($list->payment_methods);
         $json = $result->reject(function ($value) use ($id) {
             if ($value['id'] == $id)

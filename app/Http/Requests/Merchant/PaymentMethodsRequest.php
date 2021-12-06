@@ -16,7 +16,8 @@ class PaymentMethodsRequest extends MerchantRequest
             return [
                 "name" => "required|string",
                 "provider_code" => "required|string",
-                "iban" => "required"
+                "iban" => "required",
+                "pin_code" => "required"
             ];
         return [];
     }

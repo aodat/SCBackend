@@ -69,7 +69,8 @@ class MerchantRequest extends FormRequest
                     'max:14',
                     new Phone(App::make('merchantInfo')->country_code)
 
-                ]
+                ],
+                "pin_code"=>'required',
             ];
         } else if (strpos($path, 'merchant/verify/phone') !== false) {
             return [
