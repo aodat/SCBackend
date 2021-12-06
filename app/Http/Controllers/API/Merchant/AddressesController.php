@@ -10,6 +10,7 @@ use App\Models\Country;
 use App\Models\Merchant;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class AddressesController extends MerchantController
 {
@@ -32,7 +33,7 @@ class AddressesController extends MerchantController
         $area = Area::find($area_id);
 
 
-        $result = collect($merchant->select('addresses')->first()->addresses);
+        $result = collect(Merchant::where('id',$merchant->id)->select('addresses')->first()->addresses);
         $counter = $result->max('id') ?? 0;
 
         if ($result->contains("name", $request->name))
