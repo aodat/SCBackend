@@ -20,8 +20,7 @@ class DocumentController extends Controller
     {
         $merchant = $this->getMerchentInfo();
         $result = collect($merchant->select('documents')->first()->documents);
-        $counter = $result->max('id') ?? 1;
-
+        $counter = $result->max('id') ?? 0;
         $data = [
             'id' => ++$counter,
             'type' => $request->type,

@@ -15,6 +15,7 @@ class AddressesController extends MerchantController
 {
     public function index(AddressesRequest $request)
     {
+
         return $this->response(App::make('merchantAddresses'), 'Data Retrieved Successfully');
     }
 
@@ -33,11 +34,11 @@ class AddressesController extends MerchantController
 
 
         $result = collect($merchant->select('addresses')->first()->addresses);
-        $counter = $result->max('id') ?? 1;
+        $counter = $result->max('id') ?? 0;
 
         if ($result->contains("name", $request->name))
             throw new InternalException('name already Exists', 400);
-
+            
         $json = [
             'id' => ++$counter,
             'country_code' => $country->code,
@@ -46,11 +47,11 @@ class AddressesController extends MerchantController
             'city' => $city->name_en,
             'area' => $area->name_en,
             'phone' => $request->phone,
-            'description' => $request->phone,
+            'description' => $request->description,
             'is_default' => $request->is_default ?? false,
             'created_at' => Carbon::now()
         ];
-
+        
         $merchant->update(['addresses' => $result->merge([$json])]);
         return $this->successful('Create Successfully');
     }
