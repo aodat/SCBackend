@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Request;
 use App\Models\Transaction;
 use App\Models\Shipment;
 use App\Models\Invoices;
-use App\Models\Merchant;
+
+use App\Rules\PincodeVerification;
 use App\Rules\Phone;
+
 use Illuminate\Support\Facades\App;
 
 class MerchantRequest extends FormRequest
@@ -68,9 +70,11 @@ class MerchantRequest extends FormRequest
                     'min:10',
                     'max:14',
                     new Phone(App::make('merchantInfo')->country_code)
-
                 ],
-                "pin_code"=>'required',
+                "pin_code" => [
+                    'required',
+                    new PincodeVerification()
+                ],
             ];
         } else if (strpos($path, 'merchant/verify/phone') !== false) {
             return [

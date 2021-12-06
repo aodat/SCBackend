@@ -13,13 +13,14 @@ class CreatePinCodesTable extends Migration
      */
     public function up()
     {
-        Schema::create('pin_codes', function (Blueprint $table) {
+        Schema::create('pincodes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('merchant_id')->nullable();
             $table->string('code');
-            $table->string('type');
-            $table->integer('Merchant_id');
-            $table->enum('status',['is_active','in_active','use']);
+            $table->enum('status', ['active', 'inactive', 'used'])->default('active');
             $table->timestamps();
+            
+            $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
         });
     }
 

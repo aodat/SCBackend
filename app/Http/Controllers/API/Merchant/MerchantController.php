@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Exceptions\InternalException;
 use App\Http\Controllers\Controller;
-
+use App\Http\Controllers\Utilities\SmsService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -14,9 +15,9 @@ use App\Jobs\Sms;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Merchant;
+use App\Models\Pincode;
 use App\Models\User;
-use App\Models\PinCode;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 
 class MerchantController extends Controller
 {
@@ -27,17 +28,10 @@ class MerchantController extends Controller
         return $this->response($merchant, 'Data Retrieved Successfully');
     }
 
-    public function verifyUpdateProfile($merchant_id, $type)
-    {
-        return  $this->verifyMerchantPhoneNumber($merchant_id, $type);
-    }
     // Update Merchant Profile
     public function updateMerchantProfile(MerchantRequest $request)
     {
         $merchant = $this->getMerchentInfo();
-        $PinCode = $this->cheakVerifyMerchantPhoneNumber($request->pin_code, $merchant->id, 'Merchant_update_info');
-        if (!$PinCode)
-            return $this->error('this code in correct');
         $merchant->type = $request->type;
         $merchant->name = $request->name;
         $merchant->phone = $request->phone;
@@ -56,7 +50,6 @@ class MerchantController extends Controller
     // Update User Profile
     public function updateProfile(MerchantRequest $request)
     {
-
         $user = User::findOrFail(Auth::id());
         $user->email = $request->email;
         if ($user->isDirty('email')) {
@@ -93,11 +86,33 @@ class MerchantController extends Controller
     public function verifyPhoneNumber(MerchantRequest $request)
     {
         $randomPinCode = mt_rand(111111, 999999);
-        // SmsService::sendSMS($request->phone, $randomPinCode);
         Sms::dispatch($randomPinCode, $request->phone);
         $merchantID = $request->user()->merchant_id;
         Merchant::where('id', $merchantID)->update(['pin_code' => $randomPinCode]);
         return $this->successful('Pin code was sent check your mobile');
+    }
+
+    public function pincode(MerchantRequest $request)
+    {
+        $pincode = Pincode::orderBy('id', 'desc')->first();
+        if (
+            $pincode == null ||
+            isset($pincode->created_at) && $pincode->created_at->diffInSeconds() > 300
+        ) {
+            $pincode->status = 'inactive';
+            $pincode->save();
+
+            $random = mt_rand(111111, 999999);
+            SmsService::sendSMS($random, App::make('merchantInfo')->phone);
+            PinCode::create([
+                "code" => $random,
+                'Merchant_id' =>  App::make('merchantInfo')->id,
+                "status" => 'active',
+            ]);
+        } else
+            throw new InternalException('Pincode Code Was Sent before 5 Min');
+
+        return $this->successful('Pincode Code Was Sent');
     }
 
     public function getCountries()
