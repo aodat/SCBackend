@@ -52,12 +52,4 @@ class User extends Authenticatable
     {
         return $this->hasOne(Merchant::class, 'id', 'merchant_id');
     }
-
-    protected static function booted()
-    {
-        if (Request()->user())
-            static::addGlobalScope('ancient', function (Builder $builder) {
-                $builder->where('merchant_id', Request()->user()->merchant_id);
-            });
-    }
 }

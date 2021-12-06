@@ -99,9 +99,10 @@ class MerchantController extends Controller
             $pincode == null ||
             isset($pincode->created_at) && $pincode->created_at->diffInSeconds() > 300
         ) {
-            $pincode->status = 'inactive';
-            $pincode->save();
-
+            if ($pincode) {
+                $pincode->status = 'inactive';
+                $pincode->save();
+            }
             $random = mt_rand(111111, 999999);
             SmsService::sendSMS($random, App::make('merchantInfo')->phone);
             PinCode::create([
