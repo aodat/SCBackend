@@ -37,7 +37,7 @@ trait CarriersManager
 
     public function getMerchantInfo()
     {
-           return App::make('merchantInfo');
+        return App::make('merchantInfo');
     }
 
     public function generateShipment($provider, $merchantInfo = null, $shipmentArray)
@@ -94,7 +94,7 @@ trait CarriersManager
         } else {
 
             $express_rates =  collect(
-                json_decode(file_get_contents(storage_path() . '/../App/Libs/express.rates.json'), true)['Countries']
+                json_decode(file_get_contents(app_path() . '/Libs/express.rates.json'), true)['Countries']
             )->where('code', $country_code)
                 ->all();
 
