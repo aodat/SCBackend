@@ -42,6 +42,7 @@ class AddressesController extends MerchantController
 
         $json = [
             'id' => ++$counter,
+            'name' => $request->name,
             'country_code' => $country->code,
             'country' => $country->name_en,
             'city_code' => $city->code,
