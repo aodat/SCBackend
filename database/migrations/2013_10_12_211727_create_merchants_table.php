@@ -19,8 +19,8 @@ class CreateMerchantsTable extends Migration
             $table->string('email', 64);
             $table->string('phone', 16);
             $table->string('pin_code', 16)->nullable();
-            $table->double('actual_balance', 8, 2)->default('0');;
-            $table->double('available_balance', 8, 2)->default('0');;
+            $table->double('actual_balance', 8, 2)->default('0');
+            $table->double('available_balance', 8, 2)->default('0');
             $table->enum('country_code', ['JO']);
             $table->enum('currency_code', ['JOD']);
             $table->json('documents')->nullable();

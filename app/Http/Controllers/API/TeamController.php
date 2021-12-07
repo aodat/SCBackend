@@ -14,24 +14,40 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 use Laravel\Passport\Token;
+
 class TeamController extends Controller
 {
 
+    public function index(TeamRequest $request)
+    {
+        $users = User::where('merchant_id', Request()->user()->merchant_id)
+            ->where('status', 'active')->paginate(request()->per_page ?? 10);
+        return $this->pagination($users);
+    }
+
     public function inviteMember(TeamRequest $request)
     {
-        dd('xxx');
         DB::transaction(function () use ($request) {
-            $password = Str::random(8);
-            $user = User::create(
-                [
-                    'merchant_id' => $request->user()->merchant_id,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => Hash::make($password),
-                    'phone' => null
-                ]
-            );
-            $user->notify(new InviteUserNotification($user,$password));
+            // Check if the user active on not 
+            $check = User::where('merchant_id', Request()->user()->merchant_id)->where('email', $request->email)->first();
+            if ($check == null) {
+                $password = Str::random(8);
+                $user = User::create(
+                    [
+                        'merchant_id' => $request->user()->merchant_id,
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'password' => Hash::make($password),
+                        'role_member' => implode(',', $request->scope),
+                        'phone' => null
+                    ]
+                );
+                $user->notify(new InviteUserNotification($user, $password));
+            } else {
+                $check->status = 'active';
+                $check->role_member = implode(',', $request->scope);
+                $check->save();
+            }
         });
 
         return $this->successful();
@@ -43,12 +59,13 @@ class TeamController extends Controller
 
         $user = User::findOrFail($data['id']);
         $user->role = $data['role'];
+        $user->role_member = implode(',', $data['scope']);
         $user->save();
 
-        return $this->successful('Updated Sucessfully');
+        return $this->successful('Updated Successfully');
     }
 
-    public function deleteMember($user_id,TeamRequest $request)
+    public function deleteMember($user_id, TeamRequest $request)
     {
         $user = User::findOrFail($user_id);
         $user->status = 'inactive';
@@ -57,6 +74,6 @@ class TeamController extends Controller
         // Delete all user session
         Token::where('user_id', $user_id)->update(['revoked' => true]);
 
-        return $this->successful('Deleted Sucessfully');
+        return $this->successful('Deleted Successfully');
     }
 }

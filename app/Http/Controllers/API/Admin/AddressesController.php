@@ -13,8 +13,8 @@ class AddressesController extends Controller
 {
     public function index(AddressesRequests $request)
     {
-        $data  = Merchant::find($request->merchant_id)->addresses;
-        return $this->response($data, "Success get addresse to specified merchant");
+        $data  =  $this->getMerchentInfo()->addresses;
+        return $this->response($data, "Data Retrieved Successfully");
     }
 
     public function update(AddressesRequests $request)
@@ -33,7 +33,7 @@ class AddressesController extends Controller
         $addresse = $addresses->where('id', $id);
 
         if ($addresse->first() == null)
-            throw new InternalException('addresse id not Exists');
+            throw new InternalException('Address id does not exist');
 
         $current = $addresse->keys()->first();
         $addresses[$current] = $data;

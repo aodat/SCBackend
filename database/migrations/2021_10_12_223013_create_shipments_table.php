@@ -15,8 +15,7 @@ class CreateShipmentsTable extends Migration
     {
         Schema::create('shipments', function (Blueprint $table) {
             $table->id();
-            // $table->enum('carrier', ['ARAMEX','DHL']);
-            $table->bigInteger('internal_awb')->unique();
+
             $table->bigInteger('external_awb')->nullable();
 
             $table->string('reference1', 128)->nullable();
@@ -53,7 +52,7 @@ class CreateShipmentsTable extends Migration
             $table->set('extra_services', ['DOMCOD'])->nullable();
             $table->double('extra_services_fees', 6, 2)->default('0');
             $table->enum('group', ['EXP','DOM']);
-            $table->enum('status', ['DRAFT','PROCESSING','COMPLETED'])->default('DRAFT');
+            $table->enum('status', ['DRAFT','PROCESSING','COMPLETED','RENTURND'])->default('DRAFT');
 
             $table->date('delivered_at', 32)->nullable();
             $table->date('returned_at', 32)->nullable();
@@ -63,6 +62,8 @@ class CreateShipmentsTable extends Migration
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('merchant_id');
             $table->unsignedBigInteger('carrier_id');
+            
+            $table->enum('source', ['SHIPMENT','CREDITCARD','INVOICE','ORDER'])->default('ORDER');
 
             $table->json('logs')->nullable();
             $table->softDeletes();

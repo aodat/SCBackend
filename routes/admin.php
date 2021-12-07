@@ -21,6 +21,7 @@ use App\Http\Controllers\API\Admin\DocumentController;
 | contains the "admin" middleware group. Now create something great!
 |
 */
+
 Route::group(['middleware' => ['json.response']], function () {
     Route::group(['middleware' => ['auth:api', 'scope:super_admin']], function () {
         Route::group(['prefix' => 'merchant/'], function () {
@@ -43,7 +44,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
             Route::get('{merchant_id}/document', [DocumentController::class, 'index']);
             Route::post('{merchant_id}/document', [DocumentController::class, 'store']);
-            Route::put('{merchant_id}/document/{id}', [DocumentController::class, 'documentStatus']);
+            Route::put('{merchant_id}/document/{id}', [DocumentController::class, 'status']);
         });
 
         Route::group(['prefix' => 'carriers/'], function () {

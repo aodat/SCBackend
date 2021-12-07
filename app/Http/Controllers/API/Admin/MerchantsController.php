@@ -25,8 +25,8 @@ class MerchantsController extends Controller
         if ($id)
             $merchants->where('id', $id);
 
-        $paginated = $merchants->paginate(request()->perPage ?? 10);
-        return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
+        $paginated = $merchants->paginate(request()->per_page ?? 10);
+        return $this->pagination($paginated);
     }
 
     public function show(MerchantRequest $request, $id)
@@ -42,7 +42,7 @@ class MerchantsController extends Controller
         $merchant->is_active = $request->is_active;
         $merchant->save();
 
-        return $this->successful('Updated Sucessfully');
+        return $this->successful('Updated Successfully');
     }
 
     public function merchantConfig(MerchantRequest $request)
@@ -51,7 +51,7 @@ class MerchantsController extends Controller
 
         $merchant = Merchant::findOrFail($data['merchant_id']);
         $type = $data['type'];
-        return $this->response($merchant->$type, 'Data Retrieved Successfully', 200);
+        return $this->response($merchant->$type, 'Data Retrieved Successfully');
     }
 
     public function domesticRates(MerchantRequest $request)

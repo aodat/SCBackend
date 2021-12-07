@@ -37,8 +37,7 @@ class CarriersRequest extends FormRequest
             return [
                 'name' => 'required|min:6|max:255|unique:carriers',
                 'email' => 'required|email|unique:carriers',
-                'phone' => 'required',
-                'balance' => 'required|numeric|between:0.0001,9999',
+                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 'country_code' => 'required',
                 'currency_code' => 'required',
                 'is_active' => 'required|boolean'
@@ -46,8 +45,7 @@ class CarriersRequest extends FormRequest
         else if ($this->getMethod() == 'PUT' && strpos($path, 'admin/carriers/{carrier_id}') !== false)
             return [
                 'id' => 'required|exists:carriers',
-                'phone' => 'required',
-                'balance' => 'nullable|numeric|between:0.0001,9999',
+                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
                 'country_code' => 'required',
                 'currency_code' => 'required',
                 'is_active' => 'required|boolean'

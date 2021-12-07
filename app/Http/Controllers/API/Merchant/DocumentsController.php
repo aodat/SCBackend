@@ -7,67 +7,47 @@ use App\Http\Requests\Merchant\DocumentsRequest;
 use App\Models\Merchant;
 use Carbon\Carbon;
 use App\Exceptions\InternalException;
+
 class DocumentsController extends MerchantController
 {
 
     public function index(DocumentsRequest $request)
     {
-        $merchantID = $request->user()->merchant_id;
-        $data = Merchant::where('id',$merchantID)->select('documents')->first();
+    
 
-      
-        if(collect($data->documents)->isEmpty())
-            return $this->notFound();
-
-        return $this->response($data->documents,'Payment Methods Retrieved Successfully',200);
+        $data = $this->getMerchentInfo()->select('documents')->first();
+        return $this->response($data->documents, 'Data Retrieved Successfully', 200);
     }
 
-    public function createDocuments(DocumentsRequest $request)
-    { 
-        $template = json_decode(file_get_contents(storage_path() . '/app/template/documents.json'), true);
-   
-        $merchant_id = $request->user()->merchant_id;        
-
-        $merchant = Merchant::where('id','=',$merchant_id);
-        
+    public function store(DocumentsRequest $request)
+    {
+        $merchant = $this->getMerchantInfo();
         $result = collect($merchant->select('documents')->first()->documents);
         $counter = $result->max('id') ?? 0;
-        if($request->hasFile('file'))
-          $file_link = uploadFiles('documents',$request->file('file'));
-        else
-          throw new InternalException('file documents not Exists');
-          
-        $template['id']           = ++$counter;
-        $template['type']         = $request->type;
-        $template['url']          = $file_link ;
-        $template['status']       = "pending";
-        $template['updated_at']   = Carbon::now();
-        $template['created_at']   = Carbon::now();
-  
-        
+
         $data = [
             'id' => ++$counter,
             'type' => $request->type,
-            'url' => uploadFiles('documents',$request->file('file')),
+            'url' => uploadFiles('documents', $request->file('file')),
+            'status' => 'pending',
+            'verified_at' => null,
             'created_at' => Carbon::now()
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);
-        return $this->successful();
+        return $this->successful('Create Successfully');
     }
 
-    public function deleteDocuments($id,DocumentsRequest $request)
+    public function delete($id, DocumentsRequest $request)
     {
-        $merchantID = $request->user()->merchant_id;
-        $list = Merchant::where('id',$merchantID);
-        $result = collect($list->select('documents')->first()->documents);
-
-        $json = $result->reject(function ($value) use($id) {
-            if($value['id'] == $id)
+        $list = $this->getMerchentInfo();
+        $result = collect($list->documents);
+        $json = $result->reject(function ($value) use ($id) {
+            if ($value['id'] == $id && $value['verified_at'] == null)
                 return $value;
         });
         $json = array_values($json->toArray());
         $list->update(['documents' => collect($json)]);
-        return $this->successful('Deleted Sucessfully');
+        return $this->successful('Deleted Successfully');
     }
 }

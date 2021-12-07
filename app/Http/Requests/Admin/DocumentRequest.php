@@ -37,8 +37,8 @@ class DocumentRequest extends FormRequest
 
         if ($this->getMethod() == 'POST' && strpos($path, 'merchant/{merchant_id}/document') !== false)
             return [
-                "url" => "required|file",
-                "type" => "required|string",
+                "type" => "required|in:license,passport,id",
+                "file" => "required|mimes:pdf,jpg,jpeg"
             ];
         else if ($this->getMethod() == 'PUT' && strpos($path, '{merchant_id}/document/{id}') !== false)
             return [

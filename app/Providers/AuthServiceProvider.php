@@ -1,7 +1,6 @@
 <?php
 namespace App\Providers;
 use Laravel\Passport\Passport;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -30,7 +29,9 @@ class AuthServiceProvider extends ServiceProvider
         Passport::tokensCan([
             'member' => 'Merchant Member',
             'admin' => 'Merchant Adminstrator',
-            'super_admin' => 'System Adminstrator'
+            'super_admin' => 'System Adminstrator',
+            "shipping"=>" Shipping Member",
+            "payment"=>"Payment Member ",
         ]);
     }
 }

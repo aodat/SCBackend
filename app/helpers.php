@@ -12,9 +12,11 @@ function uploadFiles($folder, $file, $type = '', $isOutput = false)
     if (!$isOutput) {
         $path .= $file->getClientOriginalExtension();
         $data = file_get_contents($file);
-    } else
+    } else {
+        $data = $file;
         $path .= ".$type";
-
+    }
+    
     Storage::disk('s3')->put($path, $data);
 
     return Storage::disk('s3')->url($path);
@@ -68,7 +70,7 @@ function randomNumber($length = 16)
 
 function InternalAWBExists($number)
 {
-    return Shipment::where('internal_awb', $number)->exists();
+    return Shipment::where('external_awb', $number)->exists();
 }
 
 function nestedLowercase($value)

@@ -1,0 +1,22 @@
+[
+    {
+        "JO": [
+            {
+                "id": "1",
+                "name_en": "Arab Bank",
+                "name_ar": "البنك العربي",
+                "code": "bk"
+            }
+        ]
+    },
+    {
+        "KSA": [
+            {
+                "id": "1",
+                "name_en": "STC Pay",
+                "name_ar": "اس تي سي",
+                "code": "stc"
+            }
+        ]
+    }
+]

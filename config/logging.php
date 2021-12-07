@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
@@ -100,6 +101,21 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        'cloudwatch' => [
+            'driver' => 'custom',
+            'via' => \App\Logging\CloudWatchLoggerFactory::class,
+            'sdk' => [
+                'region' => env('AWS_DEFAULT_REGION'),
+                'version' => 'latest',
+                'credentials' => [
+                    'key' => env('AWS_ACCESS_KEY_ID'),
+                    'secret' => env('AWS_SECRET_ACCESS_KEY')
+                ]
+            ],
+            'retention' => env('CLOUDWATCH_LOG_RETENTION', 60),
+            'level' => env('CLOUDWATCH_LOG_LEVEL', 'info'),
+            'stream' => env('CLOUDWATCH_STREAM', 'logs-' . Carbon::today()->format('Y-m-d')),
+        ]
     ],
 
 ];

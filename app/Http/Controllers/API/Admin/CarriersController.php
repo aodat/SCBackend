@@ -25,36 +25,32 @@ class CarriersController extends Controller
         if ($id)
             $carriers->where('id', $id);
 
-        $paginated = $carriers->paginate(request()->perPage ?? 10);
-        return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
+        $paginated = $carriers->paginate(request()->per_page ?? 10);
+        return $this->pagination($paginated);
     }
 
     public function show($carrier_id, CarriersRequest $request)
     {
         $carrier = Carriers::findOrFail($carrier_id);
-        return $this->response($carrier, 'Data Retrieved Successfully', 200);
+        return $this->response($carrier, 'Data Retrieved Successfully');
     }
 
     public function store(CarriersRequest $request)
     {
         $data = $request->validated();
         Carriers::create($data);
-        return $this->successful();
+        return $this->successful('Create Successfully');
     }
 
     public function update(CarriersRequest $request)
     {
         $data = $request->validated();
         $carrier = Carriers::findOrFail($data['id']);
-
-        if ($data['balance'])
-            $carrier->balance = $data['balance'];
-
         $carrier->country_code = $data['country_code'];
         $carrier->currency_code = $data['currency_code'];
         $carrier->is_active = $data['is_active'];
         $carrier->save();
 
-        return $this->successful('Updated Sucessfully');
+        return $this->successful('Updated Successfully');
     }
 }

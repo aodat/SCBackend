@@ -14,7 +14,7 @@ class AddSecretKeyToUsersTable extends Migration
     public function up()
     {
         Schema::table('merchants', function (Blueprint $table) {
-            $table->string('secret_key')->unique()->after('type');
+            $table->string('secret_key')->nullable()->unique()->after('type');
         });
     }
 

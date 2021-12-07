@@ -2,30 +2,36 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Merchant\ShipmentRequest;
 
 use App\Jobs\ProcessShipCashUpdates;
 
 use App\Exports\ShipmentExport;
 
+use Carbon\Carbon;
 
+use App\Exceptions\InternalException;
+
+use App\Models\Merchant;
+use App\Models\Transaction;
 use App\Models\Carriers;
 use App\Models\Shipment;
 
-use Carbon\Carbon;
-
-use Illuminate\Support\Facades\DB;
-use App\Exceptions\InternalException;
+use Illuminate\Support\Facades\App;
 
 class ShipmentController extends MerchantController
 {
+
+    private $status = [
+        'DRAFT' => 0, 'PROCESSING' => 0, 'COMPLETED' => 0, 'RENTURND' => 0
+    ];
 
     public function index(ShipmentRequest $request)
     {
         $filters = $request->json()->all();
 
-        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');;
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
 
         $external = $filters['external'] ?? [];
@@ -33,7 +39,9 @@ class ShipmentController extends MerchantController
         $phone = $filters['phone'] ?? [];
         $cod    = $filters['cod']['val'] ?? null;
         $operation    = $filters['cod']['operation'] ?? null;
-        $shipments = Shipment::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"])->where('merchant_id', $request->user()->merchant_id);
+
+        $shipments = Shipment::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+
 
         if (count($external))
             $shipments->whereIn('external_awb', $external);
@@ -49,15 +57,23 @@ class ShipmentController extends MerchantController
         else if ($cod)
             $shipments->whereBetween('cod', [intval($cod), intval($cod) . '.99']);
 
-        $paginated = $shipments->paginate(request()->perPage ?? 10);
 
-        return $this->response($paginated, 'Data Retrieved Successfully', 200, true);
+        $tabs = DB::table('shipments')
+            ->where('merchant_id', Request()->user()->merchant_id)
+            ->select('status', DB::raw(
+                'count(status) as counter'
+            ))
+            ->groupBy('status')
+            ->pluck('counter', 'status');
+        // Merage
+        $tabs = collect($this->status)->merge(collect($tabs));
+        return $this->pagination($shipments->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
     }
 
     public function show($id, ShipmentRequest $request)
     {
         $data = Shipment::findOrFail($id);
-        return $this->response($data, 'Data Retrieved Sucessfully', 200);
+        return $this->response($data, 'Data Retrieved Sucessfully');
     }
 
     public function export($type, ShipmentRequest $request)
@@ -114,7 +130,6 @@ class ShipmentController extends MerchantController
 
             unset($shipment['sender_address_id']);
 
-
             $shipment['group'] = $type;
             if ($type == 'DOM') {
                 $shipment['consignee_country'] = $merchentInfo['country_code'];
@@ -124,15 +139,17 @@ class ShipmentController extends MerchantController
                 if ($shipment == 0)
                     throw new InternalException('Domestic Rates Is Zero');
             } else
-                $shipment['fees'] = $this->calculateFees($provider, $shipment['carrier_id'], $shipment['consignee_country'], $shipment['actual_weight']);
+                $shipment['fees'] = $this->calculateFees($provider, $shipment['sender_country'], $shipment['consignee_country'], $shipment['actual_weight']);
 
-            $shipment['internal_awb'] = randomNumber();
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
-
+            $shipment['logs'][] = [
+                'UpdateDateTime' => Carbon::now(),
+                'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
+                'UpdateDescription' => 'Create Shipment'
+            ];
             return $shipment;
         });
-
         return $this->createShipmentDB($shipments, $provider);
     }
 
@@ -143,7 +160,7 @@ class ShipmentController extends MerchantController
             return $this->generateShipmentArray('Aramex', $data);
         });
 
-
+        $resource = Request()->header('agent') ?? 'API';
         $links = [];
         // for signle Shipment Request
         if ($payloads->isEmpty()) {
@@ -151,31 +168,109 @@ class ShipmentController extends MerchantController
             $result = $this->generateShipment($provider, $this->getMerchentInfo(), $shipment);
             $links[] = $result['link'];
             $shipment['external_awb'] = $result['id'];
+            $shipment['resource'] = $resource;
             Shipment::create($shipment);
-        } 
-        
+        }
+
         if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
             $externalAWB = $result['id'];
-            $ships = $shipments->map(function ($value,$key) use($externalAWB){
+            $ships = $shipments->map(function ($value, $key) use ($externalAWB, $resource) {
                 $value['external_awb'] = $externalAWB[$key];
+                $value['resource'] = $resource;
                 return $value;
             });
             $links[] = $result['link'];
             DB::table('shipments')->insert($ships->toArray());
         }
 
-        return $this->response(['link' => mergePDF($links)]);
+        return $this->response(
+            ['link' => mergePDF($links)],
+            'Shipment Created Successfully'
+        );
     }
 
     public function printLabel(ShipmentRequest $request)
     {
-        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)]);
+        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)], 'Labels returned successfully');
     }
 
     public function shipmentProcessSQS(ShipmentRequest $request)
     {
         ProcessShipCashUpdates::dispatch($request->json()->all());
         return $this->successful('Webhook Completed');
+    }
+
+    protected function transactionDeposit($shipment_id, $amount)
+    {
+        return DB::transaction(function () use ($shipment_id, $amount) {
+            $merchent = $this->getMerchentInfo();
+            $actual_balance = $merchent->actual_balance;
+            $merchent->actual_balance = $actual_balance + $amount;
+            $merchent->save();
+
+            $carriers = Carriers::find($shipment_id);
+            $carriers->balance = $carriers->balance - $amount;
+            $carriers->save();
+
+            Transaction::create([
+                "type" => "CASHIN",
+                "item_id" => $shipment_id,
+                "merchant_id" => Request()->user()->merchant_id,
+                "amount" => $merchent->actual_balance,
+                "balance_after" => $actual_balance,
+                "source" => "SHIPMENT",
+                "created_by" => Request()->user()->id
+            ]);
+        });
+    }
+
+    public function calculate(ShipmentRequest $request)
+    {
+        $data = $request->validated();
+        $result = [];
+        Carriers::all()->where('is_cod', $data['is_cod'])->map(function ($carrier) use ($data, &$result) {
+            $result[$carrier->name] = $this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']);
+        });
+        return $this->response($result, 'Fees Calculated Successfully');
+    }
+
+    public function test(ShipmentRequest $request)
+    {
+        $data = $request->data;
+        $shipper = App::make('merchantInfo');
+        $address = App::make('merchantAddresses')->where('is_default', true)->first();
+
+        $shipment = [];
+        $shipment['sender_name'] = $shipper->name;
+        $shipment['sender_email'] = $shipper->email;
+        $shipment['sender_phone'] = $shipper->phone;
+        $shipment['sender_country'] = $shipper->country_code;
+        $shipment['sender_city'] = $address['city'];
+        $shipment['sender_area'] = $address['area'];
+        $shipment['sender_address_description'] = $address['area'];
+
+        $shipment['consignee_name'] = $data['customer']['name'];
+        $shipment['consignee_email']  = $data['customer']['email'] ?? 'salla@shipcash.net';
+        $shipment['consignee_phone']  = $data['customer']['mobile'];
+        $shipment['consignee_second_phone'] = '';
+        $shipment['consignee_country'] = $data['address']['country'];
+        $shipment['consignee_city'] = $data['address']['city'];
+        $shipment['consignee_area'] = $data['address']['shipping_address'];
+        $shipment['consignee_zip_code'] = '';
+        $shipment['consignee_address_description'] = $data['address']['shipping_address'];
+        $shipment['content'] = 'Salla Webhook';
+        $shipment['cod'] = $data['amounts']['total']['amount'];
+        $shipment['currency'] = $data['amounts']['total']['currency'];
+        $shipment['actual_weight'] = collect($data['items'])->sum('weight');
+        $shipment['pieces'] = collect($data['items'])->count();
+
+        $provider = $this->getActionShipments($shipment);
+        $shipment['fees'] = $this->calculateFees($provider, $shipment['sender_country'], $shipment['consignee_country'], $shipment['actual_weight']);
+        $shipment['merchant_id'] = Request()->user()->merchant_id;
+        $shipment['created_by'] = Request()->user()->id;
+
+
+        return $this->createShipmentDB($shipment, $provider);
     }
 }

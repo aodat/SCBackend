@@ -24,7 +24,7 @@ class TeamRequest extends FormRequest
     {
         $path = Request()->route()->uri;
         $data = parent::all($keys);
-        if ($this->method() == 'DELETE' && strpos($path,'team/member/{user_id}') !== false)
+        if ($this->method() == 'DELETE' && strpos($path, 'team/member/{user_id}') !== false)
             $data['id'] = $this->route('user_id');
         return $data;
     }
@@ -38,7 +38,7 @@ class TeamRequest extends FormRequest
         $path = Request()->route()->uri;
         if (strpos($path, 'team/member/invite') !== false) {
             return [
-                'email' => 'required|string|email|max:255|unique:users'
+                'email' => 'required|string|email|max:255'
             ];
         } else if (strpos($path, 'team/member/{user_id}') !== false) {
             return [
@@ -46,7 +46,7 @@ class TeamRequest extends FormRequest
                     'required',
                     Rule::exists('users')->where(function ($query) {
                         return $query->where('is_owner', false)
-                                ->where('merchant_id',Request()->user()->merchant_id);
+                            ->where('merchant_id', Request()->user()->merchant_id);
                     }),
                 ]
             ];
@@ -55,13 +55,15 @@ class TeamRequest extends FormRequest
                 'id' => [
                     'required',
                     Rule::exists('users')->where(function ($query) {
-                        return $query->where('merchant_id',Request()->user()->merchant_id)->where('status','active');
+                        return $query->where('merchant_id', Request()->user()->merchant_id)->where('status', 'active');
                     }),
                 ],
-                'role' => 'required|in:admin,member'
+                'scope' => 'required|in:admin,member',
+                'role.*' => [
+                    Rule::in("payment", "shipping"),
+                ],
             ];
         }
-        dd('xxxx');
         return [];
     }
 }

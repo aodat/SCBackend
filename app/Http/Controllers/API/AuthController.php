@@ -8,20 +8,23 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\RecoveryRequest;
-
+use App\Jobs\Send;
+use App\Jobs\SendMails;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Http;
 
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 
 use App\Models\Merchant;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
+
 use Illuminate\Support\Facades\Route;
-use Laravel\Passport\Passport;
+
+use Laravel\Passport\Client;
+use Laravel\Passport\ClientRepository;
+
 class AuthController extends Controller
 {
     public function login(AuthRequest $request)
@@ -37,8 +40,10 @@ class AuthController extends Controller
             if (!$merchant->is_active)
                 return $this->error('Mechant Is In-Active', 403);
         }
-
-        $userData['token'] = $userData->createToken('users', [$userData->role])->accessToken;
+        if ($userData->role === "member")
+            $role = explode(",", $userData->role_member);
+        $role[] = $userData->role;
+        $userData['token'] = $userData->createToken('users', $role)->accessToken;
         return $this->response(
             $userData,
             'User Login Successfully',
@@ -46,7 +51,8 @@ class AuthController extends Controller
         );
     }
 
-    public function register(AuthRequest $request)
+
+    public function register(AuthRequest $request, ClientRepository $clientRepository)
     {
         $merchant = Merchant::create(
             [
@@ -54,6 +60,8 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'type' => $request->type,
                 'phone' => $request->phone,
+                'country_code' => $request->country_code,
+                'currency_code' => ($request->country_code == 'JO') ? 'JOD' : 'SAR',
                 'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'), true)),
                 'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'), true))
             ]
@@ -69,8 +77,39 @@ class AuthController extends Controller
                 'role' => 'admin'
             ]
         );
-        $user->sendEmailVerificationNotification();
+
+        $client = $clientRepository->createPasswordGrantClient(
+            $merchant->id,
+            $merchant->name,
+            'http://example.com/callback.php',
+            str_replace(' ', '-', strtolower($merchant->name))
+        );
+        $merchant->update(["secret_key" => $client->secret]);
+
+        $SendMails = Send::dispatch($user);
+
         return $this->successful('User Created Successfully');
+    }
+
+    public function changeSecret(ClientRepository $clientRepository)
+    {
+        $merchantInfo =$this->getMerchentInfo();
+
+        $clients = Client::where('user_id', Request()->user()->merchant_id)->get();
+        $clients->map(function ($client) use ($clientRepository) {
+            $clientRepository->delete($client);
+        });
+
+        $client = $clientRepository->createPasswordGrantClient(
+            $merchantInfo->id,
+            $merchantInfo->name,
+            'http://example.com/callback.php',
+            str_replace(' ', '-', strtolower($merchantInfo->name))
+        );
+
+        $merchantInfo->secret_key = $client->secret;
+        $merchantInfo->save();
+        return $this->successful('Secret Created Successfully');
     }
 
     // Forget Password
@@ -78,14 +117,9 @@ class AuthController extends Controller
     {
         $response =  Password::sendResetLink($request->only('email'));
 
-        $msg = "Email could not be sent to this email address";
-        $code = 400;
-        if ($response == Password::RESET_LINK_SENT) {
-            $msg = "Mail send successfully";
-            $code = 200;
-        }
-
-        $this->response([], $msg, $code);
+        if ($response == Password::RESET_LINK_SENT)
+            return $this->successful('Mail send successfully');
+        return $this->error('Email could not be sent to this email address');
     }
 
     // Reset password
@@ -103,22 +137,16 @@ class AuthController extends Controller
                 event(new PasswordReset($user));
             }
         );
-
-        $msg = "Email could not be sent to this email address";
-        $code = 400;
-        if ($response == Password::PASSWORD_RESET) {
-            $msg = "Password reset successfully";
-            $code = 200;
-        }
-
-        $this->response([], $msg, $code);
+        if ($response == Password::PASSWORD_RESET)
+            return $this->successful('Password reset successfully');
+        return $this->error('Email could not be sent to this email address');
     }
 
     // Verify Email
     public function verifyEmail(Request $request)
     {
         if (!$request->hasValidSignature()) {
-            return $this->response([], 'Invalid/Expired url provided', 401);
+            return $this->error('Invalid/Expired url provided', 400);
         }
 
         $user = User::findOrFail($request->id);
@@ -129,52 +157,80 @@ class AuthController extends Controller
             User::where('id', $user->id)->update(['is_email_verified' => true]);
             Merchant::where('email', $user->email)->update(['is_email_verified' => true]);
         }
-        return $this->response([], 'Email verified sucessfully', 200);
+        return $this->successful('Email verified Successfully');
     }
 
     // Resend Email for verfification
     public function resend()
     {
         if (auth()->user()->hasVerifiedEmail())
-            return $this->response([], 'Email already verified.', 200);
-
-        auth()->user()->sendEmailVerificationNotification();
-
-        return $this->response([], 'Email verification link sent on your email id.', 200);
+            return $this->error('Email already verified.', 400);
+        
+        Send::dispatch(auth()->user());
+        return $this->successful('Check your email');
     }
 
     // Get Merchant Secret Key
     public function getSecretKey(Request $request)
     {
-        $secret_key = Merchant::findOrFail($request->user()->merchant_id)->secret_key;
-        return $this->response(['key' => $secret_key], 'Access Key Retrieved Successfully');
-    }
+        $merchant = $this->getMerchentInfo();
+        $client = Client::where('user_id', $merchant->id)->where('revoked', false)->first();
 
-    // Genrate Access Token
-    function generateSecretKey(Request $request)
-    {
-        $merchant = Merchant::findOrFail($request->user()->merchant_id);
+        if ($client == null)
+            $this->error('No Secret Key Created Yet');
+
         $request->request->add([
-            'name' => $merchant->name,
-            'redirect' => 'https://localhost/callback'
+            'grant_type' => 'client_credentials',
+            'client_id' => $client->id,
+            'client_secret' => $merchant->secret_key,
+            'redirect_uri' => 'http://example.com/callback.php',
+            'code' => ''
         ]);
 
         $proxy = Request::create(
-            'oauth/clients',
+            'oauth/token',
             'POST'
         );
-        $result = Route::dispatch($proxy)->getData();
+        $result = json_decode(Route::dispatch($proxy)->getContent());
+        return $this->response(['secret_key' => $merchant->secret_key, 'access_key' => $result->access_token], 'Access Key Retrieved Successfully');
+    }
 
-        $merchant->secret_key = $result->secret;
+    // Genrate Access Token
+    function generateSecretKey(Request $request, ClientRepository $clientRepository)
+    {
+        $merchant =$this->getMerchentInfo();
+
+        $clients = Client::where('user_id', $merchant->id)->get();
+        $clients->map(function ($client) use ($clientRepository) {
+            $clientRepository->delete($client);
+        });
+
+        $client = $clientRepository->createPasswordGrantClient(
+            $merchant->id,
+            $merchant->name,
+            'http://example.com/callback.php',
+            str_replace(' ', '-', strtolower($merchant->name))
+        );
+        $merchant->secret_key = $client->secret;
         $merchant->save();
 
         return $this->successful();
+    }
+
+    // Delete all Clients Secret
+    public function revokeSecretKey(Request $request, ClientRepository $clientRepository)
+    {
+        $clients = Client::where('user_id', $request->user()->merchant_id)->get();
+        $clients->map(function ($client) use ($clientRepository) {
+            $clientRepository->delete($client);
+        });
+        return $this->successful('Revoked Suceefully');
     }
 
     // Logout
     public function logout(Request $request)
     {
         $request->user()->token()->revoke();
-        return $this->response([], 'User Log Out.', 200);
+        return $this->successful('User Log Out');
     }
 }

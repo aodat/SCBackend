@@ -13,32 +13,28 @@ class DocumentController extends Controller
     public function index(DocumentRequest $request)
     {
         $data  = Merchant::find($request->merchant_id)->documents;
-        return $this->response($data, "Success get addresse to specified merchant");
+        return $this->response($data, "Data Retrieved Successfully");
     }
-
 
     public function store(DocumentRequest $request)
     {
-        $template = json_decode(file_get_contents(storage_path() . '/app/template/documents.json'), true);
-
-        $merchant_id = $request->merchant_id;
-        $merchant = Merchant::where('id', '=', $merchant_id);
-
-        $result = collect($merchant->select('documents')->first()->documents);
+        $merchant = $this->getMerchentInfo();
+        $result = collect(Merchant::where('id',$merchant->id)->select('documents')->first()->documents);
         $counter = $result->max('id') ?? 0;
+        $data = [
+            'id' => ++$counter,
+            'type' => $request->type,
+            'url' => uploadFiles('documents', $request->file('file')),
+            'status' => 'pending',
+            'verified_at' => null,
+            'created_at' => Carbon::now()
+        ];
 
-        $template['id']           = ++$counter;
-        $template['type']         = $request->type;
-        $template['url']          = uploadFiles('documents', $request->file('url'));
-        $template['status']       = "pending";
-        $template['updated_at']   = Carbon::now();
-        $template['created_at']   = Carbon::now();
-
-        $merchant->update(['documents' => $result->merge([$template])]);
-        return $this->successful();
+        $merchant->update(['documents' => $result->merge([$data])]);
+        return $this->successful('Create Successfully');
     }
 
-    public function documentStatus(DocumentRequest $request)
+    public function status(DocumentRequest $request)
     {
         $data = $request->all();
         $id = $data['id'] ?? null;
@@ -58,7 +54,7 @@ class DocumentController extends Controller
         $current = $document->keys()->first();
 
         $data = $document->toArray()[$current];
-        $data['updated_at'] =  Carbon::now();
+        $data['verified_at'] =  Carbon::now();
         $data['status'] =  $request->status;
         $documents[$current] = $data;
 

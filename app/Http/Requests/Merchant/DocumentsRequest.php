@@ -24,7 +24,7 @@ class DocumentsRequest extends MerchantRequest
     public function rules()
     {
         $path = Request()->path();
-        if(strpos($path,'documents/create') !== false) 
+        if (strpos($path, 'documents/create') !== false)
             return [
                 "type" => "required|in:license,passport,id",
                 "file" => "required|mimes:pdf,jpg,jpeg"

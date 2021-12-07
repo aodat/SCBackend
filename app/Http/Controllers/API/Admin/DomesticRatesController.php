@@ -14,7 +14,7 @@ class DomesticRatesController extends Controller
     {
         $data = $request->validated();
         $merchant = Merchant::findOrFail($data['merchant_id']);
-        return $this->response($merchant->domestic_rates, 'Data Retrieved Successfully', 200);
+        return $this->response($merchant->domestic_rates, 'Data Retrieved Successfully');
     }
 
     public function update(DomesticRatesRequest $request)
@@ -43,6 +43,6 @@ class DomesticRatesController extends Controller
         $domestic_rates[$carrier_id] = $rates;
         
         $merchant->update(['domestic_rates' => $domestic_rates]);
-        return $this->successful('Updated Sucessfully');
+        return $this->successful('Updated Successfully');
     }
 }

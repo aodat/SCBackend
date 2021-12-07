@@ -18,7 +18,7 @@ class CreateCarriersTable extends Migration
             $table->string('name', 64)->unique();
             $table->string('email', 64)->unique();
             $table->string('phone', 16)->unique();
-            $table->double('balance', 8, 2)->default('0');;
+            $table->double('balance', 8, 2)->default('0');
             $table->enum('country_code', ['JO']);
             $table->enum('currency_code', ['JOD']);
             $table->json('documents')->nullable();

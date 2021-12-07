@@ -44,6 +44,6 @@ class ExpressRatesController extends Controller
         $express_rates[$carrier_id]['zones'] = $rates;
         
         $merchant->update(['express_rates' => $express_rates]);
-        return $this->successful('Updated Sucessfully');
+        return $this->successful('Updated Successfully');
     }
 }
