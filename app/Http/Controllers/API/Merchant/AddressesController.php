@@ -34,8 +34,8 @@ class AddressesController extends MerchantController
         $area = Area::find($area_id);
 
 
-        $result = collect(Merchant::where('id',$merchant->id)->select('addresses')->first()->addresses);
-        $counter = $result->max('id') ?? 0;
+        $result = collect($merchant->addresses);
+        $counter = $result->max('id') ?? 1;
 
         if ($result->contains("name", $request->name))
             throw new InternalException('name already Exists', 400);

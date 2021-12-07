@@ -20,7 +20,7 @@ class DocumentController extends Controller
     {
         $merchant = $this->getMerchentInfo();
         $result = collect(Merchant::where('id',$merchant->id)->select('documents')->first()->documents);
-        $counter = $result->max('id') ?? 0;
+        $counter = $result->max('id') ?? 1;
         $data = [
             'id' => ++$counter,
             'type' => $request->type,
