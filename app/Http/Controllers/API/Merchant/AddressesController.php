@@ -16,8 +16,8 @@ class AddressesController extends MerchantController
 {
     public function index(AddressesRequest $request)
     {
-        $data  =  $this->getMerchentInfo()->addresses;
-        return $this->response($data, "Data Retrieved Successfully");
+        $data = $this->getMerchentInfo();
+        return $this->response($data->addresses, 'Data Retrieved Successfully', 200);
     }
 
     public function store(AddressesRequest $request)

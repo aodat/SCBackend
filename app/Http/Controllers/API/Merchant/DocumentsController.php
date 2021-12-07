@@ -13,9 +13,7 @@ class DocumentsController extends MerchantController
 
     public function index(DocumentsRequest $request)
     {
-    
-
-        $data = $this->getMerchentInfo()->select('documents')->first();
+        $data = $this->getMerchentInfo();
         return $this->response($data->documents, 'Data Retrieved Successfully', 200);
     }
 
