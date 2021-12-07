@@ -38,7 +38,8 @@ class TeamController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($password),
-                        'role_member' => implode(',', $request->scope),
+                        'role' => 'member',
+                        'role_member' => implode(',', $request->scope ?? []),
                         'phone' => null
                     ]
                 );
