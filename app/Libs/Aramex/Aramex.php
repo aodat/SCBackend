@@ -45,7 +45,7 @@ class Aramex
         $payload['Pickup']['PickupAddress']['Line1'] = $address['description'];
         $payload['Pickup']['PickupAddress']['Line2'] = $address['area'];
         $payload['Pickup']['PickupAddress']['Line3'] = '';
-        $payload['Pickup']['PickupAddress']['City'] = $address['name'];
+        $payload['Pickup']['PickupAddress']['City'] = $address['city'];
         $payload['Pickup']['PickupAddress']['CountryCode'] = $address['country_code'];
 
         $payload['Pickup']['PickupContact']['PersonName'] = $address['name'];
@@ -54,7 +54,7 @@ class Aramex
         $payload['Pickup']['PickupContact']['CellPhone'] = $address['phone'];
         $payload['Pickup']['PickupContact']['EmailAddress'] = $email;
 
-        $payload['Pickup']['PickupLocation'] = $address['city_code'];
+        $payload['Pickup']['PickupLocation'] = $address['city_code'] ?? $address['city'];
         $payload['Pickup']['PickupDate'] = '/Date(' . (strtotime($date) * 1000) . ')/';
 
         $ReadyTime  = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 03:00 PM') * 1000;
@@ -67,6 +67,7 @@ class Aramex
         $response = Http::post(self::$CREATE_PICKUP_URL, $payload);
         if (!$response->successful())
             throw new CarriersException('Aramex Create Pickup – Something Went Wrong', $payload, $response->json());
+
         if ($response->json()['HasErrors'])
             throw new CarriersException('Aramex Data Provided Not Correct - Create Pickup', $payload, $response->json());
 
