@@ -8,6 +8,7 @@ use App\Exceptions\CarriersException;
 
 use App\Models\Merchant;
 use App\Models\Pickup;
+use Illuminate\Support\Facades\App;
 use SimpleXMLElement;
 
 class DHL
@@ -29,6 +30,7 @@ class DHL
 
     private $end_point;
     private $account_number;
+    private $merchentInfo;
     function __construct()
     {
         $this->config = [
@@ -40,30 +42,29 @@ class DHL
 
         $this->end_point = self::$stagingUrl;
         $this->account_number = config('carriers.dhl.ACCOUNT_NUMBER');
+        $this->merchentInfo = App::make('merchantInfo');
     }
 
     public function createPickup($email, $date, $address)
     {
         $payload = $this->bindJsonFile('pickup.create.json');
-
         $payload['Requestor']['AccountNumber'] = $this->account_number;
 
-        $payload['Requestor']['CompanyName'] =  $address['name'];
+        $payload['Requestor']['CompanyName'] = $this->merchentInfo->name;
         $payload['Requestor']['Address1'] = $address['name'];
-        $payload['Requestor']['City'] = $address['name'];
+        $payload['Requestor']['City'] = $address['city'];
         $payload['Requestor']['CountryCode'] = $address['country_code'];
-        $payload['Requestor']['PostalCode'] = $address['name'];
+        $payload['Requestor']['PostalCode'] = "";
         $payload['Requestor']['RequestorContact']['PersonName'] = $address['name'];
-        $payload['Requestor']['RequestorContact']['Phone'] =  $address['phone'];
+        $payload['Requestor']['RequestorContact']['Phone'] = $address['phone'];
 
         $payload['Place']['CompanyName'] = $address['name'];
-        $payload['Place']['Address1'] = $address['city'];
-        $payload['Place']['Address2'] = $address['city'];
-        $payload['Place']['PackageLocation'] = $address['city'];
+        $payload['Place']['Address1'] = $address['area'];
+        $payload['Place']['Address2'] = $address['area'];
+        $payload['Place']['PackageLocation'] = $address['description'];
         $payload['Place']['City'] = $address['city'];
         $payload['Place']['CountryCode'] = $address['country_code'];
         $payload['Place']['PostalCode'] = "";
-
 
         // Pickup
         $payload['Pickup']['PickupDate'] = $date;
@@ -77,7 +78,7 @@ class DHL
         $payload['ShipmentDetails']['BillToAccountNumber'] = $this->account_number;
         $payload['ShipmentDetails']['AWBNumber'] = randomNumber(9);
 
-        $payload['ConsigneeDetails']['CompanyName'] = $address['name'];
+        $payload['ConsigneeDetails']['CompanyName'] = $this->merchentInfo->name;
         $payload['ConsigneeDetails']['AddressLine'] = $address['area'];
         $payload['ConsigneeDetails']['City'] = $address['city'];
         $payload['ConsigneeDetails']['CountryCode'] =  $address['country_code'];
@@ -86,7 +87,6 @@ class DHL
         $payload['ConsigneeDetails']['Contact']['Phone'] = $address['phone'];
 
         $response = $this->call('BookPURequest', $payload);
-
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
 
@@ -108,8 +108,7 @@ class DHL
         $response = $this->call('CancelPURequest', $payload);
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
-
-
+            
         return true;
     }
 
