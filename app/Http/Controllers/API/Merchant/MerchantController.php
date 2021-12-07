@@ -133,6 +133,6 @@ class MerchantController extends Controller
 
     public function getMerchentInfo()
     {
-        return App::make('merchantInfo');
+        return Merchant::findOrFail(Request()->user()->merchant_id);
     }
 }
