@@ -72,7 +72,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::group(['middleware' => ['scope:payment,admin']], function () {
                 Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
                 Route::post('payment-methods/create', [PaymentMethodsController::class, 'store']);
-                Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'delete'])->where('id', '[0-9]+');
+                Route::post('payment-methods/{id}', [PaymentMethodsController::class, 'delete'])->where('id', '[0-9]+');
             });
 
             // Documents
