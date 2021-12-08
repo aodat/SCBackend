@@ -27,7 +27,7 @@ class InvoiceController extends MerchantController
         $data['fk_id'] = $receipt['fk_id'];
         $data['merchant_id'] = $request->user()->merchant_id;
         $data['user_id'] = $request->user()->id;
-        $data['resource'] = $request->resource;
+        $data['resource'] = Request()->header('agent') ?? 'API';
         Invoices::create($data);
 
         return $this->successful('Create Successfully');
@@ -41,7 +41,7 @@ class InvoiceController extends MerchantController
         $invoiceInfo->link = $link;
         $invoiceInfo->save();
 
-        $this->response(['link' => $link],'Data Retrieved Successfully');
+        $this->response(['link' => $link], 'Data Retrieved Successfully');
     }
 
     public function delete($invoiceID, InvoiceRequest $request)
