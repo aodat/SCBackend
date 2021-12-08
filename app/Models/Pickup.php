@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
 class Pickup extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $appends = ['carrier_name', 'address_name'];
 
     public static function getPickupCarrires($merchant_id, $pickup_id = null, $carrier_id = null, $all = false)
     {
@@ -28,6 +30,18 @@ class Pickup extends Model
         if (!$all)
             return $sql->first();
         return $sql->get();
+    }
+
+    public function getCarrierNameAttribute()
+    {
+        $provider = App::make('carriers')->where('id', $this->carrier_id)->first();
+        return $provider->name ?? '';
+    }
+
+    public function getAddressNameAttribute()
+    {
+        $address = App::make('merchantAddresses')->where('id', $this->address_id)->first();
+        return $address['name'] ?? '';
     }
 
     protected static function booted()
