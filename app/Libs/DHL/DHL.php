@@ -16,13 +16,15 @@ class DHL
     private static $xsd = [
         'BookPURequest' => 'http://www.dhl.com book-pickup-global-req_EA.xsd',
         'CancelPURequest' => 'http://www.dhl.com cancel-pickup-global-req.xsd',
-        'ShipmentRequest' => 'http://www.dhl.com ship-val-global-req.xsd'
+        'ShipmentRequest' => 'http://www.dhl.com ship-val-global-req.xsd',
+        'RouteRequest' => 'http://www.dhl.com routing-global-req.xsd'
     ];
 
     private static $schemaVersion = [
         'BookPURequest' => '3.0',
         'CancelPURequest' => '3.0',
-        'ShipmentRequest' => '10.0'
+        'ShipmentRequest' => '10.0',
+        'RouteRequest' => '2.0'
     ];
 
     private static $stagingUrl = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet?isUTF8Support=true';
@@ -45,8 +47,30 @@ class DHL
         $this->merchentInfo = App::make('merchantInfo');
     }
 
+    public function __check($address)
+    {
+        $payload = $this->bindJsonFile('validate.json');
+        $payload['RegionCode'] = 'EU';
+        $payload['RequestType'] = 'O';
+        $payload['Address1'] = $payload['Address2'] = $payload['Address3'] = $address['area'];
+        $payload['PostalCode'] = '';
+        $payload['City'] =  $address['city'];
+        $payload['Division'] = '';
+        $payload['CountryCode'] = $address['country_code'];
+        $payload['CountryName'] = $address['country'];
+        $payload['OriginCountryCode'] = $address['country_code'];
+
+        $response = $this->call('RouteRequest', $payload);
+
+        if (!empty($response['Response']['Status']['Condition']))
+            throw new CarriersException('DHL This Country Not Supported');
+
+        return true;
+    }
+
     public function createPickup($email, $date, $address)
     {
+        $this->__check($address);
         $payload = $this->bindJsonFile('pickup.create.json');
         $payload['Requestor']['AccountNumber'] = $this->account_number;
 
@@ -108,7 +132,7 @@ class DHL
         $response = $this->call('CancelPURequest', $payload);
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
-            
+
         return true;
     }
 
@@ -179,24 +203,31 @@ class DHL
         return $payload;
     }
 
-    private function dhlXMLFile($type, $data)
+    private function dhlXMLFile($type, $data, $prefix)
     {
-        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>' . "<req:$type></req:$type>", LIBXML_NOERROR, false, 'ws', true);
-        $xml->addAttribute('req:xmlns:req', 'http://www.dhl.com');
-        $xml->addAttribute('req:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
-        $xml->addAttribute('req:xsi:schemaLocation', self::$xsd[$type]);
-        $xml->addAttribute('req:schemaVersion', self::$schemaVersion[$type]);
+        $xml = new SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?>' . "<$prefix:$type></$prefix:$type>", LIBXML_NOERROR, false, 'ws', true);
+        if ($prefix == 'req') {
+            $xml->addAttribute('req:xmlns:req', 'http://www.dhl.com');
+            $xml->addAttribute('req:xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+            $xml->addAttribute('req:xsi:schemaLocation', self::$xsd[$type]);
+            $xml->addAttribute('req:schemaVersion', self::$schemaVersion[$type]);
+        } else {
+            $xml->addAttribute('xmlns:ns1', 'http://www.dhl.com');
+            $xml->addAttribute('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+            $xml->addAttribute('xsi:schemaLocation', self::$xsd[$type]);
+            $xml->addAttribute('schemaVersion', self::$schemaVersion[$type]);
+        }
         return array_to_xml($data, $xml);
     }
 
-    private function call($type, $data)
+    private function call($type, $data, $prefix = 'req')
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_URL, $this->end_point);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($ch, CURLOPT_PORT, 443);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->dhlXMLFile($type, $data)->asXML());
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->dhlXMLFile($type, $data, $prefix)->asXML());
         $result = curl_exec($ch);
         curl_error($ch);
 

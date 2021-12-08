@@ -1,0 +1,25 @@
+{
+    "Request": {
+        "ServiceHeader": {
+            "MessageTime": "",
+            "MessageReference": "",
+            "SiteID": "",
+            "Password": ""
+        },
+        "MetaData": {
+            "SoftwareName": "3PV",
+            "SoftwareVersion": "1.0"
+        }
+    },
+    "RegionCode": "EU",
+    "RequestType": "O",
+    "Address1": "",
+    "Address2": "",
+    "Address3": "",
+    "PostalCode": "",
+    "City": "",
+    "Division": "",
+    "CountryCode": "",
+    "CountryName": "",
+    "OriginCountryCode": ""
+}
