@@ -39,9 +39,8 @@ class ShipmentController extends MerchantController
         $phone = $filters['phone'] ?? [];
         $cod    = $filters['cod']['val'] ?? null;
         $operation    = $filters['cod']['operation'] ?? null;
-
+        $type = $request->type ?? 'DOM';
         $shipments = Shipment::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
-
 
         if (count($external))
             $shipments->whereIn('external_awb', $external);
@@ -57,15 +56,17 @@ class ShipmentController extends MerchantController
         else if ($cod)
             $shipments->whereBetween('cod', [intval($cod), intval($cod) . '.99']);
 
+        $shipments->where('group', $type);
 
         $tabs = DB::table('shipments')
             ->where('merchant_id', Request()->user()->merchant_id)
             ->select('status', DB::raw(
                 'count(status) as counter'
             ))
+            ->where('group', $type)
             ->groupBy('status')
             ->pluck('counter', 'status');
-        // Merage
+
         $tabs = collect($this->status)->merge(collect($tabs));
         return $this->pagination($shipments->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
     }
