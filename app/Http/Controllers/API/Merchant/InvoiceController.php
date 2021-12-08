@@ -7,6 +7,7 @@ use App\Jobs\StripeUpdates;
 use App\Models\Invoices;
 
 use Libs\Stripe;
+use Stripe\Invoice;
 
 class InvoiceController extends MerchantController
 {
@@ -14,6 +15,12 @@ class InvoiceController extends MerchantController
     public function __construct()
     {
         $this->stripe = new Stripe();
+    }
+
+    public function index(InvoiceRequest $request)
+    {
+        $invoices = Invoices::paginate(request()->per_page ?? 10);
+        return $this->pagination($invoices);
     }
 
     public function store(InvoiceRequest $request)
