@@ -31,7 +31,8 @@ class MerchantRequest extends FormRequest
             return Shipment::where('id', Request::instance()->id)->exists();
         else if (
             ($this->getMethod() == 'DELETE' && strpos($path, 'invoice/{invoice_id}') !== false) ||
-            ($this->getMethod() == 'GET' && strpos($path, 'invoice/finalize/{invoice_id}') !== false)
+            ($this->getMethod() == 'GET' && strpos($path, 'invoice/finalize/{invoice_id}') !== false) ||
+            ($this->getMethod() == 'GET' && strpos($path, 'invoice/{invoice_id}') !== false)
         )
             return Invoices::where('id', Request::instance()->invoice_id)->exists();
         return true;

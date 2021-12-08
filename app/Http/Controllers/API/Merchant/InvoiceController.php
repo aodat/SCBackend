@@ -23,6 +23,12 @@ class InvoiceController extends MerchantController
         return $this->pagination($invoices);
     }
 
+    public function show($id,InvoiceRequest $request)
+    {
+        $data = Invoices::findOrFail($id);
+        return $this->response($data, 'Data Retrieved Sucessfully');
+    }
+
     public function store(InvoiceRequest $request)
     {
         $data = $request->validated();

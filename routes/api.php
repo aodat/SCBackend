@@ -105,11 +105,13 @@ Route::group(['middleware' => ['json.response']], function () {
 
             // Pickups
             Route::post('pickups', [PickupsController::class, 'index']);
+            Route::get('pickup/{pickup_id}', [PickupsController::class, 'show']);
             Route::post('pickups/create', [PickupsController::class, 'store']);
             Route::post('pickup/cancel', [PickupsController::class, 'cancel']);
 
             // Invoice
             Route::get('invoices', [InvoiceController::class, 'index']);
+            Route::get('invoices/{invoice_id}', [InvoiceController::class, 'show']);
             Route::get('invoice/finalize/{invoice_id}', [InvoiceController::class, 'finalize']);
             Route::post('invoice/create', [InvoiceController::class, 'store']);
             Route::delete('invoice/{invoice_id}', [InvoiceController::class, 'delete'])->where('invoice_id', '[0-9]+');

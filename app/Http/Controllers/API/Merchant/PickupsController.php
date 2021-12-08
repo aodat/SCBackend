@@ -50,6 +50,12 @@ class PickupsController extends MerchantController
         return $this->pagination($paginated, ['tabs' => $tabs]);
     }
 
+    public function show($id,PickuptRequest $request)
+    {
+        $data = Pickup::findOrFail($id);
+        return $this->response($data, 'Data Retrieved Sucessfully');
+    }
+
     public function store(PickuptRequest $request)
     {
         $merchentInfo = $this->getMerchentInfo();
