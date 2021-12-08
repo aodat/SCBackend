@@ -80,12 +80,14 @@ class ShipmentController extends MerchantController
     public function export($type, ShipmentRequest $request)
     {
         $merchentID = Request()->user()->merchant_id;
-        $shipments = Shipment::find($merchentID);
+ 
+        $shipments = Shipment::where('merchant_id',$merchentID);
         $path = "export/shipments-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
         if ($type == 'xlsx') {
             $url = exportXLSX(new ShipmentExport($shipments), $path);
         } else {
+           
             $url = exportPDF('shipments', $path, $shipments);
         }
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);

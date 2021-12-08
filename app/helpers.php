@@ -5,6 +5,7 @@ use Maatwebsite\Excel\Facades\Excel as Excel;
 
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Mpdf\Mpdf;
 
 function uploadFiles($folder, $file, $type = '', $isOutput = false)
 {
@@ -16,7 +17,7 @@ function uploadFiles($folder, $file, $type = '', $isOutput = false)
         $data = $file;
         $path .= ".$type";
     }
-    
+
     Storage::disk('s3')->put($path, $data);
 
     return Storage::disk('s3')->url($path);
@@ -24,8 +25,10 @@ function uploadFiles($folder, $file, $type = '', $isOutput = false)
 
 function exportPDF($view, $path, $data)
 {
-    $pdf = \PDF::loadView("pdf.$view", [$view => $data]);
-    Storage::disk('s3')->put($path, $pdf->output());
+    $mpdf = new Mpdf();
+    $html = view('pdf/shipments', ['shipments' => $data])->render();
+    $mpdf->WriteHTML($html);
+    (Storage::disk('s3')->put($path, $mpdf->Output('filename.pdf','S')));
     return Storage::disk('s3')->url($path);
 }
 
