@@ -47,18 +47,18 @@ class DHL
         $this->merchentInfo = App::make('merchantInfo');
     }
 
-    public function __check($address)
+    public function __check($countryName, $countryCode, $city, $area = '')
     {
         $payload = $this->bindJsonFile('validate.json');
         $payload['RegionCode'] = 'EU';
         $payload['RequestType'] = 'O';
-        $payload['Address1'] = $payload['Address2'] = $payload['Address3'] = $address['area'];
+        $payload['Address1'] = $payload['Address2'] = $payload['Address3'] = $area;
         $payload['PostalCode'] = '';
-        $payload['City'] =  $address['city'];
+        $payload['City'] =  $city;
         $payload['Division'] = '';
-        $payload['CountryCode'] = $address['country_code'];
-        $payload['CountryName'] = $address['country'];
-        $payload['OriginCountryCode'] = $address['country_code'];
+        $payload['CountryCode'] = $countryCode;
+        $payload['CountryName'] = $countryName;
+        $payload['OriginCountryCode'] = $countryCode;
 
         $response = $this->call('RouteRequest', $payload);
 
@@ -70,7 +70,7 @@ class DHL
 
     public function createPickup($email, $date, $address)
     {
-        $this->__check($address);
+        $this->__check($address['country'], $address['country_code'], $address['city'], $address['area']);
         $payload = $this->bindJsonFile('pickup.create.json');
         $payload['Requestor']['AccountNumber'] = $this->account_number;
 
@@ -153,7 +153,7 @@ class DHL
         $payload['Consignee']['AddressLine3'] = $shipmentInfo['consignee_address_description'];
         $payload['Consignee']['StreetName'] =  $shipmentInfo['consignee_address_description'];
         $payload['Consignee']['BuildingName'] =  $shipmentInfo['consignee_address_description'];
-        $payload['Consignee']['StreetNumber'] = '';
+        $payload['Consignee']['StreetNumber'] = $shipmentInfo['consignee_address_description'];
 
         $payload['Consignee']['City'] = $shipmentInfo['consignee_city'];
         $payload['Consignee']['PostalCode'] = $shipmentInfo['consignee_zip_code'] ?? '';
@@ -179,7 +179,7 @@ class DHL
         $payload['Shipper']['CountryName'] = $merchentInfo->country_code;
         $payload['Shipper']['StreetName'] =  $shipmentInfo['sender_area'];
         $payload['Shipper']['BuildingName'] =  $shipmentInfo['sender_area'];
-        $payload['Shipper']['StreetNumber'] = '';
+        $payload['Shipper']['StreetNumber'] = $shipmentInfo['sender_address_description'];
 
         $payload['Shipper']['Contact']['PersonName'] = $shipmentInfo['sender_name'];
         $payload['Shipper']['Contact']['PhoneNumber'] = $shipmentInfo['sender_phone'];
