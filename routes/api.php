@@ -19,9 +19,8 @@ use App\Http\Controllers\API\Merchant\PickupsController;
 use App\Http\Controllers\API\Merchant\InvoiceController;
 use App\Http\Controllers\API\Merchant\DashboardController;
 use App\Http\Controllers\API\Merchant\RulesController;
-
 use App\Http\Controllers\API\Merchant\CarrierController;
-use App\Models\Merchant;
+
 use Illuminate\Support\Facades\Route;
 
 

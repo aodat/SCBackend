@@ -86,6 +86,7 @@ trait CarriersManager
     */
     public function calculateFees($carrier_id, $country_code, $type, $weight)
     {
+        return rand(1,20);
         $this->merchantInfo = $this->getMerchantInfo();
         if ($type == 'DOM') {
             $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code);
