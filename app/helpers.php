@@ -2,11 +2,11 @@
 
 use App\Models\Shipment;
 use Maatwebsite\Excel\Facades\Excel as Excel;
-
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Mpdf\Mpdf;
-
+use App\View\Creators\ProfileCreator;
+use Illuminate\Support\Facades\View;
 function uploadFiles($folder, $file, $type = '', $isOutput = false)
 {
     $path = $folder . "/" . md5(Carbon::now());
@@ -25,10 +25,8 @@ function uploadFiles($folder, $file, $type = '', $isOutput = false)
 
 function exportPDF($view, $path, $data)
 {
-    $mpdf = new Mpdf();
-    $html = view('pdf/shipments', ['shipments' => $data])->render();
-    $mpdf->WriteHTML($html);
-    (Storage::disk('s3')->put($path, $mpdf->Output('filename.pdf','S')));
+    $pdf = \PDF::loadView("pdf.$view", [$view => $data]);
+    Storage::disk('s3')->put($path, $pdf->output());
     return Storage::disk('s3')->url($path);
 }
 
