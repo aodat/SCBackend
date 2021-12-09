@@ -107,12 +107,12 @@ class Aramex
         return $files;
     }
 
-    public function createShipment($merchentInfo = null, $shipmentArray)
+    public function createShipment($merchentInfo = null, $shipmentInfo)
     {
         $payload = [
             'ClientInfo' => $this->config,
             'LabelInfo' => ['ReportID' => 9729, 'ReportType' => 'URL'],
-            'Shipments' => $shipmentArray,
+            'Shipments' => $shipmentInfo,
             'Transaction' => [
                 'Reference1' => '',
                 'Reference2' => '',
@@ -122,6 +122,7 @@ class Aramex
             ]
         ];
         $response = Http::post(self::$CREATE_SHIPMENTS_URL, $payload);
+
         if (!$response->successful())
             throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $response->json());
 
@@ -160,6 +161,7 @@ class Aramex
         $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_area'];
         $data['Consignee']['PartyAddress']['Line3'] = $shipmentInfo['consignee_second_phone'];
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
+
         if ($shipmentInfo['group'] == 'EXP')
             $data['Consignee']['PartyAddress']['PostCode'] = $shipmentInfo['consignee_zip_code'];
         $data['Consignee']['PartyAddress']['CountryCode'] = ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->country_code : $shipmentInfo['consignee_country'];

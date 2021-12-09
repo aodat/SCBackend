@@ -31,7 +31,7 @@ class AuthRequest extends FormRequest
                 'type' => 'in:individual,corporate',
                 'name' => 'required|min:6|max:255',
                 'email' => 'required|email|unique:users',
-                'country_code' => 'required|in:JO,KSA',
+                'country_code' => 'required|in:JO,SA',
                 'phone' => ['required', 'unique:users', 'regex:/^([0-9\s\-\+\(\)]*)$/', 'min:10', 'max:14', new Phone(Request::instance()->country_code)],
                 'password' => 'required|min:6|max:255'
             ];

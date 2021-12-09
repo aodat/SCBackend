@@ -25,7 +25,6 @@ function uploadFiles($folder, $file, $type = '', $isOutput = false)
 
 function exportPDF($view, $path, $data)
 {
-
     $mpdf = new Mpdf();
     $html = view("pdf.$view", [$view  => $data])->render();
     $mpdf->WriteHTML($html);
@@ -35,11 +34,16 @@ function exportPDF($view, $path, $data)
 
 function mergePDF($files)
 {
+    if(count($files) > 1)
+        return reset($files);
+    else 
+        return $files;
+
     $pdf = new PDFMerger();
     foreach ($files as $file) {
         $path = 'aramex/' . md5(time()) . '.pdf';
         Storage::disk('local')->put($path, file_get_contents($file));
-        $pdf->addPDF(Storage::path($path, 'all'));
+        $pdf->addPDF(Storage::path($path),'all');
     }
     $pathForTheMergedPdf = Storage::path("aramex/result.pdf");
     $pdf->merge('file', $pathForTheMergedPdf);

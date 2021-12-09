@@ -46,8 +46,8 @@ trait CarriersManager
         $shipments = $this->adapter->createShipment($merchantInfo, $shipmentArray);
 
         return [
-            'link' => collect($shipments)->pluck('file'),
-            'id' => ($provider == 'Aramex') ? collect($shipments)->pluck('id') : $shipments['id']
+            'link' => collect($shipments)->pluck('file')->toArray(),
+            'id' => is_array($shipments) ? collect($shipments)->pluck('id') : $shipments['id']
         ];
     }
 
@@ -86,7 +86,7 @@ trait CarriersManager
     */
     public function calculateFees($carrier_id, $country_code, $type, $weight)
     {
-        return rand(1,20);
+        return rand(1, 20);
         $this->merchantInfo = $this->getMerchantInfo();
         if ($type == 'DOM') {
             $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code);

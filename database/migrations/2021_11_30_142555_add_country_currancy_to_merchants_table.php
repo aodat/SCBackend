@@ -13,7 +13,7 @@ class AddCountryCurrancyToMerchantsTable extends Migration
      */
     public function up()
     {
-        \DB::statement("ALTER TABLE merchants MODIFY COLUMN country_code ENUM('JO','KSA')");
+        \DB::statement("ALTER TABLE merchants MODIFY COLUMN country_code ENUM('JO','SA')");
         \DB::statement("ALTER TABLE merchants MODIFY COLUMN currency_code ENUM('JOD','SAR')");
     }
 

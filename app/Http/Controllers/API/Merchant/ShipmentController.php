@@ -104,7 +104,15 @@ class ShipmentController extends MerchantController
     public function createDomesticShipment(ShipmentRequest $request)
     {
         return DB::transaction(function () use ($request) {
+
+            // Check Domastic
             $shipmentRequest = $request->validated();
+            $addressList = App::make('merchantAddresses');
+            $merchantInfo = App::make('merchantInfo');
+            (collect($shipmentRequest)->pluck('sender_address_id'))->map(function ($address_id) use ($merchantInfo, $addressList) {
+                if ($addressList->where('id', $address_id)->where('country_code', $merchantInfo->country_code)->isEmpty())
+                    throw new InternalException('This is not Domastic request the merchant code differant with send country code');
+            });
             return $this->shipment('DOM', collect($shipmentRequest), 'Aramex');
         });
     }
@@ -116,6 +124,7 @@ class ShipmentController extends MerchantController
         $dom_rates = collect($merchentInfo->domestic_rates);
         $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $provider, $dom_rates, $type) {
             $address = $addresses->where('id', '=', $shipment['sender_address_id'])->first();
+
             if ($address == null)
                 throw new InternalException('Sender address id is in valid');
             if ($merchentInfo->country_code == null)
@@ -125,7 +134,7 @@ class ShipmentController extends MerchantController
             $shipment['sender_name'] = $merchentInfo['name'];
             $shipment['sender_phone'] = $address['phone'];
             $shipment['sender_country'] = $merchentInfo['country_code'];
-            $shipment['sender_city'] = $address['city_code'];
+            $shipment['sender_city'] = $address['city'];
             $shipment['sender_area'] = $address['area'];
             $shipment['sender_address_description'] = $address['description'];
 
@@ -144,11 +153,11 @@ class ShipmentController extends MerchantController
 
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
-            $shipment['logs'][] = [
-                'UpdateDateTime' => Carbon::now(),
-                'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
-                'UpdateDescription' => 'Create Shipment'
-            ];
+            // $shipment['logs'] = [
+            //     'UpdateDateTime' => Carbon::now(),
+            //     'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
+            //     'UpdateDescription' => 'Create Shipment'
+            // ];
             return $shipment;
         });
         return $this->createShipmentDB($shipments, $provider);
@@ -156,12 +165,14 @@ class ShipmentController extends MerchantController
 
     private function createShipmentDB($shipments, $provider)
     {
+        $resource = Request()->header('agent') ?? 'API';
+
         $getbulk = $shipments->where('carrier_id', 1);
         $payloads = $getbulk->map(function ($data) {
             return $this->generateShipmentArray('Aramex', $data);
         });
 
-        $resource = Request()->header('agent') ?? 'API';
+
         $links = [];
         // for signle Shipment Request
         if ($payloads->isEmpty()) {
@@ -175,13 +186,17 @@ class ShipmentController extends MerchantController
 
         if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
+
             $externalAWB = $result['id'];
+
             $ships = $shipments->map(function ($value, $key) use ($externalAWB, $resource) {
                 $value['external_awb'] = $externalAWB[$key];
                 $value['resource'] = $resource;
                 return $value;
             });
-            $links[] = $result['link'];
+
+            $links = array_merge($links, $result['link']);
+
             DB::table('shipments')->insert($ships->toArray());
         }
 
@@ -236,42 +251,42 @@ class ShipmentController extends MerchantController
         return $this->response($result, 'Fees Calculated Successfully');
     }
 
-    public function test(ShipmentRequest $request)
-    {
-        $data = $request->data;
-        $shipper = App::make('merchantInfo');
-        $address = App::make('merchantAddresses')->where('is_default', true)->first();
+    // public function test(ShipmentRequest $request)
+    // {
+    //     $data = $request->data;
+    //     $shipper = App::make('merchantInfo');
+    //     $address = App::make('merchantAddresses')->where('is_default', true)->first();
 
-        $shipment = [];
-        $shipment['sender_name'] = $shipper->name;
-        $shipment['sender_email'] = $shipper->email;
-        $shipment['sender_phone'] = $shipper->phone;
-        $shipment['sender_country'] = $shipper->country_code;
-        $shipment['sender_city'] = $address['city'];
-        $shipment['sender_area'] = $address['area'];
-        $shipment['sender_address_description'] = $address['area'];
+    //     $shipment = [];
+    //     $shipment['sender_name'] = $shipper->name;
+    //     $shipment['sender_email'] = $shipper->email;
+    //     $shipment['sender_phone'] = $shipper->phone;
+    //     $shipment['sender_country'] = $shipper->country_code;
+    //     $shipment['sender_city'] = $address['city'];
+    //     $shipment['sender_area'] = $address['area'];
+    //     $shipment['sender_address_description'] = $address['area'];
 
-        $shipment['consignee_name'] = $data['customer']['name'];
-        $shipment['consignee_email']  = $data['customer']['email'] ?? 'salla@shipcash.net';
-        $shipment['consignee_phone']  = $data['customer']['mobile'];
-        $shipment['consignee_second_phone'] = '';
-        $shipment['consignee_country'] = $data['address']['country'];
-        $shipment['consignee_city'] = $data['address']['city'];
-        $shipment['consignee_area'] = $data['address']['shipping_address'];
-        $shipment['consignee_zip_code'] = '';
-        $shipment['consignee_address_description'] = $data['address']['shipping_address'];
-        $shipment['content'] = 'Salla Webhook';
-        $shipment['cod'] = $data['amounts']['total']['amount'];
-        $shipment['currency'] = $data['amounts']['total']['currency'];
-        $shipment['actual_weight'] = collect($data['items'])->sum('weight');
-        $shipment['pieces'] = collect($data['items'])->count();
+    //     $shipment['consignee_name'] = $data['customer']['name'];
+    //     $shipment['consignee_email']  = $data['customer']['email'] ?? 'salla@shipcash.net';
+    //     $shipment['consignee_phone']  = $data['customer']['mobile'];
+    //     $shipment['consignee_second_phone'] = '';
+    //     $shipment['consignee_country'] = $data['address']['country'];
+    //     $shipment['consignee_city'] = $data['address']['city'];
+    //     $shipment['consignee_area'] = $data['address']['shipping_address'];
+    //     $shipment['consignee_zip_code'] = '';
+    //     $shipment['consignee_address_description'] = $data['address']['shipping_address'];
+    //     $shipment['content'] = 'Salla Webhook';
+    //     $shipment['cod'] = $data['amounts']['total']['amount'];
+    //     $shipment['currency'] = $data['amounts']['total']['currency'];
+    //     $shipment['actual_weight'] = collect($data['items'])->sum('weight');
+    //     $shipment['pieces'] = collect($data['items'])->count();
 
-        $provider = $this->getActionShipments($shipment);
-        $shipment['fees'] = $this->calculateFees($provider, $shipment['sender_country'], $shipment['consignee_country'], $shipment['actual_weight']);
-        $shipment['merchant_id'] = Request()->user()->merchant_id;
-        $shipment['created_by'] = Request()->user()->id;
+    //     $provider = $this->getActionShipments($shipment);
+    //     $shipment['fees'] = $this->calculateFees($provider, $shipment['sender_country'], $shipment['consignee_country'], $shipment['actual_weight']);
+    //     $shipment['merchant_id'] = Request()->user()->merchant_id;
+    //     $shipment['created_by'] = Request()->user()->id;
 
 
-        return $this->createShipmentDB($shipment, $provider);
-    }
+    //     return $this->createShipmentDB($shipment, $provider);
+    // }
 }
