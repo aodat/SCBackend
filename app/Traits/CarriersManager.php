@@ -7,7 +7,7 @@ use Libs\DHL;
 use Libs\Fedex;
 
 use App\Exceptions\CarriersException;
-use App\Models\Merchant;
+use App\Models\Country;
 use Illuminate\Support\Facades\App;
 
 trait CarriersManager
@@ -88,34 +88,37 @@ trait CarriersManager
     {
         $this->merchantInfo = $this->getMerchantInfo();
         if ($type == 'DOM') {
-            $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code)->first();
-            $price = $rate->price;
+            $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code);
+
+            if ($rate->isEmpty())
+                throw new CarriersException('Country Code Not Exists, Please Contact Administrators');
+
+            $price = $rate->first()->price;
             $fees = ceil($weight / 10) * $price;
         } else {
+            $express_rates = collect(Country::where('code', $this->merchantInfo->country_code)->first());
+            if ($express_rates->isEmpty())
+                throw new CarriersException('Country Code Not Exists, Please Contact Administrators');
 
-            $express_rates =  collect(
-                json_decode(file_get_contents(app_path() . '/Libs/express.rates.json'), true)['Countries']
-            )->where('code', $country_code)
-                ->all();
+            $express_rates = $express_rates->rates;
+            if (!isset($express_rates[$country_code]))
+                throw new CarriersException('No Setup Added To This Country, Please Contact Administrators');
 
-            if (count($express_rates) > 1)
-                throw new CarriersException('Express Rates Json Retrun More Than One Country');
+            $rates = collect($express_rates[$country_code]);
+            $zones = $rates->where('carrier_id', $carrier_id);
 
-            $list = reset($express_rates);
-            if (!$list)
-                throw new CarriersException('List File is empty');
+            if ($zones->count() > 1)
+                throw new CarriersException('Somthing Wrong On Rates Setup, Please Contact Administrators');
 
-            $zones = collect($list['zones'])->where('carrier_id', $carrier_id)->all();
-            if (empty($zones) || count($zones) > 1)
-                throw new CarriersException('Express Rates Json Retrun More Than One zone Or Empty Value');
+            if (!isset($zones->first()['zone_id']))
+                throw new CarriersException('Somthing Wrong On Zone ID Setup, Please Contact Administrators');
 
-            $zone_id = reset($zones)['zone_id'];
-            $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id)->all();
-
-            if (count($zoneRates) != 1)
+            $zone_id = $zones->first()['zone_id'];
+            $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id);
+            if ($zoneRates->count() > 1)
                 throw new CarriersException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
 
-            $zoneRates = reset($zoneRates);
+            $zoneRates = $zoneRates->first();
             $base = $zoneRates['basic'];
             $additional = $zoneRates['additional'];
 

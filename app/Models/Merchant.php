@@ -14,7 +14,6 @@ class Merchant extends Model
     use HasFactory;
     protected $guarded = [];
 
-
     protected $casts = [
         'payment_methods' => 'array',
         'documents' => 'array',
