@@ -38,8 +38,40 @@ class Fedex
         $this->end_point = self::$stagingUrl;
     }
 
+
+    public function __check($countryName, $countryCode, $city, $area = '')
+    {
+        $xml = simplexml_load_file(app_path() . '/Libs/Fedex/validate.xml');
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $this->end_point,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => $xml->asXML(),
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/xml'
+            ),
+        ));
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $xml = new SimpleXMLElement($response);
+        $body = $xml->xpath('//SOAP-ENV:Body')[0];
+        $response = (last(json_decode(json_encode((array)$body), true)));
+        if (isset($response['HighestSeverity']) && $response['HighestSeverity'] == 'FAILURE')
+            throw new CarriersException('FedEx This Country Not Supported');
+        return true;
+    }
     public function createPickup($email, $date, $address)
     {
+        $this->__check($address['country'], $address['country_code'], $address['city'], $address['area']);
+
         $payload = $this->bindJsonFile('pickup.create.json', "CreatePickupRequest");
 
         $payload['CreatePickupRequest']['AssociatedAccountNumber']['AccountNumber'] = $this->account_number;
