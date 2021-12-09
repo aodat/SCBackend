@@ -81,7 +81,6 @@ class ShipmentController extends MerchantController
     {
         $merchentID = Request()->user()->merchant_id;
         $shipments = Shipment::where('merchant_id', $merchentID)->get();
-
         $path = "export/shipments-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
         if ($type == 'xlsx')
