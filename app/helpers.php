@@ -35,7 +35,7 @@ function exportPDF($view, $path, $data)
 function mergePDF($files)
 {
     if(count($files) >= 1)
-        return reset($files);
+        return ($files[0]);
     else 
         return $files;
 

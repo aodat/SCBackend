@@ -8,6 +8,7 @@ use Libs\Fedex;
 
 use App\Exceptions\CarriersException;
 use App\Models\Country;
+use App\Models\Shipment;
 use Illuminate\Support\Facades\App;
 
 trait CarriersManager
@@ -62,10 +63,11 @@ trait CarriersManager
         return $this->adapter->createPickup($this->merchantInfo->email, $pickup_date, $address);
     }
 
-    public function printShipment($provider, $shipments_number)
+    public function printShipment($shipments_number)
     {
-        $this->loadProvider($provider);
-        return mergePDF($this->adapter->printLabel($shipments_number));
+        return mergePDF(Shipment::whereIn('external_awb', $shipments_number)->pluck('url'));
+        // $this->loadProvider($provider);
+        // return mergePDF($this->adapter->printLabel($shipments_number));
     }
 
     public function cancelPickup($provider, $pickupInfo)

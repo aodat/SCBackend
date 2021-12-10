@@ -178,9 +178,10 @@ class ShipmentController extends MerchantController
             $shipment = $shipments->toArray()[0];
             $result = $this->generateShipment($provider, $this->getMerchentInfo(), $shipment);
             $links[] = $result['link'];
+
             $shipment['external_awb'] = $result['id'];
             $shipment['resource'] = $resource;
-
+            $shipment['url'] = $result['link'];
             Shipment::create($shipment);
         }
 
@@ -188,16 +189,15 @@ class ShipmentController extends MerchantController
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
 
             $externalAWB = $result['id'];
-
-            $ships = $shipments->map(function ($value, $key) use ($externalAWB, $resource) {
+            $files = $result['link'];
+            $shipments = $shipments->map(function ($value, $key) use ($externalAWB, $resource, $files) {
                 $value['external_awb'] = $externalAWB[$key];
                 $value['resource'] = $resource;
+                $value['url'] = $files[$key];
                 return $value;
             });
-
             $links = array_merge($links, $result['link']);
-
-            DB::table('shipments')->insert($ships->toArray());
+            DB::table('shipments')->insert($shipments->toArray());
         }
 
         return $this->response(
@@ -208,7 +208,10 @@ class ShipmentController extends MerchantController
 
     public function printLabel(ShipmentRequest $request)
     {
-        return $this->response(['link' => $this->printShipment('Aramex', $request->shipment_number)], 'Labels returned successfully');
+        return $this->response(
+            ['link' => $this->printShipment($request->shipment_number)]
+            , 'Labels returned successfully'
+        );
     }
 
     public function shipmentProcessSQS(ShipmentRequest $request)

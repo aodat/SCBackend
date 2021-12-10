@@ -136,7 +136,7 @@ class DHL
         return true;
     }
 
-    public function printLabel()
+    public function printLabel($shipments, $ReportID = 9729)
     {
     }
 
@@ -187,7 +187,7 @@ class DHL
 
         $payload['Dutiable']['DeclaredValue'] = $shipmentInfo['fees'];
         $payload['Dutiable']['DeclaredCurrency'] = $merchentInfo->currency_code;
-w        $response = $this->call('ShipmentRequest', $payload);
+        $response = $this->call('ShipmentRequest', $payload);
 
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Shipment – Something Went Wrong', $payload, $response);
