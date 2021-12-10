@@ -24,8 +24,11 @@ class TransactionRequest extends MerchantRequest
             $this->getMethod() == 'PUT' && strpos($path, 'transactions/deposit') !== false
         )
             return [
-                'amount' => 'required|numeric'
+                'amount' => 'required|numeric',
+                "source" => 'required|string',
             ];
+
+
         return [];
     }
 }

@@ -103,19 +103,24 @@ class TransactionsController extends MerchantController
         $data = $request->validated();
         $merchecntInfo = $this->getMerchentInfo();
 
-        $customerID = $this->stripe->createCustomer($merchecntInfo->name, $merchecntInfo->email);
-        $receipt = $this->stripe->invoice($customerID, 'Deposit Transaction', $data['amount'], $merchecntInfo->currency_code);
-        $link = $this->stripe->finalizeInvoice($receipt['fk_id']);
-
+        $infoTransaction =   [
+            'amount' =>  $data['amount'],
+            'currency' =>  $merchecntInfo->currency_code,
+            'source' => $data['source'],
+            'description' => "deposit craete",
+        ];
+        
+        $this->stripe->InvoiceWithToken($infoTransaction);
+        unset($data['currency'], $data['source'], $data['description']);
         $data['customer_name'] = $merchecntInfo->name;
         $data['customer_email'] = $merchecntInfo->email;
-        $data['fk_id'] = $receipt['fk_id'];
+        $data['fk_id'] = null;
         $data['merchant_id'] = $request->user()->merchant_id;
         $data['user_id'] = $request->user()->id;
         $data['resource'] = 'WEB';
         Invoices::create($data);
 
-        return $this->response(['link' => $link], 'Payment request');
+        return $this->successful('Deposit Sucessfully');
     }
 
     public function export(TransactionRequest $request)
