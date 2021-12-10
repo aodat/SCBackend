@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "465641a3fac1601f7c02e76f4b55f139",
+    "content-hash": "77683fb2e9acdceacf9591d755bd32db",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -318,6 +318,77 @@
                 }
             ],
             "time": "2021-11-25T20:13:02+00:00"
+        },
+        {
+            "name": "daltcore/lara-pdf-merger",
+            "version": "2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DALTCORE/lara-pdf-merger.git",
+                "reference": "f794509b12fe61c9d6a6af9d3af52ffecddc90cf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DALTCORE/lara-pdf-merger/zipball/f794509b12fe61c9d6a6af9d3af52ffecddc90cf",
+                "reference": "f794509b12fe61c9d6a6af9d3af52ffecddc90cf",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LynX39\\LaraPdfMerger\\PdfMergerServiceProvider"
+                    ],
+                    "aliases": {
+                        "PdfMerger": "LynX39\\LaraPdfMerger\\Facades\\PdfMerger"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "LynX39\\LaraPdfMerger": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Musso",
+                    "email": "lynx@deltaaskii.com",
+                    "homepage": "https://github.com/LynX39"
+                },
+                {
+                    "name": "Ramon Smit",
+                    "email": "rsmit@daltcore.com",
+                    "homepage": "https://github.com/daltcore"
+                },
+                {
+                    "name": "Marouan Sami",
+                    "email": "sami.marwen.isetcom@gmail.com",
+                    "homepage": "https://github.com/MarwenSami"
+                }
+            ],
+            "homepage": "https://github.com/MarwenSami/lara-pdf-merger",
+            "keywords": [
+                "duplex merge",
+                "laravel",
+                "manage",
+                "merge",
+                "merger",
+                "paginate",
+                "pdf"
+            ],
+            "support": {
+                "issues": "https://github.com/DALTCORE/lara-pdf-merger/issues",
+                "source": "https://github.com/DALTCORE/lara-pdf-merger/tree/2.0"
+            },
+            "abandoned": true,
+            "time": "2020-05-06T07:49:12+00:00"
         },
         {
             "name": "defuse/php-encryption",
@@ -4723,56 +4794,6 @@
                 }
             ],
             "time": "2021-09-25T23:10:38+00:00"
-        },
-        {
-            "name": "rguedes/pdfmerger",
-            "version": "1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rguedes/PDFMerger.git",
-                "reference": "8e1caa1093160107bb1796ce07d9fc3d6769fc34"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rguedes/PDFMerger/zipball/8e1caa1093160107bb1796ce07d9fc3d6769fc34",
-                "reference": "8e1caa1093160107bb1796ce07d9fc3d6769fc34",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "PDFMerger": "Classes/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL"
-            ],
-            "authors": [
-                {
-                    "name": "Myo Kyaw Htun",
-                    "homepage": "https://github.com/myokyawhtun"
-                },
-                {
-                    "name": "Rolando Guedes",
-                    "homepage": "https://github.com/rguedes"
-                }
-            ],
-            "description": "PDFMerger for PHP",
-            "homepage": "https://github.com/rguedes/PDFMerger",
-            "keywords": [
-                "pdf",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/rguedes/PDFMerger/issues",
-                "source": "https://github.com/rguedes/PDFMerger/tree/1.0.4"
-            },
-            "abandoned": true,
-            "time": "2019-01-04T09:47:31+00:00"
         },
         {
             "name": "setasign/fpdi",

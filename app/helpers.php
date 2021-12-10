@@ -4,6 +4,8 @@ use App\Models\Shipment;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 
 use Illuminate\Support\Facades\Storage;
+use LynX39\LaraPdfMerger\Facades\PdfMerger;
+
 use Carbon\Carbon;
 use Mpdf\Mpdf;
 
@@ -32,26 +34,30 @@ function exportPDF($view, $path, $data)
     return Storage::disk('s3')->url($path);
 }
 
+
 function mergePDF($files)
 {
-    if(count($files) >= 1)
-        return ($files[0]);
-    else 
-        return $files;
+    $pdfMerger = PDFMerger::init();
 
-    $pdf = new PDFMerger();
+    $folder = time();
+    $quotes = $folder . '/quotes.pdf';
+    Storage::disk('local')->put($quotes, '');
+
     foreach ($files as $file) {
-        $path = 'aramex/' . md5(time()) . '.pdf';
+        $path = $folder . '/' . md5(time()) . '.pdf';
         Storage::disk('local')->put($path, file_get_contents($file));
-        $pdf->addPDF(Storage::path($path),'all');
+        $pdfMerger->addPDF(Storage::path($path), 'all');
     }
-    $pathForTheMergedPdf = Storage::path("aramex/result.pdf");
-    $pdf->merge('file', $pathForTheMergedPdf);
+    $pdfMerger->merge();
+    
+    $export = 'export/' . md5(time()) . '.pdf';
+    Storage::disk('s3')->put(
+        $export,
+        $pdfMerger->save(Storage::path($quotes), "string")
+    );
 
-    Storage::disk('s3')->put($path, file_get_contents(Storage::path("aramex/result.pdf")));
-
-    Storage::deleteDirectory('aramex');
-    return Storage::disk('s3')->url($path);
+    Storage::deleteDirectory($folder);
+    return Storage::disk('s3')->url($export);
 }
 
 
