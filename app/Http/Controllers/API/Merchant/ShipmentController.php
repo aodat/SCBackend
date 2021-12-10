@@ -104,14 +104,13 @@ class ShipmentController extends MerchantController
     public function createDomesticShipment(ShipmentRequest $request)
     {
         return DB::transaction(function () use ($request) {
-
             // Check Domastic
             $shipmentRequest = $request->validated();
             $addressList = App::make('merchantAddresses');
             $merchantInfo = App::make('merchantInfo');
             (collect($shipmentRequest)->pluck('sender_address_id'))->map(function ($address_id) use ($merchantInfo, $addressList) {
                 if ($addressList->where('id', $address_id)->where('country_code', $merchantInfo->country_code)->isEmpty())
-                    throw new InternalException('This is not Domastic request the merchant code differant with send country code');
+                    throw new InternalException('This is not tDomestic request the merchant code different with send country code');
             });
             return $this->shipment('DOM', collect($shipmentRequest), 'Aramex');
         });

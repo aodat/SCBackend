@@ -42,20 +42,19 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'consignee_city' => 'required',
                 $type . 'consignee_area' => 'required',
                 $type . 'consignee_address_description' => 'required',
-                $type . 'consignee_zip_code' => '',
-
                 $type . 'content' => 'required',
-
-                $type . 'cod' => 'required|numeric|between:0,9999',
                 $type . 'pieces' => 'required|integer',
             ];
             if (strpos($path, 'shipments/domestic/create') !== false) {
                 $validation['*'] = 'required|array|min:1|max:50';
                 $validation[$type . 'extra_services'] = 'required|in:DOMCOD';
+                $validation[$type . 'cod'] = 'required|numeric|between:0,9999';
             } else if (strpos($path, 'shipments/express/create') !== false) {
                 $validation[$type . 'consignee_country'] = 'required';
                 $validation[$type . 'actual_weight'] = 'required|numeric|between:0,9999';
+                $validation[$type . 'consignee_zip_code'] = 'required';
             }
+
             return $validation;
         } else if ($this->method() == 'POST' && strpos($path, 'shipments/filters') !== false)
             return [
