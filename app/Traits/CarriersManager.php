@@ -44,10 +44,9 @@ trait CarriersManager
     {
         $this->loadProvider($provider);
         $shipments = $this->adapter->createShipment($merchantInfo, $shipmentArray);
-
         return [
-            'link' => collect($shipments)->pluck('file')->toArray(),
-            'id' => is_array($shipments) ? collect($shipments)->pluck('id') : $shipments['id']
+            'link' => (isset($shipments[0])) ? collect($shipments)->pluck('file')->toArray() : $shipments['file'],
+            'id' => (isset($shipments[0])) ? collect($shipments)->pluck('id') : $shipments['id']
         ];
     }
 

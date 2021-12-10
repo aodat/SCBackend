@@ -52,7 +52,7 @@ class ShipmentRequest extends MerchantRequest
             } else if (strpos($path, 'shipments/express/create') !== false) {
                 $validation[$type . 'consignee_country'] = 'required';
                 $validation[$type . 'actual_weight'] = 'required|numeric|between:0,9999';
-                $validation[$type . 'consignee_zip_code'] = 'required';
+                $validation[$type . 'consignee_zip_code'] = '';
             }
 
             return $validation;

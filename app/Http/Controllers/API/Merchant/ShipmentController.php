@@ -180,6 +180,7 @@ class ShipmentController extends MerchantController
             $links[] = $result['link'];
             $shipment['external_awb'] = $result['id'];
             $shipment['resource'] = $resource;
+
             Shipment::create($shipment);
         }
 

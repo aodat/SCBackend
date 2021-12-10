@@ -25,9 +25,7 @@
         "Contact": {
             "PersonName": "",
             "PhoneNumber": "",
-            "PhoneExtension": {
-                "-self-closing": "true"
-            },
+            "PhoneExtension": "",
             "Email": "",
             "MobilePhoneNumber": ""
         },
@@ -36,31 +34,36 @@
         "StreetNumber": "",
         "BusinessPartyTypeCode": "BU"
     },
+    "Dutiable": {
+        "DeclaredValue": "",
+        "DeclaredCurrency": "",
+        "ShipperEIN": "ShipperEIN12021",
+        "TermsOfTrade": "DAP"
+    },
     "UseDHLInvoice": "Y",
     "DHLInvoiceLanguageCode": "en",
     "DHLInvoiceType": "CMI",
     "ShipmentDetails": {
         "Pieces": {
-            "Piece": 
-                {
-                    "PieceID": "1",
-                    "PackageType": "EE",
-                    "Weight": "0.5",
-                    "Width": "20",
-                    "Height": "15",
-                    "Depth": "30",
-                    "PieceContents": "1st Piece ShipCash",
-                    "PieceReference": {
-                        "ReferenceID": "Piece1Reference",
-                        "ReferenceType": "PK2"
-                    }
+            "Piece": {
+                "PieceID": "1",
+                "PackageType": "EE",
+                "Weight": "0.5",
+                "Width": "20",
+                "Height": "15",
+                "Depth": "30",
+                "PieceContents": "1st Piece ShipCash",
+                "PieceReference": {
+                    "ReferenceID": "Piece1Reference",
+                    "ReferenceType": "PK2"
                 }
+            }
         },
         "WeightUnit": "K",
         "GlobalProductCode": "P",
         "LocalProductCode": "P",
-        "Date": "2021-02-15",
-        "Contents": "v10.0 001 - parcel with clothing",
+        "Date": "",
+        "Contents": "",
         "DimensionUnit": "C",
         "PackageType": "PA",
         "IsDutiable": "Y",
