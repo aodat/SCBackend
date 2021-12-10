@@ -152,11 +152,15 @@ class ShipmentController extends MerchantController
 
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
-            // $shipment['logs'] = [
-            //     'UpdateDateTime' => Carbon::now(),
-            //     'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
-            //     'UpdateDescription' => 'Create Shipment'
-            // ];
+            $shipment['logs'] = json_encode([
+                [
+                    'UpdateDateTime' => Carbon::now(),
+                    'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
+                    'UpdateDescription' => 'Create Shipment'
+                ]
+            ]);
+            $shipment['created_at'] = Carbon::now();
+            $shipment['updated_at'] = Carbon::now();
             return $shipment;
         });
         return $this->createShipmentDB($shipments, $provider);
@@ -197,7 +201,8 @@ class ShipmentController extends MerchantController
                 return $value;
             });
             $links = array_merge($links, $result['link']);
-            DB::table('shipments')->insert($shipments->toArray());
+            Shipment::insert($shipments->toArray());
+            // DB::table('shipments')->insert();
         }
 
         return $this->response(
@@ -209,8 +214,8 @@ class ShipmentController extends MerchantController
     public function printLabel(ShipmentRequest $request)
     {
         return $this->response(
-            ['link' => $this->printShipment($request->shipment_number)]
-            , 'Labels returned successfully'
+            ['link' => $this->printShipment($request->shipment_number)],
+            'Labels returned successfully'
         );
     }
 
