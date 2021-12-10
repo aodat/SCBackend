@@ -19,7 +19,7 @@ class RulesController extends MerchantController
     {
         $merchant = $this->getMerchentInfo();
         $result = collect($merchant->select('rules')->first()->rules);
-        $counter = $result->max('id') ?? 1;
+        $counter = $result->max('id') ?? 0;
 
         $data = $request->validated();
         $data['id'] = ++$counter;

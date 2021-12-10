@@ -35,10 +35,12 @@ class AddressesController extends MerchantController
 
 
         $result = collect($merchant->addresses);
-        $counter = $result->max('id') ?? 1;
+        $counter = $result->max('id') ?? 0;
 
         if ($result->contains("name", $request->name))
             throw new InternalException('name already Exists', 400);
+        else if ($country->code != $merchant->country_code)
+            throw new InternalException('The Country address not same of merchant country', 400);
 
         $json = [
             'id' => ++$counter,
