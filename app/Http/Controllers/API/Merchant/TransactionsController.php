@@ -105,11 +105,12 @@ class TransactionsController extends MerchantController
 
         $infoTransaction =   [
             'amount' =>  $data['amount'],
-            'currency' =>  $merchecntInfo->currency_code, // test (usd),
-            'source' => $data['source'], //test (tok_visa),
+            'currency' =>  $merchecntInfo->currency_code,
+            'source' => $data['source'],
             'description' => "deposit craete",
         ];
-        $charge = $this->stripe->InvoiceWithToken($infoTransaction);
+        
+        $this->stripe->InvoiceWithToken($infoTransaction);
         unset($data['currency'], $data['source'], $data['description']);
         $data['customer_name'] = $merchecntInfo->name;
         $data['customer_email'] = $merchecntInfo->email;
@@ -119,7 +120,7 @@ class TransactionsController extends MerchantController
         $data['resource'] = 'WEB';
         Invoices::create($data);
 
-        return $this->successful();
+        return $this->successful('Deposit Sucessfully');
     }
 
     public function export(TransactionRequest $request)
