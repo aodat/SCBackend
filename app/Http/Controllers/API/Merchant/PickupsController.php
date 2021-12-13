@@ -50,7 +50,7 @@ class PickupsController extends MerchantController
         return $this->pagination($paginated, ['tabs' => $tabs]);
     }
 
-    public function show($id,PickuptRequest $request)
+    public function show($id, PickuptRequest $request)
     {
         $data = Pickup::findOrFail($id);
         return $this->response($data, 'Data Retrieved Sucessfully');
@@ -87,6 +87,10 @@ class PickupsController extends MerchantController
         $pickup = Pickup::getPickupCarrires($request->user()->merchant_id, $request->pickup_id, $request->carrier_id, false);
         $this->cancelPickup($pickup->name, $pickup);
 
+        $pickup = Pickup::findOrfail($request->pickup_id);
+        $pickup->status = 'CANCELD';
+        $pickup->save();
+        
         return $this->successful('The pickup has been canceled successfully');
     }
 }
