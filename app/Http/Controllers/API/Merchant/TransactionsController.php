@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Exports\TransactionsExport;
 use App\Http\Requests\Merchant\TransactionRequest;
 use App\Models\Invoices;
 use App\Models\Transaction;
@@ -109,7 +110,7 @@ class TransactionsController extends MerchantController
             'source' => $data['source'],
             'description' => "deposit craete",
         ];
-        
+
         $this->stripe->InvoiceWithToken($infoTransaction);
         unset($data['currency'], $data['source'], $data['description']);
         $data['customer_name'] = $merchecntInfo->name;
@@ -125,5 +126,23 @@ class TransactionsController extends MerchantController
 
     public function export(TransactionRequest $request)
     {
+        $merchentID = Request()->user()->merchant_id;
+        $type = $request->type;
+        $date = $request->date;
+
+        $transaction = Transaction::where('merchant_id', $merchentID)
+            ->whereDate('created_at', $date)
+            ->get();
+        if ($transaction->isEmpty())
+            return $this->response([], 'No Data Retrieved');
+
+        $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
+
+        if ($type == 'xlsx')
+            $url = exportXLSX(new TransactionsExport($transaction), $path);
+        else
+            $url = exportPDF('transactions', $path, $transaction);
+
+        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
     }
 }

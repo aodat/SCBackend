@@ -9,7 +9,8 @@
     </head>
     <body>
         <div class="container mt-5">
-            <table class="table table-bordered mb-5">
+            <center><h4>Shipments</h4></center>
+            <table class="table table-bordered mb-5" border="1" width="100%">
                 <thead>
                     <tr class="table-danger">
                         <th scope="col">Sender Name</th>

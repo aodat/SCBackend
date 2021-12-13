@@ -28,7 +28,13 @@ class TransactionRequest extends MerchantRequest
                 "source" => 'required|string',
             ];
 
-
+        else if (
+            $this->getMethod() == 'POST' && strpos($path, 'transactions/export') !== false
+        )
+            return [
+                'date' => 'required|date|date_format:Y-m-d',
+                'type' => 'in:xlsx,pdf'
+            ];
         return [];
     }
 }
