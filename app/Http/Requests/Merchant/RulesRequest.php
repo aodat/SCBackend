@@ -21,7 +21,7 @@ class RulesRequest extends MerchantRequest
                 'rules.*.value' => 'required',
                 'action' => 'required|array'
             ];
-        else if (strpos($path, 'rules/{rule_id}') !== false)
+        else if ($this->method() == 'PUT' && strpos($path, 'rules/{rule_id}') !== false)
             return [
                 'is_active' => 'required|boolean'
             ];
