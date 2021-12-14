@@ -14,9 +14,12 @@ class PayTabs
     private $profileID;
     private $endPoint;
 
-    public function __construct()
+    public function __construct($country = 'JO')
     {
-        $this->endPoint = "https://secure-jordan.paytabs.com/payment/request/";
+        $this->endPoint = 'https://secure.paytabs.com/payment/request/';
+        if ($country == 'JO')
+            $this->endPoint = 'https://secure-jordan.paytabs.com/payment/request/';
+            
         $this->server = env('PAYTABS_SERVER_KEY');
         $this->client = env('PAYTABS_CLIENT_KEY');
         $this->profileID = env('PAYTABS_PROFILE_ID');
@@ -30,7 +33,7 @@ class PayTabs
             'tran_class' => 'ecom',
             'tran_ref' => $transacton_ref,
             'cart_id' => $this->client,
-            'cart_description' => "Order",
+            'cart_description' => 'Order',
             'cart_currency' => $currancy,
             'cart_amount' => $amount,
             'return' => 'none'
