@@ -51,7 +51,7 @@ class TransactionsController extends MerchantController
                 $transaction->whereBetween('amount', [intval($amount), intval($amount) . '.99']);
 
             $created_at = (string)$value->created_at->format('Y-m-d');
-            $paginated[$created_at] = $transaction->get();
+            $paginated[$created_at] = $transaction->get()->groupBy('type');
         }
 
         return $this->response($paginated, 'Data Retrieved Successfully');
