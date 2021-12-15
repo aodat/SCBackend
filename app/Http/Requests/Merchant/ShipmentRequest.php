@@ -26,19 +26,20 @@ class ShipmentRequest extends MerchantRequest
             // Check the type of shipment
             $type = '';
             $condition = 'not_in';
+            $isRequired = true;
             if (strpos($path, 'shipments/domestic/create') !== false) {
                 $condition = 'in';
+                $isRequired = false;
                 $type = '*.';
             }
 
             $validation = [
                 $type . 'carrier_id' => 'required|exists:carriers,id|' . $condition . ':1', // it's mean for aramex only
                 $type . 'sender_address_id' => 'required',
-
                 $type . 'consignee_name' => 'required|min:6|max:255',
                 $type . 'consignee_email' => 'required|email',
                 $type . 'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                $type . 'consignee_second_phone' => 'required',
+                $type . 'consignee_second_phone' => $isRequired ? 'required' : '',
                 $type . 'consignee_city' => 'required',
                 $type . 'consignee_area' => 'required',
                 $type . 'consignee_address_description' => 'required',
@@ -78,8 +79,8 @@ class ShipmentRequest extends MerchantRequest
             return [
                 'weight' => 'required|numeric|between:0,9999',
                 'country_code' => 'required',
-                'type'=>'required|in:express,dom',
-                'is_cod'=>'required|boolean',
+                'type' => 'required|in:express,dom',
+                'is_cod' => 'required|boolean',
             ];
         return [];
     }

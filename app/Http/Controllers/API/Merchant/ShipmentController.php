@@ -13,7 +13,6 @@ use Carbon\Carbon;
 
 use App\Exceptions\InternalException;
 
-use App\Models\Merchant;
 use App\Models\Transaction;
 use App\Models\Carriers;
 use App\Models\Shipment;
@@ -110,7 +109,7 @@ class ShipmentController extends MerchantController
             $merchantInfo = App::make('merchantInfo');
             (collect($shipmentRequest)->pluck('sender_address_id'))->map(function ($address_id) use ($merchantInfo, $addressList) {
                 if ($addressList->where('id', $address_id)->where('country_code', $merchantInfo->country_code)->isEmpty())
-                    throw new InternalException('This is not tDomestic request the merchant code different with send country code');
+                    throw new InternalException('This is not Domestic request the merchant code different with send country code');
             });
             return $this->shipment('DOM', collect($shipmentRequest), 'Aramex');
         });
