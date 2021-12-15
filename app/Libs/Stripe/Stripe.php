@@ -3,7 +3,6 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class Stripe
@@ -48,12 +47,11 @@ class Stripe
 
     public function InvoiceWithToken($data)
     {
-        //Create a charge
-
+        // Create a charge
         $stripe = new \Stripe\StripeClient(
             $this->access_key
         );
-        return  $stripe->charges->create($data);
+        return $stripe->charges->create($data);
     }
 
     public function invoiceItem($custmerID, $description, $amount, $currency = 'USD')

@@ -106,13 +106,14 @@ class TransactionsController extends MerchantController
 
         $infoTransaction =   [
             'amount' =>  $data['amount'],
-            'currency' =>  $merchecntInfo->currency_code,
-            'source' => $data['source'],
-            'description' => "deposit craete",
+            'currency' => 'USD', // $merchecntInfo->currency_code,
+            'source' => $data['token'],
+            'description' => "Merachnt Deposit " . $merchecntInfo->name,
         ];
 
         $this->stripe->InvoiceWithToken($infoTransaction);
-        unset($data['currency'], $data['source'], $data['description']);
+
+        unset($data['currency'], $data['token'], $data['description']);
         $data['customer_name'] = $merchecntInfo->name;
         $data['customer_email'] = $merchecntInfo->email;
         $data['fk_id'] = null;

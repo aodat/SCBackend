@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
 
+use Stripe\Exception\InvalidRequestException;
+
 use Illuminate\Support\Facades\Response;
 
 use Throwable;
@@ -47,6 +49,10 @@ class Handler extends ExceptionHandler
         } else if ($exception instanceof AuthorizationException) {
             $response['meta']['code'] = 403;
             $response['meta']['msg'] = 'Unauthorized request';
+            return Response::make($response);
+        } else if ($exception instanceof InvalidRequestException) {
+            $response['meta']['code'] = 422;
+            $response['meta']['msg'] = 'Invalid Strip Request';
             return Response::make($response);
         }
         return parent::render($request, $exception);

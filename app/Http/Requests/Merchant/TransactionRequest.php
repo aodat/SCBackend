@@ -25,7 +25,7 @@ class TransactionRequest extends MerchantRequest
         )
             return [
                 'amount' => 'required|numeric',
-                "source" => 'required|string',
+                "token" => 'required|string',
             ];
 
         else if (
