@@ -56,7 +56,8 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('pincode', [MerchantController::class, 'pincode']);
 
-            Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
+            Route::post('phone/verify', [MerchantController::class, 'verifyPhone']);
+
             Route::put('update-info', [MerchantController::class, 'updateMerchantProfile']);
 
             // Merchant Profile

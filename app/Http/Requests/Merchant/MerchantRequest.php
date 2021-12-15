@@ -77,9 +77,12 @@ class MerchantRequest extends FormRequest
                     new PincodeVerification()
                 ],
             ];
-        } else if (strpos($path, 'merchant/verify/phone') !== false) {
+        } else if (strpos($path, 'merchant/phone/verify') !== false) {
             return [
-                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14'
+                "pin_code" => [
+                    'required',
+                    new PincodeVerification()
+                ]
             ];
         }
         return [];

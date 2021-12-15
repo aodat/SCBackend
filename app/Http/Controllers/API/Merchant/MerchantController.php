@@ -17,6 +17,7 @@ use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\Pincode;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
 class MerchantController extends Controller
@@ -83,13 +84,13 @@ class MerchantController extends Controller
         return $this->successful('Updated Successfully');
     }
 
-    public function verifyPhoneNumber(MerchantRequest $request)
+    public function verifyPhone(MerchantRequest $request)
     {
-        $randomPinCode = mt_rand(111111, 999999);
-        Sms::dispatch($randomPinCode, $request->phone);
-        $merchantID = $request->user()->merchant_id;
-        Merchant::where('id', $merchantID)->update(['pin_code' => $randomPinCode]);
-        return $this->successful('Pin code was sent check your mobile');
+        $merchant = $this->getMerchentInfo();
+        $merchant->phone_verified_at = Carbon::now();
+        $merchant->save();
+        
+        return $this->successful('Merchant Phone Verified');
     }
 
     public function pincode(MerchantRequest $request)
