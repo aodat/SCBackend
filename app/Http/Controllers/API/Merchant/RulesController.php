@@ -27,7 +27,7 @@ class RulesController extends MerchantController
         $data['created_at'] = Carbon::now();
 
         $merchant->update(['rules' => $result->merge([$data])]);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function status($id, RulesRequest $request)

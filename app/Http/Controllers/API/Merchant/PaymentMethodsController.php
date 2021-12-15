@@ -35,7 +35,7 @@ class PaymentMethodsController extends MerchantController
         if (isset($json['pin_code']))
             unset($json['pin_code']);
         $list->update(['payment_methods' => $result->merge([$json])]);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function delete($id, PaymentMethodsRequest $request)

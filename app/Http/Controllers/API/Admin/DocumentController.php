@@ -31,7 +31,7 @@ class DocumentController extends Controller
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function status(DocumentRequest $request)

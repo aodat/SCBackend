@@ -57,7 +57,7 @@ class AddressesController extends MerchantController
         ];
 
         $merchant->update(['addresses' => $result->merge([$json])]);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function delete($id, AddressesRequest $request)

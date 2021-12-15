@@ -43,7 +43,7 @@ class InvoiceController extends MerchantController
         $data['resource'] = Request()->header('agent') ?? 'API';
         Invoices::create($data);
 
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function finalize($invoiceID, InvoiceRequest $request)

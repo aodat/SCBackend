@@ -39,7 +39,7 @@ class CarriersController extends Controller
     {
         $data = $request->validated();
         Carriers::create($data);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function update(CarriersRequest $request)
