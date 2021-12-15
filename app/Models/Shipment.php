@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +14,7 @@ class Shipment extends Model
     use HasFactory;
     protected $guarded = [];
     protected $appends = ['carrier_name'];
+
     protected $casts = [
         'logs' => 'array'
     ];
@@ -28,6 +31,11 @@ class Shipment extends Model
             return [];
         }
         return parent::castAttribute($key, $value);
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 
     protected static function booted()

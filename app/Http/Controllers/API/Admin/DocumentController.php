@@ -27,7 +27,7 @@ class DocumentController extends Controller
             'url' => uploadFiles('documents', $request->file('file')),
             'status' => 'pending',
             'verified_at' => null,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);
@@ -54,7 +54,7 @@ class DocumentController extends Controller
         $current = $document->keys()->first();
 
         $data = $document->toArray()[$current];
-        $data['verified_at'] =  Carbon::now();
+        $data['verified_at'] =  Carbon::now()->format('Y-m-d H:i:s');
         $data['status'] =  $request->status;
         $documents[$current] = $data;
 

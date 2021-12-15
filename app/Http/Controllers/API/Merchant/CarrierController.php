@@ -24,8 +24,8 @@ class CarrierController extends MerchantController
                     'name' => $data->name,
                     'is_defult' => false,
                     'is_enabled' => true,
-                    'create_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
+                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ];
             } else
                 $carrier['name'] = $data->name;
@@ -48,8 +48,8 @@ class CarrierController extends MerchantController
                 'carrier_id' => $carrier_id,
                 'is_defult' => $request->is_defult,
                 'is_enabled' => $request->is_enabled,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ];
 
             $result = $result->merge([$data]);
@@ -63,7 +63,7 @@ class CarrierController extends MerchantController
                 'is_defult' => $request->is_defult,
                 'is_enabled' => $request->is_enabled,
                 'created_at' => $result[$key]['created_at'],
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
         }
         $merchant->update(['carriers' => $result]);

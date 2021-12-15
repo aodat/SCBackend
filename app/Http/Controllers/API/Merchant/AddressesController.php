@@ -53,7 +53,7 @@ class AddressesController extends MerchantController
             'phone' => $request->phone,
             'description' => $request->description,
             'is_default' => $request->is_default ?? false,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
         ];
 
         $merchant->update(['addresses' => $result->merge([$json])]);

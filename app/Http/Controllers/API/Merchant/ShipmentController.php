@@ -154,7 +154,7 @@ class ShipmentController extends MerchantController
             $shipment['created_by'] = Request()->user()->id;
             $shipment['logs'] = json_encode([
                 [
-                    'UpdateDateTime' => Carbon::now(),
+                    'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
                     'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
                     'UpdateDescription' => 'Create Shipment'
                 ]

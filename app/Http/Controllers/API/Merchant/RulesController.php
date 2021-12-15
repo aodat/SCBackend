@@ -24,7 +24,7 @@ class RulesController extends MerchantController
         $data = $request->validated();
         $data['id'] = ++$counter;
         $data['is_active'] = true;
-        $data['created_at'] = Carbon::now();
+        $data['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
 
         $merchant->update(['rules' => $result->merge([$data])]);
         return $this->successful('Created Successfully');
@@ -41,7 +41,7 @@ class RulesController extends MerchantController
 
         $current = $rule->keys()->first();
         $data = $rule->toArray()[$current];
-        $data['updated_at'] =  Carbon::now();
+        $data['updated_at'] =  Carbon::now()->format('Y-m-d H:i:s');
         $data['is_active'] =  $request->is_active;
         $rules[$current] = $data;
         

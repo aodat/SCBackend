@@ -29,7 +29,7 @@ class DocumentsController extends MerchantController
             'url' => uploadFiles('documents', $request->file('file')),
             'status' => 'pending',
             'verified_at' => null,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);

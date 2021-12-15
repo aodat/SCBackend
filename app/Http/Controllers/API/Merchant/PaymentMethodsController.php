@@ -31,7 +31,7 @@ class PaymentMethodsController extends MerchantController
 
         $json += $provider;
         $json['id'] = ++$counter;
-        $json['created_at'] = Carbon::now();
+        $json['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
         if (isset($json['pin_code']))
             unset($json['pin_code']);
         $list->update(['payment_methods' => $result->merge([$json])]);
