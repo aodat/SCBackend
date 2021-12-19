@@ -9,20 +9,22 @@ use LynX39\LaraPdfMerger\Facades\PdfMerger;
 use Carbon\Carbon;
 use Mpdf\Mpdf;
 
-function uploadFiles($folder, $file, $type = '', $isOutput = false)
-{
-    $path = $folder . "/" . md5(Carbon::now());
-    if (!$isOutput) {
-        $path .= $file->getClientOriginalExtension();
-        $data = file_get_contents($file);
-    } else {
-        $data = $file;
-        $path .= ".$type";
+if (!function_exists('uploadFiles')) {
+    function uploadFiles($folder, $file, $type = '', $isOutput = false)
+    {
+        $path = $folder . "/" . md5(Carbon::now());
+        if (!$isOutput) {
+            $path .= $file->getClientOriginalExtension();
+            $data = file_get_contents($file);
+        } else {
+            $data = $file;
+            $path .= ".$type";
+        }
+
+        Storage::disk('s3')->put($path, $data);
+
+        return Storage::disk('s3')->url($path);
     }
-
-    Storage::disk('s3')->put($path, $data);
-
-    return Storage::disk('s3')->url($path);
 }
 
 function exportPDF($view, $path, $data)
@@ -49,7 +51,7 @@ function mergePDF($files)
         $pdfMerger->addPDF(Storage::path($path), 'all');
     }
     $pdfMerger->merge();
-    
+
     $export = 'export/' . md5(time()) . '.pdf';
     Storage::disk('s3')->put(
         $export,
