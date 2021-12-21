@@ -12,28 +12,8 @@ class CarrierController extends MerchantController
     //
     public function index()
     {
-        $merchant = $this->getMerchantInfo();
-        $result =   collect($merchant->carriers);
-        $Carriers =  Carriers::all();
-
-        $collection = collect($Carriers)->map(function ($data) use ($result) {
-
-            $carrier = $result->where("carrier_id", $data->id)->first();
-            if ($carrier === null) {
-                $carrier = [
-                    'name' => $data->name,
-                    'is_defult' => false,
-                    'is_enabled' => true,
-                    'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                ];
-            } else
-                $carrier['name'] = $data->name;
-
-            return $carrier;
-        });
-
-        return $this->response($collection, 'Data Retrieved Successfully');
+        $carriers =  Carriers::all();
+        return $this->response($carriers, 'Data Retrieved Successfully');
     }
 
     public function update($carrier_id, CarrierRequest  $request)
