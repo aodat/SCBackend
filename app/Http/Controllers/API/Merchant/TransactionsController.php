@@ -56,8 +56,8 @@ class TransactionsController extends MerchantController
 
         $tabs = DB::table('shipments')
             ->where('merchant_id', Request()->user()->merchant_id)
-            ->select('status', DB::raw(
-                'count(status) as counter'
+            ->select('type', DB::raw(
+                'count(type) as counter'
             ))
             ->groupBy('type')
             ->pluck('counter', 'type');
