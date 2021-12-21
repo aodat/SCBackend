@@ -36,7 +36,6 @@ class TransactionsController extends MerchantController
         $sources = $filters['sources'] ?? [];
         $amount = $filters['amount']['val'] ?? null;
         $operation = $filters['amount']['operation'] ?? null;
-        $paginated = array();
 
 
         $transaction = Transaction::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
@@ -54,7 +53,7 @@ class TransactionsController extends MerchantController
         else if ($amount)
             $transaction->whereBetween('amount', [intval($amount), intval($amount) . '.99']);
 
-        $tabs = DB::table('shipments')
+        $tabs = DB::table('transactions')
             ->where('merchant_id', Request()->user()->merchant_id)
             ->select('type', DB::raw(
                 'count(type) as counter'
