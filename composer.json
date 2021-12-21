@@ -22,6 +22,7 @@
         "stripe/stripe-php": "^7.100"
     },
     "require-dev": {
+        "brianium/paratest": "^6.4",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
