@@ -20,12 +20,12 @@ class Carriers extends Model
     ];
 
     protected $appends = [
-        'is_enabled', 'is_defult'
+        'is_enabled', 'is_defult','carrier_id'
     ];
 
     protected $hidden = [
         'email', 'phone', 'balance', 'country_code', 'currency_code', 'documents',
-        'is_email_verified', 'is_phone_verified', 'is_documents_verified', 'is_active'
+        'is_email_verified', 'is_phone_verified', 'is_documents_verified', 'is_active','id'
     ];
 
     public function __construct(array $attributes = array())
@@ -34,6 +34,11 @@ class Carriers extends Model
         $this->merchantCarriers = App::make('merchantCarriers');
     }
 
+    public function getCarrierIdAttribute()
+    {
+        return $this->id;
+    }
+    
     public function getIsDefultAttribute()
     {
         $list = $this->merchantCarriers->where('carrier_id', $this->id)->first();
