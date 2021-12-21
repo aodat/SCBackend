@@ -159,7 +159,7 @@ class Aramex
 
         $data['Consignee']['PartyAddress']['Line1'] = $shipmentInfo['consignee_address_description'];
         $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_area'];
-        $data['Consignee']['PartyAddress']['Line3'] = $shipmentInfo['consignee_second_phone'];
+        $data['Consignee']['PartyAddress']['Line3'] = $shipmentInfo['consignee_second_phone'] ?? '';
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
 
         if ($shipmentInfo['group'] == 'EXP')
