@@ -21,17 +21,13 @@ class CarrierController extends MerchantController
             $carrier = $result->where("carrier_id", $data->id)->first();
             if ($carrier === null) {
                 $carrier = [
-                    'carrier_id' => (int) $data->id,
                     'name' => $data->name,
                     'is_defult' => false,
                     'is_enabled' => true,
-                    'express' => (boolean) $data->express,
-                    'domestic' =>(boolean) $data->domestic,
-                    'logo' =>  $data->logo,
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ];
-            } else            //
+            } else
                 $carrier['name'] = $data->name;
 
             return $carrier;

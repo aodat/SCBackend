@@ -13,6 +13,12 @@ class Carriers extends Model
     protected $merchantCarriers;
     protected $guarded = [];
 
+
+    protected $casts = [
+        'express' => 'boolean',
+        'domestic' => 'boolean'
+    ];
+
     protected $appends = [
         'is_enabled', 'is_defult'
     ];
