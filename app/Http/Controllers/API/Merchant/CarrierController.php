@@ -17,6 +17,7 @@ class CarrierController extends MerchantController
         $Carriers =  Carriers::all();
 
         $collection = collect($Carriers)->map(function ($data) use ($result) {
+
             $carrier = $result->where("carrier_id", $data->id)->first();
             if ($carrier === null) {
                 $carrier = [
@@ -24,10 +25,13 @@ class CarrierController extends MerchantController
                     'name' => $data->name,
                     'is_defult' => false,
                     'is_enabled' => true,
+                    'express' => (boolean) $data->express,
+                    'domestic' =>(boolean) $data->domestic,
+                    'logo' =>  $data->logo,
                     'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                     'updated_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 ];
-            } else
+            } else            //
                 $carrier['name'] = $data->name;
 
             return $carrier;
