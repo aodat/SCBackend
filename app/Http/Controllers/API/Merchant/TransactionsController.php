@@ -7,13 +7,18 @@ use App\Http\Requests\Merchant\TransactionRequest;
 use App\Models\Invoices;
 use App\Models\Transaction;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\DB;
 use Libs\Stripe;
 
 class TransactionsController extends MerchantController
 {
 
     protected $stripe;
+
+    private $type = [
+        'ALL' => 0, 'CASHIN' => 0, 'CASHOUT' => 0
+    ];
+
     public function __construct()
     {
         $this->stripe = new Stripe();
@@ -31,38 +36,40 @@ class TransactionsController extends MerchantController
         $sources = $filters['sources'] ?? [];
         $amount = $filters['amount']['val'] ?? null;
         $operation = $filters['amount']['operation'] ?? null;
-        $transaction2 = Transaction::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"])
-            ->select('created_at')
-            ->groupBy('created_at')
-            ->paginate(request()->per_page ?? 10);
         $paginated = array();
 
-        foreach ($transaction2 as $key => $value) {
-            $transaction = Transaction::where("created_at", "=", $value->created_at)->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
-            if (count($statuses))
-                $transaction->whereIn('status', $statuses);
 
-            if (count($sources))
-                $transaction->whereIn('source', $sources);
+        $transaction = Transaction::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        if (count($statuses))
+            $transaction->whereIn('status', $statuses);
 
-            if (count($types))
-                $transaction->whereIn('type', $types);
+        if (count($sources))
+            $transaction->whereIn('source', $sources);
 
-            if ($operation)
-                $transaction->where('amount', $operation, $amount);
-            else if ($amount)
-                $transaction->whereBetween('amount', [intval($amount), intval($amount) . '.99']);
+        if (count($types))
+            $transaction->whereIn('type', $types);
 
-            $created_at = (string)$value->created_at->format('Y-m-d');
-            $paginated[$created_at] = $transaction->get()->groupBy('type');
-        }
+        if ($operation)
+            $transaction->where('amount', $operation, $amount);
+        else if ($amount)
+            $transaction->whereBetween('amount', [intval($amount), intval($amount) . '.99']);
 
-        return $this->response($paginated, 'Data Retrieved Successfully');
+        $tabs = DB::table('shipments')
+            ->where('merchant_id', Request()->user()->merchant_id)
+            ->select('status', DB::raw(
+                'count(status) as counter'
+            ))
+            ->groupBy('type')
+            ->pluck('counter', 'type');
+
+        $tabs = collect($this->type)->merge(collect($tabs));
+        $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
+
+        return $this->pagination($transaction->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
     }
 
     public function show($id, TransactionRequest $request)
     {
-
         $data = Transaction::findOrFail($id);
         return $this->response($data, 'Data Retrieved Successfully');
     }
