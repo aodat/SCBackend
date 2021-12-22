@@ -1,22 +1,167 @@
-[
-    {
-        "JO": [
-            {
-                "id": "1",
-                "name_en": "Arab Bank",
-                "name_ar": "البنك العربي",
-                "code": "bk"
-            }
-        ]
-    },
-    {
-        "SA": [
-            {
-                "id": "1",
-                "name_en": "STC Pay",
-                "name_ar": "اس تي سي",
-                "code": "stc"
-            }
-        ]
-    }
-]
+{
+    "JO": [
+        {
+            "id": "1",
+            "name_en": "Arab Bank",
+            "name_ar": "البنك العربي",
+            "code": "ab",
+            "type": "bank"
+        },
+        {
+            "id": "2",
+            "name_en": "Jordan Commercial Bank",
+            "name_ar": "البنك التجاري الأردني",
+            "code": "bcb",
+            "type": "bank"
+        },
+        {
+            "id": "3",
+            "name_en": "Housing Bank for Trade & Finance",
+            "name_ar": "بنك الإسكان للتجارة والتمويل",
+            "code": "hbtf",
+            "type": "bank"
+        },
+        {
+            "id": "4",
+            "name_en": "Cairo Amman Bank",
+            "name_ar": "بنك القاهرة عمان",
+            "code": "cab",
+            "type": "bank"
+        },
+        {
+            "id": "5",
+            "name_en": "Arab Jordan Investment Bank",
+            "name_ar": "بنك الاستثمار العربي الأردني",
+            "code": "ajib",
+            "type": "bank"
+        },
+        {
+            "id": "6",
+            "name_en": "Bank al Etihad",
+            "name_ar": "بنك الاتحاد",
+            "code": "bae",
+            "type": "bank"
+        },
+        {
+            "id": "7",
+            "name_en": "BLOM Bank",
+            "name_ar": "بنك لبنان والمهجر",
+            "code": "bbk",
+            "type": "bank"
+        },
+        {
+            "id": "8",
+            "name_en": "Bank Audi",
+            "name_ar": "بنك عودة",
+            "code": "ba",
+            "type": "bank"
+        },
+        {
+            "id": "9",
+            "name_en": "Islamic International Arab Bank",
+            "name_ar": "البنك العربي الاسلامي الدولي",
+            "code": "iiab",
+            "type": "bank"
+        },
+        {
+            "id": "10",
+            "name_en": "Al-Rajhi Bank",
+            "name_ar": "بنك الراجحي",
+            "code": "arb",
+            "type": "bank"
+        },
+        {
+            "id": "11",
+            "name_en": "Capital Bank of Jordan",
+            "name_ar": "  كابيتال بنك",
+            "code": "cbj",
+            "type": "bank"
+        },
+        {
+            "id": "12",
+            "name_en": "Jordan Ahli Bank",
+            "name_ar": "البنك الأهلي الأردني",
+            "code": "jab",
+            "type": "bank"
+        },
+        {
+            "id": "13",
+            "name_en": "INVESTBANK",
+            "name_ar": "البنك الاستثماري",
+            "code": "ib",
+            "type": "bank"
+        },
+        {
+            "id": "14",
+            "name_en": "Bank of Jordan",
+            "name_ar": "بنك الاردن",
+            "code": "bj",
+            "type": "bank"
+        },
+        {
+            "id": "15",
+            "name_en": "Jordan Islamic Bank",
+            "name_ar": "البنك الاسلامي الاردني",
+            "code": "jib",
+            "type": "bank"
+        },
+        {
+            "id": "16",
+            "name_en": "Safwa Islamic Bank",
+            "name_ar": "بنك صفوة الاسلامي",
+            "code": "sib",
+            "type": "bank"
+        },
+        {
+            "id": "17",
+            "name_en": "Jordan Kuwait Bank",
+            "name_ar": "البنك الأردني الكويتي",
+            "code": "jkb",
+            "type": "bank"
+        },
+        {
+            "id": "18",
+            "name_en": "Zain Cash",
+            "name_ar": "زين كاش",
+            "code": "zc",
+            "type": "wallet"
+        },
+        {
+            "id": "19",
+            "name_en": "Orange Money",
+            "name_ar": "محفظة أورنج",
+            "code": "om",
+            "type": "wallet"
+        },
+        {
+            "id": "20",
+            "name_en": "Umniah Mahfazti",
+            "name_ar": "أمنية محفظتي",
+            "code": "um",
+            "type": "wallet"
+        },
+        {
+            "id": "21",
+            "name_en": "MEPS",
+            "name_ar": "ميبس",
+            "code": "ms",
+            "type": "wallet"
+        },
+        {
+            "id": "22",
+            "name_en": "Mared",
+            "name_ar": "ماريد",
+            "code": "md",
+            "type": "wallet"
+        }
+    ],
+    "SA": [
+        {
+            "id": "1",
+            "name_en": "STC Pay",
+            "name_ar": "اس تي سي",
+            "code": "stc",
+            "type": "wallet"
+        }
+    ]
+}
