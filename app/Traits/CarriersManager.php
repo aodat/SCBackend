@@ -9,6 +9,7 @@ use Libs\Fedex;
 use App\Exceptions\CarriersException;
 use App\Models\Country;
 use App\Models\Shipment;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
 trait CarriersManager
@@ -141,22 +142,32 @@ trait CarriersManager
     public function webhook($shipmentInfo, $status)
     {
         $this->loadProvider($shipmentInfo['provider'], true);
-        $ChargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']], true)['ChargeableWeight'] ?? null;
+        $chargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']], true)['ChargeableWeight'] ?? null;
 
-        // if($ChargeableWeight)
-        //     throw new CarriersException('Chargeable Weight Is Zero');
+        if($chargeableWeight)
+            throw new CarriersException('Chargeable Weight Is Zero');
 
-        $setup = $this->adapter->setup[$status] ?? ['status' => 'PROCESSING'];
-        if ($ChargeableWeight)
+        if ($chargeableWeight)
             $setup['chargable_weight'] = $this->calculateFees(
                 $shipmentInfo['provider'],
                 $shipmentInfo['carrier_id'],
                 $shipmentInfo['consignee_country'],
                 $shipmentInfo['group'],
-                $ChargeableWeight
+                $chargeableWeight
             );
+        $updated = $this->adapter->setup[$status] ?? ['status' => 'PROCESSING'];
 
-        $shipmentInfo->update($setup);
+
+
+        $logs = collect(json_decode($shipmentInfo->logs, true));
+
+        $updated['logs'] = $logs->merge([[
+            'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+            'UpdateLocation' => '',
+            'UpdateDescription' => $setup['status']
+        ]]);
+
+        $shipmentInfo->update($updated);
         return true;
     }
 }
