@@ -165,7 +165,7 @@ class DHL
         $payload['Consignee']['Contact']['Email'] = $shipmentInfo['consignee_email'];
         $payload['Consignee']['Contact']['PhoneExtension'] = '';
 
-        $payload['ShipmentDetails']['Contents'] = $shipmentInfo['content'];
+        $payload['ShipmentDetails']['Contents'] = $shipmentInfo['consignee_notes'] ?? '';
         $payload['ShipmentDetails']['Date'] = Carbon::now()->format('Y-m-d');
         
         $payload['ShipmentDetails']['Pieces']['Piece']['PieceContents'] = $shipmentInfo['content'] ?? '';
@@ -190,6 +190,7 @@ class DHL
 
         $payload['Dutiable']['DeclaredValue'] = $shipmentInfo['fees'];
         $payload['Dutiable']['DeclaredCurrency'] = $merchentInfo->currency_code;
+
         $response = $this->call('ShipmentRequest', $payload);
 
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')

@@ -52,11 +52,7 @@
                 "Width": "20",
                 "Height": "15",
                 "Depth": "30",
-                "PieceContents": "1st Piece ShipCash",
-                "PieceReference": {
-                    "ReferenceID": "Piece1Reference",
-                    "ReferenceType": "PK2"
-                }
+                "PieceContents": "1st Piece ShipCash"
             }
         },
         "WeightUnit": "K",
