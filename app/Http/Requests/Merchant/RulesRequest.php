@@ -16,7 +16,7 @@ class RulesRequest extends MerchantRequest
             return [
                 'name' => 'required',
                 'rules.*.type' => 'required|in:express,dom',
-                'rules.*.sub-type' => 'required|in:cod,weight,city',
+                'rules.*.sub-type' => 'required|in:cod,weight,city,country',
                 'rules.*.constraint' => 'required',
                 'rules.*.value' => 'required',
                 'action' => 'required|array'
