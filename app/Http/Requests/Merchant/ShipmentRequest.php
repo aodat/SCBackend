@@ -40,12 +40,14 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'consignee_email' => 'required|email',
                 $type . 'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 $type . 'consignee_second_phone' => $isRequired ? 'required' : '',
+                $type . 'consignee_notes' => '',
                 $type . 'consignee_city' => 'required',
                 $type . 'consignee_area' => 'required',
                 $type . 'consignee_address_description' => 'required',
                 $type . 'content' => 'required',
                 $type . 'pieces' => 'required|integer',
             ];
+            
             if (strpos($path, 'shipments/domestic/create') !== false) {
                 $validation['*'] = 'required|array|min:1|max:50';
                 $validation[$type . 'extra_services'] = 'required|in:DOMCOD';

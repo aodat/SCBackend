@@ -174,7 +174,7 @@ class Aramex
 
         $data['ShippingDateTime'] = '/Date(' . (Carbon::tomorrow()->getTimestamp() * 1000) . ')/';
         $data['DueDate'] = '/Date(' . (Carbon::tomorrow()->getTimestamp() * 1000) . ')/';
-        $data['Comments'] = $shipmentInfo['notes'] ?? '';
+        $data['Comments'] = $shipmentInfo['consignee_notes'] ?? '';
 
         $data['Details']['DescriptionOfGoods'] = $shipmentInfo['content'];
         $data['Details']['GoodsOriginCountry'] = $merchentInfo->country_code;

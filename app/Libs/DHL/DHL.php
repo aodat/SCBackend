@@ -168,6 +168,9 @@ class DHL
         $payload['ShipmentDetails']['Contents'] = $shipmentInfo['content'];
         $payload['ShipmentDetails']['Date'] = Carbon::now()->format('Y-m-d');
         
+        $payload['ShipmentDetails']['Pieces']['Piece']['PieceContents'] = $shipmentInfo['content'] ?? '';
+        $payload['ShipmentDetails']['Pieces']['Piece']['Weight'] = $shipmentInfo['actual_weight'] ?? '';
+
         $payload['Shipper']['ShipperID'] = $merchentInfo->id;
         $payload['Shipper']['CompanyName'] = $shipmentInfo['sender_name'];
         $payload['Shipper']['AddressLine1'] = $shipmentInfo['sender_address_description'];
