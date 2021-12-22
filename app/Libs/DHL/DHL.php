@@ -161,7 +161,7 @@ class DHL
 
         $payload['Consignee']['Contact']['PersonName'] = $shipmentInfo['consignee_name'];
         $payload['Consignee']['Contact']['PhoneNumber'] = $shipmentInfo['consignee_phone'];
-        $payload['Consignee']['Contact']['MobilePhoneNumber'] = $shipmentInfo['consignee_second_phone'];
+        $payload['Consignee']['Contact']['MobilePhoneNumber'] = $shipmentInfo['consignee_second_phone'] ?? '';
         $payload['Consignee']['Contact']['Email'] = $shipmentInfo['consignee_email'];
         $payload['Consignee']['Contact']['PhoneExtension'] = '';
 

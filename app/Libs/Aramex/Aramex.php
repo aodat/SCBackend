@@ -169,7 +169,7 @@ class Aramex
         $data['Consignee']['Contact']['PersonName'] = $shipmentInfo['consignee_name'];
         $data['Consignee']['Contact']['CompanyName'] = $shipmentInfo['consignee_name'];
         $data['Consignee']['Contact']['PhoneNumber1'] = $shipmentInfo['consignee_phone'];
-        $data['Consignee']['Contact']['PhoneNumber2'] = $shipmentInfo['consignee_second_phone'];
+        $data['Consignee']['Contact']['PhoneNumber2'] = $shipmentInfo['consignee_second_phone'] ?? '';
         $data['Consignee']['Contact']['CellPhone'] = $shipmentInfo['consignee_phone'];
 
         $data['ShippingDateTime'] = '/Date(' . (Carbon::tomorrow()->getTimestamp() * 1000) . ')/';
@@ -196,7 +196,6 @@ class Aramex
 
         $data['Details']['CustomsValueAmount']['CurrencyCode'] =
             ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD';
-
 
         $data['Details']['Services'] = ($shipmentInfo['cod'] > 0) ? 'CODS' : '';
         return $data;
