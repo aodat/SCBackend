@@ -47,8 +47,10 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
     Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
         Route::group(['prefix' => 'merchant/'], function () {
+            Route::get('generate-secret', [AuthController::class, 'generateSecretKey']);
             Route::put('change-secret', [AuthController::class, 'changeSecret']);
-
+            Route::delete('revoke-secret', [AuthController::class, 'revokeSecretKey']);
+            
             Route::get('carrier/list', [CarrierController::class, 'index']);
             Route::put('carrier/{carrier_id}/update', [CarrierController::class, 'update']);
 

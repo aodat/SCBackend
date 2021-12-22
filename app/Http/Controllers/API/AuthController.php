@@ -86,14 +86,14 @@ class AuthController extends Controller
         );
         $merchant->update(["secret_key" => $client->secret]);
 
-        $SendMails = Send::dispatch($user);
+        Send::dispatch($user);
 
         return $this->successful('User Created Successfully');
     }
 
     public function changeSecret(ClientRepository $clientRepository)
     {
-        $merchantInfo =$this->getMerchentInfo();
+        $merchantInfo = Merchant::findOrFail(Request()->user()->merchant_id);
 
         $clients = Client::where('user_id', Request()->user()->merchant_id)->get();
         $clients->map(function ($client) use ($clientRepository) {
@@ -165,7 +165,7 @@ class AuthController extends Controller
     {
         if (auth()->user()->hasVerifiedEmail())
             return $this->error('Email already verified.', 400);
-        
+
         Send::dispatch(auth()->user());
         return $this->successful('Check your email');
     }
@@ -173,7 +173,7 @@ class AuthController extends Controller
     // Get Merchant Secret Key
     public function getSecretKey(Request $request)
     {
-        $merchant = $this->getMerchentInfo();
+        $merchant = Merchant::findOrFail(Request()->user()->merchant_id);
         $client = Client::where('user_id', $merchant->id)->where('revoked', false)->first();
 
         if ($client == null)
@@ -198,7 +198,7 @@ class AuthController extends Controller
     // Genrate Access Token
     function generateSecretKey(Request $request, ClientRepository $clientRepository)
     {
-        $merchant =$this->getMerchentInfo();
+        $merchant = Merchant::findOrFail(Request()->user()->merchant_id);
 
         $clients = Client::where('user_id', $merchant->id)->get();
         $clients->map(function ($client) use ($clientRepository) {
