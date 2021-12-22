@@ -224,6 +224,11 @@ class AuthController extends Controller
         $clients->map(function ($client) use ($clientRepository) {
             $clientRepository->delete($client);
         });
+
+        $merchant = Merchant::findOrFail(Request()->user()->merchant_id);
+        $merchant->secret_key = null;
+        $merchant->save();
+
         return $this->successful('Revoked Suceefully');
     }
 
