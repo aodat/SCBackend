@@ -214,7 +214,7 @@ class AuthController extends Controller
         $merchant->secret_key = $client->secret;
         $merchant->save();
 
-        return $this->successful('Secret Key Changed Successfully');
+        return $this->response(['key' => $client->secret], 'Secret Key Changed Successfully');
     }
 
     // Delete all Clients Secret
@@ -229,7 +229,7 @@ class AuthController extends Controller
         $merchant->secret_key = null;
         $merchant->save();
 
-        return $this->successful('Revoked Successfully');
+        return $this->response(['key' => null], 'Revoked Successfully');
     }
 
     // Logout
