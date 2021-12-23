@@ -44,6 +44,9 @@ class AuthController extends Controller
             $role = explode(",", $userData->role_member);
         $role[] = $userData->role;
         $userData['token'] = $userData->createToken('users', $role)->accessToken;
+        $userData['country_code'] = $merchant->country_code;
+        $userData['country_code'] = $merchant->country_code;
+
         return $this->response(
             $userData,
             'User Login Successfully',
