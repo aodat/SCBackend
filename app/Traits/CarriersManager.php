@@ -8,7 +8,9 @@ use Libs\Fedex;
 
 use App\Exceptions\CarriersException;
 use App\Models\Country;
+use App\Models\Merchant;
 use App\Models\Shipment;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
@@ -16,7 +18,7 @@ trait CarriersManager
 {
     public $adapter;
     private $merchantInfo;
-    public function loadProvider($provider, $isWebHook = false)
+    public function loadProvider($provider, $merchantID = null)
     {
         $provider = strtoupper($provider);
         switch ($provider) {
@@ -33,13 +35,15 @@ trait CarriersManager
                 throw new CarriersException('Invalid Provider');
         }
 
-        if (!$isWebHook)
-            $this->merchantInfo = $this->getMerchantInfo();
+        $this->merchantInfo = $this->getMerchantInfo($merchantID);
     }
 
-    public function getMerchantInfo()
+    public function getMerchantInfo($merchantID = null)
     {
-        return App::make('merchantInfo');
+        if ($merchantID)
+            return Merchant::findOrFail($merchantID);
+        else
+            return App::make('merchantInfo');
     }
 
     public function generateShipment($provider, $merchantInfo = null, $shipmentArray)
@@ -139,32 +143,54 @@ trait CarriersManager
         return $fees;
     }
 
-    public function webhook($shipmentInfo, $status)
+    public function webhook($shipmentInfo, $data)
     {
-        $this->loadProvider($shipmentInfo['provider'], true);
+        $this->loadProvider($shipmentInfo['carrier_name'], $shipmentInfo['merchant_id']);
         $chargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']], true)['ChargeableWeight'] ?? null;
-
-        if($chargeableWeight)
+        if ($chargeableWeight)
             throw new CarriersException('Chargeable Weight Is Zero');
 
         if ($chargeableWeight)
             $setup['chargable_weight'] = $this->calculateFees(
-                $shipmentInfo['provider'],
+                $shipmentInfo['carrier_name'],
                 $shipmentInfo['carrier_id'],
                 $shipmentInfo['consignee_country'],
                 $shipmentInfo['group'],
                 $chargeableWeight
             );
-        $updated = $this->adapter->setup[$status] ?? ['status' => 'PROCESSING'];
 
+        $updated = $this->adapter->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
 
+        $actions = $updated['actions'] ?? [];
+        if (isset($updated['actions']))
+            unset($updated['actions']);
+
+        foreach ($actions as $action) {
+            if ($action == 'create_transaction')
+                Transaction::create(
+                    [
+                        'type' => 'CASHIN',
+                        'merchant_id' => $shipmentInfo['merchant_id'],
+                        'source' => 'SHIPMENT',
+                        'status' => 'COMPLETED',
+                        'created_by' => $shipmentInfo['created_by'],
+                        'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $this->merchantInfo->actual_balance,
+                        'amount' => ($shipmentInfo['cod'] - $shipmentInfo['fees']),
+                        'resource' => 'API'
+                    ]
+                );
+            else if ($action == 'update_merchant_balance') {
+                $this->merchantInfo->actual_balance =  ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $this->merchantInfo->actual_balance;
+                $this->merchantInfo->save();
+            }
+        }
 
         $logs = collect(json_decode($shipmentInfo->logs, true));
 
         $updated['logs'] = $logs->merge([[
             'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
-            'UpdateLocation' => '',
-            'UpdateDescription' => $setup['status']
+            'UpdateLocation' => $data['Comment1'],
+            'UpdateDescription' => $updated['status']
         ]]);
 
         $shipmentInfo->update($updated);

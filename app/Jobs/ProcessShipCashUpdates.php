@@ -34,7 +34,9 @@ class ProcessShipCashUpdates implements ShouldQueue
      */
     public function handle()
     {
-        $shipmentInfo = Shipment::where('external_awb', $this->data['WaybillNumber'])->first();
-        $this->webhook($shipmentInfo, $this->data['UpdateCode']);
+        $shipmentInfo = Shipment::withoutGlobalScope('ancient')->get()->where('external_awb', $this->data['WaybillNumber'])->first();
+        $this->webhook($shipmentInfo, $this->data);
+
+        return true;
     }
 }
