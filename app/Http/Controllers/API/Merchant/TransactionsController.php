@@ -114,22 +114,29 @@ class TransactionsController extends MerchantController
         $merchecntInfo = $this->getMerchentInfo();
 
         $infoTransaction =   [
-            'amount' =>  $data['amount'],
-            'currency' => 'USD', // $merchecntInfo->currency_code,
+            'amount' =>  currency_exchange($data['amount'], $merchecntInfo->currency_code, 'USD'),
+            'currency' => 'USD',
             'source' => $data['token'],
             'description' => "Merachnt Deposit " . $merchecntInfo->name,
         ];
 
         $this->stripe->InvoiceWithToken($infoTransaction);
 
-        unset($data['currency'], $data['token'], $data['description']);
-        $data['customer_name'] = $merchecntInfo->name;
-        $data['customer_email'] = $merchecntInfo->email;
-        $data['fk_id'] = null;
-        $data['merchant_id'] = $request->user()->merchant_id;
-        $data['user_id'] = $request->user()->id;
-        $data['resource'] = 'WEB';
-        Invoices::create($data);
+        Transaction::create(
+            [
+                'type' => 'CASHOUT',
+                'merchant_id' => $request->user()->merchant_id,
+                'source' => 'CREDITCARD',
+                'status' => 'COMPLETED',
+                'created_by' => $request->user()->id,
+                'balance_after' => $request->amount + $merchecntInfo->actual_balance,
+                'amount' => $request->amount,
+                'resource' => Request()->header('agent') ?? 'API'
+            ]
+        );
+
+        $merchecntInfo->actual_balance = $request->amount + $merchecntInfo->actual_balance;
+        $merchecntInfo->save();
 
         return $this->successful('Deposit Sucessfully');
     }

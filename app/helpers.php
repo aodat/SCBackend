@@ -1,5 +1,6 @@
 <?php
 
+use App\Exceptions\InternalException;
 use App\Models\Shipment;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use LynX39\LaraPdfMerger\Facades\PdfMerger;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use Mpdf\Mpdf;
 
 if (!function_exists('uploadFiles')) {
@@ -95,6 +97,29 @@ function nestedLowercase($value)
         return array_map('nestedLowercase', $value);
     }
     return strtolower($value);
+}
+
+
+function currency_exchange($amount, $from, $to = 'USD')
+{
+    $arr = [
+        'from' => $from,
+        'to' => $to,
+        'amount' => $amount,
+        'api_key' => 'demo'
+    ];
+
+    $response = Http::get("https://api.fastforex.io/convert?".http_build_query($arr));
+
+    if (!$response->successful())
+        throw new InternalException('Currency Exchange',422);
+    return intval($response['result'][$to]);
+     
+    // $rates = [
+    //     'JOD' => 0.71,
+    //     'SAR' => 3.75
+    // ];
+    // return $rates[$from] * $amount; 
 }
 
 function array_to_xml(array $arr, SimpleXMLElement $xml)

@@ -47,7 +47,6 @@ class Stripe
 
     public function InvoiceWithToken($data)
     {
-        // Create a charge
         $stripe = new \Stripe\StripeClient(
             $this->access_key
         );
