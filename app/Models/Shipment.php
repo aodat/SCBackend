@@ -13,7 +13,7 @@ class Shipment extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = ['carrier_name'];
+    protected $appends = ['carrier_name', 'generator_name'];
 
     protected $casts = [
         'logs' => 'array'
@@ -23,6 +23,11 @@ class Shipment extends Model
     {
         $provider = App::make('carriers')->where('id', $this->carrier_id)->first();
         return $provider->name ?? '';
+    }
+
+    public function getGeneratorNameAttribute()
+    {
+        return User::findOrFail($this->created_by)->name;
     }
 
     protected function castAttribute($key, $value)
