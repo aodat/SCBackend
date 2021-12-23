@@ -9,6 +9,7 @@
         "aws/aws-sdk-php": "~3.0",
         "carlos-meneses/laravel-mpdf": "^2.1",
         "daltcore/lara-pdf-merger": "^2.0",
+        "doctrine/dbal": "^3.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "laravel/framework": "^8.54",
