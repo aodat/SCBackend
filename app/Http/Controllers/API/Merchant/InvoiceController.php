@@ -5,13 +5,18 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Http\Requests\Merchant\InvoiceRequest;
 use App\Jobs\StripeUpdates;
 use App\Models\Invoices;
-
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Libs\Stripe;
 use Stripe\Invoice;
 
 class InvoiceController extends MerchantController
 {
     protected $stripe;
+    private $status = [
+        'DRAFT' => 0, 'PAID' => 0, 'FAILED' => 0, 'RENTURND' => 0
+    ];
+
     public function __construct()
     {
         $this->stripe = new Stripe();
@@ -19,11 +24,28 @@ class InvoiceController extends MerchantController
 
     public function index(InvoiceRequest $request)
     {
-        $invoices = Invoices::paginate(request()->per_page ?? 10);
-        return $this->pagination($invoices);
+        $filters = $request->json()->all();
+
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
+        $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
+        $statuses = $filters['statuses'] ?? [];
+
+        $invoices = Invoices::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        if (count($statuses))
+            $invoices->whereIn('status', $statuses);
+
+        $tabs = DB::table('invoices')
+            ->where('merchant_id', Request()->user()->merchant_id)
+            ->select('status', DB::raw(
+                'count(status) as counter'
+            ))
+            ->groupBy('status')
+            ->pluck('counter', 'status');
+        $tabs = collect($this->status)->merge(collect($tabs));
+        return $this->pagination($invoices->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
     }
 
-    public function show($id,InvoiceRequest $request)
+    public function show($id, InvoiceRequest $request)
     {
         $data = Invoices::findOrFail($id);
         return $this->response($data, 'Data Retrieved Sucessfully');

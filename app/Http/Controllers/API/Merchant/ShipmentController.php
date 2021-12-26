@@ -31,7 +31,7 @@ class ShipmentController extends MerchantController
     {
         $filters = $request->json()->all();
 
-        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
 
         $external = $filters['external'] ?? [];

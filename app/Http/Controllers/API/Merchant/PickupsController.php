@@ -19,14 +19,14 @@ class PickupsController extends MerchantController
     {
         $filters = $request->json()->all();
 
-        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
 
         $pickupID = $request->pickup_id ?? null;
         $carrierID = $request->carrier_id ?? null;
         $status = $request->status ?? null;
 
-        $pickup = Pickup::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        $pickup = Pickup::all();// ::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if ($pickupID != null)
             $pickup->where('id', $pickupID);
 
