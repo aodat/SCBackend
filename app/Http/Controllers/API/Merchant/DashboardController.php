@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Merchant\DashboardRequest;
 use Illuminate\Support\Facades\DB;
-use App\Models\Transaction;
 use Carbon\Carbon;
 
 class DashboardController extends MerchantController
@@ -98,7 +96,7 @@ class DashboardController extends MerchantController
             "CASHOUT" => $this->arrayDays,
             "CASHIN" => $this->arrayDays,
         ];
-        $payment_sql = Transaction::whereBetween('created_at', [$this->since_at, $this->until])
+        $payment_sql = DB::table('transactions')->whereBetween('created_at', [$this->since_at, $this->until])
             ->select(DB::raw("DATE_FORMAT(created_at,'%Y-%m-%d') as date"), 'type', DB::raw('sum(amount) as amount'))
             ->groupBy('date', 'type')
             ->get();
