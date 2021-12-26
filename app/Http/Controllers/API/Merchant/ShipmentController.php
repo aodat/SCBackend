@@ -15,6 +15,7 @@ use App\Exceptions\InternalException;
 
 use App\Models\Transaction;
 use App\Models\Carriers;
+use App\Models\Country;
 use App\Models\Shipment;
 
 use Illuminate\Support\Facades\App;
@@ -117,10 +118,11 @@ class ShipmentController extends MerchantController
 
     private function shipment($type, $shipments, $provider = null)
     {
+        $countries = Country::pluck('code','name_en');
         $merchentInfo = $this->getMerchentInfo();
         $addresses = collect($merchentInfo->addresses);
         $dom_rates = collect($merchentInfo->domestic_rates);
-        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $provider, $dom_rates, $type) {
+        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $provider, $dom_rates, $type,$countries) {
             $address = $addresses->where('id', '=', $shipment['sender_address_id'])->first();
 
             if ($address == null)
@@ -146,8 +148,10 @@ class ShipmentController extends MerchantController
                 $shipment['fees'] = $domestic_rates['price'] ?? 0;
                 if ($shipment == 0)
                     throw new InternalException('Domestic Rates Is Zero');
-            } else
+            } else {
                 $shipment['fees'] = $this->calculateFees($provider, $shipment['sender_country'], $shipment['consignee_country'], $shipment['actual_weight']);
+                $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
+            }
 
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
@@ -251,7 +255,6 @@ class ShipmentController extends MerchantController
     public function calculate(ShipmentRequest $request)
     {
         $data = $request->validated();
-        $result = [];
         $car = Carriers::get()->where('is_cod', $data['is_cod'])->map(function ($carrier) use ($data, &$result) {
             $carrier['fees'] = $this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']);
 
