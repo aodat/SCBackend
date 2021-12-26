@@ -25,7 +25,7 @@ class Carriers extends Model
     ];
 
     protected $hidden = [
-        'email', 'phone', 'balance', 'country_code', 'currency_code', 'documents','updated_at','created_at',
+        'email', 'phone', 'balance', 'country_code', 'currency_code', 'documents', 'updated_at', 'created_at',
         'is_email_verified', 'is_phone_verified', 'is_documents_verified', 'is_active', 'id'
     ];
 
@@ -42,18 +42,24 @@ class Carriers extends Model
 
     public function getIsDefultAttribute()
     {
-        $list = $this->merchantCarriers->where('carrier_id', $this->id)->first();
-        if ($list == null)
-            return false;
-        return ($list['is_defult']);
+        if (!empty($this->merchantCarriers)) {
+            $list = $this->merchantCarriers->where('carrier_id', $this->id)->first();
+            if ($list == null)
+                return false;
+            return ($list['is_defult']);
+        }
+        return false;
     }
 
     public function getIsEnabledAttribute()
     {
-        $list = $this->merchantCarriers->where('carrier_id', $this->id)->first();
-        if ($list == null)
-            return true;
+        if (!empty($this->merchantCarriers)) {
+            $list = $this->merchantCarriers->where('carrier_id', $this->id)->first();
+            if ($list == null)
+                return true;
 
-        return ($list['is_enabled']);
+            return ($list['is_enabled']);
+        }
+        return ($this->is_active);
     }
 }

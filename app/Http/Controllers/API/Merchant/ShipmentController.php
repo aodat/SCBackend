@@ -258,7 +258,7 @@ class ShipmentController extends MerchantController
     {
         $data = $request->validated();
         $car = Carriers::get()->where('is_cod', $data['is_cod'])->map(function ($carrier) use ($data, &$result) {
-            $carrier['fees'] = $this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']);
+            $carrier['fees'] = number_format($this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']),2);
 
             return $carrier;
         });
