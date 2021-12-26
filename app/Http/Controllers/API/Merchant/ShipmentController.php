@@ -118,11 +118,11 @@ class ShipmentController extends MerchantController
 
     private function shipment($type, $shipments, $provider = null)
     {
-        $countries = Country::pluck('code','name_en');
+        $countries = Country::pluck('code', 'name_en');
         $merchentInfo = $this->getMerchentInfo();
         $addresses = collect($merchentInfo->addresses);
         $dom_rates = collect($merchentInfo->domestic_rates);
-        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $provider, $dom_rates, $type,$countries) {
+        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $provider, $dom_rates, $type, $countries) {
             $address = $addresses->where('id', '=', $shipment['sender_address_id'])->first();
 
             if ($address == null)
@@ -205,11 +205,13 @@ class ShipmentController extends MerchantController
             });
             $links = array_merge($links, $result['link']);
             Shipment::insert($shipments->toArray());
-            // DB::table('shipments')->insert();
         }
-
+        
         return $this->response(
-            ['link' => mergePDF($links)],
+            [
+                'id' => Shipment::select('id')->first()->id,
+                'link' => mergePDF($links)
+            ],
             'Shipment Created Successfully'
         );
     }
