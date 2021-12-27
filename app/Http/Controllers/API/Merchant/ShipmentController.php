@@ -258,12 +258,15 @@ class ShipmentController extends MerchantController
     public function calculate(ShipmentRequest $request)
     {
         $data = $request->validated();
-        $car = Carriers::get()->where('is_cod', $data['is_cod'])->map(function ($carrier) use ($data, &$result) {
-            $carrier['fees'] = number_format($this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']), 2);
+        $carriers = Carriers::where('is_active', true)
+            ->where($data['type'], true)
+            ->get();
 
+        $carrier = $carriers->map(function ($carrier) use ($data) {
+            $carrier['fees'] = number_format($this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']), 2);
             return $carrier;
         });
-        return $this->response($car, 'Fees Calculated Successfully');
+        return $this->response($carrier, 'Fees Calculated Successfully');
     }
 
     public function template(ShipmentRequest $request)

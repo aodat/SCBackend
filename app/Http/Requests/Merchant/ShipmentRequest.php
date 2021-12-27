@@ -85,7 +85,7 @@ class ShipmentRequest extends MerchantRequest
             return [
                 'weight' => 'required|numeric|between:0,9999',
                 'country_code' => 'required',
-                'type' => 'required|in:express,dom',
+                'type' => 'required|in:express,domestic',
                 'is_cod' => 'required|boolean',
             ];
         return [];

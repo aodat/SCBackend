@@ -17,6 +17,7 @@ class Carriers extends Model
     protected $casts = [
         'express' => 'boolean',
         'domestic' => 'boolean',
+        'is_active' => 'boolean',
         'accept_cod' => 'boolean'
     ];
 
