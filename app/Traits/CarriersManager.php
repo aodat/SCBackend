@@ -92,7 +92,6 @@ trait CarriersManager
     */
     public function calculateFees($carrier_id, $country_code, $type, $weight)
     {
-        return rand(1, 20);
         $this->merchantInfo = $this->getMerchantInfo();
         if ($type == 'DOM') {
             $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code);
@@ -106,8 +105,11 @@ trait CarriersManager
             $express_rates = collect(Country::where('code', $this->merchantInfo->country_code)->first());
             if ($express_rates->isEmpty())
                 throw new CarriersException('Country Code Not Exists, Please Contact Administrators');
+                
+            $express_rates = $express_rates['rates'];
+            if (count($express_rates) == 0)
+                throw new CarriersException('No Setup Added To This Country, Please Contact Administrators');
 
-            $express_rates = $express_rates->rates;
             if (!isset($express_rates[$country_code]))
                 throw new CarriersException('No Setup Added To This Country, Please Contact Administrators');
 

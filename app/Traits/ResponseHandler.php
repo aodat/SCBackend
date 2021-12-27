@@ -70,4 +70,12 @@ trait ResponseHandler
         ];
         return Response::make($response, 200);
     }
+
+    public static function download($path)
+    {
+        if (file_exists($path)) {
+            return Response::download($path);
+        }
+        return self::error('Template File Not Found', 400);
+    }
 }

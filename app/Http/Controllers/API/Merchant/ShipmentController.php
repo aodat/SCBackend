@@ -20,6 +20,7 @@ use App\Models\Invoices;
 use App\Models\Shipment;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class ShipmentController extends MerchantController
 {
@@ -285,12 +286,8 @@ class ShipmentController extends MerchantController
 
     public function template(ShipmentRequest $request)
     {
-        return $this->response(
-            [
-                'file' => asset('storage/template/domestic_template.xlsx')
-            ],
-            'Template Retured Successfully'
-        );
+        $path = storage_path().'/'.'app/template/domestic_template.xlsx';
+        return $this->download($path);
     }
 
     // public function test(ShipmentRequest $request)
