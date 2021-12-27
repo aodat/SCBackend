@@ -64,7 +64,7 @@ class TransactionsController extends MerchantController
         $tabs = collect($this->type)->merge(collect($tabs));
         $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
 
-        return $this->pagination($transaction->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
+        return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
     public function show($id, TransactionRequest $request)

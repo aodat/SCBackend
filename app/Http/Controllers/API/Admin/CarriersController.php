@@ -25,7 +25,7 @@ class CarriersController extends Controller
         if ($id)
             $carriers->where('id', $id);
 
-        $paginated = $carriers->paginate(request()->per_page ?? 10);
+        $paginated = $carriers->paginate(request()->per_page ?? 30);
         return $this->pagination($paginated);
     }
 

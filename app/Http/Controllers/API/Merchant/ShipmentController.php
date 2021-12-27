@@ -70,7 +70,7 @@ class ShipmentController extends MerchantController
             ->pluck('counter', 'status');
 
         $tabs = collect($this->status)->merge(collect($tabs));
-        return $this->pagination($shipments->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
+        return $this->pagination($shipments->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
     public function show($id, ShipmentRequest $request)

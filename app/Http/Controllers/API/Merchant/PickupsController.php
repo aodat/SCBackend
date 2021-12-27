@@ -46,7 +46,7 @@ class PickupsController extends MerchantController
             ->pluck('counter', 'status');
 
         $tabs = collect($this->status)->merge(collect($tabs));
-        return $this->pagination($pickup->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
+        return $this->pagination($pickup->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
     public function show($id, PickuptRequest $request)

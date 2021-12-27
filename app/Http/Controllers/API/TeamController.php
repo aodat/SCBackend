@@ -21,7 +21,7 @@ class TeamController extends Controller
     public function index(TeamRequest $request)
     {
         $users = User::where('merchant_id', Request()->user()->merchant_id)
-            ->where('status', 'active')->paginate(request()->per_page ?? 10);
+            ->where('status', 'active')->paginate(request()->per_page ?? 30);
         return $this->pagination($users);
     }
 
