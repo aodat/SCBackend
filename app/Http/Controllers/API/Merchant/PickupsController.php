@@ -44,7 +44,7 @@ class PickupsController extends MerchantController
             ))
             ->groupBy('status')
             ->pluck('counter', 'status');
-        // Merage
+
         $tabs = collect($this->status)->merge(collect($tabs));
         return $this->pagination($pickup->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
     }
@@ -89,7 +89,7 @@ class PickupsController extends MerchantController
         $pickup = Pickup::findOrfail($request->pickup_id);
         $pickup->status = 'CANCELD';
         $pickup->save();
-        
+
         return $this->successful('The pickup has been canceled successfully');
     }
 }
