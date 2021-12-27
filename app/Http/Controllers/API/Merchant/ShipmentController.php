@@ -16,10 +16,10 @@ use App\Exceptions\InternalException;
 use App\Models\Transaction;
 use App\Models\Carriers;
 use App\Models\Country;
+use App\Models\Invoices;
 use App\Models\Shipment;
 
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Storage;
 
 class ShipmentController extends MerchantController
 {
@@ -179,10 +179,8 @@ class ShipmentController extends MerchantController
             return $this->generateShipmentArray('Aramex', $data);
         });
 
-
         $links = [];
-        // for signle Shipment Request
-        if ($payloads->isEmpty()) {
+        if ($payloads->isEmpty()) { // for signle Shipment Request
             $shipment = $shipments->toArray()[0];
             $result = $this->generateShipment($provider, $this->getMerchentInfo(), $shipment);
             $links[] = $result['link'];
@@ -190,12 +188,27 @@ class ShipmentController extends MerchantController
             $shipment['external_awb'] = $result['id'];
             $shipment['resource'] = $resource;
             $shipment['url'] = $result['link'];
+            $payment = null;
+            if (isset($shipment['payment'])) {
+                $payment = $shipment['payment'];
+                unset($shipment['payment']);
+            }
+
             Shipment::create($shipment);
+            if ($payment)
+                Invoices::create([
+                    "merchant_id" => Request()->user()->merchant_id,
+                    "user_id" => Request()->user()->id,
+                    "fk_id" => Shipment::select('id')->first()->id,
+                    "customer_name" => $shipment['consignee_name'],
+                    "customer_email" => $shipment['consignee_email'],
+                    "description" => $shipment['consignee_notes'],
+                    "amount" => $payment
+                ]);
         }
 
         if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
-
             $externalAWB = $result['id'];
             $files = $result['link'];
             $shipments = $shipments->map(function ($value, $key) use ($externalAWB, $resource, $files) {
@@ -207,6 +220,7 @@ class ShipmentController extends MerchantController
             $links = array_merge($links, $result['link']);
             Shipment::insert($shipments->toArray());
         }
+
 
         return $this->response(
             [

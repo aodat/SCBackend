@@ -34,6 +34,7 @@ class ShipmentRequest extends MerchantRequest
                 $type = '*.';
             }
 
+
             $validation = [
                 $type . 'carrier_id' => [
                     'required',
@@ -49,7 +50,7 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'consignee_area' => 'required',
                 $type . 'consignee_address_description' => 'required',
                 $type . 'content' => 'required',
-                $type . 'pieces' => 'required|integer',
+                $type . 'pieces' => 'required|integer'
             ];
 
             if (strpos($path, 'shipments/domestic/create') !== false) {
@@ -57,6 +58,8 @@ class ShipmentRequest extends MerchantRequest
                 $validation[$type . 'extra_services'] = 'required|in:DOMCOD';
                 $validation[$type . 'cod'] = 'required|numeric|between:0,9999';
             } else if (strpos($path, 'shipments/express/create') !== false) {
+                $validation[$type . 'cod'] = 'numeric|between:0,9999';
+                $validation[$type . 'payment'] = 'numeric|between:0,9999';
                 $validation[$type . 'consignee_country'] = 'required';
                 $validation[$type . 'actual_weight'] = 'required|numeric|between:0,9999';
                 $validation[$type . 'consignee_zip_code'] = '';
