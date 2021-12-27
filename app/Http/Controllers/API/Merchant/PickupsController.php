@@ -26,7 +26,7 @@ class PickupsController extends MerchantController
         $carrierID = $request->carrier_id ?? null;
         $status = $request->status ?? null;
 
-        $pickup = Pickup::all();// ::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        $pickup = Pickup::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if ($pickupID != null)
             $pickup->where('id', $pickupID);
 
@@ -36,7 +36,6 @@ class PickupsController extends MerchantController
         if ($carrierID != null)
             $pickup->where('carrier_id', $carrierID);
 
-        $paginated = $pickup->paginate(request()->per_page ?? 10);
 
         $tabs = DB::table('pickups')
             ->where('merchant_id', Request()->user()->merchant_id)
@@ -47,7 +46,7 @@ class PickupsController extends MerchantController
             ->pluck('counter', 'status');
         // Merage
         $tabs = collect($this->status)->merge(collect($tabs));
-        return $this->pagination($paginated, ['tabs' => $tabs]);
+        return $this->pagination($pickup->paginate(request()->per_page ?? 10), ['tabs' => $tabs]);
     }
 
     public function show($id, PickuptRequest $request)
