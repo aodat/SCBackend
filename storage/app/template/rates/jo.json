@@ -1,1 +1,1496 @@
-[{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":6},{"carrier_id":1,"zone_id":5},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":8},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":10},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":1},{"carrier_id":3,"zone_id":4},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":6},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":1},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":4},{"carrier_id":3,"zone_id":9},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":4},{"carrier_id":3,"zone_id":5},{"carrier_id":1,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":2},{"carrier_id":3,"zone_id":6},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":1},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":4},{"carrier_id":3,"zone_id":5},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":2},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":4},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":7},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":8},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":1},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":1},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":7},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":4},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":1},{"carrier_id":3,"zone_id":4},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":1},{"carrier_id":2,"zone_id":1},{"carrier_id":3,"zone_id":6},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":8},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":7},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":8},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":2,"zone_id":5},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":1},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":10},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":2,"zone_id":8},{"carrier_id":1,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":2,"zone_id":6},{"carrier_id":1,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":1},{"carrier_id":3,"zone_id":4},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":6},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":1},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":1},{"carrier_id":3,"zone_id":4},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":1},{"carrier_id":3,"zone_id":12},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":7},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":2},{"carrier_id":1,"zone_id":1},{"carrier_id":2,"zone_id":2},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":5},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":7},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":8},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":3},{"carrier_id":1,"zone_id":2},{"carrier_id":2,"zone_id":1},{"carrier_id":3,"zone_id":4},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":3},{"carrier_id":3,"zone_id":1},{"carrier_id":1,"zone_id":4},{"carrier_id":2,"zone_id":4},{"carrier_id":3,"zone_id":9},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":6},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":3},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":8},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":5},{"carrier_id":3,"zone_id":7},{"carrier_id":1,"zone_id":5},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":1,"zone_id":3},{"carrier_id":2,"zone_id":8},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7},{"carrier_id":3,"zone_id":11},{"carrier_id":1,"zone_id":5},{"carrier_id":2,"zone_id":7}]
+[
+    {
+      "1": 0,
+      "2": 8,
+      "3": 6,
+      "country_code": "AF"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 0,
+      "country_code": "AX"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "AL"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 8,
+      "country_code": "DZ"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "AS"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "AD"
+    },
+    {
+      "1": 4,
+      "2": 7,
+      "3": 11,
+      "country_code": "AO"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "AI"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 11,
+      "country_code": "AQ"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "AG"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "AR"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "AM"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "AW"
+    },
+    {
+      "1": 4,
+      "2": 6,
+      "3": 10,
+      "country_code": "AU"
+    },
+    {
+      "1": 4,
+      "2": 3,
+      "3": 2,
+      "country_code": "AT"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "AZ"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "BS"
+    },
+    {
+      "1": 2,
+      "2": 1,
+      "3": 4,
+      "country_code": "BH"
+    },
+    {
+      "1": 2,
+      "2": 5,
+      "3": 6,
+      "country_code": "BD"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "BB"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "BY"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 1,
+      "country_code": "BE"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "BZ"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "BJ"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "BM"
+    },
+    {
+      "1": 5,
+      "2": 5,
+      "3": 11,
+      "country_code": "BT"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "BO"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "BA"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "BW"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 0,
+      "country_code": "BV"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "BR"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "IO"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "VG"
+    },
+    {
+      "1": 5,
+      "2": 5,
+      "3": 11,
+      "country_code": "BN"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 3,
+      "country_code": "BG"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "BF"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "BI"
+    },
+    {
+      "1": 5,
+      "2": 5,
+      "3": 11,
+      "country_code": "KH"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "CM"
+    },
+    {
+      "1": 4,
+      "2": 4,
+      "3": 9,
+      "country_code": "CA"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "CV"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "BQ"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "KY"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 0,
+      "country_code": "CF"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "TD"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "CL"
+    },
+    {
+      "1": 4,
+      "2": 4,
+      "3": 5,
+      "country_code": "CN"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 11,
+      "country_code": "CX"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 11,
+      "country_code": "CC"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "CO"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 0,
+      "country_code": "KM"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "CG"
+    },
+    {
+      "1": 0,
+      "2": 7,
+      "3": 11,
+      "country_code": "CD"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "CK"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "CR"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "CI"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 3,
+      "country_code": "HR"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 0,
+      "country_code": "CU"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "CW"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "country_code": "CY"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 2,
+      "country_code": "CZ"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 2,
+      "country_code": "DK"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "DJ"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "DM"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "DO"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "EC"
+    },
+    {
+      "1": 2,
+      "2": 2,
+      "3": 6,
+      "country_code": "EG"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "SV"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 11,
+      "country_code": "GQ"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "ER"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "EE"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "SZ"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "ET"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 0,
+      "country_code": "FK"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "FO"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "FJ"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 2,
+      "country_code": "FI"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 1,
+      "country_code": "FR"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "GF"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 11,
+      "country_code": "PF"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "TF"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "GA"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "GM"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "GE"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 11,
+      "country_code": "DE"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "GH"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "GI"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 2,
+      "country_code": "GR"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "GL"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "GD"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "GP"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "GU"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "GT"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "GG"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "GN"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "GW"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "GY"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "HT"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "HM"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "HN"
+    },
+    {
+      "1": 4,
+      "2": 4,
+      "3": 5,
+      "country_code": "HK"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 2,
+      "country_code": "HU"
+    },
+    {
+      "1": 0,
+      "2": 6,
+      "3": 3,
+      "country_code": "IS"
+    },
+    {
+      "1": 2,
+      "2": 5,
+      "3": 4,
+      "country_code": "IN"
+    },
+    {
+      "1": 4,
+      "2": 5,
+      "3": 7,
+      "country_code": "ID"
+    },
+    {
+      "1": 3,
+      "2": 8,
+      "3": 0,
+      "country_code": "IR"
+    },
+    {
+      "1": 2,
+      "2": 8,
+      "3": 1,
+      "country_code": "IQ"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 2,
+      "country_code": "IE"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 0,
+      "country_code": "IM"
+    },
+    {
+      "1": 0,
+      "2": 6,
+      "3": 0,
+      "country_code": "IL"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 1,
+      "country_code": "IT"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "JM"
+    },
+    {
+      "1": 5,
+      "2": 5,
+      "3": 7,
+      "country_code": "JP"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 4,
+      "country_code": "JE"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "JO"
+    },
+    {
+      "1": 3,
+      "2": 6,
+      "3": 11,
+      "country_code": "KZ"
+    },
+    {
+      "1": 4,
+      "2": 7,
+      "3": 11,
+      "country_code": "KE"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "KI"
+    },
+    {
+      "1": 2,
+      "2": 1,
+      "3": 4,
+      "country_code": "KW"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "KG"
+    },
+    {
+      "1": 5,
+      "2": 5,
+      "3": 11,
+      "country_code": "LA"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "LV"
+    },
+    {
+      "1": 1,
+      "2": 1,
+      "3": 6,
+      "country_code": "LB"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "LS"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "LR"
+    },
+    {
+      "1": 3,
+      "2": 8,
+      "3": 0,
+      "country_code": "LY"
+    },
+    {
+      "1": 5,
+      "2": 3,
+      "3": 11,
+      "country_code": "LI"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 3,
+      "country_code": "LT"
+    },
+    {
+      "1": 4,
+      "2": 3,
+      "3": 2,
+      "country_code": "LU"
+    },
+    {
+      "1": 0,
+      "2": 5,
+      "3": 11,
+      "country_code": "MO"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "MG"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "MW"
+    },
+    {
+      "1": 4,
+      "2": 5,
+      "3": 7,
+      "country_code": "MY"
+    },
+    {
+      "1": 5,
+      "2": 5,
+      "3": 11,
+      "country_code": "MV"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "ML"
+    },
+    {
+      "1": 4,
+      "2": 6,
+      "3": 2,
+      "country_code": "MT"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 11,
+      "country_code": "MH"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "MQ"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "MR"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "MU"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "YT"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "MX"
+    },
+    {
+      "1": 0,
+      "2": 8,
+      "3": 11,
+      "country_code": "FM"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "MD"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 11,
+      "country_code": "MC"
+    },
+    {
+      "1": 5,
+      "2": 5,
+      "3": 11,
+      "country_code": "MN"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "ME"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "MS"
+    },
+    {
+      "1": 3,
+      "2": 7,
+      "3": 8,
+      "country_code": "MA"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "MZ"
+    },
+    {
+      "1": 0,
+      "2": 5,
+      "3": 0,
+      "country_code": "MM"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "NA"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "NR"
+    },
+    {
+      "1": 4,
+      "2": 5,
+      "3": 11,
+      "country_code": "NP"
+    },
+    {
+      "1": 4,
+      "2": 3,
+      "3": 1,
+      "country_code": "NL"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "NC"
+    },
+    {
+      "1": 4,
+      "2": 6,
+      "3": 10,
+      "country_code": "NZ"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "NI"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "NE"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "NG"
+    },
+    {
+      "1": 0,
+      "2": 8,
+      "3": 0,
+      "country_code": "NU"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 11,
+      "country_code": "NF"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "KP"
+    },
+    {
+      "1": 0,
+      "2": 6,
+      "3": 0,
+      "country_code": "MK"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 11,
+      "country_code": "MP"
+    },
+    {
+      "1": 4,
+      "2": 3,
+      "3": 2,
+      "country_code": "NO"
+    },
+    {
+      "1": 2,
+      "2": 1,
+      "3": 4,
+      "country_code": "OM"
+    },
+    {
+      "1": 2,
+      "2": 5,
+      "3": 6,
+      "country_code": "PK"
+    },
+    {
+      "1": 5,
+      "2": 5,
+      "3": 11,
+      "country_code": "PW"
+    },
+    {
+      "1": 1,
+      "2": 0,
+      "3": 11,
+      "country_code": "PS"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "PA"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "PG"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "PY"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "PE"
+    },
+    {
+      "1": 4,
+      "2": 5,
+      "3": 11,
+      "country_code": "PH"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 0,
+      "country_code": "PN"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 2,
+      "country_code": "PL"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 2,
+      "country_code": "PT"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "PR"
+    },
+    {
+      "1": 2,
+      "2": 1,
+      "3": 4,
+      "country_code": "QA"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "RE"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 2,
+      "country_code": "RO"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 3,
+      "country_code": "RU"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "RW"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "WS"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 3,
+      "country_code": "SM"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "ST"
+    },
+    {
+      "1": 2,
+      "2": 1,
+      "3": 12,
+      "country_code": "SA"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "SN"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 3,
+      "country_code": "RS"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "SC"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "SL"
+    },
+    {
+      "1": 4,
+      "2": 5,
+      "3": 7,
+      "country_code": "SG"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 11,
+      "country_code": "SX"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 3,
+      "country_code": "SK"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 3,
+      "country_code": "SI"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "SB"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 0,
+      "country_code": "SO"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "ZA"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 0,
+      "country_code": "GS"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "KR"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 0,
+      "country_code": "SS"
+    },
+    {
+      "1": 5,
+      "2": 3,
+      "3": 2,
+      "country_code": "ES"
+    },
+    {
+      "1": 3,
+      "2": 5,
+      "3": 6,
+      "country_code": "LK"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 11,
+      "country_code": "BL"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 0,
+      "country_code": "SH"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "KN"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "LC"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 11,
+      "country_code": "MF"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 11,
+      "country_code": "PM"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "VC"
+    },
+    {
+      "1": 3,
+      "2": 7,
+      "3": 0,
+      "country_code": "SD"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "SR"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 0,
+      "country_code": "SJ"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 2,
+      "country_code": "SE"
+    },
+    {
+      "1": 5,
+      "2": 3,
+      "3": 2,
+      "country_code": "CH"
+    },
+    {
+      "1": 1,
+      "2": 2,
+      "3": 0,
+      "country_code": "SY"
+    },
+    {
+      "1": 4,
+      "2": 5,
+      "3": 5,
+      "country_code": "TW"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 11,
+      "country_code": "TJ"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "TZ"
+    },
+    {
+      "1": 4,
+      "2": 5,
+      "3": 7,
+      "country_code": "TH"
+    },
+    {
+      "1": 0,
+      "2": 8,
+      "3": 11,
+      "country_code": "TL"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "TG"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "TK"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "TO"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "TT"
+    },
+    {
+      "1": 3,
+      "2": 7,
+      "3": 8,
+      "country_code": "TN"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 3,
+      "country_code": "TR"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 0,
+      "country_code": "TM"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "TC"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "TV"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "country_code": "UM"
+    },
+    {
+      "1": 0,
+      "2": 0,
+      "3": 11,
+      "country_code": "VI"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "UG"
+    },
+    {
+      "1": 5,
+      "2": 6,
+      "3": 3,
+      "country_code": "UA"
+    },
+    {
+      "1": 2,
+      "2": 1,
+      "3": 4,
+      "country_code": "AE"
+    },
+    {
+      "1": 3,
+      "2": 3,
+      "3": 1,
+      "country_code": "GB"
+    },
+    {
+      "1": 4,
+      "2": 4,
+      "3": 9,
+      "country_code": "US"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "UY"
+    },
+    {
+      "1": 3,
+      "2": 6,
+      "3": 11,
+      "country_code": "UZ"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "VU"
+    },
+    {
+      "1": 5,
+      "2": 3,
+      "3": 0,
+      "country_code": "VA"
+    },
+    {
+      "1": 5,
+      "2": 8,
+      "3": 11,
+      "country_code": "VE"
+    },
+    {
+      "1": 5,
+      "2": 5,
+      "3": 7,
+      "country_code": "VN"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 11,
+      "country_code": "WF"
+    },
+    {
+      "1": 5,
+      "2": 0,
+      "3": 0,
+      "country_code": "EH"
+    },
+    {
+      "1": 3,
+      "2": 8,
+      "3": 0,
+      "country_code": "YE"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 11,
+      "country_code": "ZM"
+    },
+    {
+      "1": 5,
+      "2": 7,
+      "3": 0,
+      "country_code": "ZW"
+    }
+  ]
