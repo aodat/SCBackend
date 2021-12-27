@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Merchant;
 
+use Illuminate\Validation\Rule;
 
 class ShipmentRequest extends MerchantRequest
 {
@@ -25,16 +26,19 @@ class ShipmentRequest extends MerchantRequest
         if ($this->method() == 'POST' && (strpos($path, 'shipments/express/create') !== false || strpos($path, 'shipments/domestic/create') !== false)) {
             // Check the type of shipment
             $type = '';
-            $condition = 'not_in';
             $isRequired = true;
+            $shipType = 'express';
             if (strpos($path, 'shipments/domestic/create') !== false) {
-                $condition = 'in';
+                $shipType = 'domestic';
                 $isRequired = false;
                 $type = '*.';
             }
 
             $validation = [
-                $type . 'carrier_id' => 'required|exists:carriers,id|' . $condition . ':1', // it's mean for aramex only
+                $type . 'carrier_id' => [
+                    'required',
+                    'exists:carriers,id,is_active,1,' . $shipType . ',1',
+                ],
                 $type . 'sender_address_id' => 'required',
                 $type . 'consignee_name' => 'required|min:6|max:255',
                 $type . 'consignee_email' => 'required|email',
@@ -47,7 +51,7 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'content' => 'required',
                 $type . 'pieces' => 'required|integer',
             ];
-            
+
             if (strpos($path, 'shipments/domestic/create') !== false) {
                 $validation['*'] = 'required|array|min:1|max:50';
                 $validation[$type . 'extra_services'] = 'required|in:DOMCOD';
