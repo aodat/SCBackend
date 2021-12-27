@@ -19,6 +19,7 @@ use App\Models\Country;
 use App\Models\Shipment;
 
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Storage;
 
 class ShipmentController extends MerchantController
 {
@@ -206,7 +207,7 @@ class ShipmentController extends MerchantController
             $links = array_merge($links, $result['link']);
             Shipment::insert($shipments->toArray());
         }
-        
+
         return $this->response(
             [
                 'id' => Shipment::select('id')->first()->id,
@@ -258,11 +259,21 @@ class ShipmentController extends MerchantController
     {
         $data = $request->validated();
         $car = Carriers::get()->where('is_cod', $data['is_cod'])->map(function ($carrier) use ($data, &$result) {
-            $carrier['fees'] = number_format($this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']),2);
+            $carrier['fees'] = number_format($this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']), 2);
 
             return $carrier;
         });
         return $this->response($car, 'Fees Calculated Successfully');
+    }
+
+    public function template(ShipmentRequest $request)
+    {
+        return $this->response(
+            [
+                'file' => asset('storage/template/domestic_template.xlsx')
+            ],
+            'Template Retured Successfully'
+        );
     }
 
     // public function test(ShipmentRequest $request)
