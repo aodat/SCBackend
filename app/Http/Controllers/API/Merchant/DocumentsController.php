@@ -43,7 +43,10 @@ class DocumentsController extends MerchantController
         $json = $result->reject(function ($value) use ($id) {
             if ($value['id'] == $id && $value['verified_at'] == null)
                 return $value;
+            else if ($value['id'] == $id && $value['verified_at'] !== null)
+                throw new InternalException('You Can\'t Delete this Document', 400);
         });
+
         $json = array_values($json->toArray());
         $list->update(['documents' => collect($json)]);
         return $this->successful('Deleted Successfully');
