@@ -12,7 +12,8 @@ class Country extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'rates' => 'array'
+        'rates' => 'array',
+        'zipcode' => 'boolean'
     ];
 
     protected function castAttribute($key, $value)
@@ -23,7 +24,7 @@ class Country extends Model
 
         return parent::castAttribute($key, $value);
     }
-    
+
     public static function getCities($id)
     {
         return DB::table('countries as c')->join('cities as ci', 'c.id', 'ci.country_id')

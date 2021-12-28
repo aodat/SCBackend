@@ -18,6 +18,7 @@ class Carriers extends Model
         'express' => 'boolean',
         'domestic' => 'boolean',
         'is_active' => 'boolean',
+        'accept_arabic' => 'boolean',
         'accept_cod' => 'boolean'
     ];
 
