@@ -41,7 +41,7 @@ class ShipmentRequest extends MerchantRequest
                     'exists:carriers,id,is_active,1,' . $shipType . ',1',
                 ],
                 $type . 'sender_address_id' => 'required',
-                $type . 'consignee_name' => 'required|min:6|max:255',
+                $type . 'consignee_name' => 'required|max:255',
                 $type . 'consignee_email' => ($isRequired ? 'required|' : '') . 'email',
                 $type . 'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 $type . 'consignee_second_phone' => $isRequired ? 'required' : '',
