@@ -124,6 +124,7 @@ class ShipmentController extends MerchantController
         $merchentInfo = $this->getMerchentInfo();
         $addresses = collect($merchentInfo->addresses);
         $dom_rates = collect($merchentInfo->domestic_rates);
+
         $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $provider, $dom_rates, $type, $countries) {
             $address = $addresses->where('id', '=', $shipment['sender_address_id'])->first();
 
@@ -188,7 +189,8 @@ class ShipmentController extends MerchantController
 
             $shipment['external_awb'] = $result['id'];
             $shipment['resource'] = $resource;
-            $shipment['url'] = $result['link'];
+            $shipment['url'] = mergePDF($result['link']);
+
             $payment = null;
             if (isset($shipment['payment'])) {
                 $payment = $shipment['payment'];
@@ -211,17 +213,17 @@ class ShipmentController extends MerchantController
         if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
             $externalAWB = $result['id'];
-            $files = $result['link'];
+            $files = mergePDF($result['link']);
             $shipments = $shipments->map(function ($value, $key) use ($externalAWB, $resource, $files) {
                 $value['external_awb'] = $externalAWB[$key];
                 $value['resource'] = $resource;
-                $value['url'] = $files[$key];
+                $value['url'] = $files;
                 return $value;
             });
             $links = array_merge($links, $result['link']);
+
             Shipment::insert($shipments->toArray());
         }
-
 
         return $this->response(
             [
