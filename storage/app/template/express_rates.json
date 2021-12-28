@@ -37,7 +37,7 @@
         "zones": [
             {
                 "id": 1,
-                "basic": 16,
+                "basic": 17,
                 "additional": 6,
                 "max_weight": 5
             },
@@ -82,7 +82,7 @@
             {
                 "condintion": "<=",
                 "weight": 2,
-                "percent": 0.25
+                "percent": 0.30
             }
         ]
     },
