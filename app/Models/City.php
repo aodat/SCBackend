@@ -19,12 +19,12 @@ class City extends Model
             ->select('ar.*')
             ->get();
         if ($data->isEmpty())
-            return [
+            return [[
                 'id' => -1,
                 'city_id' => $id,
                 'name_ar' => 'جميع المناطق',
                 'name_en' => 'ALL',
-            ];
+            ]];
         return $data;
     }
 }
