@@ -77,6 +77,7 @@ class DashboardController extends MerchantController
         ];
         $sql_shipping =  DB::table('transactions as t')
             ->join('shipments as shp', 'shp.id', 't.item_id')
+            ->where('t.merchant_id', '=',  'shp.merchant_id')
             ->where('t.merchant_id', '=',  $this->merchant_id)
             ->whereBetween('shp.created_at', [$this->since_at, $this->until])
             ->select(DB::raw("DATE_FORMAT(shp.created_at,'%Y-%m-%d') as date"), "shp.status", DB::raw('sum(amount) as amount'))
@@ -102,7 +103,7 @@ class DashboardController extends MerchantController
             ->select(DB::raw("DATE_FORMAT(created_at,'%Y-%m-%d') as date"), 'type', DB::raw('sum(amount) as amount'))
             ->groupBy('date', 'type')
             ->get();
-            
+
         $paymentCollect = collect($payment_sql);
         foreach ($paymentCollect as  $value)
             $payment[$value->type][$value->date] = $value->amount;
@@ -115,6 +116,7 @@ class DashboardController extends MerchantController
         $pending_payment  = $this->arrayDays;
         $pendingPaymentSql =   DB::table('transactions as t')
             ->join('shipments as shp', 'shp.id', 't.item_id')
+            ->where('t.merchant_id', '=',  'shp.merchant_id')
             ->where('shp.merchant_id', '=',  $this->merchant_id)
             ->where('shp.transaction_id', '=',  null)
             ->whereBetween('shp.created_at', [$this->since_at, $this->until])
