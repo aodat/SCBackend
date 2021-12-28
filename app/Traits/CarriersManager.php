@@ -105,7 +105,7 @@ trait CarriersManager
             $express_rates = collect(Country::where('code', $this->merchantInfo->country_code)->first());
             if ($express_rates->isEmpty())
                 throw new CarriersException('Country Code Not Exists, Please Contact Administrators');
-                
+
             $express_rates = $express_rates['rates'];
             if (count($express_rates) == 0)
                 throw new CarriersException('No Setup Added To This Country, Please Contact Administrators');
@@ -123,13 +123,21 @@ trait CarriersManager
                 throw new CarriersException('Somthing Wrong On Zone ID Setup, Please Contact Administrators');
 
             $zone_id = $zones->first()['zone_id'];
+            $discounts = $this->merchantInfo['express_rates'][$carrier_id]['discounts'] ?? [];
             $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id);
+
             if ($zoneRates->count() > 1)
                 throw new CarriersException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
 
             $zoneRates = $zoneRates->first();
             $base = $zoneRates['basic'];
             $additional = $zoneRates['additional'];
+            if (!empty($discounts)) {
+                foreach ($discounts as $key => $value) {
+                    if (eval("return " .  $weight . $value['condintion'] . $value['weight'] . ";"))
+                        $additional = $additional - ($additional * $value['percent']);
+                }
+            }
 
             $fees = 0;
             if ($weight > 0) {
