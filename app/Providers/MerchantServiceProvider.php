@@ -23,7 +23,11 @@ class MerchantServiceProvider extends ServiceProvider
     {
         $this->app->singleton('merchantInfo', function () {
             if (!Auth::user())
-                return [];
+                return [
+                    'country_code' => Request()->sender_country_code,
+                    'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'), true)),
+                    'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'), true))
+                ];
             return Merchant::findOrFail(Auth::user()->merchant_id);
         });
 

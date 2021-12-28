@@ -13,6 +13,7 @@ use App\Models\Shipment;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Request;
 
 trait CarriersManager
 {
@@ -92,7 +93,7 @@ trait CarriersManager
     */
     public function calculateFees($carrier_id, $country_code, $type, $weight)
     {
-        $this->merchantInfo = $this->getMerchantInfo();
+        $this->merchantInfo = Request()->user() == null ? collect(App::make('merchantInfo')) : $this->getMerchantInfo();
         if ($type == 'DOM') {
             $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code);
 
@@ -102,7 +103,7 @@ trait CarriersManager
             $price = $rate->first()->price;
             $fees = ceil($weight / 10) * $price;
         } else {
-            $express_rates = collect(Country::where('code', $this->merchantInfo->country_code)->first());
+            $express_rates = collect(Country::where('code', $this->merchantInfo['country_code'])->first());
             if ($express_rates->isEmpty())
                 throw new CarriersException('Country Code Not Exists, Please Contact Administrators');
 
