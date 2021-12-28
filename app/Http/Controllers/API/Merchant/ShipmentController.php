@@ -152,8 +152,8 @@ class ShipmentController extends MerchantController
                 if ($shipment == 0)
                     throw new InternalException('Domestic Rates Is Zero');
             } else {
-                $shipment['fees'] = $this->calculateFees($provider, $shipment['sender_country'], $shipment['consignee_country'], $shipment['actual_weight']);
                 $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
+                $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], $shipment['consignee_country'], 'express', $shipment['actual_weight']);
             }
 
             $shipment['merchant_id'] = Request()->user()->merchant_id;
