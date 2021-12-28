@@ -31,6 +31,13 @@
                 "additional": 11,
                 "max_weight": 15
             }
+        ],
+        "discounts": [
+            {
+                "condintion": "<=",
+                "weight": 2,
+                "percent": -0.15
+            }
         ]
     },
     "2": {
