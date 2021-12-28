@@ -242,7 +242,7 @@ class ShipmentController extends MerchantController
         );
     }
 
-    public function shipmentProcessSQS(ShipmentRequest $request)
+    public function hook(ShipmentRequest $request)
     {
         ProcessShipCashUpdates::dispatch($request->json()->all());
         return $this->successful('Webhook Completed');
@@ -288,7 +288,7 @@ class ShipmentController extends MerchantController
 
     public function template(ShipmentRequest $request)
     {
-        $path = storage_path().'/'.'app/template/domestic_template.xlsx';
+        $path = storage_path() . '/' . 'app/template/domestic_template.xlsx';
         return $this->download($path);
     }
 

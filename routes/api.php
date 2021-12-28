@@ -142,7 +142,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
         Route::post('auth/logout', [AuthController::class, 'logout']);
     });
-    Route::get('process/shipments', [ShipmentController::class, 'shipmentProcessSQS']);
+    Route::post('shipment/webhook', [ShipmentController::class, 'hook']);
     Route::get('process/stripe', [InvoiceController::class, 'stripeProcessSQS']);
 });
 Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');
