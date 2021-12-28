@@ -189,7 +189,7 @@ class ShipmentController extends MerchantController
 
             $shipment['external_awb'] = $result['id'];
             $shipment['resource'] = $resource;
-            $shipment['url'] = mergePDF($result['link']);
+            $shipment['url'] = mergePDF([$result['link']]);
 
             $payment = null;
             if (isset($shipment['payment'])) {
