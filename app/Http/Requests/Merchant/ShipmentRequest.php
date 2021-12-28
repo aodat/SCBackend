@@ -42,7 +42,7 @@ class ShipmentRequest extends MerchantRequest
                 ],
                 $type . 'sender_address_id' => 'required',
                 $type . 'consignee_name' => 'required|min:6|max:255',
-                $type . 'consignee_email' => 'required|email',
+                $type . 'consignee_email' => ($isRequired ? 'required|' : '') . 'email',
                 $type . 'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 $type . 'consignee_second_phone' => $isRequired ? 'required' : '',
                 $type . 'consignee_notes' => '',
