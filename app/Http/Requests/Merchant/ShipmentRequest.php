@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Merchant;
 
+use App\Rules\wordCount;
 use Illuminate\Support\Facades\Request;
-use Illuminate\Validation\Rule;
 
 class ShipmentRequest extends MerchantRequest
 {
@@ -46,10 +46,15 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'consignee_email' => ($isRequired ? 'required|' : '') . 'email',
                 $type . 'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 $type . 'consignee_second_phone' => $isRequired ? 'required' : '',
-                $type . 'consignee_notes' => '',
+                $type . 'consignee_notes' => [
+                    new wordCount(4)
+                ],
                 $type . 'consignee_city' => 'required',
                 $type . 'consignee_area' => 'required',
-                $type . 'consignee_address_description' => 'required',
+                $type . 'consignee_address_description' => [
+                    'required',
+                    new wordCount(4)
+                ],
                 $type . 'content' => 'required',
                 $type . 'pieces' => 'required|integer'
             ];
@@ -99,7 +104,58 @@ class ShipmentRequest extends MerchantRequest
                 $validation['city_from'] = 'required';
                 $validation['city_to'] = 'required';
             }
-            // dd($validation);
+            return $validation;
+        } else if ($this->method() == 'POST' && (strpos($path, 'shipments/create') !== false)) {
+            $validation = [
+                'strip_token' => 'required',
+                'type' => 'required|in:express,domestic',
+                'carrier_id' => [
+                    'required',
+                    'exists:carriers,id,is_active,1'
+                ],
+                'sender_email' => 'required|email',
+                'sender_name' => [
+                    'required',
+                    new wordCount(2)
+                ],
+                'sender_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
+                'sender_country' => 'required',
+                'sender_city' => 'required',
+                'sender_area' => 'required',
+                'sender_address_description' => 'required',
+
+                'consignee_name' => 'required|max:255',
+                'consignee_email' => 'email',
+                'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+                'consignee_notes' => [
+                    new wordCount(4)
+                ],
+                'consignee_country' => 'required',
+                'consignee_city' => 'required',
+                'consignee_area' => 'required',
+                'consignee_address_description' => [
+                    'required',
+                    new wordCount(4)
+                ],
+                'content' => [
+                    'required',
+                    new wordCount(4)
+                ],
+                'pieces' => 'required|integer',
+                'consignee_zip_code' => '',
+                'actual_weight' => 'required|numeric|between:0,9999',
+            ];
+
+            $type = Request::instance()->type;
+            if ($type == 'express') {
+                $validation['consignee_second_phone'] = '';
+                $validation['cod'] = 'numeric|between:0,9999';
+                $validation['declared_value'] = 'required|numeric|between:0,9999';
+                $validation['payment'] = 'numeric|between:0,9999';
+            } else {
+                $validation['cod'] = 'required|numeric|between:0,9999';
+                $validation['extra_services'] = 'required|in:DOMCOD';
+            }
             return $validation;
         }
         return [];

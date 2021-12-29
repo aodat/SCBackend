@@ -125,7 +125,7 @@ class ShipmentController extends MerchantController
         $addresses = collect($merchentInfo->addresses);
         $dom_rates = collect($merchentInfo->domestic_rates);
 
-        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $provider, $dom_rates, $type, $countries) {
+        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $dom_rates, $type, $countries) {
             $address = $addresses->where('id', '=', $shipment['sender_address_id'])->first();
 
             if ($address == null)
@@ -153,7 +153,7 @@ class ShipmentController extends MerchantController
                     throw new InternalException('Domestic Rates Is Zero');
             } else {
                 $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
-                $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], $shipment['consignee_country'], 'express', $shipment['actual_weight']);
+                $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
             }
 
             $shipment['merchant_id'] = Request()->user()->merchant_id;
@@ -296,42 +296,14 @@ class ShipmentController extends MerchantController
         return $this->download($path);
     }
 
-    // public function test(ShipmentRequest $request)
-    // {
-    //     $data = $request->data;
-    //     $shipper = App::make('merchantInfo');
-    //     $address = App::make('merchantAddresses')->where('is_default', true)->first();
-
-    //     $shipment = [];
-    //     $shipment['sender_name'] = $shipper->name;
-    //     $shipment['sender_email'] = $shipper->email;
-    //     $shipment['sender_phone'] = $shipper->phone;
-    //     $shipment['sender_country'] = $shipper->country_code;
-    //     $shipment['sender_city'] = $address['city'];
-    //     $shipment['sender_area'] = $address['area'];
-    //     $shipment['sender_address_description'] = $address['area'];
-
-    //     $shipment['consignee_name'] = $data['customer']['name'];
-    //     $shipment['consignee_email']  = $data['customer']['email'] ?? 'salla@shipcash.net';
-    //     $shipment['consignee_phone']  = $data['customer']['mobile'];
-    //     $shipment['consignee_second_phone'] = '';
-    //     $shipment['consignee_country'] = $data['address']['country'];
-    //     $shipment['consignee_city'] = $data['address']['city'];
-    //     $shipment['consignee_area'] = $data['address']['shipping_address'];
-    //     $shipment['consignee_zip_code'] = '';
-    //     $shipment['consignee_address_description'] = $data['address']['shipping_address'];
-    //     $shipment['content'] = 'Salla Webhook';
-    //     $shipment['cod'] = $data['amounts']['total']['amount'];
-    //     $shipment['currency'] = $data['amounts']['total']['currency'];
-    //     $shipment['actual_weight'] = collect($data['items'])->sum('weight');
-    //     $shipment['pieces'] = collect($data['items'])->count();
-
-    //     $provider = $this->getActionShipments($shipment);
-    //     $shipment['fees'] = $this->calculateFees($provider, $shipment['sender_country'], $shipment['consignee_country'], $shipment['actual_weight']);
-    //     $shipment['merchant_id'] = Request()->user()->merchant_id;
-    //     $shipment['created_by'] = Request()->user()->id;
-
-
-    //     return $this->createShipmentDB($shipment, $provider);
-    // }
+    public function guestShipment(ShipmentRequest $request)
+    {
+        $data = $request->validated();
+        if ($data['type'] == 'express') {
+            dd($data);
+        } else {
+        }
+        // return $this->createShipmentDB($shipments, $provider);
+        // return $this->shipment('DOM', collect($data));
+    }
 }
