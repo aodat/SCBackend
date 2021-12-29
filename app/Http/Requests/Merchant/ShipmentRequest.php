@@ -47,13 +47,13 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 $type . 'consignee_second_phone' => $isRequired ? 'required' : '',
                 $type . 'consignee_notes' => [
-                    new wordCount(4)
+                    new wordCount(2, 4)
                 ],
                 $type . 'consignee_city' => 'required',
                 $type . 'consignee_area' => 'required',
                 $type . 'consignee_address_description' => [
                     'required',
-                    new wordCount(4)
+                    new wordCount(2, 4)
                 ],
                 $type . 'content' => 'required',
                 $type . 'pieces' => 'required|integer'

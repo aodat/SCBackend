@@ -163,7 +163,7 @@ class Aramex
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
 
         if ($shipmentInfo['group'] == 'EXP')
-            $data['Consignee']['PartyAddress']['PostCode'] = $shipmentInfo['consignee_zip_code'];
+            $data['Consignee']['PartyAddress']['PostCode'] = $shipmentInfo['consignee_zip_code'] ?? '';
         $data['Consignee']['PartyAddress']['CountryCode'] = ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->country_code : $shipmentInfo['consignee_country'];
 
         $data['Consignee']['Contact']['PersonName'] = $shipmentInfo['consignee_name'];
