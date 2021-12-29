@@ -278,7 +278,7 @@ class ShipmentController extends MerchantController
         $carriers = Carriers::where('is_active', true)
             ->where($data['type'], true);
 
-        if (!$data['is_cod'])
+        if ($data['is_cod'])
             $carriers->where('accept_cod', $data['is_cod']);
 
         $carrier = $carriers->get()->map(function ($carrier) use ($data) {
