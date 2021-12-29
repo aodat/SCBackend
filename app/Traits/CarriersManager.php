@@ -12,6 +12,7 @@ use App\Models\Merchant;
 use App\Models\Shipment;
 use App\Models\Transaction;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Request;
 
@@ -91,16 +92,20 @@ trait CarriersManager
     /*
         $type : DOM , Express
     */
-    public function calculateFees($carrier_id, $country_code, $type, $weight)
+
+    public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
     {
-        $this->merchantInfo = Request()->user() == null ? collect(App::make('merchantInfo')) : $this->getMerchantInfo();
-        if ($type == 'DOM') {
-            $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $country_code);
+        $this->merchantInfo = Request()->user() === null ? collect(App::make('merchantInfo')) : $this->getMerchantInfo();
+        if ($type == 'domestic') {
+            if (!isset($this->merchantInfo['domestic_rates'][$carrier_id]))
+                throw new CarriersException('The Carrier ID ' . $carrier_id . ' No Support domestic , Please Contact Administrators');
+
+            $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $to);
 
             if ($rate->isEmpty())
                 throw new CarriersException('Country Code Not Exists, Please Contact Administrators');
 
-            $price = $rate->first()->price;
+            $price = $rate->first()['price'];
             $fees = ceil($weight / 10) * $price;
         } else {
             $express_rates = collect(Country::where('code', $this->merchantInfo['country_code'])->first());
@@ -111,10 +116,10 @@ trait CarriersManager
             if (count($express_rates) == 0)
                 throw new CarriersException('No Setup Added To This Country, Please Contact Administrators');
 
-            if (!isset($express_rates[$country_code]))
+            if (!isset($express_rates[$to]))
                 throw new CarriersException('No Setup Added To This Country, Please Contact Administrators');
 
-            $rates = collect($express_rates[$country_code]);
+            $rates = collect($express_rates[$to]);
             $zones = $rates->where('carrier_id', $carrier_id);
 
             if ($zones->count() > 1)
@@ -164,6 +169,7 @@ trait CarriersManager
         if ($chargeableWeight)
             $setup['chargable_weight'] = $this->calculateFees(
                 $shipmentInfo['carrier_name'],
+                null,
                 $shipmentInfo['carrier_id'],
                 $shipmentInfo['consignee_country'],
                 $shipmentInfo['group'],
