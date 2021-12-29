@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Merchant;
 
+use Illuminate\Support\Facades\Request;
 use Illuminate\Validation\Rule;
 
 class ShipmentRequest extends MerchantRequest
@@ -62,6 +63,7 @@ class ShipmentRequest extends MerchantRequest
                 $validation[$type . 'payment'] = 'numeric|between:0,9999';
                 $validation[$type . 'consignee_country'] = 'required';
                 $validation[$type . 'actual_weight'] = 'required|numeric|between:0,9999';
+                $validation[$type . 'declared_value'] = 'required|numeric|between:0,9999';
                 $validation[$type . 'consignee_zip_code'] = '';
             }
 
@@ -84,13 +86,22 @@ class ShipmentRequest extends MerchantRequest
             return [
                 'shipment_number.*' => 'required|exists:shipments,external_awb'
             ];
-        else if ($this->method() == 'POST' && strpos($path, 'shipments/calculate/fees'))
-            return [
+        else if ($this->method() == 'POST' && strpos($path, 'shipments/calculate/fees')) {
+            $type = Request::instance()->type;
+            $validation = [
                 'weight' => 'required|numeric|between:0,9999',
-                'country_code' => 'required',
                 'type' => 'required|in:express,domestic',
                 'is_cod' => 'required|boolean',
             ];
+            if ($type == 'express') {
+                $validation['country_code'] = 'required';
+            } else {
+                $validation['city_from'] = 'required';
+                $validation['city_to'] = 'required';
+            }
+            // dd($validation);
+            return $validation;
+        }
         return [];
     }
 }
