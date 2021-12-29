@@ -276,11 +276,12 @@ class ShipmentController extends MerchantController
     {
         $data = $request->validated();
         $carriers = Carriers::where('is_active', true)
-            ->where($data['type'], true)
-            ->where('accept_cod', $data['is_cod'])
-            ->get();
+            ->where($data['type'], true);
 
-        $carrier = $carriers->map(function ($carrier) use ($data) {
+        if (!$data['is_cod'])
+            $carriers->where('accept_cod', $data['is_cod']);
+
+        $carrier = $carriers->get()->map(function ($carrier) use ($data) {
             $carrier['fees'] = number_format($this->calculateFees($carrier->id, $data['country_code'], $data['type'], $data['weight']), 2);
             return $carrier;
         });
