@@ -214,16 +214,15 @@ class ShipmentController extends MerchantController
                     "description" => $shipment['consignee_notes'],
                     "amount" => $payment
                 ]);
-        }
-
-        if (!$payloads->isEmpty()) {
+        } else if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
             $externalAWB = $result['id'];
-            $files = mergePDF($result['link']);
+            $files = $result['link'];
+
             $shipments = $shipments->map(function ($value, $key) use ($externalAWB, $resource, $files) {
                 $value['external_awb'] = $externalAWB[$key];
                 $value['resource'] = $resource;
-                $value['url'] = $files;
+                $value['url'] = mergePDF([$files[$key]]);
                 return $value;
             });
             $links = array_merge($links, $result['link']);
@@ -292,10 +291,7 @@ class ShipmentController extends MerchantController
             else
                 $carrier['fees'] = (number_format($this->calculateFees($carrier->id, $data['city_from'], $data['city_to'], $data['type'], $data['weight']), 2));
             return $carrier;
-
-
-
-        })->reject(function($carrier){
+        })->reject(function ($carrier) {
             return  floatval($carrier['fees']) <= 0;
         });
         return $this->response($carrier->flatten(), 'Fees Calculated Successfully');
