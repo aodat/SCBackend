@@ -150,10 +150,9 @@ class DHL
         $payload['Consignee']['AddressLine1'] = $shipmentInfo['consignee_address_description'];
         $payload['Consignee']['AddressLine2'] = $shipmentInfo['consignee_address_description'];
         $payload['Consignee']['AddressLine3'] = $shipmentInfo['consignee_address_description'];
-        $payload['Consignee']['StreetName'] =  $shipmentInfo['consignee_address_description'];
-        $payload['Consignee']['BuildingName'] =  $shipmentInfo['consignee_address_description'];
-        $payload['Consignee']['StreetNumber'] = substr($shipmentInfo['consignee_address_description'], 0, 12);
-
+        $payload['Consignee']['StreetName'] =  substr($shipmentInfo['consignee_address_description'], 0, 25);
+        $payload['Consignee']['BuildingName'] =  substr($shipmentInfo['consignee_address_description'], 0, 25);
+        $payload['Consignee']['StreetNumber'] = substr($shipmentInfo['consignee_address_description'], 0, 15);
         $payload['Consignee']['City'] = $shipmentInfo['consignee_city'];
         $payload['Consignee']['PostalCode'] = $shipmentInfo['consignee_zip_code'] ?? '';
         $payload['Consignee']['CountryCode'] = $shipmentInfo['consignee_country'];
@@ -170,7 +169,7 @@ class DHL
 
         $payload['ShipmentDetails']['Pieces']['Piece']['PieceContents'] = $shipmentInfo['content'] ?? '';
         $payload['ShipmentDetails']['Pieces']['Piece']['Weight'] = $shipmentInfo['actual_weight'] ?? '';
-
+        
         $payload['Shipper']['ShipperID'] = $merchentInfo->id;
         $payload['Shipper']['CompanyName'] = $shipmentInfo['sender_name'];
         $payload['Shipper']['AddressLine1'] = $shipmentInfo['sender_address_description'];
@@ -180,8 +179,8 @@ class DHL
         $payload['Shipper']['CountryCode'] = $merchentInfo->country_code;
         $payload['Shipper']['CountryName'] = $merchentInfo->country_code;
         $payload['Shipper']['StreetName'] =  $shipmentInfo['sender_area'];
-        $payload['Shipper']['BuildingName'] =  $shipmentInfo['sender_area'];
-        $payload['Shipper']['StreetNumber'] = $shipmentInfo['sender_address_description'];
+        $payload['Shipper']['BuildingName'] =  substr($shipmentInfo['sender_area'], 0, 30);
+        $payload['Shipper']['StreetNumber'] = substr($shipmentInfo['sender_address_description'], 0, 15);
 
         $payload['Shipper']['Contact']['PersonName'] = $shipmentInfo['sender_name'];
         $payload['Shipper']['Contact']['PhoneNumber'] = $shipmentInfo['sender_phone'];

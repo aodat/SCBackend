@@ -25,9 +25,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         set_time_limit('0');
-        // $this->call([
-        //     fakeUserShipments::class
-        // ]);
+        $this->call([
+            fakeUserShipments::class
+        ]);
+        
         DB::transaction(function () {
             $ar = Countries::keyValue('ar', 'code', 'label');
             $en = Countries::keyValue('en', 'code', 'label');

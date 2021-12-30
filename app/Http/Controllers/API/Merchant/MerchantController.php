@@ -89,7 +89,7 @@ class MerchantController extends Controller
         $merchant = $this->getMerchentInfo();
         $merchant->phone_verified_at = Carbon::now();
         $merchant->save();
-        
+
         return $this->successful('Merchant Phone Verified');
     }
 
@@ -134,6 +134,9 @@ class MerchantController extends Controller
 
     public function getMerchentInfo()
     {
-        return Merchant::findOrFail(Request()->user()->merchant_id);
+        if (Request()->user() !== null)
+            return Merchant::findOrFail(Request()->user()->merchant_id);
+        else
+            return Merchant::findOrFail(1); // Guest Account
     }
 }

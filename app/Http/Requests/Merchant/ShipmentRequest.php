@@ -135,7 +135,7 @@ class ShipmentRequest extends MerchantRequest
                 'consignee_area' => 'required',
                 'consignee_address_description' => [
                     'required',
-                    new wordCount(4)
+                    new wordCount(2, 6)
                 ],
                 'content' => [
                     'required',

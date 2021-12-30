@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use LynX39\LaraPdfMerger\Facades\PdfMerger;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Mpdf\Mpdf;
 
@@ -88,7 +89,7 @@ function randomNumber($length = 16)
 
 function InternalAWBExists($number)
 {
-    return Shipment::where('external_awb', $number)->exists();
+    return DB::table('shipments')->where('external_awb', $number)->exists();
 }
 
 function nestedLowercase($value)
