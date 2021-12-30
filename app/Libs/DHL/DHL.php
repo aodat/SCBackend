@@ -114,7 +114,7 @@ class DHL
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
 
-        return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
+            return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
     }
 
     public function cancelPickup($pickupInfo)
@@ -122,10 +122,11 @@ class DHL
         $address = Merchant::getAdressInfoByID($pickupInfo->address_id);
         $payload = $this->bindJsonFile('pickup.cancel.json');
 
-        $payload['RegionCode'] = 'EU';
-        $payload['ConfirmationNumber'] = $pickupInfo->hash;
+        $payload['RegionCode'] = 'AP';
+        $payload['ConfirmationNumber'] =  $pickupInfo->hash;
         $payload['RequestorName'] = $address->name;
         $payload['CountryCode'] = $address->country_code;
+        $payload['OriginSvcArea'] = 'AMM';
         $payload['PickupDate'] = $pickupInfo->pickup_date;
         $payload['CancelTime'] = '10:20';
 
@@ -134,10 +135,6 @@ class DHL
             throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
 
         return true;
-    }
-
-    public function printLabel($shipments, $ReportID = 9729)
-    {
     }
 
     public function createShipment($merchentInfo, $shipmentInfo)

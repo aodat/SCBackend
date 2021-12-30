@@ -7,10 +7,11 @@
         }
     },
     "RegionCode": "AP",
-    "ConfirmationNumber": "CBJ180206002254",
-    "RequestorName": "Roy",
-    "CountryCode": "CA",
-    "Reason": "008",
-    "PickupDate": "2017-11-21",
-    "CancelTime": "10:20"
+    "ConfirmationNumber": "",
+    "RequestorName": "",
+    "CountryCode": "",
+    "OriginSvcArea":"",
+    "Reason": "001",
+    "PickupDate": "",
+    "CancelTime": ""
 }
