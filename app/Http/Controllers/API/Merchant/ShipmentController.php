@@ -298,7 +298,7 @@ class ShipmentController extends MerchantController
         })->reject(function($carrier){
             return  floatval($carrier['fees']) <= 0;
         });
-        return $this->response($carrier, 'Fees Calculated Successfully');
+        return $this->response($carrier->flatten(), 'Fees Calculated Successfully');
     }
 
     public function template(ShipmentRequest $request)
