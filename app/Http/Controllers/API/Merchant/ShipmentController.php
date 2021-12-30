@@ -288,10 +288,15 @@ class ShipmentController extends MerchantController
             $carriers->where('accept_cod', $data['is_cod']);
         $carrier = $carriers->get()->map(function ($carrier) use ($data) {
             if ($data['type'] == 'express')
-                $carrier['fees'] = number_format($this->calculateFees($carrier->id, null, $data['country_code'], $data['type'], $data['weight']), 2);
+                $carrier['fees'] = (number_format($this->calculateFees($carrier->id, null, $data['country_code'], $data['type'], $data['weight']), 2));
             else
-                $carrier['fees'] = number_format($this->calculateFees($carrier->id, $data['city_from'], $data['city_to'], $data['type'], $data['weight']), 2);
+                $carrier['fees'] = (number_format($this->calculateFees($carrier->id, $data['city_from'], $data['city_to'], $data['type'], $data['weight']), 2));
             return $carrier;
+
+
+
+        })->reject(function($carrier){
+            return  floatval($carrier['fees']) <= 0;
         });
         return $this->response($carrier, 'Fees Calculated Successfully');
     }

@@ -130,12 +130,15 @@ trait CarriersManager
 
             $zone_id = $zones->first()['zone_id'];
             $discounts = $this->merchantInfo['express_rates'][$carrier_id]['discounts'] ?? [];
-            $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id);
 
+            $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id);
             if ($zoneRates->count() > 1)
                 throw new CarriersException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
 
             $zoneRates = $zoneRates->first();
+            if($zoneRates == null)
+                return 0;
+
             $base = $zoneRates['basic'];
             $additional = $zoneRates['additional'];
             if (!empty($discounts)) {
