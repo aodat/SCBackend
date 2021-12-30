@@ -160,6 +160,7 @@ class ShipmentController extends MerchantController
 
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
+            $shipment['status'] = 'DRAFT';
             $shipment['logs'] = collect([
                 [
                     'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
@@ -312,7 +313,7 @@ class ShipmentController extends MerchantController
         $merchentInfo = Merchant::findOrFail(1);
         $dom_rates = collect($merchentInfo->domestic_rates);
         $shipment['sender_country'] = $countries[$shipment['sender_country']] ?? null;
-
+        $shipment['status'] = 'DRAFT';
         if ($shipment['type'] == 'express') {
             $shipment['group'] = 'EXP';
             $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
