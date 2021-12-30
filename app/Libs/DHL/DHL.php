@@ -147,9 +147,9 @@ class DHL
         $payload['Billing']['BillingAccountNumber'] = $this->account_number;
 
         $payload['Consignee']['CompanyName'] = $shipmentInfo['consignee_name'];
-        $payload['Consignee']['AddressLine1'] = $shipmentInfo['consignee_address_description'];
-        $payload['Consignee']['AddressLine2'] = $shipmentInfo['consignee_address_description'];
-        $payload['Consignee']['AddressLine3'] = $shipmentInfo['consignee_address_description'];
+        $payload['Consignee']['AddressLine1'] = substr($shipmentInfo['consignee_address_description'], 0, 10);
+        $payload['Consignee']['AddressLine2'] = substr($shipmentInfo['consignee_address_description'], 0, 10);
+        $payload['Consignee']['AddressLine3'] = substr($shipmentInfo['consignee_address_description'], 0, 10);
         $payload['Consignee']['StreetName'] =  substr($shipmentInfo['consignee_address_description'], 0, 25);
         $payload['Consignee']['BuildingName'] =  substr($shipmentInfo['consignee_address_description'], 0, 25);
         $payload['Consignee']['StreetNumber'] = substr($shipmentInfo['consignee_address_description'], 0, 15);
@@ -169,12 +169,12 @@ class DHL
 
         $payload['ShipmentDetails']['Pieces']['Piece']['PieceContents'] = $shipmentInfo['content'] ?? '';
         $payload['ShipmentDetails']['Pieces']['Piece']['Weight'] = $shipmentInfo['actual_weight'] ?? '';
-        
+
         $payload['Shipper']['ShipperID'] = $merchentInfo->id;
         $payload['Shipper']['CompanyName'] = $shipmentInfo['sender_name'];
-        $payload['Shipper']['AddressLine1'] = $shipmentInfo['sender_address_description'];
-        $payload['Shipper']['AddressLine2'] = $shipmentInfo['sender_area'];
-        $payload['Shipper']['AddressLine3'] = $shipmentInfo['sender_area'];
+        $payload['Shipper']['AddressLine1'] = substr($shipmentInfo['sender_address_description'], 0, 25);
+        $payload['Shipper']['AddressLine2'] = substr($shipmentInfo['sender_area'], 0, 25);
+        $payload['Shipper']['AddressLine3'] = substr($shipmentInfo['sender_area'], 0, 25);
         $payload['Shipper']['City'] = $shipmentInfo['sender_city'];
         $payload['Shipper']['CountryCode'] = $merchentInfo->country_code;
         $payload['Shipper']['CountryName'] = $merchentInfo->country_code;
