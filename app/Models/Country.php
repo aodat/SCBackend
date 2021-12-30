@@ -27,10 +27,19 @@ class Country extends Model
 
     public static function getCities($id)
     {
-        return DB::table('countries as c')->join('cities as ci', 'c.id', 'ci.country_id')
-            ->where('c.id', $id)
-            ->orWhere('c.code', strtoupper($id))
-            ->select('ci.*')
-            ->get();
+        $data = DB::table('countries as c')
+            ->join('cities as ci', 'c.id', 'ci.country_id')
+            ->where(function ($query) use ($id) {
+                $query->where('c.id', $id)
+                    ->orWhere('c.code', strtoupper($id));
+            });
+
+        if (isset(Request()->name))
+            $data->where(function ($query) {
+                $query->where('ci.name_en', 'like', '%' . Request()->name . '%')
+                    ->orWhere('ci.name_ar', 'like', '%' . Request()->name . '%');
+            });
+
+        return $data->select('ci.*')->limit(50)->get();
     }
 }
