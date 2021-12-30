@@ -85,7 +85,7 @@ class DHL
         $payload['Place']['CompanyName'] = $address['name'];
         $payload['Place']['Address1'] = $address['area'];
         $payload['Place']['Address2'] = $address['area'];
-        $payload['Place']['PackageLocation'] = $address['description'];
+        $payload['Place']['PackageLocation'] = substr($address['description'], 0, 30);
         $payload['Place']['City'] = $address['city'];
         $payload['Place']['CountryCode'] = $address['country_code'];
         $payload['Place']['PostalCode'] = "";
