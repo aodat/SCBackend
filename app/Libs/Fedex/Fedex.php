@@ -141,7 +141,10 @@ class Fedex
     {
         $payload = $this->bindJsonFile('shipment.create.json', "ProcessShipmentRequest");
 
-        $payload['ProcessShipmentRequest']['TransactionDetail']['CustomerTransactionId'] = randomNumber(32);
+        $payload['ProcessShipmentRequest']['TransactionDetail']['CustomerTransactionId'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['CustomerReferences']['Value'] =
+            randomNumber(32);
+
         $payload['ProcessShipmentRequest']['RequestedShipment']['ShipTimestamp'] = Carbon::now()->format(Carbon::ATOM);
         $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Contact'] = [
             'PersonName' => $shipmentInfo['sender_name'],
@@ -169,9 +172,22 @@ class Fedex
         ];
         $payload['ProcessShipmentRequest']['RequestedShipment']['ShippingChargesPayment']['Payor']['ResponsibleParty']['AccountNumber'] = $this->account_number;
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['Description'] = $shipmentInfo['notes'] ?? 'No Notes';
-        $response = $this->call('ProcessShipmentRequest', $payload);
 
-        if (!isset($response['Notifications']['Severity']))
+
+        $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['Weight']['Value'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['Weight']['Value'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['CustomerReferences']['Value'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['TotalWeight']['Value'] =
+            number_format($shipmentInfo['actual_weight'], 2, '.', '');
+
+        // $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['CustomsValue']['Amount'] =
+        //     $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['UnitPrice']['Amount'] =
+        //     currency_exchange($shipmentInfo['fees'], $merchentInfo->currency_code);
+
+        
+        $response = $this->call('ProcessShipmentRequest', $payload);
+        // dd($response);
+        if (!isset($response['Notifications']['Severity']) || (isset($response['Notifications']['Severity']) && $response['Notifications']['Severity'] == 'ERROR'))
             throw new CarriersException('FedEx Create Shipment – Something Went Wrong', $payload, $response);
 
         return [
