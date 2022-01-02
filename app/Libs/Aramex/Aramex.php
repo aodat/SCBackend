@@ -184,7 +184,7 @@ class Aramex
         $data['Details']['NumberOfPieces'] = $shipmentInfo['pieces'];
         $data['Details']['ProductGroup'] = $shipmentInfo['group'];
 
-        $data['Details']['ActualWeight']['Value'] = $shipmentInfo['actual_weight'];
+        $data['Details']['ActualWeight']['Value'] = $shipmentInfo['actual_weight'] ?? 0;
 
         if ($shipmentInfo['group'] == 'EXP') {
 
