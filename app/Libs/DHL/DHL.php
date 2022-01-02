@@ -114,7 +114,7 @@ class DHL
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
 
-            return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
+        return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
     }
 
     public function cancelPickup($pickupInfo)
@@ -161,7 +161,7 @@ class DHL
         $payload['Consignee']['Contact']['Email'] = $shipmentInfo['consignee_email'];
         $payload['Consignee']['Contact']['PhoneExtension'] = '';
 
-        $payload['ShipmentDetails']['Contents'] = $shipmentInfo['consignee_notes'] ?? '';
+        $payload['ShipmentDetails']['Contents'] = $shipmentInfo['content'] ?? ''; // $shipmentInfo['consignee_notes'] ?? '';
         $payload['ShipmentDetails']['Date'] = Carbon::now()->format('Y-m-d');
 
         $payload['ShipmentDetails']['Pieces']['Piece']['PieceContents'] = $shipmentInfo['content'] ?? '';
