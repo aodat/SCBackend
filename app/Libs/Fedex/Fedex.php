@@ -3,12 +3,9 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
-use App\Models\Carriers;
+use App\Models\City;
 use App\Models\Merchant;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Http;
-
-use XmlParser;
 
 use SimpleXMLElement;
 
@@ -133,10 +130,6 @@ class Fedex
         return true;
     }
 
-    public function printLabel()
-    {
-    }
-
     public function createShipment($merchentInfo, $shipmentInfo)
     {
         $payload = $this->bindJsonFile('shipment.create.json', "ProcessShipmentRequest");
@@ -165,11 +158,12 @@ class Fedex
         ];
         $payload['ProcessShipmentRequest']['RequestedShipment']['Recipient']['Address'] = [
             'StreetLines' => $shipmentInfo['consignee_address_description'],
-            'City' => $shipmentInfo['consignee_city'],
-            'StateOrProvinceCode' => 'GA',
+            'City' => $shipmentInfo['consignee_area'],
+            'StateOrProvinceCode' => City::where('name_en', $shipmentInfo['consignee_city'])->first() ? City::where('name_en', $shipmentInfo['consignee_city'])->first()->code : '',
             'PostalCode' => $shipmentInfo['consignee_zip_code'] ?? '',
             'CountryCode' => $shipmentInfo['consignee_country']
         ];
+
         $payload['ProcessShipmentRequest']['RequestedShipment']['ShippingChargesPayment']['Payor']['ResponsibleParty']['AccountNumber'] = $this->account_number;
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['Description'] = $shipmentInfo['notes'] ?? 'No Notes';
 
@@ -180,9 +174,9 @@ class Fedex
             $payload['ProcessShipmentRequest']['RequestedShipment']['TotalWeight']['Value'] =
             number_format($shipmentInfo['actual_weight'], 2, '.', '');
 
-        // $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['CustomsValue']['Amount'] =
-        //     $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['UnitPrice']['Amount'] =
-        //     currency_exchange($shipmentInfo['fees'], $merchentInfo->currency_code);
+        $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['CustomsValue']['Amount'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['UnitPrice']['Amount'] =
+            currency_exchange($shipmentInfo['fees'], $merchentInfo->currency_code);
 
         
         $response = $this->call('ProcessShipmentRequest', $payload);
