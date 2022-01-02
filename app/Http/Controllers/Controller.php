@@ -36,19 +36,19 @@ class Controller extends BaseController
             $test->save();
         });
 
-        City::get()->map(function ($city) {
-            $test = City::findOrFail($city->id);
-            $test->name_en = mb_convert_encoding(str_replace("'", "", ucfirst(strtolower($test->name_en))), 'UTF-8', 'UTF-8');
-            $test->save();
-        });
+        // City::get()->map(function ($city) {
+        //     $test = City::findOrFail($city->id);
+        //     $test->name_en = mb_convert_encoding(str_replace("'", "", ucfirst(strtolower($test->name_en))), 'UTF-8', 'UTF-8');
+        //     $test->save();
+        // });
 
 
 
-        Area::get()->map(function ($area) {
-            $test = Area::findOrFail($area->id);
-            $test->name_en = mb_convert_encoding(str_replace("'", "", ucfirst(strtolower($test->name_en))), 'UTF-8', 'UTF-8');
-            $test->save();
-        });
+        // Area::get()->map(function ($area) {
+        //     $test = Area::findOrFail($area->id);
+        //     $test->name_en = mb_convert_encoding(str_replace("'", "", ucfirst(strtolower($test->name_en))), 'UTF-8', 'UTF-8');
+        //     $test->save();
+        // });
 
         return $this->successful();
         $lists = collect(json_decode(Storage::disk('local')->get('template/rates/jo.json'), true));
