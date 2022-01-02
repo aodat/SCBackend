@@ -16,7 +16,8 @@ class Shipment extends Model
     protected $appends = ['carrier_name', 'generator_name'];
 
     protected $casts = [
-        'logs' => 'array'
+        'logs' => 'array',
+        'is_doc' => 'boolean'
     ];
 
     public function getCarrierNameAttribute()

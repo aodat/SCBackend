@@ -3,6 +3,8 @@
 namespace App\Http\Requests\Merchant;
 
 use App\Rules\wordCount;
+
+use Illuminate\Validation\Rules\RequiredIf;
 use Illuminate\Support\Facades\Request;
 
 class ShipmentRequest extends MerchantRequest
@@ -58,7 +60,7 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'content' => 'required',
                 $type . 'pieces' => 'required|integer'
             ];
-
+            
             if (strpos($path, 'shipments/domestic/create') !== false) {
                 $validation['*'] = 'required|array|min:1|max:50';
                 $validation[$type . 'extra_services'] = 'required|in:DOMCOD';
@@ -68,10 +70,14 @@ class ShipmentRequest extends MerchantRequest
                 $validation[$type . 'payment'] = 'numeric|between:0,9999';
                 $validation[$type . 'consignee_country'] = 'required';
                 $validation[$type . 'actual_weight'] = 'required|numeric|between:0,9999';
-                $validation[$type . 'declared_value'] = 'required|numeric|between:0,9999';
+                $validation[$type . 'is_doc'] = 'required|boolean';
+                $validation[$type . 'declared_value'] = [
+                    new RequiredIf($this->is_doc == false),
+                    'numeric',
+                    'between:0,9999'
+                ];
                 $validation[$type . 'consignee_zip_code'] = '';
             }
-
             return $validation;
         } else if ($this->method() == 'POST' && strpos($path, 'shipments/filters') !== false)
             return [

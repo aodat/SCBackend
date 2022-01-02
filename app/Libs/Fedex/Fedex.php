@@ -147,7 +147,7 @@ class Fedex
         $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Address'] = [
             'StreetLines' => $shipmentInfo['sender_address_description'],
             'City' => $shipmentInfo['sender_city'],
-            'StateOrProvinceCode' => 'GA',
+            // 'StateOrProvinceCode' => 'GA',
             'PostalCode' => '20000',
             'CountryCode' => $merchentInfo->country_code
         ];
