@@ -28,5 +28,16 @@ class DatabaseSeeder extends Seeder
         $this->call([
             fakeUserShipments::class
         ]);
+        // $countries = storage_path('app/template/SQL/countries.sql');
+        // $sql = file_get_contents($countries);
+        // DB::unprepared($sql);
+
+        // $cities = storage_path('app/template/SQL/cities.sql');
+        // $sql = file_get_contents($cities);
+        // DB::unprepared($sql);
+
+        // $areas = storage_path('app/template/SQL/areas.sql');
+        // $sql = file_get_contents($areas);
+        // DB::unprepared($sql);
     }
 }

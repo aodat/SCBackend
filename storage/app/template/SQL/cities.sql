@@ -1,4 +1,4 @@
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (101,'Andaman and nicobar islands',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Andhra pradesh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Arunachal pradesh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -9,7 +9,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (101,'Dadra and nagar haveli',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Daman and diu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Delhi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (101,'Goa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Gujarat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Haryana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -20,7 +20,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (101,'Kenmore',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Kerala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Lakshadweep',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (101,'Madhya pradesh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Maharashtra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Manipur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -31,7 +31,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (101,'Natwar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Odisha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Paschim medinipur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (101,'Pondicherry',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Punjab',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Rajasthan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -42,7 +42,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (101,'Uttar pradesh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Uttarakhand',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (101,'Vaishali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (101,'West bengal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Badakhshan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Badgis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -53,7 +53,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (1,'Faryab',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Gawr',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Gazni',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (1,'Herat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Hilmand',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Jawzjan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -64,7 +64,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (1,'Lagman',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Lawghar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Nangarhar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (1,'Nimruz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Nuristan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Paktika',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -75,7 +75,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (1,'Samangan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Sar-e pul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Takhar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (1,'Uruzgan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Wardag',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (1,'Zabul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -86,7 +86,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (2,'Dibre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Durres',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Elbasan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (2,'Fier',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Gjirokaster',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Gramsh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -97,7 +97,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (2,'Kruje',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Kucove',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Kukes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (2,'Kurbin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Lezhe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Librazhd',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -108,7 +108,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (2,'Mirdite',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Peqin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Permet',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (2,'Pogradec',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Puke',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Sarande',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -119,7 +119,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (2,'Tropoje',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (2,'Vlore',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Ayn daflah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (3,'Ayn tamushanat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Adrar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Algiers',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -130,7 +130,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (3,'Biskrah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Blidah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Buirah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (3,'Bumardas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Burj bu arririj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Ghalizan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -141,7 +141,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (3,'Khanshalah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Masilah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Midyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (3,'Milah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Muaskar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Mustaghanam',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -152,7 +152,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (3,'Qustantinah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Sakikdah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Satif',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (3,'Sayda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Sidi ban-al-abbas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Suq ahras',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -163,7 +163,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (3,'Tinduf',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Tisamsilt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Tiyarat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (3,'Tizi wazu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Umm-al-bawaghi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Wahran',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -174,7 +174,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (3,'Al-aghwat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Al-bayadh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Al-jazair',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (3,'Al-wad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'Ash-shalif',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (3,'At-tarif',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -185,7 +185,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (5,'Andorra la vella',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (5,'Canillo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (5,'Encamp',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (5,'La massana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (5,'Les escaldes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (5,'Ordino',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -196,7 +196,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (6,'Cabinda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (6,'Cunene',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (6,'Huambo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (6,'Huila',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (6,'Kuando-kubango',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (6,'Kwanza norte',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -207,7 +207,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (6,'Malanje',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (6,'Moxico',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (6,'Namibe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (6,'Uige',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (6,'Zaire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (7,'Other provinces',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -218,7 +218,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (8,'Sector claimed by new zealand',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (8,'Sector claimed by norway',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (8,'Unclaimed sector',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (9,'Barbuda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (9,'Saint george',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (9,'Saint john',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -229,7 +229,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (10,'Buenos aires',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'Catamarca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'Chaco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (10,'Chubut',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'Cordoba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'Corrientes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -240,7 +240,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (10,'La pampa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'La rioja',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'Mendoza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (10,'Misiones',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'Neuquen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'Rio negro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -251,7 +251,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (10,'Santa fe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'Santiago del estero',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (10,'Tierra del fuego',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (10,'Tucuman',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (11,'Aragatsotn',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (11,'Ararat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -262,7 +262,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (11,'Shirak',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (11,'Stepanakert',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (11,'Syunik',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (11,'Tavush',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (11,'Vayots dzor',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (11,'Yerevan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -273,7 +273,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (13,'Balmain',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Bankstown',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Baulkham hills',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (13,'Bonnet bay',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Camberwell',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Carole park',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -284,7 +284,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (13,'Cherrybrook',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Clayton',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Collingwood',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (13,'Frenchs forest',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Hawthorn',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Jannnali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -295,7 +295,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (13,'Perth',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Queensland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'South australia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (13,'Tasmania',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Templestowe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (13,'Victoria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -306,7 +306,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (14,'Bundesland steiermark',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (14,'Bundesland tirol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (14,'Burgenland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (14,'Carinthia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (14,'Karnten',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (14,'Liezen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -317,7 +317,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (14,'Schleswig-holstein',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (14,'Steiermark',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (14,'Styria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (14,'Tirol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (14,'Upper austria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (14,'Vorarlberg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -328,7 +328,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (15,'Ganja',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (15,'Kalbacar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (15,'Lankaran',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (15,'Mil-qarabax',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (15,'Mugan-salyan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (15,'Nagorni-qarabax',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -339,7 +339,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (15,'Sirvan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (15,'Xacmaz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (16,'Abaco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (16,'Acklins island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (16,'Andros',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (16,'Berry islands',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -350,7 +350,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (16,'Exuma and cays',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (16,'Grand bahama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (16,'Inagua islands',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (16,'Long island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (16,'Mayaguana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (16,'New providence',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -361,7 +361,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (17,'Badiyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (17,'Hidd',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (17,'Jidd hafs',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (17,'Mahama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (17,'Manama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (17,'Sitrah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -372,7 +372,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (18,'Bandarban',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Barguna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Barisal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (18,'Bhola',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Bogora',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Brahman bariya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -383,7 +383,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (18,'Dhaka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Dinajpur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Faridpur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (18,'Feni',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Gaybanda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Gazipur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -394,7 +394,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (18,'Jessor',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Jhalakati',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Jhanaydah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (18,'Khagrachhari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Khulna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Kishorganj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -405,7 +405,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (18,'Lakshmipur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Lalmanir hat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Madaripur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (18,'Magura',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Maimansingh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Manikganj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -416,7 +416,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (18,'Narayanganj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Narsingdi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Nator',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (18,'Naugaon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Nawabganj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Netrakona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -427,7 +427,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (18,'Patuakhali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Pirojpur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Rajbari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (18,'Rajshahi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Rangamati',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Rangpur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -438,7 +438,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (18,'Sirajganj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Sunamganj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (18,'Tangayal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (18,'Thakurgaon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (19,'Christ church',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (19,'Saint andrew',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -449,7 +449,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (19,'Saint lucy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (19,'Saint michael',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (19,'Saint peter',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (19,'Saint philip',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (19,'Saint thomas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (20,'Brest',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -460,7 +460,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (20,'Minsk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (20,'Minskaja voblasts',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (20,'Petrik',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (20,'Vicebsk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (21,'Antwerpen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (21,'Berchem',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -471,7 +471,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (21,'Hainaut',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (21,'Liege',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (21,'Limburg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (21,'Luxembourg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (21,'Namur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (21,'Ontario',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -482,7 +482,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (21,'West-vlaanderen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (22,'Belize',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (22,'Cayo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (22,'Corozal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (22,'Orange walk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (22,'Stann creek',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -493,7 +493,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (23,'Borgou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (23,'Collines',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (23,'Couffo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (23,'Donga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (23,'Littoral',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (23,'Mono',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -504,7 +504,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (24,'Saint george',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (25,'Bumthang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (25,'Chhukha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (25,'Chirang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (25,'Daga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (25,'Geylegphug',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -515,7 +515,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (25,'Punakha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (25,'Rinpung',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (25,'Samchi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (25,'Samdrup jongkhar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (25,'Shemgang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (25,'Tashigang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -526,7 +526,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (26,'Chuquisaca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (26,'Cochabamba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (26,'La paz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (26,'Oruro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (26,'Pando',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (26,'Potosi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -537,7 +537,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (28,'Central bobonong',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'Central boteti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'Central mahalapye',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (28,'Central serowe-palapye',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'Central tutume',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'Chobe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -548,7 +548,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (28,'Kgalagadi north',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'Kgalagadi south',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'Kgatleng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (28,'Kweneng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'Lobatse',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'Ngamiland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -559,7 +559,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (28,'Selibe phikwe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'South east',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (28,'Sowa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (29,'Bouvet island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Acre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Alagoas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -570,7 +570,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (30,'Distrito federal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Espirito santo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Estado de sao paulo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (30,'Goias',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Maranhao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Mato grosso',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -581,7 +581,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (30,'Parana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Pernambuco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Piaui',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (30,'Rio grande do norte',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Rio grande do sul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Rio de janeiro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -592,7 +592,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (30,'Sergipe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (30,'Tocantins',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (31,'British indian ocean territory',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (32,'Belait',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (32,'Brunei-muara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (32,'Temburong',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -603,7 +603,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (33,'Gabrovo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Haskovo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Jambol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (33,'Kardzhali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Kjustendil',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Lovech',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -614,7 +614,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (33,'Pleven',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Plovdiv',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Razgrad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (33,'Ruse',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Shumen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Silistra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -625,7 +625,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (33,'Stara zagora',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Targovishte',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Varna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (33,'Veliko tarnovo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Vidin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (33,'Vraca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -636,7 +636,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (34,'Bougouriba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Boulgou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Boulkiemde',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (34,'Comoe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Ganzourgou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Gnagna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -647,7 +647,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (34,'Kenedougou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Komandjari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Kompienga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (34,'Kossi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Kouritenga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Kourweogo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -658,7 +658,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (34,'Noumbiel',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Oubritenga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Oudalan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (34,'Passore',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Poni',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Sanguie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -669,7 +669,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (34,'Sourou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Tapoa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Tuy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (34,'Yatenga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Zondoma',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (34,'Zoundweogo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -680,7 +680,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (35,'Cibitoke',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (35,'Gitega',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (35,'Karuzi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (35,'Kayanza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (35,'Kirundo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (35,'Makamba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -691,7 +691,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (35,'Ruyigi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Banteay mean chey',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Bat dambang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (36,'Kampong cham',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Kampong chhnang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Kampong spoeu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -702,7 +702,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (36,'Kracheh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Krong kaeb',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Krong pailin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (36,'Krong preah sihanouk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Mondol kiri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Otdar mean chey',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -713,7 +713,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (36,'Rotanak kiri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Siem reab',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Stueng traeng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (36,'Svay rieng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (36,'Takaev',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (37,'Adamaoua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -724,29 +724,29 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (37,'Nord extreme',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (37,'Nordouest',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (37,'Ouest',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (37,'Sud',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (37,'Sudouest',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'Alberta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'British columbia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'Manitoba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'New brunswick',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'Newfoundland and labrador',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'Northwest territories',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'Nova scotia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'Nunavut',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
-	 (38,'Ontario',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'Prince edward island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'Quebec',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (38,'Saskatchewan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'Alberta',NULL,'AB','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'British columbia',NULL,'BC','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'Manitoba',NULL,'MB','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'New brunswick',NULL,'NB','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'Newfoundland and labrador',NULL,'NL','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'Northwest territories',NULL,'NT','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'Nova scotia',NULL,'NS','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'Nunavut',NULL,'NU','2021-12-30 20:54:01','2021-12-30 20:54:01');
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+	 (38,'Ontario',NULL,'ON','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'Prince edward island',NULL,'PE','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'Quebec',NULL,'QC','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (38,'Saskatchewan',NULL,'SK','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (38,'Yukon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (39,'Boavista',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (39,'Brava',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (39,'Fogo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (39,'Maio',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (39,'Sal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (39,'Santo antao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (39,'Sao nicolau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (39,'Sao tiago',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -757,7 +757,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (41,'Basse-kotto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (41,'Haut-mbomou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (41,'Haute-kotto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (41,'Kemo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (41,'Lobaye',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (41,'Mambere-kadei',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -768,7 +768,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (41,'Ouaka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (41,'Ouham',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (41,'Ouham-pende',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (41,'Sangha-mbaere',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (41,'Vakaga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (42,'Batha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -779,7 +779,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (42,'Kanem',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (42,'Lac',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (42,'Logone occidental',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (42,'Logone oriental',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (42,'Mayo-kebbi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (42,'Moyen-chari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -790,7 +790,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (43,'Antofagasta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (43,'Araucania',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (43,'Atacama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (43,'Bio bio',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (43,'Coquimbo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (43,'Libertador general bernardo o',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -801,7 +801,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (43,'Metropolitana de santiago',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (43,'Tarapaca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (43,'Valparaiso',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (44,'Anhui',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Anhui province',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Anhui sheng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -812,7 +812,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (44,'Fujian',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Fujian sheng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Gansu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (44,'Guangdong',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Guangdong sheng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Guangxi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -823,7 +823,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (44,'Henan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Hubei',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Hunan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (44,'Jiangsu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Jiangsu sheng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Jiangxi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -834,7 +834,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (44,'Ningxia hui',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Qinghai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Shaanxi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (44,'Shandong',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Shandong sheng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Shanghai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -845,7 +845,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (44,'Xinjiang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Xizang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Yunnan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (44,'Zhejiang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (44,'Zhejiang sheng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (45,'Christmas island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -856,7 +856,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (47,'Atlantico',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Bogota',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Bolivar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (47,'Boyaca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Caldas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Caqueta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -867,7 +867,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (47,'Cordoba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Cundinamarca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Guainia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (47,'Guaviare',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Huila',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'La guajira',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -878,7 +878,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (47,'Putumayo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Quindio',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Risaralda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (47,'San andres y providencia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Santander',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (47,'Sucre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -889,7 +889,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (48,'Mwali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (48,'Njazidja',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (48,'Nzwani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (49,'Bouenza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (49,'Brazzaville',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (49,'Cuvette',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -900,7 +900,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (49,'Plateaux',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (49,'Pool',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (49,'Sangha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (50,'Bandundu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (50,'Bas-congo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (50,'Equateur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -911,7 +911,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (50,'Kinshasa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (50,'Maniema',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (50,'Nord-kivu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (50,'Sud-kivu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (51,'Aitutaki',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (51,'Atiu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -922,7 +922,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (51,'Nassau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (51,'Pukapuka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (51,'Rakahanga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (51,'Rarotonga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (51,'Tongareva',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (52,'Alajuela',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -933,7 +933,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (52,'Puntarenas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (52,'San jose',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (53,'Abidjan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (53,'Agneby',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (53,'Bafing',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (53,'Denguele',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -944,7 +944,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (53,'Lagunes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (53,'Marahoue',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (53,'Moyen-cavally',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (53,'Moyen-comoe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (53,'Nzi-comoe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (53,'Sassandra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -955,7 +955,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (53,'Worodougou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (53,'Zanzan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Bjelovar-bilogora',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (54,'Dubrovnik-neretva',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Grad zagreb',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Istra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -966,7 +966,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (54,'Medhimurje',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Medimurska zupanija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Osijek-baranja',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (54,'Osjecko-baranjska zupanija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Pozhega-slavonija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Primorje-gorski kotar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -977,7 +977,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (54,'Varazhdin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Virovitica-podravina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Vukovar-srijem',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (54,'Zadar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (54,'Zagreb',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (55,'Camaguey',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -988,7 +988,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (55,'Guantanamo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (55,'Habana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (55,'Holguin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (55,'Isla de la juventud',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (55,'La habana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (55,'Las tunas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -999,7 +999,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (55,'Villa clara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (56,'Government controlled area',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (56,'Limassol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (56,'Nicosia district',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (56,'Paphos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (56,'Turkish controlled area',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1010,7 +1010,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (57,'Jihomoravsky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'Karlovarsky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'Klecany',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (57,'Kralovehradecky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'Liberecky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'Lipov',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1021,7 +1021,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (57,'Plzensky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'Praha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'Rajhrad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (57,'Smirice',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'South moravian',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'Straz nad nisou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1032,7 +1032,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (57,'Velesin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'Vysochina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (57,'Zlinsky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (58,'Arhus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Bornholm',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Frederiksborg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1043,7 +1043,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (58,'Kobenhavns kommune',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Nordjylland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Ribe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (58,'Ringkobing',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Roervig',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Roskilde',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1054,7 +1054,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (58,'Storstrom',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Syddanmark',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Toelloese',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (58,'Vejle',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Vestsjalland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (58,'Viborg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1065,7 +1065,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (59,'Ubuk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (60,'Saint andrew',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (60,'Saint david',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (60,'Saint george',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (60,'Saint john',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (60,'Saint joseph',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1076,7 +1076,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (60,'Saint peter',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'Azua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'Bahoruco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (61,'Barahona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'Dajabon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'Distrito nacional',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1087,7 +1087,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (61,'Hato mayor',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'Independencia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'La altagracia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (61,'La romana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'La vega',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'Maria trinidad sanchez',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1098,7 +1098,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (61,'Peravia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'Puerto plata',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'Salcedo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (61,'Samana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'San cristobal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (61,'San juan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1109,7 +1109,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (61,'Valverde',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (62,'Aileu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (62,'Ainaro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (62,'Ambeno',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (62,'Baucau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (62,'Bobonaro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1120,7 +1120,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (62,'Liquica',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (62,'Manatuto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (62,'Manufahi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (62,'Viqueque',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Azuay',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Bolivar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1131,7 +1131,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (63,'El oro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Esmeraldas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Galapagos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (63,'Guayas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Imbabura',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Loja',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1142,7 +1142,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (63,'Orellana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Pastaza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Pichincha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (63,'Sucumbios',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Tungurahua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (63,'Zamora chinchipe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1153,7 +1153,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (64,'Cairo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Dumyat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Kafr-ash-shaykh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (64,'Matruh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Muhafazat ad daqahliyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Muhafazat al fayyum',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1164,7 +1164,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (64,'Sawhaj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Sina al-janubiyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Sina ash-shamaliyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (64,'Ad-daqahliyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Al-bahr-al-ahmar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Al-buhayrah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1175,7 +1175,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (64,'Al-jizah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Al-minufiyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Al-minya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (64,'Al-qahira',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Al-qalyubiyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (64,'Al-uqsur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1186,7 +1186,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (65,'Cabanas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (65,'Chalatenango',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (65,'Cuscatlan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (65,'La libertad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (65,'La paz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (65,'La union',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1197,7 +1197,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (65,'Santa ana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (65,'Sonsonate',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (65,'Usulutan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (66,'Annobon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (66,'Bioko norte',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (66,'Bioko sur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1208,7 +1208,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (67,'Anseba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (67,'Debub',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (67,'Debub-keih-bahri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (67,'Gash-barka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (67,'Maekel',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (67,'Semien-keih-bahri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1219,7 +1219,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (68,'Jogeva',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (68,'Laane',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (68,'Laane-viru',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (68,'Parnu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (68,'Polva',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (68,'Rapla',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1230,7 +1230,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (68,'Voru',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (69,'Addis abeba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (69,'Afar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (69,'Amhara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (69,'Benishangul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (69,'Diredawa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1241,7 +1241,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (69,'Oromia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (69,'Somali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (69,'Southern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (69,'Tigray',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (70,'Christmas island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (70,'Cocos islands',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1252,7 +1252,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (72,'Nor ara eysturoy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (72,'Nor oy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (72,'Sandoy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (72,'Streymoy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (72,'Su uroy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (72,'Sy ra eysturoy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1263,7 +1263,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (73,'Northern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (73,'South pacific',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (73,'Western',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (74,'Ahvenanmaa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Etela-karjala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Etela-pohjanmaa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1274,7 +1274,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (74,'Kainuu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Kanta-hame',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Keski-pohjanmaa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (74,'Keski-suomi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Kymenlaakso',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Lansi-suomen laani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1285,7 +1285,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (74,'Paijat-hame',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Pirkanmaa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Pohjanmaa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (74,'Pohjois-karjala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Pohjois-pohjanmaa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Pohjois-savo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1296,7 +1296,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (74,'Uleaborgs lan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Uusimaa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (74,'Varsinais-suomi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Ain',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Aisne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Albi le sequestre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1307,7 +1307,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Alsace',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Aquitaine',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Ardeche',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Ardennes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Ariege',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Aube',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1318,7 +1318,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Basse-normandie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Bouches-du-rhone',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Bourgogne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Bretagne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Brittany',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Burgundy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1329,7 +1329,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Charente',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Charente-maritime',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Cher',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Correze',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Corse-du-sud',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Cote-dor',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1340,7 +1340,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Dordogne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Doubs',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Drome',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Essonne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Eure',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Eure-et-loir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1351,7 +1351,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Gers',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Gironde',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Haut-rhin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Haute-corse',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Haute-garonne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Haute-loire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1362,7 +1362,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Hautes-alpes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Hautes-pyrenees',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Hauts-de-seine',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Herault',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Ile-de-france',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Ille-et-vilaine',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1373,7 +1373,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Klagenfurt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Landes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Languedoc-roussillon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Larcay',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Le castellet',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Le creusot',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1384,7 +1384,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Loiret',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Lorraine',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Lot',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Lot-et-garonne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Lower normandy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Lozere',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1395,7 +1395,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Meurthe-et-moselle',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Meuse',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Midi-pyrenees',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Morbihan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Moselle',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Nievre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1406,7 +1406,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Paris',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Pas-de-calais',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Pays de la loire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Pays-de-la-loire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Picardy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Puy-de-dome',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1417,7 +1417,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Rhone-alpes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Saint ouen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Saint viatre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Saone-et-loire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Sarthe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Savoie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1428,7 +1428,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Sophia antipolis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Souvans',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Tarn',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Tarn-et-garonne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Territoire de belfort',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Treignac',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1439,7 +1439,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (75,'Vaucluse',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Vellise',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Vendee',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (75,'Vienne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Vosges',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (75,'Yonne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1450,7 +1450,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (77,'Iles sous le vent',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (77,'Marquesas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (77,'Tuamotu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (77,'Tubuai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (78,'Amsterdam',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (78,'Crozet islands',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1461,7 +1461,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (79,'Ngounie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (79,'Nyanga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (79,'Ogooue-ivindo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (79,'Ogooue-lolo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (79,'Ogooue-maritime',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (79,'Woleu-ntem',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1472,7 +1472,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (80,'Kanifing',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (80,'Kerewan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (80,'Kuntaur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (80,'Mansakonko',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (81,'Abhasia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (81,'Ajaria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1483,7 +1483,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (81,'Mcheta-mtianeti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (81,'Racha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (81,'Samagrelo-zemo svaneti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (81,'Samche-zhavaheti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (81,'Shida kartli',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (81,'Tbilisi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1494,7 +1494,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (82,'Beilstein wurtt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Berlin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Brandenburg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (82,'Bremen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Dreisbach',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Freistaat bayern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1505,7 +1505,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (82,'Kortenberg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Laasdorf',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Land baden-wurttemberg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (82,'Land bayern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Land brandenburg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Land hessen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1516,7 +1516,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (82,'Land sachsen-anhalt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Land thuringen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Lower saxony',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (82,'Mecklenburg-vorpommern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Mulfingen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Munich',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1527,7 +1527,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (82,'North rhine-westphalia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Osterode',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Rheinland-pfalz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (82,'Rhineland-palatinate',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Saarland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Sachsen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1538,7 +1538,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (82,'Webling',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Weinstrabe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (82,'Schlobborn',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (83,'Ashanti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (83,'Brong-ahafo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (83,'Central',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1549,7 +1549,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (83,'Upper west',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (83,'Volta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (83,'Western',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (84,'Gibraltar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Acharnes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Ahaia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1560,7 +1560,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (85,'Attica',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Attiki',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Ayion oros',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (85,'Crete',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Dodekanisos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Drama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1571,7 +1571,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (85,'Florina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Fokis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Fthiotis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (85,'Grevena',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Halandri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Halkidiki',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1582,7 +1582,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (85,'Imathia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Ioannina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Iraklion',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (85,'Karditsa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Kastoria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Kavala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1593,7 +1593,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (85,'Korinthia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Kozani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Lakonia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (85,'Larisa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Lasithi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Lesvos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1604,7 +1604,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (85,'Nomos zakynthou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Pella',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Pieria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (85,'Piraios',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Preveza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Rethimni',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1615,7 +1615,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (85,'Thessaloniki',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Trikala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Voiotia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (85,'West greece',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Xanthi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (85,'Zakinthos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1626,7 +1626,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (86,'Ivittuut',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (86,'Kangaatsiaq',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (86,'Maniitsoq',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (86,'Nanortalik',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (86,'Narsaq',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (86,'Nuuk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1637,7 +1637,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (86,'Qeqertarsuaq',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (86,'Sisimiut',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (86,'Udenfor kommunal inddeling',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (86,'Upernavik',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (86,'Uummannaq',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (87,'Carriacou-petite martinique',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1648,7 +1648,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (87,'Saint mark',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (87,'Saint patrick',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (88,'Basse-terre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (88,'Grande-terre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (88,'Iles des saintes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (88,'La desirade',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1659,7 +1659,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (89,'Agat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (89,'Barrigada',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (89,'Chalan-pago-ordot',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (89,'Dededo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (89,'Hagatna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (89,'Inarajan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1670,7 +1670,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (89,'Sinajana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (89,'Talofofo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (89,'Tamuning',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (89,'Yigo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (89,'Yona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (90,'Alta verapaz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1681,7 +1681,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (90,'Escuintla',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (90,'Guatemala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (90,'Huehuetenango',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (90,'Izabal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (90,'Jalapa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (90,'Jutiapa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1692,7 +1692,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (90,'Sacatepequez',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (90,'San marcos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (90,'Santa rosa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (90,'Solola',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (90,'Suchitepequez',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (90,'Totonicapan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1703,7 +1703,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (91,'Saint andrew',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (91,'Saint martin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (91,'Saint peter port',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (91,'Saint pierre du bois',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (91,'Saint sampson',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (91,'Saint saviour',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1714,7 +1714,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (92,'Boffa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Boke',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Conakry',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (92,'Coyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Dabola',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Dalaba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1725,7 +1725,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (92,'Gaoual',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Gueckedou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Kankan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (92,'Kerouane',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Kindia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Kissidougou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1736,7 +1736,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (92,'Lola',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Macenta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Mali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (92,'Mamou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Mandiana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (92,'Nzerekore',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1747,7 +1747,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (92,'Yomou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (93,'Bafata',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (93,'Bissau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (93,'Bolama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (93,'Cacheu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (93,'Gabu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1758,7 +1758,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (94,'Cuyuni-mazaruni',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (94,'Demerara-mahaica',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (94,'East berbice-corentyne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (94,'Essequibo islands-west demerar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (94,'Mahaica-berbice',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (94,'Pomeroon-supenaam',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1769,7 +1769,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (95,'Centre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (95,'Grandanse',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (95,'Nord',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (95,'Nord-est',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (95,'Nord-ouest',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (95,'Ouest',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1780,7 +1780,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (97,'Choluteca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (97,'Colon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (97,'Comayagua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (97,'Copan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (97,'Cortes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (97,'Distrito central',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1791,7 +1791,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (97,'Islas de la bahia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (97,'La paz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (97,'Lempira',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (97,'Ocotepeque',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (97,'Olancho',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (97,'Santa barbara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1802,7 +1802,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (99,'Baranya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (99,'Bekes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (99,'Borsod-abauj-zemplen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (99,'Budapest',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (99,'Csongrad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (99,'Fejer',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1813,7 +1813,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (99,'Komarom-esztergom',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (99,'Nograd',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (99,'Pest',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (99,'Somogy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (99,'Szabolcs-szatmar-bereg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (99,'Tolna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1824,7 +1824,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (100,'Gullbringusysla',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (100,'Hofu borgarsva i',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (100,'Nor urland eystra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (100,'Nor urland vestra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (100,'Su urland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (100,'Su urnes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1835,7 +1835,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (102,'Bangka-belitung',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Banten',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Bengkulu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (102,'Gandaria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Gorontalo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Jakarta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1846,7 +1846,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (102,'Kalimantan barat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Kalimantan selatan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Kalimantan tengah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (102,'Kalimantan timur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Kendal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Lampung',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1857,7 +1857,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (102,'Papua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Riau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Riau kepulauan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (102,'Solo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Sulawesi selatan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Sulawesi tengah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1868,7 +1868,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (102,'Sumatera utara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (102,'Yogyakarta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Ardabil',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (103,'Azarbayjan-e bakhtari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Azarbayjan-e khavari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Bushehr',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1879,7 +1879,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (103,'Golestan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Hamadan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Hormozgan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (103,'Ilam',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Kerman',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Kermanshah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1890,7 +1890,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (103,'Lorestan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Markazi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Mazandaran',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (103,'Ostan-e esfahan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Qazvin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (103,'Qom',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1901,7 +1901,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (103,'Zanjan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (104,'Babil',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (104,'Baghdad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (104,'Dahuk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (104,'Dhi qar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (104,'Diyala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1912,7 +1912,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (104,'Maysan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (104,'Ninawa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (104,'Salah-ad-din',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (104,'Wasit',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (104,'Al-anbar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (104,'Al-basrah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1923,7 +1923,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (104,'At-tamim',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Armagh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Carlow',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (105,'Cavan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Clare',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Cork',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1934,7 +1934,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (105,'Kildare',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Kilkenny',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Laois',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (105,'Leinster',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Leitrim',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Limerick',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1945,7 +1945,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (105,'Meath',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Monaghan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Offaly',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (105,'Roscommon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Sligo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Tipperary north riding',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1956,7 +1956,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (105,'Wexford',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (105,'Wicklow',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (106,'Beit hanania',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (106,'Ben gurion airport',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (106,'Bethlehem',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (106,'Caesarea',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1967,7 +1967,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (106,'Hamerkaz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (106,'Hazafon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (106,'Hebron',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (106,'Jaffa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (106,'Jerusalem',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (106,'Khefa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1978,7 +1978,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (106,'Tel aviv',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (106,'Tsafon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (106,'Umm el fahem',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (106,'Yerushalayim',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Abruzzi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Abruzzo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -1989,7 +1989,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Ascoli piceno',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Asti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Avellino',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Bari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Basilicata',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Belluno',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2000,7 +2000,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Bolzano',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Brescia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Brindisi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Calabria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Campania',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Cartoceto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2011,7 +2011,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Cosenza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Cremona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Cuneo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Emilia-romagna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Ferrara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Firenze',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2022,7 +2022,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Genoa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Gorizia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Laquila',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Lazio',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Lecce',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Lecco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2033,7 +2033,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Lombardy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Macerata',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Mantova',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Marche',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Messina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Milan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2044,7 +2044,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Monza and brianza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Naples',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Novara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Padova',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Parma',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Pavia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2055,7 +2055,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Piemonte',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Pisa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Pordenone',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Potenza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Puglia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Reggio emilia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2066,7 +2066,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Sassari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Savona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Sicilia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Siena',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Sondrio',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'South tyrol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2077,7 +2077,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Trapani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Trentino-alto adige',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Trento',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Treviso',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Udine',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Umbria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2088,7 +2088,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (107,'Verbano-cusio-ossola',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Vercelli',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Verona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (107,'Vicenza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (107,'Viterbo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (108,'Buxoro viloyati',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2099,7 +2099,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (108,'Portland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (108,'Saint andrews',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (108,'Saint ann',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (108,'Saint catherine',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (108,'Saint elizabeth',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (108,'Saint james',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2110,7 +2110,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (109,'Aichi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Akita',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Aomori',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (109,'Chiba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Ehime',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Fukui',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2121,7 +2121,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (109,'Hiroshima',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Hokkaido',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Hyogo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (109,'Ibaraki',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Ishikawa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Iwate',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2132,7 +2132,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (109,'Kochi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Kumamoto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Kyoto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (109,'Mie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Miyagi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Miyazaki',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2143,7 +2143,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (109,'Oita',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Okayama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Okinawa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (109,'Osaka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Saga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Saitama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2154,7 +2154,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (109,'Tokushima',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Tokyo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Tottori',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (109,'Toyama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Wakayama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (109,'Yamagata',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2165,7 +2165,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (110,'Saint clement',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (110,'Saint helier',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (110,'Saint john',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (110,'Saint lawrence',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (110,'Saint martin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (110,'Saint mary',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2176,7 +2176,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (115,'Amman',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (115,'Irbid',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (115,'Jarash',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (115,'Maan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (115,'Madaba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (115,'Al-aqabah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2187,7 +2187,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (115,'Az-zarqa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (112,'Akmecet',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (112,'Akmola',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (112,'Aktobe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (112,'Almati',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (112,'Atirau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2198,7 +2198,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (112,'Mankistau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (112,'Ontustik kazakstan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (112,'Pavlodar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (112,'Sigis kazakstan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (112,'Soltustik kazakstan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (112,'Taraz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2209,7 +2209,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (113,'North eastern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (113,'Nyanza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (113,'Rift valley',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (113,'Western',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Abaiang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Abemana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2220,7 +2220,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (114,'Butaritari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Kiritimati',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Kuria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (114,'Maiana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Makin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Marakei',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2231,7 +2231,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (114,'Tabiteuea north',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Tabiteuea south',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Tabuaeran',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (114,'Tamana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Tarawa north',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (114,'Tarawa south',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2242,7 +2242,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (116,'Chollanam',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Chungbuk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Chungcheongbuk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (116,'Chungcheongnam',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Chungnam',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Daegu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2253,7 +2253,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (116,'Gyeongsangnam-do',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Incheon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Jeju-si',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (116,'Jeonbuk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Kangweon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Kwangju',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2264,7 +2264,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (116,'Kyungbuk-do',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Kyunggi-do',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Kyunggi-do',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (116,'Pusan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Seoul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Sudogwon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2275,7 +2275,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (116,'Wonju',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (116,'Gwangyoksi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (117,'Al asimah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (117,'Hawalli',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (117,'Mishref',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (117,'Qadesiya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2286,7 +2286,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (117,'Al-jahra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (117,'Al-kuwayt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (118,'Batken',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (118,'Bishkek',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (118,'Chui',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (118,'Issyk-kul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2297,7 +2297,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (119,'Attopu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (119,'Bokeo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (119,'Bolikhamsay',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (119,'Champasak',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (119,'Houaphanh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (119,'Khammouane',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2308,7 +2308,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (119,'Saravan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (119,'Savannakhet',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (119,'Sekong',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (119,'Viangchan prefecture',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (119,'Viangchan province',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (119,'Xaignabury',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2319,7 +2319,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (120,'Bauskas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Cesu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Daugavpils',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (120,'Daugavpils city',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Dobeles',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Gulbenes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2330,7 +2330,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (120,'Kraslavas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Kuldigas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Liepaja',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (120,'Liepajas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Limbazhu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Ludzas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2341,7 +2341,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (120,'Rezeknes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Riga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Rigas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (120,'Saldus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Talsu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (120,'Tukuma',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2352,7 +2352,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (121,'Beirut',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (121,'Jabal lubnan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (121,'Mohafazat liban-nord',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (121,'Mohafazat mont-liban',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (121,'Sidon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (121,'Al-biqa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2363,7 +2363,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (122,'Butha-buthe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (122,'Leribe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (122,'Mafeteng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (122,'Maseru',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (122,'Mohales hoek',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (122,'Mokhotlong',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2374,7 +2374,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (123,'Bong',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (123,'Grand bassa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (123,'Grand cape mount',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (123,'Grand gedeh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (123,'Loffa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (123,'Margibi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2385,7 +2385,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (123,'Sinoe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Ajdabiya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Fezzan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (124,'Banghazi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Darnah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Ghadamis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2396,7 +2396,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (124,'Sawfajjin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Surt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Tarabulus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (124,'Tarhunah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Tripolitania',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Tubruq',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2407,7 +2407,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (124,'Al-jabal al akhdar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Al-jufrah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Al-khums',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (124,'Al-kufrah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'An-nuqat al-khams',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (124,'Ash-shati',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2418,7 +2418,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (125,'Mauren',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (125,'Planken',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (125,'Ruggell',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (125,'Schaan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (125,'Schellenberg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (125,'Triesen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2429,7 +2429,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (126,'Kauno',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (126,'Klaipedos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (126,'Marijampoles',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (126,'Panevezhio',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (126,'Panevezys',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (126,'Shiauliu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2440,7 +2440,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (126,'Vilniaus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (127,'Capellen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (127,'Clervaux',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (127,'Diekirch',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (127,'Echternach',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (127,'Esch-sur-alzette',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2451,7 +2451,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (127,'Remich',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (127,'Vianden',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (127,'Wiltz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (128,'Macau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Berovo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Bitola',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2462,7 +2462,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (129,'Gevgelija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Gostivar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Kavadarci',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (129,'Kichevo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Kochani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Kratovo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2473,7 +2473,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (129,'Ohrid',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Prilep',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Probishtip',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (129,'Radovish',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Resen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Shtip',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2484,7 +2484,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (129,'Tetovo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Valandovo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (129,'Veles',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (129,'Vinica',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (130,'Antananarivo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (130,'Antsiranana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2495,7 +2495,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (131,'Balaka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Blantyre city',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Chikwawa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (131,'Chiradzulu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Chitipa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Dedza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2506,7 +2506,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (131,'Machinga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Mangochi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Mchinji',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (131,'Mulanje',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Mwanza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Mzimba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2517,7 +2517,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (131,'Ntcheu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Ntchisi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Phalombe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (131,'Rumphi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Salima',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (131,'Thyolo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2528,7 +2528,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (132,'Kuala lumpur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (132,'Labuan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (132,'Melaka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (132,'Negeri johor',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (132,'Negeri sembilan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (132,'Pahang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2539,7 +2539,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (132,'Sabah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (132,'Sarawak',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (132,'Selangor',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (132,'Sembilan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (132,'Terengganu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (133,'Alif alif',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2550,7 +2550,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (133,'Gaaf alif',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (133,'Gaaf dhaal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (133,'Ghaviyani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (133,'Haa alif',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (133,'Haa dhaal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (133,'Kaaf',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2561,7 +2561,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (133,'Nuun',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (133,'Raa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (133,'Shaviyani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (133,'Siin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (133,'Thaa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (133,'Vaav',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2572,7 +2572,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (134,'Koulikoro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (134,'Mopti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (134,'Segou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (134,'Sikasso',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (134,'Tombouctou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (135,'Gozo and comino',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2583,7 +2583,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (135,'Valletta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (135,'Western',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (136,'Castletown',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (136,'Douglas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (136,'Laxey',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (136,'Onchan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2594,7 +2594,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (137,'Ailinlaplap',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Ailuk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Arno',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (137,'Aur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Bikini',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Ebon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2605,7 +2605,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (137,'Kwajalein',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Lae',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Lib',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (137,'Likiep',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Majuro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Maloelap',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2616,7 +2616,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (137,'Rongelap',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Ujae',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Utrik',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (137,'Wotho',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (137,'Wotje',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (138,'Fort-de-france',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2627,7 +2627,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (139,'Assaba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (139,'Brakna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (139,'Dhakhlat nawadibu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (139,'Hudh-al-gharbi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (139,'Hudh-ash-sharqi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (139,'Inshiri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2638,7 +2638,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (139,'Tiris zammur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (139,'Trarza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (140,'Black river',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (140,'Eau coulee',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (140,'Flacq',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (140,'Floreal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2649,7 +2649,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (140,'Port louis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (140,'Riviere du rempart',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (140,'Rodrigues',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (140,'Rose hill',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (140,'Savanne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (141,'Mayotte',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2660,7 +2660,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (142,'Campeche',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Chiapas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Chihuahua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (142,'Coahuila',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Colima',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Distrito federal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2671,7 +2671,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (142,'Hidalgo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Jalisco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Mexico',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (142,'Michoacan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Morelos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Nayarit',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2682,7 +2682,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (142,'Quintana roo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'San luis potosi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Sinaloa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (142,'Sonora',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Tabasco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (142,'Tamaulipas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2693,7 +2693,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (143,'Chuuk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (143,'Kusaie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (143,'Pohnpei',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (143,'Yap',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (144,'Balti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (144,'Cahul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2704,7 +2704,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (144,'Lapusna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (144,'Orhei',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (144,'Soroca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (144,'Taraclia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (144,'Tighina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (144,'Transnistria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2715,7 +2715,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (145,'Monte carlo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Arhangaj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Bajan-olgij',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (146,'Bajanhongor',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Bulgan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Darhan-uul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2726,7 +2726,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (146,'Govisumber',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Hentij',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Hovd',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (146,'Hovsgol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Omnogovi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Orhon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2737,7 +2737,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (146,'Ulaanbaatar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Uvs',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (146,'Zavhan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (147,'Montserrat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Agadir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Casablanca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2748,7 +2748,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (148,'Guelmim',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Kenitra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Marrakech-tensift-al haouz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (148,'Meknes-tafilalet',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Oriental',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Oujda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2759,7 +2759,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (148,'Souss massa-draa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Tadla-azilal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Tangier-tetouan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (148,'Taza-al hoceima-taounate',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Wilaya de casablanca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (148,'Wilaya de rabat-sale',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2770,7 +2770,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (149,'Maputo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (149,'Maputo provincia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (149,'Nampula',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (149,'Niassa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (149,'Sofala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (149,'Tete',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2781,7 +2781,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (150,'Kachin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (150,'Kayah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (150,'Kayin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (150,'Magway',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (150,'Mandalay',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (150,'Mon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2792,7 +2792,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (150,'Tanintharyi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (150,'Yangon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (151,'Caprivi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (151,'Erongo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (151,'Hardap',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (151,'Karas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2803,7 +2803,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (151,'Omaheke',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (151,'Omusati',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (151,'Oshana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (151,'Oshikoto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (151,'Otjozondjupa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (152,'Yaren',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2814,7 +2814,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (153,'Janakpur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (153,'Karnali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (153,'Koshi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (153,'Lumbini',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (153,'Mahakali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (153,'Mechi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2825,7 +2825,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (154,'Bonaire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (154,'Curacao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (154,'Saba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (154,'Sint eustatius',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (154,'Sint maarten',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (155,'Amsterdam',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2836,7 +2836,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (155,'Gelderland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (155,'Groningen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (155,'Limburg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (155,'Noord-brabant',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (155,'Noord-holland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (155,'Overijssel',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2847,7 +2847,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (156,'Iles',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (156,'Nord',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (156,'Sud',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (157,'Area outside region',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (157,'Auckland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (157,'Bay of plenty',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2858,7 +2858,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (157,'Manawatu-wanganui',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (157,'Marlborough',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (157,'Nelson',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (157,'Northland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (157,'Otago',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (157,'Rodney',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2869,7 +2869,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (157,'Wellington',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (157,'West coast',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (158,'Atlantico norte',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (158,'Atlantico sur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (158,'Boaco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (158,'Carazo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2880,7 +2880,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (158,'Jinotega',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (158,'Leon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (158,'Madriz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (158,'Managua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (158,'Masaya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (158,'Matagalpa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2891,7 +2891,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (159,'Diffa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (159,'Dosso',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (159,'Maradi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (159,'Niamey',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (159,'Tahoua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (159,'Tillabery',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2902,7 +2902,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (160,'Akwa ibom',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Anambra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Bauchi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (160,'Bayelsa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Benue',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Borno',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2913,7 +2913,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (160,'Ekiti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Enugu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Gombe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (160,'Imo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Jigawa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Kaduna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2924,7 +2924,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (160,'Kwara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Lagos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Nassarawa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (160,'Niger',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Ogun',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Ondo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2935,7 +2935,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (160,'Sokoto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Taraba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (160,'Yobe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (160,'Zamfara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (161,'Niue',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (162,'Norfolk island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2946,7 +2946,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (164,'Akershus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Aust agder',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Bergen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (164,'Buskerud',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Finnmark',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Hedmark',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2957,7 +2957,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (164,'Oestfold',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Oppland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Oslo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (164,'Rogaland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Soer troendelag',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Sogn og fjordane',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2968,7 +2968,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (164,'Vest agder',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Vestfold',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (164,'Ãƒâ˜stfold',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (165,'Al buraimi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (165,'Dhufar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (165,'Masqat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2979,7 +2979,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (165,'Adh-dhahirah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (165,'Al-batinah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (165,'Ash-sharqiyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (166,'Baluchistan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (166,'Federal capital area',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (166,'Federally administered tribal ',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -2990,7 +2990,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (167,'Aimeliik',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (167,'Airai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (167,'Angaur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (167,'Hatobohei',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (167,'Kayangel',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (167,'Koror',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3001,7 +3001,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (167,'Ngatpang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (167,'Ngchesar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (167,'Ngerchelong',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (167,'Ngiwal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (167,'Peleliu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (167,'Sonsorol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3012,7 +3012,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (168,'Ghazzah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (168,'Ghazzah ash-shamaliyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (168,'Janin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (168,'Khan yunis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (168,'Nabulus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (168,'Qalqilyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3023,7 +3023,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (168,'Tulkarm',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (168,'Al-khalil',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (168,'Al-quds',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (169,'Bocas del toro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (169,'Chiriqui',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (169,'Cocle',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3034,7 +3034,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (169,'Kuna yala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (169,'Los santos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (169,'Ngobe bugle',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (169,'Panama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (169,'Veraguas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (170,'East new britain',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3045,7 +3045,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (170,'Gulf',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (170,'Madang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (170,'Manus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (170,'Milne bay',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (170,'Morobe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (170,'National capital district',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3056,7 +3056,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (170,'Simbu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (170,'Southern highlands',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (170,'West new britain',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (170,'Western highlands',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (171,'Alto paraguay',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (171,'Alto parana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3067,7 +3067,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (171,'Caazapa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (171,'Canendiyu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (171,'Central',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (171,'Concepcion',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (171,'Cordillera',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (171,'Guaira',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3078,7 +3078,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (171,'Presidente hayes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (171,'San pedro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Amazonas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (172,'Ancash',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Apurimac',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Arequipa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3089,7 +3089,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (172,'Huanuco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Ica',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Junin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (172,'La libertad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Lambayeque',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Lima y callao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3100,7 +3100,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (172,'Piura',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Puno',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'San martin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (172,'Tacna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Tumbes',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (172,'Ucayali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3111,7 +3111,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (173,'Caraga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (173,'Central luzon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (173,'Central mindanao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (173,'Central visayas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (173,'Cordillera',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (173,'Davao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3122,7 +3122,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (173,'Luzon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (173,'Mactan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (173,'Metropolitan manila area',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (173,'Muslim mindanao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (173,'Northern mindanao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (173,'Southern mindanao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3133,7 +3133,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (175,'Biale blota',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Dobroszyce',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Dolnoslaskie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (175,'Dziekanow lesny',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Hopowo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Kartuzy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3144,7 +3144,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (175,'Lubelskie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Lubuskie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Malomice',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (175,'Malopolskie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Mazowieckie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Mirkow',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3155,7 +3155,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (175,'Polska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Pomorskie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Poznan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (175,'Pruszkow',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Rymanowska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Rzeszow',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3166,7 +3166,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (175,'Warsaw',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Wejherowo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Wielkopolskie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (175,'Wroclaw',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Zachodnio-pomorskie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (175,'Zukowo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3177,7 +3177,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (176,'Braga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (176,'Centro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (176,'Distrito de leiria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (176,'Distrito de viana do castelo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (176,'Distrito de vila real',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (176,'Distrito do porto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3188,7 +3188,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (177,'Arecibo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (177,'Bayamon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (177,'Carolina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (177,'Florida',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (177,'Guayama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (177,'Humacao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3199,7 +3199,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (178,'Doha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (178,'Jarian-al-batnah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (178,'Umm salal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (178,'Ad-dawhah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (178,'Al-ghuwayriyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (178,'Al-jumayliyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3210,7 +3210,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (179,'Saint-benoit',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (179,'Saint-denis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (179,'Saint-paul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (179,'Saint-pierre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Alba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Arad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3221,7 +3221,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (180,'Botosani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Braila',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Brasov',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (180,'Bucuresti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Buzau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Calarasi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3232,7 +3232,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (180,'Dambovita',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Dolj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Galati',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (180,'Giurgiu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Gorj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Harghita',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3243,7 +3243,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (180,'Maramures',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Mehedinti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Mures',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (180,'Neamt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Olt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Prahova',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3254,7 +3254,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (180,'Suceava',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Teleorman',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Timis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (180,'Tulcea',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Valcea',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (180,'Vaslui',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3265,7 +3265,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Altaj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Amur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Arhangelsk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Astrahan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Bashkortostan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Belgorod',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3276,7 +3276,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Chita',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Chukotka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Chuvashija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Dagestan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Evenkija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Gorno-altaj',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3287,7 +3287,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Irkutsk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Ivanovo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Jamalo-nenets',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Jaroslavl',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Jevrej',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Kabardino-balkarija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3298,7 +3298,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Karachaj-cherkessija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Karelija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Kemerovo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Khabarovskiy kray',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Kirov',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Komi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3309,7 +3309,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Krasnojarsk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Krasnoyarskiy kray',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Kurgan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Kursk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Leningrad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Lipeck',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3320,7 +3320,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Moskovskaja oblast',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Moskovskaya oblast',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Moskva',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Murmansk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Nenets',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Nizhnij novgorod',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3331,7 +3331,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Orenburg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Orjol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Penza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Perm',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Primorje',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Pskov',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3342,7 +3342,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Sahalin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Samara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Samarskaya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Sankt-peterburg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Saratov',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Smolensk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3353,7 +3353,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Tatarstan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Tjumen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Tomsk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Tula',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Tver',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Tyva',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3364,7 +3364,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (181,'Vladimir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Volgograd',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (181,'Vologda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (181,'Voronezh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (182,'Butare',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (182,'Byumba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3375,7 +3375,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (182,'Kibungo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (182,'Kibuye',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (182,'Kigali-ngali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (182,'Ruhengeri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (183,'Ascension',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (183,'Gough island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3386,7 +3386,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (184,'Saint george basseterre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (184,'Saint george gingerland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (184,'Saint james windward',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (184,'Saint john capesterre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (184,'Saint john figtree',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (184,'Saint mary cayon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3397,7 +3397,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (184,'Saint thomas middle island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (184,'Trinity palmetto point',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (185,'Anse-la-raye',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (185,'Canaries',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (185,'Castries',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (185,'Choiseul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3408,7 +3408,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (185,'Soufriere',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (185,'Vieux fort',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (186,'Miquelon-langlade',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (186,'Saint-pierre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (187,'Charlotte',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (187,'Grenadines',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3419,7 +3419,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (188,'Aana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (188,'Aiga-i-le-tai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (188,'Atua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (188,'Faasaleleaga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (188,'Gagaemauga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (188,'Gagaifomauga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3430,7 +3430,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (188,'Vaisigano',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (189,'Acquaviva',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (189,'Borgo maggiore',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (189,'Chiesanuova',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (189,'Domagnano',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (189,'Faetano',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3441,7 +3441,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (190,'Agua grande',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (190,'Cantagalo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (190,'Lemba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (190,'Lobata',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (190,'Me-zochi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (190,'Pague',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3452,7 +3452,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (191,'Central province',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (191,'Eastern province',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (191,'Hail',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (191,'Jawf',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (191,'Jizan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (191,'Makkah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3463,7 +3463,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (191,'Al-bahah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (191,'Al-hudud-ash-shamaliyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (191,'Al-madinah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (191,'Ar-riyad',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (192,'Dakar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (192,'Diourbel',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3474,7 +3474,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (192,'Saint-louis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (192,'Tambacounda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (192,'Thies',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (192,'Ziguinchor',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (193,'Central serbia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (193,'Kosovo and metohija',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3485,7 +3485,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (194,'Takamaka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (194,'Victoria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (195,'Eastern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (195,'Northern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (195,'Southern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (195,'Western',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3496,7 +3496,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (197,'Nitriansky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (197,'Presovsky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (197,'Trenciansky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (197,'Trnavsky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (197,'Zilinsky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (198,'Benedikt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3507,7 +3507,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (198,'Notranjsko-krashka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (198,'Obalno-krashka',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (198,'Obcina domzale',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (198,'Obcina vitanje',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (198,'Osrednjeslovenska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (198,'Podravska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3518,7 +3518,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (198,'Zasavska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (199,'Pitcairn',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (200,'Central',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (200,'Choiseul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (200,'Guadalcanal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (200,'Isabel',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3529,7 +3529,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (200,'Western',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (201,'Awdal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (201,'Bakol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (201,'Banadir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (201,'Bari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (201,'Bay',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3540,7 +3540,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (201,'Jubbadha dexe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (201,'Mudug',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (201,'Nugal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (201,'Sanag',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (201,'Shabellaha dhexe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (201,'Shabellaha hose',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3551,7 +3551,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (202,'Gauteng',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (202,'Kempton park',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (202,'Kramerville',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (202,'Kwazulu natal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (202,'Limpopo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (202,'Mpumalanga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3562,7 +3562,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (202,'Umtentweni',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (202,'Western cape',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (203,'South georgia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (204,'Central equatoria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'A coruna',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Alacant',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3573,7 +3573,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (205,'Asturias',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Avila',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Badajoz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (205,'Balears',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Barcelona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Bertamirans',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3584,7 +3584,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (205,'Cantabria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Castello',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Catalunya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (205,'Ceuta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Ciudad real',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Comunidad autonoma de canarias',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3595,7 +3595,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (205,'Comunidad valenciana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Cordoba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Cuenca',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (205,'Gipuzkoa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Girona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Granada',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3606,7 +3606,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (205,'Jaen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'La rioja',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Las palmas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (205,'Leon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Lerida',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Lleida',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3617,7 +3617,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (205,'Murcia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Navarra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Ourense',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (205,'Pais vasco',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Palencia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Pontevedra',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3628,7 +3628,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (205,'Soria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Tarragona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Tenerife',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (205,'Teruel',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Toledo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (205,'Valencia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3639,7 +3639,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (206,'Amparai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Anuradhapuraya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Badulla',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (206,'Boralesgamuwa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Colombo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Galla',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3650,7 +3650,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (206,'Kilinochchi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Kurunegala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Madakalpuwa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (206,'Maha nuwara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Malwana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Mannarama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3661,7 +3661,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (206,'North eastern province',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'North western province',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Nuwara eliya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (206,'Polonnaruwa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Puttalama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Ratnapuraya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3672,7 +3672,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (206,'Western province',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Yapanaya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (206,'Kadawatha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (207,'Aali-an-nil',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Bahr-al-jabal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Central equatoria',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3683,7 +3683,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (207,'Janub darfur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Janub kurdufan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Junqali',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (207,'Kassala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Nahr-an-nil',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Shamal bahr-al-ghazal',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3694,7 +3694,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (207,'Warab',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Wilayat al khartum',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Al-bahr-al-ahmar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (207,'Al-buhayrat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Al-jazirah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (207,'Al-khartum',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3705,7 +3705,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (207,'Ash-shamaliyah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (208,'Brokopondo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (208,'Commewijne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (208,'Coronie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (208,'Marowijne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (208,'Nickerie',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3716,7 +3716,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (209,'Svalbard',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (210,'Hhohho',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (210,'Lubombo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (210,'Manzini',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (210,'Shiselweni',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Alvsborgs lan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3727,7 +3727,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (211,'Gavleborg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Gaza',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Gotland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (211,'Halland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Jamtland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Jonkoping',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3738,7 +3738,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (211,'Orebro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Ostergotland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Saltsjo-boo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (211,'Skane',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Smaland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Sodermanland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3749,7 +3749,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (211,'Vastergotland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Vasternorrland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (211,'Vastmanland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (211,'Vastra gotaland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Aargau',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Appenzell inner-rhoden',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3760,7 +3760,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (212,'Canton ticino',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Fribourg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Geneve',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (212,'Glarus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Graubunden',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Heerbrugg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3771,7 +3771,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (212,'Muhen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Neuchatel',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Nidwalden',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (212,'Obwalden',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Sankt gallen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Schaffhausen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3782,7 +3782,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (212,'Uri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Valais',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Vaud',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (212,'Vauffelin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Zug',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (212,'Zurich',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3793,7 +3793,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (213,'Halab',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (213,'Hamah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (213,'Hims',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (213,'Idlib',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (213,'Madinat dimashq',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (213,'Tartus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3804,7 +3804,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (213,'As-suwayda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Changhwa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Chiayi hsien',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (214,'Chiayi shih',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Eastern taipei',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Hsinchu hsien',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3815,7 +3815,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (214,'Kaohsiung shih',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Keelung shih',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Kinmen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (214,'Miaoli',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Nantou',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Northern taiwan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3826,7 +3826,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (214,'Taichung shih',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Tainan hsien',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Tainan shih',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (214,'Taipei hsien',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Taipei shih / taipei hsien',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (214,'Taitung',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3837,7 +3837,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (215,'Dushanbe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (215,'Gorno-badakhshan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (215,'Karotegin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (215,'Khatlon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (215,'Sughd',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (216,'Arusha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3848,7 +3848,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (216,'Kigoma',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (216,'Kilimanjaro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (216,'Lindi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (216,'Mara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (216,'Mbeya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (216,'Morogoro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3859,7 +3859,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (216,'Ruvuma',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (216,'Shinyanga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (216,'Singida',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (216,'Tabora',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (216,'Tanga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (216,'Zanzibar and pemba',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3870,7 +3870,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (217,'Chachoengsao',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Chai nat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Chaiyaphum',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (217,'Changwat chaiyaphum',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Chanthaburi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Chiang mai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3881,7 +3881,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (217,'Kamphaeng phet',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Kanchanaburi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Khon kaen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (217,'Krabi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Krung thep',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Lampang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3892,7 +3892,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (217,'Maha sarakham',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Mukdahan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Nakhon nayok',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (217,'Nakhon pathom',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Nakhon phanom',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Nakhon ratchasima',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3903,7 +3903,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (217,'Nong bua lam phu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Nong khai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Nonthaburi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (217,'Pathum thani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Pattani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Phangnga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3914,7 +3914,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (217,'Phichit',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Phitsanulok',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Phra nakhon si ayutthaya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (217,'Phrae',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Phuket',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Prachin buri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3925,7 +3925,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (217,'Roi et',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Sa kaeo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Sakon nakhon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (217,'Samut prakan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Samut sakhon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Samut songkhran',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3936,7 +3936,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (217,'Songkhla',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Sukhothai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Suphan buri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (217,'Surat thani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Surin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Tak',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3947,7 +3947,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (217,'Uthai thani',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Uttaradit',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (217,'Yala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (217,'Yasothon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (218,'Centre',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (218,'Kara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3958,7 +3958,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (219,'Fakaofo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (219,'Nukunonu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (220,'Eua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (220,'Haapai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (220,'Niuas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (220,'Tongatapu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3969,7 +3969,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (221,'Couva-tabaquite-talparo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (221,'Diego martin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (221,'Glencoe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (221,'Penal debe',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (221,'Point fortin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (221,'Port of spain',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3980,7 +3980,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (221,'Sangre grande',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (221,'Siparia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (221,'Tobago',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (222,'Aryanah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Bajah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Bin arus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -3991,7 +3991,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (222,'Hammamet yasmine',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Jundubah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Madaniyin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (222,'Manubah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Monastir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Nabul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4002,7 +4002,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (222,'Sfax',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Sidi bu zayd',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Silyanah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (222,'Susah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Tatawin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Tawzar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4013,7 +4013,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (222,'Al-munastir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Al-qasrayn',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (222,'Al-qayrawan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (223,'Adana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Adiyaman',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Afyon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4024,7 +4024,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (223,'Antalya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Ardahan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Artvin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (223,'Aydin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Balikesir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Bartin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4035,7 +4035,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (223,'Bitlis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Bolu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Burdur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (223,'Bursa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Canakkale',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Cankiri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4046,7 +4046,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (223,'Edirne',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Elazig',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Erzincan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (223,'Erzurum',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Eskisehir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Gaziantep',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4057,7 +4057,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (223,'Icel',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Igdir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Isparta',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (223,'Istanbul',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Izmir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Kahramanmaras',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4068,7 +4068,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (223,'Kastamonu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Kayseri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Kilis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (223,'Kirikkale',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Kirklareli',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Kirsehir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4079,7 +4079,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (223,'Malatya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Manisa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Mardin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (223,'Mugla',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Mus',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Nevsehir',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4090,7 +4090,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (223,'Sakarya',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Samsun',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Sanliurfa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (223,'Siirt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Sinop',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Sirnak',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4101,7 +4101,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (223,'Tunceli',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Usak',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Van',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (223,'Yalova',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Yozgat',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (223,'Zonguldak',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4112,7 +4112,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (224,'Lebap',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (224,'Mari',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (225,'Grand turk',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (225,'South caicos and east caicos',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (226,'Funafuti',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (226,'Nanumanga',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4123,7 +4123,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (226,'Nukulaelae',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (226,'Vaitupu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (227,'Central',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (227,'Eastern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (227,'Northern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (227,'Western',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4134,7 +4134,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (228,'Dnipropetrovska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Donetska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Ivano-frankivska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (228,'Kharkiv',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Kharkov',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Khersonska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4145,7 +4145,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (228,'Kyyivska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Lvivska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Luhanska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (228,'Mykolayivska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Odeska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Odessa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4156,7 +4156,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (228,'Ternopilska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Volynska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Vynnytska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (228,'Zakarpatska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Zaporizhia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (228,'Zhytomyrska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4167,7 +4167,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (229,'Sharjah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (229,'Sharjha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (229,'Umm al qaywayn',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (229,'Al-fujayrah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (229,'Ash-shariqah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Aberdeen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4178,7 +4178,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'Belfast',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Berkshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Birmingham',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Brechin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Bridgnorth',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Bristol',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4189,7 +4189,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'Cheshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Cleveland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Co fermanagh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Conwy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Cornwall',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Coventry',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4200,7 +4200,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'Derbyshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Devon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Dial code dungannon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Didcot',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Dorset',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Dunbartonshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4211,7 +4211,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'East sussex',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'East yorkshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'England',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Essex',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Fermanagh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Fife',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4222,7 +4222,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'Gwent',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Hampshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Hants',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Herefordshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Hertfordshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Ireland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4233,7 +4233,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'Kilmarnock',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Lanarkshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Lancashire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Leicestershire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Lincolnshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Llanymynech',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4244,7 +4244,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'Merseyside',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Mid glamorgan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Middlesex',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Mildenhall',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Monmouthshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Newton stewart',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4255,7 +4255,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'Northants',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Northern ireland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Northumberland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Nottinghamshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Oxford',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Powys',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4266,7 +4266,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'Scottish borders',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Shropshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Somerset',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'South glamorgan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'South wales',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'South yorkshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4277,7 +4277,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'Surrey',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Sussex',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Twickenham',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Tyne and wear',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Tyrone',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Utah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4288,84 +4288,84 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (230,'West sussex',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'West yorkshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Whissendine',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (230,'Wiltshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Wokingham',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Worcestershire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Wrexham',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Wurttemberg',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (230,'Yorkshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Alabama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Alaska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Arizona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Arkansas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+	 (231,'Alabama',NULL,'AL','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Alaska',NULL,'AK','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Arizona',NULL,'AZ','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Arkansas',NULL,'AR','2021-12-30 20:54:01','2021-12-30 20:54:01');
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (231,'Byram',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'California',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'California',NULL,'CA','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (231,'Cokato',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Colorado',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Connecticut',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Delaware',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'District of columbia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Florida',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Georgia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Hawaii',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
-	 (231,'Idaho',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Illinois',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Indiana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Iowa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Kansas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Kentucky',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Louisiana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Colorado',NULL,'CO','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Connecticut',NULL,'CT','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Delaware',NULL,'DE','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'District of columbia',NULL,'DC','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Florida',NULL,'FL','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Georgia',NULL,'GA','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Hawaii',NULL,'HI','2021-12-30 20:54:01','2021-12-30 20:54:01');
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+	 (231,'Idaho',NULL,'ID','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Illinois',NULL,'IL','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Indiana',NULL,'IN','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Iowa',NULL,'IA','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Kansas',NULL,'KS','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Kentucky',NULL,'KY','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Louisiana',NULL,'LA','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (231,'Lowa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Maine',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Maryland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
-	 (231,'Massachusetts',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Maine',NULL,'ME','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Maryland',NULL,'MD','2021-12-30 20:54:01','2021-12-30 20:54:01');
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+	 (231,'Massachusetts',NULL,'MA','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (231,'Medfield',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Michigan',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Minnesota',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Mississippi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Missouri',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Montana',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Nebraska',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Nevada',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'New hampshire',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
-	 (231,'New jersey',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Michigan',NULL,'MI','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Minnesota',NULL,'MN','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Mississippi',NULL,'MS','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Missouri',NULL,'MO','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Montana',NULL,'MT','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Nebraska',NULL,'NE','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Nevada',NULL,'NV','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'New hampshire',NULL,'NH','2021-12-30 20:54:01','2021-12-30 20:54:01');
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+	 (231,'New jersey',NULL,'NJ','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (231,'New jersy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'New mexico',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'New york',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'North carolina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'North dakota',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Ohio',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Oklahoma',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'New mexico',NULL,'NM','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'New york',NULL,'NY','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'North carolina',NULL,'NC','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'North dakota',NULL,'ND','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Ohio',NULL,'OH','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Oklahoma',NULL,'OK','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (231,'Ontario',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Oregon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
-	 (231,'Pennsylvania',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Oregon',NULL,'OR','2021-12-30 20:54:01','2021-12-30 20:54:01');
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+	 (231,'Pennsylvania',NULL,'PA','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (231,'Ramey',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Rhode island',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'South carolina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'South dakota',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Rhode island',NULL,'RI','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'South carolina',NULL,'SC','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'South dakota',NULL,'SD','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (231,'Sublimity',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Tennessee',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Texas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Tennessee',NULL,'TN','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Texas',NULL,'TX','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (231,'Trimble',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Utah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
-	 (231,'Vermont',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Virginia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Washington',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'West virginia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Wisconsin',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
-	 (231,'Wyoming',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Utah',NULL,'UT','2021-12-30 20:54:01','2021-12-30 20:54:01');
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+	 (231,'Vermont',NULL,'VT','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Virginia',NULL,'VA','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Washington',NULL,'WA','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'West virginia',NULL,'WV','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Wisconsin',NULL,'WI','2021-12-30 20:54:01','2021-12-30 20:54:01'),
+	 (231,'Wyoming',NULL,'WY','2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (232,'United states minor outlying i',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (233,'Artigas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (233,'Canelones',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (233,'Cerro largo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (233,'Colonia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (233,'Durazno',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (233,'Florida',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4376,7 +4376,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (233,'Paysandu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (233,'Rio negro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (233,'Rivera',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (233,'Rocha',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (233,'Salto',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (233,'San jose',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4387,7 +4387,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (234,'Buhoro',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (234,'Buxoro viloyati',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (234,'Cizah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (234,'Fargona',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (234,'Horazm',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (234,'Kaskadar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4398,7 +4398,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (234,'Sirdare',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (234,'Surhondar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (234,'Toskent',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (235,'Malampa',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (235,'Penama',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (235,'Sanma',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4409,7 +4409,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (237,'Amazonas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Anzoategui',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Apure',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (237,'Aragua',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Barinas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Bolivar',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4420,7 +4420,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (237,'Falcon',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Guarico',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Lara',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (237,'Merida',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Miranda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Monagas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4431,7 +4431,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (237,'Trujillo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Vargas',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (237,'Yaracuy',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (237,'Zulia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (238,'Bac giang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (238,'Binh dinh',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4442,7 +4442,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (238,'Dong nai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (238,'Dong nam bo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (238,'Duyen hai mien trung',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (238,'Hanoi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (238,'Hung yen',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (238,'Khu bon cu',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4453,7 +4453,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (238,'Thu do ha noi',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (238,'Tinh can tho',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (238,'Tinh da nang',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (238,'Tinh gia lai',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (239,'Anegada',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (239,'Jost van dyke',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4464,7 +4464,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (241,'Alo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (241,'Singave',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (241,'Wallis',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (242,'Bu jaydur',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (242,'Wad-adh-dhahab',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (242,'Al-ayun',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4475,7 +4475,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (243,'Hadramaut',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (243,'Hajjah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (243,'Hudaydah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (243,'Ibb',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (243,'Lahij',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (243,'Marib',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4486,7 +4486,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (243,'Taizz',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (243,'Al-bayda',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (243,'Al-hudaydah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (243,'Al-jawf',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (243,'Al-mahrah',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (243,'Al-mahwit',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4497,7 +4497,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (244,'Serbia',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (244,'Vojvodina',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (245,'Central',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (245,'Copperbelt',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (245,'Eastern',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (245,'Luapala',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
@@ -4508,7 +4508,7 @@ INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUE
 	 (245,'Western',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (246,'Bulawayo',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (246,'Harare',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01');
-INSERT INTO cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
+INSERT INTO forge.cities (country_id,name_en,name_ar,code,created_at,updated_at) VALUES
 	 (246,'Manicaland',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (246,'Mashonaland central',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),
 	 (246,'Mashonaland east',NULL,NULL,'2021-12-30 20:54:01','2021-12-30 20:54:01'),

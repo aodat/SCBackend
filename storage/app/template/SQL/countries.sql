@@ -1,4 +1,4 @@
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Afghanistan','أفغانستان',NULL,0,NULL,'AF','2021-12-30 20:54:01','2022-01-02 07:58:41'),
 	 ('Albania','ألبانيا',NULL,1,NULL,'AL','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Algeria','الجزائر',NULL,0,NULL,'DZ','2021-12-30 20:54:01','2022-01-02 07:58:46'),
@@ -9,7 +9,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Antarctica','أنتاركتيكا',NULL,1,NULL,'AQ','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Antigua and barbuda',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Argentina','الأرجنتين',NULL,1,NULL,'AR','2021-12-30 20:54:01','2022-01-02 07:58:46');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Armenia','أرمينيا',NULL,1,NULL,'AM','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Aruba','أروبا',NULL,1,NULL,'AW','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Australia','أستراليا',NULL,1,NULL,'AU','2021-12-30 20:54:01','2022-01-02 07:58:46'),
@@ -20,7 +20,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Bangladesh','بنغلاديش',NULL,0,NULL,'BD','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Barbados','بربادوس',NULL,1,NULL,'BB','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Belarus','بيلاروس',NULL,1,NULL,'BY','2021-12-30 20:54:01','2022-01-02 07:58:46');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Belgium','بلجيكا',NULL,1,NULL,'BE','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Belize','بليز',NULL,1,NULL,'BZ','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Benin','بنين',NULL,1,NULL,'BJ','2021-12-30 20:54:01','2022-01-02 07:58:46'),
@@ -31,7 +31,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Botswana','بوتسوانا',NULL,1,NULL,'BW','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Bouvet island','جزيرة بوفيه',NULL,1,NULL,'BV','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Brazil','البرازيل',NULL,1,NULL,'BR','2021-12-30 20:54:01','2022-01-02 07:58:46');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('British indian ocean territory','الإقليم البريطاني في المحيط الهندي',NULL,1,NULL,'IO','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Brunei','بروناي',NULL,1,NULL,'BN','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Bulgaria','بلغاريا',NULL,1,NULL,'BG','2021-12-30 20:54:01','2022-01-02 07:58:46'),
@@ -42,7 +42,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Canada','كندا',NULL,1,NULL,'CA','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Cape verde','الرأس الأخضر',NULL,1,NULL,'CV','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Cayman islands','جزر كايمان',NULL,1,NULL,'KY','2021-12-30 20:54:01','2022-01-02 07:58:46');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Central african republic','جمهورية أفريقيا الوسطى',NULL,1,NULL,'CF','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Chad','تشاد',NULL,1,NULL,'TD','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Chile','تشيلي',NULL,1,NULL,'CL','2021-12-30 20:54:01','2022-01-02 07:58:46'),
@@ -53,7 +53,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Comoros','جزر القمر',NULL,0,NULL,'KM','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Congo',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Congo the democratic republic of the',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:46');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Cook islands','جزر كوك',NULL,1,NULL,'CK','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Costa rica','كوستاريكا',NULL,1,NULL,'CR','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Cote d''ivoire (ivory coast)',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:46'),
@@ -64,7 +64,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Denmark','الدانمرك',NULL,1,NULL,'DK','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Djibouti','جيبوتي',NULL,1,NULL,'DJ','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Dominica','دومينيكا',NULL,1,NULL,'DM','2021-12-30 20:54:01','2022-01-02 07:58:46');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Dominican republic','جمهورية الدومينيكان',NULL,1,NULL,'DO','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('East timor',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Ecuador','الإكوادور',NULL,1,NULL,'EC','2021-12-30 20:54:01','2022-01-02 07:58:46'),
@@ -75,7 +75,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Estonia','إستونيا',NULL,1,NULL,'EE','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Ethiopia','إثيوبيا',NULL,1,NULL,'ET','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('External territories of australia',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:46');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Falkland islands','جزر فوكلاند',NULL,1,NULL,'FK','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Faroe islands','جزر فارو',NULL,1,NULL,'FO','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Fiji islands',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:46'),
@@ -86,7 +86,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('French southern territories','الأقاليم الجنوبية الفرنسية',NULL,1,NULL,'TF','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Gabon','الغابون',NULL,1,NULL,'GA','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Gambia the',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:46');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Georgia','جورجيا',NULL,1,NULL,'GE','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Germany','ألمانيا',NULL,1,NULL,'DE','2021-12-30 20:54:01','2022-01-02 07:58:46'),
 	 ('Ghana','غانا',NULL,1,NULL,'GH','2021-12-30 20:54:01','2022-01-02 07:58:46'),
@@ -97,7 +97,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Guadeloupe','غوادلوب',NULL,1,NULL,'GP','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Guam','غوام',NULL,1,NULL,'GU','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Guatemala','غواتيمالا',NULL,1,NULL,'GT','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Guernsey and alderney',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Guinea','غينيا',NULL,1,NULL,'GN','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Guinea-bissau','غينيا بيساو',NULL,1,NULL,'GW','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -108,7 +108,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Hong kong s.a.r.',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Hungary','هنغاريا',NULL,1,NULL,'HU','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Iceland','آيسلندا',NULL,1,NULL,'IS','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('India','الهند',NULL,1,NULL,'IN','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Indonesia','إندونيسيا',NULL,1,NULL,'ID','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Iran','إيران',NULL,0,NULL,'IR','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -119,7 +119,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Jamaica','جامايكا',NULL,1,NULL,'JM','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Japan','اليابان',NULL,1,NULL,'JP','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Jersey','جيرسي',NULL,1,NULL,'JE','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Kazakhstan','كازاخستان',NULL,1,NULL,'KZ','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Kenya','كينيا',NULL,1,NULL,'KE','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Kiribati','كيريباتي',NULL,1,NULL,'KI','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -130,7 +130,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Laos','لاوس',NULL,1,NULL,'LA','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Latvia','لاتفيا',NULL,1,NULL,'LV','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Lebanon','لبنان',NULL,0,NULL,'LB','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Lesotho','ليسوتو',NULL,1,NULL,'LS','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Liberia','ليبيريا',NULL,1,NULL,'LR','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Libya','ليبيا',NULL,0,NULL,'LY','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -141,7 +141,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Macedonia',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Madagascar','مدغشقر',NULL,0,NULL,'MG','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Malawi','ملاوي',NULL,1,NULL,'MW','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Malaysia','ماليزيا',NULL,1,NULL,'MY','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Maldives','جزر المالديف',NULL,1,NULL,'MV','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Mali','مالي',NULL,1,NULL,'ML','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -152,7 +152,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Mauritania','موريتانيا',NULL,1,NULL,'MR','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Mauritius','موريشيوس',NULL,1,NULL,'MU','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Mayotte','مايوت',NULL,1,NULL,'YT','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Mexico','المكسيك',NULL,1,NULL,'MX','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Micronesia','ميكرونيزيا',NULL,1,NULL,'FM','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Moldova','مولدوفا',NULL,1,NULL,'MD','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -163,7 +163,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Mozambique','موزمبيق',NULL,1,NULL,'MZ','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Myanmar',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Namibia','ناميبيا',NULL,1,NULL,'NA','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Nauru','ناورو',NULL,1,NULL,'NR','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Nepal','نيبال',NULL,1,NULL,'NP','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Netherlands antilles',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -174,7 +174,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Niger','النيجر',NULL,1,NULL,'NE','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Nigeria','نيجيريا',NULL,1,NULL,'NG','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Niue','نيوي',NULL,1,NULL,'NU','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Norfolk island','جزيرة نورفولك',NULL,1,NULL,'NF','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Northern mariana islands','جزر ماريانا الشمالية',NULL,1,NULL,'MP','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Norway','النرويج',NULL,1,NULL,'NO','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -185,7 +185,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Panama','بنما',NULL,1,NULL,'PA','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Papua new guinea','بابوا غينيا الجديدة',NULL,1,NULL,'PG','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Paraguay','باراغواي',NULL,1,NULL,'PY','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Peru','بيرو',NULL,1,NULL,'PE','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Philippines','الفلبين',NULL,1,NULL,'PH','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Pitcairn island',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -196,7 +196,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Reunion','روينيون',NULL,1,NULL,'RE','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Romania','رومانيا',NULL,1,NULL,'RO','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Russia','روسيا',NULL,1,NULL,'RU','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Rwanda','رواندا',NULL,1,NULL,'RW','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Saint helena',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Saint kitts and nevis',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -207,7 +207,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('San marino','سان مارينو',NULL,1,NULL,'SM','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Sao tome and principe',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Saudi arabia','المملكة العربية السعودية',NULL,0,NULL,'SA','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Senegal','السنغال',NULL,1,NULL,'SN','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Serbia','صربيا',NULL,1,NULL,'RS','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Seychelles','سيشل',NULL,1,NULL,'SC','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -218,7 +218,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Smaller territories of the uk',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Solomon islands','جزر سليمان',NULL,0,NULL,'SB','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Somalia','الصومال',NULL,0,NULL,'SO','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('South africa','جنوب أفريقيا',NULL,1,NULL,'ZA','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('South georgia',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('South sudan','جنوب السودان',NULL,0,NULL,'SS','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -229,7 +229,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Svalbard and jan mayen islands',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Swaziland',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Sweden','السويد',NULL,1,NULL,'SE','2021-12-30 20:54:01','2022-01-02 07:58:47');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Switzerland','سويسرا',NULL,1,NULL,'CH','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Syria','سوريا',NULL,0,NULL,'SY','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Taiwan','تايوان',NULL,1,NULL,'TW','2021-12-30 20:54:01','2022-01-02 07:58:47'),
@@ -240,7 +240,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Tokelau','توكيلو',NULL,1,NULL,'TK','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Tonga','تونغا',NULL,1,NULL,'TO','2021-12-30 20:54:01','2022-01-02 07:58:47'),
 	 ('Trinidad and tobago',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:48');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Tunisia','تونس',NULL,0,NULL,'TN','2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('Turkey','تركيا',NULL,1,NULL,'TR','2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('Turkmenistan','تركمانستان',NULL,1,NULL,'TM','2021-12-30 20:54:01','2022-01-02 07:58:48'),
@@ -251,7 +251,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('United arab emirates','الإمارات العربية المتحدة',NULL,0,NULL,'AE','2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('United kingdom','المملكة المتحدة',NULL,1,NULL,'GB','2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('United states','الولايات المتحدة',NULL,1,NULL,'US','2021-12-30 20:54:01','2022-01-02 07:58:48');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('United states minor outlying islands',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('Uruguay','أورغواي',NULL,1,NULL,'UY','2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('Uzbekistan','أوزبكستان',NULL,0,NULL,'UZ','2021-12-30 20:54:01','2022-01-02 07:58:48'),
@@ -262,7 +262,7 @@ INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,update
 	 ('Virgin islands (british)',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('Virgin islands (us)',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('Wallis and futuna islands',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:48');
-INSERT INTO countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
+INSERT INTO forge.countries (name_en,name_ar,flag,zipcode,rates,code,created_at,updated_at) VALUES
 	 ('Western sahara','الصحراء الغربية',NULL,1,NULL,'EH','2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('Yemen','اليمن',NULL,0,NULL,'YE','2021-12-30 20:54:01','2022-01-02 07:58:48'),
 	 ('Yugoslavia',NULL,NULL,0,NULL,NULL,'2021-12-30 20:54:01','2022-01-02 07:58:48'),

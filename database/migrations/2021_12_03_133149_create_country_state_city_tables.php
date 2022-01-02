@@ -18,7 +18,7 @@ class CreateCountryStateCityTables extends Migration
             $table->string('name_en');
             $table->string('name_ar')->nullable();
             $table->string('flag')->nullable();
-            $table->string('code')->index();
+            $table->string('code')->nullable()->index();
             $table->timestamps();
         });
         Schema::create('cities', function (Blueprint $table) {
@@ -26,7 +26,7 @@ class CreateCountryStateCityTables extends Migration
             $table->unsignedBigInteger('country_id');
             $table->string('name_en');
             $table->string('name_ar')->nullable();
-            $table->string('code')->nullable();
+            $table->string('code')->nullable()->index();
             $table->timestamps();
 
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');

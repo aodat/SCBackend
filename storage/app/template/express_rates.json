@@ -9,7 +9,7 @@
             },
             {
                 "id": 2,
-                "basic": 14.04,
+                "basic": 13,
                 "additional": 5.4,
                 "max_weight": 15
             },
@@ -115,7 +115,7 @@
             },
             {
                 "id": 4,
-                "basic": 14.04,
+                "basic": 13,
                 "additional": 6.3,
                 "max_weight": 20
             },
