@@ -22,7 +22,6 @@ class Fedex
         'CancelPickupRequest' => 'http://fedex.com/ws/pickup/v22'
     ];
 
-
     private $end_point;
     private $prefix = '';
     private $xmlPrefix = '';
@@ -35,40 +34,8 @@ class Fedex
         $this->end_point = self::$stagingUrl;
     }
 
-
-    public function __check($countryName, $countryCode, $city, $area = '')
-    {
-        $xml = simplexml_load_file(app_path() . '/Libs/Fedex/validate.xml');
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->end_point,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => $xml->asXML(),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/xml'
-            ),
-        ));
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        $xml = new SimpleXMLElement($response);
-        $body = $xml->xpath('//SOAP-ENV:Body')[0];
-        $response = (last(json_decode(json_encode((array)$body), true)));
-        if (isset($response['HighestSeverity']) && $response['HighestSeverity'] == 'FAILURE')
-            throw new CarriersException('FedEx This Country Not Supported');
-        return true;
-    }
     public function createPickup($email, $date, $address)
     {
-        $this->__check($address['country'], $address['country_code'], $address['city'], $address['area']);
-
         $payload = $this->bindJsonFile('pickup.create.json', "CreatePickupRequest");
 
         $payload['CreatePickupRequest']['AssociatedAccountNumber']['AccountNumber'] = $this->account_number;
@@ -83,14 +50,12 @@ class Fedex
 
         $payload['CreatePickupRequest']['OriginDetail']['BuildingPartDescription'] = $address['area'];
         $payload['CreatePickupRequest']['OriginDetail']['ReadyTimestamp'] = date('c', strtotime($date . ' 03:00 PM'));
-
         $response = $this->call('CreatePickupRequest', $payload);
 
-        if (isset($response['HighestSeverity']) && $response['HighestSeverity'])
+        if (!isset($response['Notifications']['Severity']) || (isset($response['Notifications']['Severity']) && $response['Notifications']['Severity'] == 'ERROR'))
             throw new CarriersException('FedEx Create pickup – Something Went Wrong', $payload, $response);
 
-        dd($response);
-        // return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
+        return ['id' => randomNumber(32), 'guid' => $response['PickupConfirmationNumber']];
     }
 
     public function cancelPickup($pickupInfo)
@@ -117,7 +82,7 @@ class Fedex
         $payload['vid-CancelPickupRequest']['vid-Payor']['vid-ResponsibleParty']['vid-Address'] = [
             "vid-StreetLines" => "",
             "vid-City" => $address->city_code,
-            "vid-StateOrProvinceCode" => "TN",
+            // "vid-StateOrProvinceCode" => "",
             "vid-PostalCode" => "",
             "vid-CountryCode" => $address->country_code,
             "vid-GeographicCoordinates" => ""
@@ -178,9 +143,8 @@ class Fedex
             $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['UnitPrice']['Amount'] =
             currency_exchange($shipmentInfo['fees'], $merchentInfo->currency_code);
 
-        
+
         $response = $this->call('ProcessShipmentRequest', $payload);
-        // dd($response);
         if (!isset($response['Notifications']['Severity']) || (isset($response['Notifications']['Severity']) && $response['Notifications']['Severity'] == 'ERROR'))
             throw new CarriersException('FedEx Create Shipment – Something Went Wrong', $payload, $response);
 

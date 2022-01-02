@@ -41,7 +41,7 @@
                     "ContactId": "",
                     "PersonName": "",
                     "Title": "Mr.",
-                    "CompanyName": "DEOYAROHIT0905",
+                    "CompanyName": "",
                     "PhoneNumber": "",
                     "PhoneExtension": "",
                     "PagerNumber": "",
@@ -51,8 +51,7 @@
                 "Address": {
                     "StreetLines": "",
                     "City": "",
-                    "StateOrProvinceCode": "",
-                    "PostalCode": "20000",
+                    "PostalCode": "",
                     "CountryCode": ""
                 }
             },
