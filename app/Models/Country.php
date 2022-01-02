@@ -40,6 +40,6 @@ class Country extends Model
                     ->orWhere('ci.name_ar', 'like', '%' . Request()->name . '%');
             });
 
-        return $data->select('ci.*')->limit(50)->get();
+        return $data->select('ci.*')->limit(150)->get();
     }
 }
