@@ -14,5 +14,5 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::post('shipments/create', [ShipmentController::class, 'guestShipment']);
 
 
-    Route::get('json', [Controller::class, 'json']);
+    // Route::get('json', [Controller::class, 'json']);
 });
