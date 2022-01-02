@@ -55,7 +55,7 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'consignee_area' => 'required',
                 $type . 'consignee_address_description' => [
                     'required',
-                    new wordCount(2, 4)
+                    new wordCount(1, 10)
                 ],
                 $type . 'content' => 'required',
                 $type . 'pieces' => 'required|integer'
@@ -141,7 +141,7 @@ class ShipmentRequest extends MerchantRequest
                 'consignee_area' => 'required',
                 'consignee_address_description' => [
                     'required',
-                    new wordCount(2, 6)
+                    new wordCount(1, 10)
                 ],
                 'content' => [
                     'required',
