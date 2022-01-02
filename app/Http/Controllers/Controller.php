@@ -29,6 +29,7 @@ class Controller extends BaseController
 
     public function json()
     {
+        set_time_limit('0');
         Country::get()->map(function ($country) {
             $test = Country::findOrFail($country->id);
             $test->name_en = ucfirst(strtolower($test->name_en));
