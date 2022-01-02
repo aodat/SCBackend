@@ -30,17 +30,17 @@ class Controller extends BaseController
     public function json()
     {
         set_time_limit('0');
-        Country::get()->map(function ($country) {
-            $test = Country::findOrFail($country->id);
-            $test->name_en = ucfirst(strtolower($test->name_en));
-            $test->save();
-        });
-
-        // City::get()->map(function ($city) {
-        //     $test = City::findOrFail($city->id);
-        //     $test->name_en = mb_convert_encoding(str_replace("'", "", ucfirst(strtolower($test->name_en))), 'UTF-8', 'UTF-8');
+        // Country::get()->map(function ($country) {
+        //     $test = Country::findOrFail($country->id);
+        //     $test->name_en = ucfirst(strtolower($test->name_en));
         //     $test->save();
         // });
+
+        City::get()->map(function ($city) {
+            $test = City::findOrFail($city->id);
+            $test->name_en = mb_convert_encoding(str_replace("'", "", ucfirst(strtolower($test->name_en))), 'UTF-8', 'UTF-8');
+            $test->save();
+        });
 
 
 
