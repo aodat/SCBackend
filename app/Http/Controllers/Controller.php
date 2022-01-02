@@ -29,11 +29,11 @@ class Controller extends BaseController
 
     public function json()
     {
-        // Country::get()->map(function ($country) {
-        //     $test = Country::findOrFail($country->id);
-        //     $test->name_en = ucfirst(strtolower($test->name_en));
-        //     $test->save();
-        // });
+        Country::get()->map(function ($country) {
+            $test = Country::findOrFail($country->id);
+            $test->name_en = ucfirst(strtolower($test->name_en));
+            $test->save();
+        });
 
         City::get()->map(function ($city) {
             $test = City::findOrFail($city->id);
