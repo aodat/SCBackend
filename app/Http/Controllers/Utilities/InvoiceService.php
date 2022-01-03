@@ -45,9 +45,10 @@ class InvoiceService
             ->currencySymbol('$')
             ->currencyCode('USD')
             ->currencyFormat('{SYMBOL}{VALUE}')
-            ->addItem($item)
-            ->save('s3');
+            ->addItem($item);
 
-        return $invoice->url();
+        if ($data->consignee_notes != '')
+            $invoice->notes($data->consignee_notes);
+        return $invoice->save('s3')->url();
     }
 }
