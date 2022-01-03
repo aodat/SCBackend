@@ -157,10 +157,10 @@ class ShipmentController extends MerchantController
             unset($shipment['sender_address_id']);
 
             $shipment['group'] = $type;
+            $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
             if ($type == 'DOM') {
                 $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', 1);
             } else {
-                $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
                 $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
             }
 
