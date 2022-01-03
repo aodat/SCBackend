@@ -352,7 +352,7 @@ class ShipmentController extends MerchantController
 
         unset($shipment['strip_token'], $shipment['type']);
         $provider = Carriers::where('id', $shipment['carrier_id'])->first()->name;
-        return $this->createShipmentDB(collect($shipment), $provider);
+        // return $this->createShipmentDB(collect($shipment), $provider);
 
         // $infoTransaction =   [
         //     'amount' =>  currency_exchange($data['amount'], $merchecntInfo->currency_code, 'USD'),
