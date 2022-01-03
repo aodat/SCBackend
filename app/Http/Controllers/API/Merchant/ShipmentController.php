@@ -28,7 +28,7 @@ class ShipmentController extends MerchantController
 {
 
     private $status = [
-        'DRAFT' => 0, 'PROCESSING' => 0, 'COMPLETED' => 0, 'RENTURND' => 0
+        'DRAFT' => 0, 'PROCESSING' => 0, 'COMPLETED' => 0, 'RENTURND' => 0, 'PENDING_PAYMENTS' => 0
     ];
 
     public function index(ShipmentRequest $request)
@@ -44,25 +44,39 @@ class ShipmentController extends MerchantController
         $cod    = $filters['cod']['val'] ?? null;
         $operation    = $filters['cod']['operation'] ?? null;
         $type = $request->type ?? 'DOM';
-        $shipments = Shipment::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
 
+
+        $shipments = DB::table('shipments as s')->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($external))
-            $shipments->whereIn('external_awb', $external);
-        if (count($statuses))
-            $shipments->whereIn('status', $statuses);
+            $shipments->whereIn('s.external_awb', $external);
+
         if (count($phone))
             $shipments = $shipments->where(function ($query) use ($phone) {
-                $query->whereIn('sender_phone', $phone)->orWhereIn('consignee_phone', $phone);
+                $query->whereIn('s.sender_phone', $phone)->orWhereIn('s.consignee_phone', $phone);
             });
 
         if ($operation)
-            $shipments->where("cod", $operation, $cod);
+            $shipments->where("s.cod", $operation, $cod);
         else if ($cod)
-            $shipments->whereBetween('cod', [intval($cod), intval($cod) . '.99']);
+            $shipments->whereBetween('s.cod', [intval($cod), intval($cod) . '.99']);
 
-        $shipments->where('group', $type);
+        $shipments->where('s.group', $type);
+        if (count($statuses)) {
+            if (in_array('PENDING_PAYMENTS', $statuses)) {
+                $shipments->leftJoin('transactions as t', function ($query) {
+                    return $query->on('s.id', '=', 't.item_id')
+                        ->where('s.merchant_id', 't.merchant_id');
+                })
+                    ->where('s.status', '=', 'COMPLETED')
+                    ->whereNull('s.transaction_id')
+                    ->whereNull('t.id');
 
-        $tabs = DB::table('shipments')
+                $this->status['PENDING_PAYMENTS'] = $shipments->count();
+            } else
+                $shipments->whereIn('s.status', $statuses);
+        }
+
+        $tabs =  DB::table('shipments')
             ->where('merchant_id', Request()->user()->merchant_id)
             ->select('status', DB::raw(
                 'count(status) as counter'

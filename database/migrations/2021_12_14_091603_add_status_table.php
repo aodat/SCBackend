@@ -13,7 +13,7 @@ class AddStatusTable extends Migration
      */
     public function up()
     {
-        \DB::statement("ALTER TABLE shipments MODIFY COLUMN status ENUM('DRAFT','PROCESSING','COMPLETED','RENTURND','PENDING_PAYMENTS')");
+        \DB::statement("ALTER TABLE shipments MODIFY COLUMN status ENUM('DRAFT','PROCESSING','COMPLETED','RENTURND')");
     }
 
     /**
