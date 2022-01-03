@@ -45,6 +45,7 @@ class InvoiceService
             ->currencySymbol('$')
             ->currencyCode('USD')
             ->currencyFormat('{SYMBOL}{VALUE}')
+            ->filename('invoices/'.md5(time()))
             ->addItem($item);
 
         if ($data->consignee_notes != '')
