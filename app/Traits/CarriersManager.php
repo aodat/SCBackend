@@ -75,7 +75,7 @@ trait CarriersManager
         $shipments = Shipment::whereIn('external_awb', $shipments_number)->get();
         $shipments = $shipments->map(function ($shipment) {
             if ($shipment['group'] == 'EXP' && $shipment['is_doc'] == false) {
-                $shipment['url'] = mergePDF([$shipment['url'], InvoiceService::commercial($shipment)]);
+                $shipment['url'] = mergePDF([InvoiceService::commercial($shipment),$shipment['url']]);
             }
             return $shipment;
         });
