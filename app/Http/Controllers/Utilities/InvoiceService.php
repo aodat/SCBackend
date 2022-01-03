@@ -17,7 +17,8 @@ class InvoiceService
             'phone'         => $data->sender_phone,
             'custom_fields' => [
                 $data->sender_email,
-                $data->sender_country . ' , ' . $data->sender_city . ' - ' . $data->sender_area,
+                $data->sender_country . ' , ' . $data->sender_city,
+                $data->sender_area,
                 $data->sender_address_description
             ],
         ]);
@@ -27,8 +28,8 @@ class InvoiceService
             'phone'         => $data->consignee_phone,
             'custom_fields' => [
                 $data->consignee_email,
-                $data->sender_country . ' , ' . $data->sender_city . ' - ' . $data->sender_area,
-                $data->consignee_zip_code,
+                $data->sender_country . ' , ' . $data->sender_city,
+                $data->sender_area . ' ' . $data->consignee_zip_code,
                 $data->sender_address_description
             ],
         ]);
