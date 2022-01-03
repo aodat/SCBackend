@@ -229,6 +229,8 @@ class ShipmentController extends MerchantController
                 $value['external_awb'] = $externalAWB[$key];
                 $value['resource'] = $resource;
                 $value['url'] = mergePDF([$files[$key]]);
+
+                unset($value['payment']);
                 return $value;
             });
             $links = array_merge($links, $result['link']);
