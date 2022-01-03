@@ -158,12 +158,7 @@ class ShipmentController extends MerchantController
 
             $shipment['group'] = $type;
             if ($type == 'DOM') {
-                $shipment['consignee_country'] = $merchentInfo['country_code'];
-
-                $domestic_rates = $dom_rates->where('code', '=', $address['city_code'])->first();
-                $shipment['fees'] = $domestic_rates['price'] ?? 0;
-                if ($shipment == 0)
-                    throw new InternalException('Domestic Rates Is Zero');
+                $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', 1);
             } else {
                 $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
                 $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
