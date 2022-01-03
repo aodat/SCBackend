@@ -63,14 +63,7 @@ class ShipmentController extends MerchantController
         $shipments->where('s.group', $type);
         if (count($statuses)) {
             if (in_array('PENDING_PAYMENTS', $statuses)) {
-                $shipments->leftJoin('transactions as t', function ($query) {
-                    return $query->on('s.id', '=', 't.item_id')
-                        ->where('s.merchant_id', 't.merchant_id');
-                })
-                    ->where('s.status', '=', 'COMPLETED')
-                    ->whereNull('s.transaction_id')
-                    ->whereNull('t.id');
-
+                $shipments->where('s.status', '=', 'COMPLETED')->whereNull('s.transaction_id');
                 $this->status['PENDING_PAYMENTS'] = $shipments->count();
             } else
                 $shipments->whereIn('s.status', $statuses);
