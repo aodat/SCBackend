@@ -16,6 +16,7 @@
         "laravel/passport": "^10.1",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "laraveldaily/laravel-invoices": "^2.2",
         "league/flysystem-aws-s3-v3": "^1.0",
         "maatwebsite/excel": "^3.1",
         "maxbanton/cwh": "^2.0",

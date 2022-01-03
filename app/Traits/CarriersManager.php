@@ -6,15 +6,15 @@ use Libs\Aramex;
 use Libs\DHL;
 use Libs\Fedex;
 
+use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Utilities\InvoiceService;
 use App\Exceptions\CarriersException;
+
 use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\Shipment;
 use App\Models\Transaction;
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Request;
 
 trait CarriersManager
 {
@@ -72,9 +72,14 @@ trait CarriersManager
 
     public function printShipment($shipments_number)
     {
-        return mergePDF(Shipment::whereIn('external_awb', $shipments_number)->pluck('url'));
-        // $this->loadProvider($provider);
-        // return mergePDF($this->adapter->printLabel($shipments_number));
+        $shipments = Shipment::whereIn('external_awb', $shipments_number)->get();
+        $shipments = $shipments->map(function ($shipment) {
+            if ($shipment['group'] == 'EXP' && $shipment['is_doc'] == false) {
+                $shipment['url'] = mergePDF([$shipment['url'], InvoiceService::commercial($shipment)]);
+            }
+            return $shipment;
+        });
+        return ($shipments->pluck('url'));
     }
 
     public function cancelPickup($provider, $pickupInfo)
@@ -136,7 +141,7 @@ trait CarriersManager
                 throw new CarriersException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
 
             $zoneRates = $zoneRates->first();
-            if($zoneRates == null)
+            if ($zoneRates == null)
                 return 0;
 
             $base = $zoneRates['basic'];

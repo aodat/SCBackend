@@ -236,6 +236,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Meneses\LaravelMpdf\Facades\LaravelMpdf::class,
         'Countries' => PeterColes\Countries\CountriesFacade::class,
+        'Invoice' => LaravelDaily\Invoices\Facades\Invoice::class
     ],
 
 ];

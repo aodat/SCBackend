@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Area;
-use App\Models\City;
-use App\Models\Country;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
@@ -14,6 +11,7 @@ use App\Traits\ResponseHandler;
 use App\Traits\CarriersManager;
 use App\Traits\SystemConfig;
 use App\Traits\SystemRules;
+
 use Illuminate\Support\Facades\Storage;
 
 class Controller extends BaseController
