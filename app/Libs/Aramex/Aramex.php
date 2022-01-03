@@ -194,7 +194,7 @@ class Aramex
         if (isset($shipmentInfo['cod']))
             $data['Details']['CashOnDeliveryAmount'] = [
                 'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
-                "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : $shipmentInfo['cod'] / 0.71,
+                "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['cod'],$merchentInfo->currency_code),
             ];
 
         $data['Details']['CashAdditionalAmount'] = [
@@ -204,7 +204,7 @@ class Aramex
 
         $data['Details']['CustomsValueAmount'] = [
             'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
-            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : (($shipmentInfo['declared_value'] / 0.71) ?? 0),
+            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code),
         ];
 
         $data['Details']['CustomsValueAmount']['CurrencyCode'] =

@@ -46,7 +46,9 @@ class ShipmentController extends MerchantController
         $type = $request->type ?? 'DOM';
 
 
-        $shipments = DB::table('shipments as s')->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        $shipments = DB::table('shipments as s')
+            ->where('merchant_id', Request()->user()->merchant_id)
+            ->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($external))
             $shipments->whereIn('s.external_awb', $external);
 
@@ -68,6 +70,8 @@ class ShipmentController extends MerchantController
             } else
                 $shipments->whereIn('s.status', $statuses);
         }
+        $shipments->orderBy('created_at', 'desc');
+
 
         $tabs =  DB::table('shipments')
             ->where('merchant_id', Request()->user()->merchant_id)
