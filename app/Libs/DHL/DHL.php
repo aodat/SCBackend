@@ -43,6 +43,9 @@ class DHL
         ];
 
         $this->end_point = self::$stagingUrl;
+        if (config('app.env') == 'production')
+            $this->end_point = self::$productionUrl;
+
         $this->account_number = config('carriers.dhl.ACCOUNT_NUMBER');
         $this->merchentInfo = App::make('merchantInfo');
     }

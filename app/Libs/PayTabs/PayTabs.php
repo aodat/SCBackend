@@ -5,8 +5,6 @@ namespace Libs;
 use Illuminate\Support\Facades\Http;
 use App\Exceptions\InternalException;
 
-use Illuminate\Support\Str;
-
 class PayTabs
 {
 

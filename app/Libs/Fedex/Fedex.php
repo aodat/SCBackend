@@ -14,6 +14,7 @@ class Fedex
     private $account_number, $meter_number, $key, $password;
 
     private static $stagingUrl = 'https://wsbeta.fedex.com:443/web-services';
+    private static $productionUrl = 'https://ws.fedex.com:443/web-services';
 
 
     private static $xsd = [
@@ -31,7 +32,10 @@ class Fedex
         $this->meter_number = config('carriers.fedex.METER_NUMBER');
         $this->key = config('carriers.fedex.KEY');
         $this->password = config('carriers.fedex.PASSWORD');
+
         $this->end_point = self::$stagingUrl;
+        if (config('app.env') == 'production')
+            $this->end_point = self::$productionUrl;
     }
 
     public function createPickup($email, $date, $address)
