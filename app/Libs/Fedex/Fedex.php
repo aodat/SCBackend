@@ -149,7 +149,12 @@ class Fedex
 
 
         $response = $this->call('ProcessShipmentRequest', $payload);
-        if (!isset($response['Notifications']['Severity']) || (isset($response['Notifications']['Severity']) && $response['Notifications']['Severity'] == 'ERROR'))
+
+        if (
+            (!isset($response['Notifications']['Severity'])) ||
+            (isset($response['Notifications']['Severity']) && $response['Notifications']['Severity'] == 'ERROR') ||
+            (!isset($response['CompletedShipmentDetail']))
+        )
             throw new CarriersException('FedEx Create Shipment – Something Went Wrong', $payload, $response);
 
         return [
