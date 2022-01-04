@@ -101,7 +101,8 @@ class TransactionsController extends MerchantController
                 'merchant_id' => $request->user()->merchant_id,
                 'source' => $request->source,
                 'created_by' => $request->user()->id,
-                'balance_after' => $request->amount,
+                'amount' => $request->amount,
+                'balance_after' => $merchecntInfo->actual_balance,
                 'payment_method' => collect($selectedPayment),
                 'resource' => Request()->header('agent') ?? 'API'
             ]
