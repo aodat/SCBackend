@@ -114,6 +114,7 @@ class DHL
         $payload['ConsigneeDetails']['Contact']['Phone'] = $address['phone'];
 
         $response = $this->call('BookPURequest', $payload);
+
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
 
@@ -122,13 +123,12 @@ class DHL
 
     public function cancelPickup($pickupInfo)
     {
-        $address = Merchant::getAdressInfoByID($pickupInfo->address_id);
         $payload = $this->bindJsonFile('pickup.cancel.json');
 
-        $payload['RegionCode'] = 'AP';
+        $payload['RegionCode'] = 'EU';
         $payload['ConfirmationNumber'] =  $pickupInfo->hash;
-        $payload['RequestorName'] = $address->name;
-        $payload['CountryCode'] = $address->country_code;
+        $payload['RequestorName'] = $pickupInfo->address_info['name'];
+        $payload['CountryCode'] = $pickupInfo->address_info['country_code'];
         $payload['OriginSvcArea'] = 'AMM';
         $payload['PickupDate'] = $pickupInfo->pickup_date;
         $payload['CancelTime'] = '10:20';
@@ -194,7 +194,6 @@ class DHL
 
         if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
             throw new CarriersException('DHL Create Shipment – Something Went Wrong', $payload, $response);
-
 
         return [
             'id' => $response['AirwayBillNumber'],

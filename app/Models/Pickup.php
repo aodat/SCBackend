@@ -14,24 +14,9 @@ class Pickup extends Model
     use HasFactory;
     protected $guarded = [];
     protected $appends = ['carrier_name', 'address_name'];
-
-    public static function getPickupCarrires($merchant_id, $pickup_id = null, $carrier_id = null, $all = false)
-    {
-        $sql = DB::table('pickups as ups')
-            ->join('carriers as c', 'ups.carrier_id', 'c.id')
-            ->where('merchant_id', '=', $merchant_id)
-            ->select(DB::raw('ups.*,c.name'));
-
-        if ($pickup_id)
-            $sql->where('ups.id', '=', $pickup_id);
-
-        if ($carrier_id)
-            $sql->where('c.id', '=', $carrier_id);
-
-        if (!$all)
-            return $sql->first();
-        return $sql->get();
-    }
+    protected $casts = [
+        'address_info' => 'array'
+    ];
 
     public function getCarrierNameAttribute()
     {
@@ -41,8 +26,7 @@ class Pickup extends Model
 
     public function getAddressNameAttribute()
     {
-        $address = App::make('merchantAddresses')->where('id', $this->address_id)->first();
-        return $address['name'] ?? '';
+        return $this->address_info['name'];
     }
 
     protected function serializeDate(DateTimeInterface $date)

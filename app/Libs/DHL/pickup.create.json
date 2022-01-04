@@ -10,49 +10,49 @@
         "AccountType": "D",
         "AccountNumber": "123456789",
         "RequestorContact": {
-            "PersonName": "Roy",
-            "Phone": "1234567890"
+            "PersonName": "",
+            "Phone": ""
         },
-        "CompanyName": "DHL TEST",
-        "Address1": "DHL EXPRESS FR",
-        "Address2": "Le Rue",
-        "City": "Paris",
-        "CountryCode": "FR",
-        "PostalCode": "75001"
+        "CompanyName": "",
+        "Address1": "",
+        "Address2": "X",
+        "City": "",
+        "CountryCode": "",
+        "PostalCode": ""
     },
     "Place": {
         "LocationType": "B",
-        "CompanyName": "Test Pickup",
-        "Address1": "DHL EXPRESS GB",
-        "Address2": "A Road",
+        "CompanyName": "",
+        "Address1": "",
+        "Address2": "",
         "PackageLocation": "Reception",
-        "City": "LIVERPOOL",
-        "CountryCode": "GB",
-        "PostalCode": "L24 8RF"
+        "City": "",
+        "CountryCode": "",
+        "PostalCode": ""
     },
     "Pickup": {
-        "PickupDate": "2018-02-06",
+        "PickupDate": "",
         "PickupTypeCode": "A",
         "ReadyByTime": "10:20",
         "CloseTime": "14:20",
         "Pieces": "1",
         "RemotePickupFlag": "N",
         "weight": {
-            "Weight": "10",
+            "Weight": "1",
             "WeightUnit": "K"
         }
     },
     "PickupContact": {
-        "PersonName": "Kosani",
-        "Phone": "1234567890"
+        "PersonName": "",
+        "Phone": ""
     },
     "ShipmentDetails": {
         "AccountType": "D",
-        "AccountNumber": "123456789",
-        "BillToAccountNumber": "123456789",
-        "AWBNumber": "7520067111",
+        "AccountNumber": "",
+        "BillToAccountNumber": "",
+        "AWBNumber": "",
         "NumberOfPieces": "1",
-        "Weight": "10",
+        "Weight": "1",
         "WeightUnit": "K",
         "GlobalProductCode": "P",
         "LocalProductCode": "P",
@@ -68,14 +68,14 @@
         }
     },
     "ConsigneeDetails": {
-        "CompanyName": "ConsigneeCompany",
-        "AddressLine": "ConsigneeAdd1",
-        "City": "ConsigneeCity",
-        "CountryCode": "FR",
-        "PostalCode": "75001",
+        "CompanyName": "",
+        "AddressLine": "X",
+        "City": "",
+        "CountryCode": "",
+        "PostalCode": "",
         "Contact": {
-            "PersonName": "ConsigneePerson",
-            "Phone": "12345"
+            "PersonName": "",
+            "Phone": ""
         }
     }
 }

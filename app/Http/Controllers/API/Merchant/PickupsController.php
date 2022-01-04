@@ -64,27 +64,27 @@ class PickupsController extends MerchantController
         $address = $merchentAddresses->where('id', '=', $data['address_id'])->first();
         if ($address == null)
             return $this->error('address id is not valid', 400);
+
         $provider = Carriers::findOrfail($data['carrier_id'])->name;
-        DB::transaction(function () use ($data, $address, $provider, $merchentInfo) {
-            $pickupInfo = $this->generatePickup($provider, $data['pickup_date'], $address);
 
-            $data['merchant_id'] = $merchentInfo->id;
-            $data['hash'] = $pickupInfo['guid'];
-            $data['cancel_ref'] = $pickupInfo['id'];
+        $pickupInfo = $this->generatePickup($provider, $data['pickup_date'], $address);
 
-            Pickup::updateOrCreate(
-                ['merchant_id' => $merchentInfo->id, 'hash' => $pickupInfo['guid'], 'carrier_id' => $data['carrier_id']],
-                ['merchant_id' => $merchentInfo->id, 'hash' => $pickupInfo['guid'], 'cancel_ref' => $pickupInfo['id'], 'carrier_id' => $data['carrier_id'], 'pickup_date' => $data['pickup_date'], 'address_id' => $data['address_id']],
-            );
-        });
+        $data['merchant_id'] = $merchentInfo->id;
+        $data['hash'] = $pickupInfo['guid'];
+        $data['cancel_ref'] = $pickupInfo['id'];
+
+        Pickup::updateOrCreate(
+            ['merchant_id' => $merchentInfo->id, 'hash' => $pickupInfo['guid'], 'carrier_id' => $data['carrier_id']],
+            ['merchant_id' => $merchentInfo->id, 'hash' => $pickupInfo['guid'], 'cancel_ref' => $pickupInfo['id'], 'carrier_id' => $data['carrier_id'], 'pickup_date' => $data['pickup_date'], 'address_info' => collect($address)],
+        );
 
         return $this->successful('Created-Updated Successfully');
     }
 
     public function cancel(PickuptRequest $request)
     {
-        $pickup = Pickup::getPickupCarrires($request->user()->merchant_id, $request->pickup_id, $request->carrier_id, false);
-        $this->cancelPickup($pickup->name, $pickup);
+        $pickup = Pickup::where('id',$request->pickup_id,)->where('carrier_id', $request->carrier_id)->first();
+        $this->cancelPickup($pickup->carrier_name, $pickup);
 
         $pickup = Pickup::findOrfail($request->pickup_id);
         $pickup->status = 'CANCELD';
