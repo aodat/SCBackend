@@ -14,7 +14,6 @@ class Merchant extends Model
     use HasFactory;
     protected $guarded = [];
 
-
     protected $casts = [
         'payment_methods' => 'array',
         'documents' => 'array',
@@ -112,14 +111,9 @@ class Merchant extends Model
 
     public function getConfigAttribute()
     {
-        $payment_providers = collect(json_decode(Storage::disk('local')->get('template/payment_providers.json'), true));
-        $payment_providers = $payment_providers->filter(function ($collection) {
-            return in_array($this->country_code, collect($collection)->keys()->toArray());
-        });
-
         return [
             'countries' => collect(json_decode(Storage::disk('local')->get('template/countries.json'), true)),
-            'payment_providers' => (!$payment_providers->isEmpty()) ? collect($payment_providers)->first()[$this->country_code] : []
+            'payment_providers' =>  collect(json_decode(Storage::disk('local')->get('template/payment_providers.json'), true))[$this->country_code] ?? []
         ];
     }
 }

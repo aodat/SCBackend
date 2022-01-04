@@ -12,6 +12,8 @@ use App\Traits\CarriersManager;
 use App\Traits\SystemConfig;
 use App\Traits\SystemRules;
 
+use Illuminate\Support\Facades\Storage;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -21,5 +23,23 @@ class Controller extends BaseController
     public function unauthenticated()
     {
         return $this->error('unauthenticated', 403);
+    }
+
+    public function json()
+    {
+        $lists = collect(json_decode(Storage::disk('local')->get('template/rates/jo.json'), true));
+        $data = [];
+        $lists->map(function ($list) use (&$data) {
+            foreach ($list as $key => $value) {
+                if ($value != 0) {
+                    $data[$list['country_code']][] = [
+                        'carrier_id' => $key,
+                        'zone_id' => $value
+                    ];
+                }
+            }
+        });
+        echo json_encode($data);
+        die;
     }
 }

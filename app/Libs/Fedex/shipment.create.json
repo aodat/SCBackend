@@ -30,30 +30,30 @@
             },
             "Shipper": {
                 "Contact": {
-                    "PersonName": "One Person",
-                    "CompanyName": "Digital Orange",
-                    "PhoneNumber": "00-00-22-33"
+                    "PersonName": "",
+                    "CompanyName": "",
+                    "PhoneNumber": ""
                 },
                 "Address": {
-                    "StreetLines": "test",
-                    "City": "Roswell",
-                    "StateOrProvinceCode": "GA",
-                    "PostalCode": "30076",
-                    "CountryCode": "US"
+                    "StreetLines": "",
+                    "City": "",
+                    "StateOrProvinceCode": "",
+                    "PostalCode": "",
+                    "CountryCode": ""
                 }
             },
             "Recipient": {
                 "Contact": {
-                    "PersonName": "Some Name",
-                    "CompanyName": "Some Name",
-                    "PhoneNumber": "123-4564-121"
+                    "PersonName": "",
+                    "CompanyName": "",
+                    "PhoneNumber": ""
                 },
                 "Address": {
-                    "StreetLines": "test",
-                    "City": "Dubai",
+                    "StreetLines": "",
+                    "City": "",
                     "StateOrProvinceCode": "GA",
-                    "PostalCode": "20000",
-                    "CountryCode": "AE"
+                    "PostalCode": "",
+                    "CountryCode": ""
                 }
             },
             "ShippingChargesPayment": {
@@ -74,12 +74,12 @@
                     }
                 },
                 "CustomsValue": {
-                    "Currency": "DHS",
-                    "Amount": "407"
+                    "Currency": "USD",
+                    "Amount": "10"
                 },
                 "Commodities": {
                     "NumberOfPieces": "1",
-                    "Description": "Automobiles And Motorcycle Parts",
+                    "Description": "",
                     "CountryOfManufacture": "US",
                     "Weight": {
                         "Units": "KG",
@@ -88,8 +88,8 @@
                     "Quantity": "1",
                     "QuantityUnits": "EA",
                     "UnitPrice": {
-                        "Currency": "DHS",
-                        "Amount": "407.0"
+                        "Currency": "USD",
+                        "Amount": "10"
                     }
                 }
             },

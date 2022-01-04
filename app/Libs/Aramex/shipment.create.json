@@ -28,41 +28,6 @@
             "Type": ""
         }
     },
-    "ThirdParty": {
-        "Reference1": "",
-        "Reference2": "",
-        "PartyAddress": {
-            "Line1": "",
-            "Line2": "",
-            "Line3": "",
-            "City": "",
-            "StateOrProvinceCode": "",
-            "PostCode": "",
-            "CountryCode": "JO",
-            "Longitude": 0,
-            "Latitude": 0,
-            "BuildingNumber": null,
-            "BuildingName": null,
-            "Floor": null,
-            "Apartment": null,
-            "POBox": null,
-            "Description": null
-        },
-        "Contact": {
-            "Department": "",
-            "PersonName": "",
-            "Title": "",
-            "CompanyName": "",
-            "PhoneNumber1": "",
-            "PhoneNumber1Ext": "",
-            "PhoneNumber2": "",
-            "PhoneNumber2Ext": "",
-            "FaxNumber": "",
-            "CellPhone": "",
-            "EmailAddress": "",
-            "Type": ""
-        }
-    },
     "Consignee": {
         "Reference1": "",
         "Reference2": "",

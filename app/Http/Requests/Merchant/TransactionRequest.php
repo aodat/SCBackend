@@ -24,7 +24,16 @@ class TransactionRequest extends MerchantRequest
             $this->getMethod() == 'PUT' && strpos($path, 'transactions/deposit') !== false
         )
             return [
-                'amount' => 'required|numeric'
+                'amount' => 'required|numeric',
+                "token" => 'required|string',
+            ];
+
+        else if (
+            $this->getMethod() == 'POST' && strpos($path, 'transactions/export') !== false
+        )
+            return [
+                'date' => 'required|date|date_format:Y-m-d',
+                'type' => 'in:xlsx,pdf'
             ];
         return [];
     }

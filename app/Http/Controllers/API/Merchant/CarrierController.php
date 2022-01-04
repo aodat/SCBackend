@@ -12,28 +12,8 @@ class CarrierController extends MerchantController
     //
     public function index()
     {
-        $merchant = $this->getMerchantInfo();
-        $result =   collect($merchant->carriers);
-        $Carriers =  Carriers::all();
-
-        $collection = collect($Carriers)->map(function ($data) use ($result) {
-            $carrier = $result->where("carrier_id", $data->id)->first();
-            if ($carrier === null) {
-                $carrier = [
-                    'carrier_id' => (int) $data->id,
-                    'name' => $data->name,
-                    'is_defult' => false,
-                    'is_enabled' => true,
-                    'create_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ];
-            } else
-                $carrier['name'] = $data->name;
-
-            return $carrier;
-        });
-
-        return $this->response($collection, 'Data Retrieved Successfully');
+        $carriers =  Carriers::all();
+        return $this->response($carriers, 'Data Retrieved Successfully');
     }
 
     public function update($carrier_id, CarrierRequest  $request)
@@ -48,8 +28,8 @@ class CarrierController extends MerchantController
                 'carrier_id' => $carrier_id,
                 'is_defult' => $request->is_defult,
                 'is_enabled' => $request->is_enabled,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now()
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ];
 
             $result = $result->merge([$data]);
@@ -63,7 +43,7 @@ class CarrierController extends MerchantController
                 'is_defult' => $request->is_defult,
                 'is_enabled' => $request->is_enabled,
                 'created_at' => $result[$key]['created_at'],
-                'updated_at' => Carbon::now()
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
         }
         $merchant->update(['carriers' => $result]);

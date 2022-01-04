@@ -16,12 +16,12 @@ class RulesRequest extends MerchantRequest
             return [
                 'name' => 'required',
                 'rules.*.type' => 'required|in:express,dom',
-                'rules.*.sub-type' => 'required|in:cod,weight,city',
+                'rules.*.sub-type' => 'required|in:cod,weight,city,country',
                 'rules.*.constraint' => 'required',
                 'rules.*.value' => 'required',
                 'action' => 'required|array'
             ];
-        else if (strpos($path, 'rules/{rule_id}') !== false)
+        else if ($this->method() == 'PUT' && strpos($path, 'rules/{rule_id}') !== false)
             return [
                 'is_active' => 'required|boolean'
             ];

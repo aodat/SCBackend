@@ -13,16 +13,14 @@ class DocumentsController extends MerchantController
 
     public function index(DocumentsRequest $request)
     {
-    
-
-        $data = $this->getMerchentInfo()->select('documents')->first();
+        $data = $this->getMerchentInfo();
         return $this->response($data->documents, 'Data Retrieved Successfully', 200);
     }
 
     public function store(DocumentsRequest $request)
     {
         $merchant = $this->getMerchantInfo();
-        $result = collect($merchant->select('documents')->first()->documents);
+        $result = collect($merchant->documents);
         $counter = $result->max('id') ?? 0;
 
         $data = [
@@ -31,11 +29,11 @@ class DocumentsController extends MerchantController
             'url' => uploadFiles('documents', $request->file('file')),
             'status' => 'pending',
             'verified_at' => null,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function delete($id, DocumentsRequest $request)
@@ -45,7 +43,10 @@ class DocumentsController extends MerchantController
         $json = $result->reject(function ($value) use ($id) {
             if ($value['id'] == $id && $value['verified_at'] == null)
                 return $value;
+            else if ($value['id'] == $id && $value['verified_at'] !== null)
+                throw new InternalException('You Can\'t Delete this Document', 400);
         });
+
         $json = array_values($json->toArray());
         $list->update(['documents' => collect($json)]);
         return $this->successful('Deleted Successfully');

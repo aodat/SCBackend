@@ -9,7 +9,7 @@ class Phone implements Rule
     private $country_code;
     private $country_keys = [
         'jo' => '+962',
-        'ksa' => '+966'
+        'sa' => '+966'
     ];
     /**
      * Create a new rule instance.

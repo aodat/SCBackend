@@ -18,13 +18,15 @@ class CarriersException extends Exception
     public function render($rquest)
     {
         $response = [
-            'meta' =>
-            [
+            'meta' => [
                 'code' => 422,
                 'msg' => $this->msg,
                 'request_id' => App::make('request_id')
             ]
         ];
+
+        if (!empty($this->response))
+            $response['error'] = $this->response;
         return response()->json($response);
     }
 

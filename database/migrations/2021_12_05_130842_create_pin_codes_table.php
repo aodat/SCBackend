@@ -19,7 +19,7 @@ class CreatePinCodesTable extends Migration
             $table->string('code');
             $table->enum('status', ['active', 'inactive', 'used'])->default('active');
             $table->timestamps();
-            
+
             $table->foreign('merchant_id')->references('id')->on('merchants')->onDelete('cascade');
         });
     }

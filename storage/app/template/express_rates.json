@@ -3,38 +3,40 @@
         "zones": [
             {
                 "id": 1,
-                "basic": 17,
-                "additional": 7,
-                "g30": 8,
-                "g99": 10
+                "basic": 13,
+                "additional": 5,
+                "max_weight": 15
             },
             {
                 "id": 2,
-                "basic": 15,
-                "additional": 4,
-                "g30": 10,
-                "g99": 10
+                "basic": 13,
+                "additional": 5.4,
+                "max_weight": 15
             },
             {
                 "id": 3,
-                "basic": 15,
-                "additional": 4,
-                "g30": 8,
-                "g99": 10
+                "basic": 19,
+                "additional": 5,
+                "max_weight": 15
             },
             {
                 "id": 4,
-                "basic": 15,
-                "additional": 4,
-                "g30": 10,
-                "g99": 10
+                "basic": 19,
+                "additional": 5,
+                "max_weight": 15
             },
             {
                 "id": 5,
-                "basic": 15,
-                "additional": 4,
-                "g30": 10,
-                "g99": 10
+                "basic": 50,
+                "additional": 11,
+                "max_weight": 15
+            }
+        ],
+        "discounts": [
+            {
+                "condintion": "<=",
+                "weight": 2,
+                "percent": -0.15
             }
         ]
     },
@@ -43,51 +45,127 @@
             {
                 "id": 1,
                 "basic": 17,
-                "additional": 7,
-                "g30": 8,
-                "g99": 10
+                "additional": 6,
+                "max_weight": 5
             },
             {
                 "id": 2,
-                "basic": 15,
-                "additional": 4,
-                "g30": 10,
-                "g99": 10
+                "basic": 20,
+                "additional": 5,
+                "max_weight": 5
             },
             {
                 "id": 3,
-                "basic": 15,
-                "additional": 4,
-                "g30": 8,
-                "g99": 10
+                "basic": 20.5,
+                "additional": 7.5,
+                "max_weight": 5
             },
             {
                 "id": 4,
-                "basic": 15,
-                "additional": 4,
-                "g30": 10,
-                "g99": 10
+                "basic": 19.25,
+                "additional": 6.5,
+                "max_weight": 5
             },
             {
                 "id": 5,
-                "basic": 15,
-                "additional": 4,
-                "g30": 10,
-                "g99": 10
+                "basic": 23,
+                "additional": 7.75,
+                "max_weight": 5
             },
             {
                 "id": 6,
-                "basic": 15,
-                "additional": 4,
-                "g30": 10,
-                "g99": 10
+                "basic": 24.5,
+                "additional": 8,
+                "max_weight": 5
             },
             {
                 "id": 7,
-                "basic": 15,
+                "basic": 38,
+                "additional": 12.5,
+                "max_weight": 5
+            }
+        ],
+        "discounts": [
+            {
+                "condintion": "<=",
+                "weight": 2,
+                "percent": 0.30
+            }
+        ]
+    },
+    "3": {
+        "zones": [
+            {
+                "id": 1,
+                "basic": 13,
+                "additional": 6,
+                "max_weight": 20
+            },
+            {
+                "id": 2,
+                "basic": 13,
+                "additional": 6,
+                "max_weight": 20
+            },
+            {
+                "id": 3,
+                "basic": 25,
+                "additional": 7,
+                "max_weight": 20
+            },
+            {
+                "id": 4,
+                "basic": 13,
+                "additional": 6.3,
+                "max_weight": 20
+            },
+            {
+                "id": 5,
+                "basic": 13,
+                "additional": 6,
+                "max_weight": 20
+            },
+            {
+                "id": 6,
+                "basic": 13,
+                "additional": 6,
+                "max_weight": 20
+            },
+            {
+                "id": 7,
+                "basic": 17,
+                "additional": 7,
+                "max_weight": 20
+            },
+            {
+                "id": 8,
+                "basic": 24,
+                "additional": 8,
+                "max_weight": 20
+            },
+            {
+                "id": 9,
+                "basic": 17,
+                "additional": 6,
+                "max_weight": 20
+            },
+            {
+                "id": 10,
+                "basic": 19.5,
+                "additional": 8,
+                "max_weight": 20
+            },
+            {
+                "id": 11,
+                "basic": 32,
+                "additional": 9,
+                "max_weight": 20
+            },
+            {
+                "id": 12,
+                "basic": 50,
                 "additional": 4,
-                "g30": 10,
-                "g99": 10
+                "max_weight": 20
             }
         ]
     }

@@ -16,8 +16,8 @@ class AddressesController extends MerchantController
 {
     public function index(AddressesRequest $request)
     {
-        $data  =  $this->getMerchentInfo()->addresses;
-        return $this->response($data, "Data Retrieved Successfully");
+        $data = $this->getMerchentInfo();
+        return $this->response($data->addresses, 'Data Retrieved Successfully', 200);
     }
 
     public function store(AddressesRequest $request)
@@ -34,14 +34,17 @@ class AddressesController extends MerchantController
         $area = Area::find($area_id);
 
 
-        $result = collect(Merchant::where('id',$merchant->id)->select('addresses')->first()->addresses);
+        $result = collect($merchant->addresses);
         $counter = $result->max('id') ?? 0;
 
         if ($result->contains("name", $request->name))
             throw new InternalException('name already Exists', 400);
+        else if ($country->code != $merchant->country_code)
+            throw new InternalException('The Country address not same of merchant country', 400);
 
         $json = [
             'id' => ++$counter,
+            'name' => $request->name,
             'country_code' => $country->code,
             'country' => $country->name_en,
             'city_code' => $city->code,
@@ -50,11 +53,11 @@ class AddressesController extends MerchantController
             'phone' => $request->phone,
             'description' => $request->description,
             'is_default' => $request->is_default ?? false,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
         ];
 
         $merchant->update(['addresses' => $result->merge([$json])]);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function delete($id, AddressesRequest $request)

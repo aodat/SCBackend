@@ -19,15 +19,15 @@ class RulesController extends MerchantController
     {
         $merchant = $this->getMerchentInfo();
         $result = collect($merchant->select('rules')->first()->rules);
-        $counter = $result->max('id') ?? 1;
+        $counter = $result->max('id') ?? 0;
 
         $data = $request->validated();
         $data['id'] = ++$counter;
         $data['is_active'] = true;
-        $data['created_at'] = Carbon::now();
+        $data['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
 
         $merchant->update(['rules' => $result->merge([$data])]);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function status($id, RulesRequest $request)
@@ -41,7 +41,7 @@ class RulesController extends MerchantController
 
         $current = $rule->keys()->first();
         $data = $rule->toArray()[$current];
-        $data['updated_at'] =  Carbon::now();
+        $data['updated_at'] =  Carbon::now()->format('Y-m-d H:i:s');
         $data['is_active'] =  $request->is_active;
         $rules[$current] = $data;
         

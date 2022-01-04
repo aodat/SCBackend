@@ -21,7 +21,7 @@ class TeamController extends Controller
     public function index(TeamRequest $request)
     {
         $users = User::where('merchant_id', Request()->user()->merchant_id)
-            ->where('status', 'active')->paginate(request()->per_page ?? 10);
+            ->where('status', 'active')->paginate(request()->per_page ?? 30);
         return $this->pagination($users);
     }
 
@@ -38,7 +38,8 @@ class TeamController extends Controller
                         'name' => $request->name,
                         'email' => $request->email,
                         'password' => Hash::make($password),
-                        'role_member' => implode(',', $request->scope),
+                        'role' => 'member',
+                        'role_member' => implode(',', $request->scope ?? []),
                         'phone' => null
                     ]
                 );
@@ -58,8 +59,8 @@ class TeamController extends Controller
         $data = $request->validated();
 
         $user = User::findOrFail($data['id']);
-        $user->role = $data['role'];
-        $user->role_member = implode(',', $data['scope']);
+        $user->role = $data['scope'];
+        $user->role_member = implode(',', $data['role']);
         $user->save();
 
         return $this->successful('Updated Successfully');

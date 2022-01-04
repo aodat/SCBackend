@@ -19,9 +19,8 @@ use App\Http\Controllers\API\Merchant\PickupsController;
 use App\Http\Controllers\API\Merchant\InvoiceController;
 use App\Http\Controllers\API\Merchant\DashboardController;
 use App\Http\Controllers\API\Merchant\RulesController;
-
 use App\Http\Controllers\API\Merchant\CarrierController;
-use App\Models\Merchant;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -48,8 +47,10 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('email/resend', [AuthController::class, 'resend'])->name('verification.resend');
     Route::group(['middleware' => ['auth:api', 'check.merchant']], function () {
         Route::group(['prefix' => 'merchant/'], function () {
+            Route::get('generate-secret', [AuthController::class, 'generateSecretKey']);
             Route::put('change-secret', [AuthController::class, 'changeSecret']);
-
+            Route::delete('revoke-secret', [AuthController::class, 'revokeSecretKey']);
+            
             Route::get('carrier/list', [CarrierController::class, 'index']);
             Route::put('carrier/{carrier_id}/update', [CarrierController::class, 'update']);
 
@@ -57,7 +58,8 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('dashboard', [DashboardController::class, 'index']);
             Route::post('pincode', [MerchantController::class, 'pincode']);
 
-            Route::post('verify/phone', [MerchantController::class, 'verifyPhoneNumber']);
+            Route::post('phone/verify', [MerchantController::class, 'verifyPhone']);
+
             Route::put('update-info', [MerchantController::class, 'updateMerchantProfile']);
 
             // Merchant Profile
@@ -72,7 +74,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::group(['middleware' => ['scope:payment,admin']], function () {
                 Route::get('payment-methods', [PaymentMethodsController::class, 'index']);
                 Route::post('payment-methods/create', [PaymentMethodsController::class, 'store']);
-                Route::delete('payment-methods/{id}', [PaymentMethodsController::class, 'delete'])->where('id', '[0-9]+');
+                Route::post('payment-methods/{id}', [PaymentMethodsController::class, 'delete'])->where('id', '[0-9]+');
             });
 
             // Documents
@@ -89,6 +91,7 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::group(['middleware' => ['scope:shipping,admin']], function () {
                 Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
                 Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
+                Route::get('shipments/template', [ShipmentController::class, 'template']);
                 Route::post('shipments/filters', [ShipmentController::class, 'index']);
                 Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
                 Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
@@ -101,14 +104,17 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+');
             Route::put('transactions/withdraw', [TransactionsController::class, 'withDraw']);
             Route::put('transactions/deposit', [TransactionsController::class, 'deposit']);
-            Route::get('transactions/export/{type}', [TransactionsController::class, 'export']);
+            Route::post('transactions/export', [TransactionsController::class, 'export']);
 
             // Pickups
             Route::post('pickups', [PickupsController::class, 'index']);
+            Route::get('pickup/{pickup_id}', [PickupsController::class, 'show']);
             Route::post('pickups/create', [PickupsController::class, 'store']);
             Route::post('pickup/cancel', [PickupsController::class, 'cancel']);
 
             // Invoice
+            Route::post('invoices', [InvoiceController::class, 'index']);
+            Route::get('invoices/{invoice_id}', [InvoiceController::class, 'show']);
             Route::get('invoice/finalize/{invoice_id}', [InvoiceController::class, 'finalize']);
             Route::post('invoice/create', [InvoiceController::class, 'store']);
             Route::delete('invoice/{invoice_id}', [InvoiceController::class, 'delete'])->where('invoice_id', '[0-9]+');
@@ -136,7 +142,7 @@ Route::group(['middleware' => ['json.response']], function () {
 
         Route::post('auth/logout', [AuthController::class, 'logout']);
     });
-    Route::get('process/shipments', [ShipmentController::class, 'shipmentProcessSQS']);
+    Route::post('shipment/webhook', [ShipmentController::class, 'hook']);
     Route::get('process/stripe', [InvoiceController::class, 'stripeProcessSQS']);
 });
 Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');

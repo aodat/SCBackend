@@ -13,8 +13,7 @@ class PaymentMethodsController extends MerchantController
 {
     public function index(PaymentMethodsRequest $request)
     {
-        $merchantID =Request()->user()->merchant_id;
-        $data = Merchant::where('id', $merchantID)->select('payment_methods')->first();
+        $data = $this->getMerchentInfo();
         return $this->response($data->payment_methods, 'Data Retrieved Successfully', 200);
     }
 
@@ -23,8 +22,8 @@ class PaymentMethodsController extends MerchantController
         $json = $request->validated();
         $list = $this->getMerchentInfo();
 
-        $result = collect(Merchant::where('id', $list->id)->payment_methods);
-        $counter = $result->max('id') ?? 1;
+        $result = collect($list->payment_methods);
+        $counter = $result->max('id') ?? 0;
         $provider = collect($list->config['payment_providers'])->where('code', strtolower($json['provider_code']))->first();
 
         if ($provider == null)
@@ -32,11 +31,11 @@ class PaymentMethodsController extends MerchantController
 
         $json += $provider;
         $json['id'] = ++$counter;
-        $json['created_at'] = Carbon::now();
+        $json['created_at'] = Carbon::now()->format('Y-m-d H:i:s');
         if (isset($json['pin_code']))
             unset($json['pin_code']);
         $list->update(['payment_methods' => $result->merge([$json])]);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function delete($id, PaymentMethodsRequest $request)

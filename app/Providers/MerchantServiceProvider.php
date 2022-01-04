@@ -22,8 +22,12 @@ class MerchantServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('merchantInfo', function () {
-            if (!Auth::user())
-                return [];
+            if (Request()->user() === null)
+                return [
+                    'country_code' => 'JO',
+                    'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'), true)),
+                    'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'), true))
+                ];
             return Merchant::findOrFail(Auth::user()->merchant_id);
         });
 
@@ -47,12 +51,6 @@ class MerchantServiceProvider extends ServiceProvider
             return collect(Merchant::findOrFail(Auth::user()->merchant_id)->rules)->where('is_active', true);
         });
 
-
-        $this->app->singleton('merchantRules', function () {
-            if (!Auth::user())
-                return [];
-            return collect(Merchant::findOrFail(Auth::user()->merchant_id)->rules)->where('is_active', true);
-        });
 
         $this->app->singleton('Countrieslookup', function () {
             return Countries::lookup('en', true);

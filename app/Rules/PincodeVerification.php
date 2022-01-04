@@ -31,7 +31,9 @@ class PincodeVerification implements Rule
             ->orderBy('id', 'desc')->first();
 
         if (
-            isset($pincode->created_at) && $pincode->created_at->diffInSeconds() < 300
+            isset($pincode->created_at) && 
+            $pincode->created_at->diffInSeconds() < 300 &&
+            $pincode->status == 'active'
         ) {
             $pincode->status = 'used';
             $pincode->save();

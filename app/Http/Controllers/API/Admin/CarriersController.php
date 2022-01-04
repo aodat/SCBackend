@@ -25,7 +25,7 @@ class CarriersController extends Controller
         if ($id)
             $carriers->where('id', $id);
 
-        $paginated = $carriers->paginate(request()->per_page ?? 10);
+        $paginated = $carriers->paginate(request()->per_page ?? 30);
         return $this->pagination($paginated);
     }
 
@@ -39,7 +39,7 @@ class CarriersController extends Controller
     {
         $data = $request->validated();
         Carriers::create($data);
-        return $this->successful('Create Successfully');
+        return $this->successful('Created Successfully');
     }
 
     public function update(CarriersRequest $request)

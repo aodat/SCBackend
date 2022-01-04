@@ -14,9 +14,9 @@ class GateToPay
 
     public function __construct()
     {
-        $this->endPoint = "https://cmsopenapi.gatetopay.com/api/";
-        // if (env('APP_ENV') == 'local')
-        //     $this->endPoint = "https://cmsopenapitest.gatetopay.com/api/";
+        $this->endPoint = "https://cmsopenapitest.gatetopay.com/api/";
+        if (config('app.env') == 'production')
+            $this->endPoint = "https://cmsopenapi.gatetopay.com/api/";
 
         $this->agentKey = env('GATETOPAY_AGENTKEY');
         $this->tokenKey = $this->generatedKey();

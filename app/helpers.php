@@ -1,49 +1,68 @@
 <?php
 
+use App\Exceptions\InternalException;
 use App\Models\Shipment;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 
 use Illuminate\Support\Facades\Storage;
+use LynX39\LaraPdfMerger\Facades\PdfMerger;
+
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Mpdf\Mpdf;
 
-function uploadFiles($folder, $file, $type = '', $isOutput = false)
-{
-    $path = $folder . "/" . md5(Carbon::now());
-    if (!$isOutput) {
-        $path .= $file->getClientOriginalExtension();
-        $data = file_get_contents($file);
-    } else {
-        $data = $file;
-        $path .= ".$type";
+if (!function_exists('uploadFiles')) {
+    function uploadFiles($folder, $file, $type = '', $isOutput = false)
+    {
+        $path = $folder . "/" . md5(Carbon::now());
+        if (!$isOutput) {
+            $path .= $file->getClientOriginalExtension();
+            $data = file_get_contents($file);
+        } else {
+            $data = $file;
+            $path .= ".$type";
+        }
+
+        Storage::disk('s3')->put($path, $data);
+
+        return Storage::disk('s3')->url($path);
     }
-    
-    Storage::disk('s3')->put($path, $data);
-
-    return Storage::disk('s3')->url($path);
 }
 
 function exportPDF($view, $path, $data)
 {
-    $pdf = \PDF::loadView("pdf.$view", [$view => $data]);
-    Storage::disk('s3')->put($path, $pdf->output());
+    $mpdf = new Mpdf();
+    $html = view("pdf.$view", [$view  => $data])->render();
+    $mpdf->WriteHTML($html);
+    Storage::disk('s3')->put($path, $mpdf->Output('filename.pdf', 'S'));
     return Storage::disk('s3')->url($path);
 }
 
+
 function mergePDF($files)
 {
-    $pdf = new PDFMerger();
+    $pdfMerger = PDFMerger::init();
+
+    $folder = time();
+    $quotes = $folder . '/quotes.pdf';
+    Storage::disk('local')->put($quotes, '');
+
     foreach ($files as $file) {
-        $path = 'aramex/' . md5(time()) . '.pdf';
+        $path = $folder . '/' . md5(time()) . '.pdf';
         Storage::disk('local')->put($path, file_get_contents($file));
-        $pdf->addPDF(Storage::path($path, 'all'));
+        $pdfMerger->addPDF(Storage::path($path), 'all');
     }
-    $pathForTheMergedPdf = Storage::path("aramex/result.pdf");
-    $pdf->merge('file', $pathForTheMergedPdf);
+    $pdfMerger->merge();
 
-    Storage::disk('s3')->put($path, file_get_contents(Storage::path("aramex/result.pdf")));
+    $export = 'export/' . md5(time()) . '.pdf';
+    Storage::disk('s3')->put(
+        $export,
+        $pdfMerger->save(Storage::path($quotes), "string")
+    );
 
-    Storage::deleteDirectory('aramex');
-    return Storage::disk('s3')->url($path);
+    Storage::deleteDirectory($folder);
+    return Storage::disk('s3')->url($export);
 }
 
 
@@ -70,7 +89,7 @@ function randomNumber($length = 16)
 
 function InternalAWBExists($number)
 {
-    return Shipment::where('external_awb', $number)->exists();
+    return DB::table('shipments')->where('external_awb', $number)->exists();
 }
 
 function nestedLowercase($value)
@@ -79,6 +98,29 @@ function nestedLowercase($value)
         return array_map('nestedLowercase', $value);
     }
     return strtolower($value);
+}
+
+
+function currency_exchange($amount, $from, $to = 'USD')
+{
+    $arr = [
+        'from' => $from,
+        'to' => $to,
+        'amount' => $amount,
+        'api_key' => 'demo'
+    ];
+
+    $response = Http::get("https://api.fastforex.io/convert?".http_build_query($arr));
+
+    if (!$response->successful())
+        throw new InternalException('Currency Exchange',422);
+    return intval($response['result'][$to]);
+     
+    // $rates = [
+    //     'JOD' => 0.71,
+    //     'SAR' => 3.75
+    // ];
+    // return $rates[$from] * $amount; 
 }
 
 function array_to_xml(array $arr, SimpleXMLElement $xml)

@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Exports\TransactionsExport;
 use App\Http\Requests\Merchant\TransactionRequest;
 use App\Models\Invoices;
 use App\Models\Transaction;
 use Carbon\Carbon;
-
+use Illuminate\Support\Facades\DB;
 use Libs\Stripe;
 
 class TransactionsController extends MerchantController
 {
 
     protected $stripe;
+
+    private $type = [
+        'ALL' => 0, 'CASHIN' => 0, 'CASHOUT' => 0
+    ];
+
     public function __construct()
     {
         $this->stripe = new Stripe();
@@ -22,7 +28,7 @@ class TransactionsController extends MerchantController
     {
         $filters = $request->json()->all();
 
-        $since = $filters['created_at']['since'] ?? Carbon::today()->subDays(3)->format('Y-m-d');
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
 
         $types = $filters['types'] ?? [];
@@ -30,35 +36,39 @@ class TransactionsController extends MerchantController
         $sources = $filters['sources'] ?? [];
         $amount = $filters['amount']['val'] ?? null;
         $operation = $filters['amount']['operation'] ?? null;
-        $transaction2 = Transaction::select('created_at')->groupBy('created_at')->paginate(request()->per_page ?? 10);
-        $paginated = array();
 
-        foreach ($transaction2 as $key => $value) {
-            $transaction = Transaction::where("created_at", "=", $value->created_at)->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
-            if (count($statuses))
-                $transaction->whereIn('status', $statuses);
 
-            if (count($sources))
-                $transaction->whereIn('source', $sources);
+        $transaction = Transaction::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        if (count($statuses))
+            $transaction->whereIn('status', $statuses);
 
-            if (count($types))
-                $transaction->whereIn('type', $types);
+        if (count($sources))
+            $transaction->whereIn('source', $sources);
 
-            if ($operation)
-                $transaction->where('amount', $operation, $amount);
-            else if ($amount)
-                $transaction->whereBetween('amount', [intval($amount), intval($amount) . '.99']);
+        if (count($types))
+            $transaction->whereIn('type', $types);
 
-            $created_at = (string)$value->created_at->format('Y-m-d');
-            $paginated[$created_at] = $transaction->get();
-        }
+        if ($operation)
+            $transaction->where('amount', $operation, $amount);
+        else if ($amount)
+            $transaction->whereBetween('amount', [intval($amount), intval($amount) . '.99']);
 
-        return $this->response($paginated, 'Data Retrieved Successfully');
+        $tabs = DB::table('transactions')
+            ->where('merchant_id', Request()->user()->merchant_id)
+            ->select('type', DB::raw(
+                'count(type) as counter'
+            ))
+            ->groupBy('type')
+            ->pluck('counter', 'type');
+
+        $tabs = collect($this->type)->merge(collect($tabs));
+        $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
+
+        return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
     public function show($id, TransactionRequest $request)
     {
-
         $data = Transaction::findOrFail($id);
         return $this->response($data, 'Data Retrieved Successfully');
     }
@@ -91,9 +101,10 @@ class TransactionsController extends MerchantController
                 'merchant_id' => $request->user()->merchant_id,
                 'source' => $request->source,
                 'created_by' => $request->user()->id,
-                'balance_after' => $request->amount,
+                'amount' => $request->amount,
+                'balance_after' => ($actualBalance - $request->amount),
                 'payment_method' => collect($selectedPayment),
-                'resource' => $request->resource
+                'resource' => Request()->header('agent') ?? 'API'
             ]
         );
     }
@@ -103,22 +114,53 @@ class TransactionsController extends MerchantController
         $data = $request->validated();
         $merchecntInfo = $this->getMerchentInfo();
 
-        $customerID = $this->stripe->createCustomer($merchecntInfo->name, $merchecntInfo->email);
-        $receipt = $this->stripe->invoice($customerID, 'Deposit Transaction', $data['amount'], $merchecntInfo->currency_code);
-        $link = $this->stripe->finalizeInvoice($receipt['fk_id']);
+        $infoTransaction =   [
+            'amount' =>  currency_exchange($data['amount'], $merchecntInfo->currency_code, 'USD'),
+            'currency' => 'USD',
+            'source' => $data['token'],
+            'description' => "Merachnt Deposit " . $merchecntInfo->name,
+        ];
 
-        $data['customer_name'] = $merchecntInfo->name;
-        $data['customer_email'] = $merchecntInfo->email;
-        $data['fk_id'] = $receipt['fk_id'];
-        $data['merchant_id'] = $request->user()->merchant_id;
-        $data['user_id'] = $request->user()->id;
-        $data['resource'] = 'WEB';
-        Invoices::create($data);
+        $this->stripe->InvoiceWithToken($infoTransaction);
 
-        return $this->response(['link' => $link], 'Payment request');
+        Transaction::create(
+            [
+                'type' => 'CASHOUT',
+                'merchant_id' => $request->user()->merchant_id,
+                'source' => 'CREDITCARD',
+                'status' => 'COMPLETED',
+                'created_by' => $request->user()->id,
+                'balance_after' => $request->amount + $merchecntInfo->actual_balance,
+                'amount' => $request->amount,
+                'resource' => Request()->header('agent') ?? 'API'
+            ]
+        );
+
+        $merchecntInfo->actual_balance = $request->amount + $merchecntInfo->actual_balance;
+        $merchecntInfo->save();
+
+        return $this->successful('Deposit Sucessfully');
     }
 
     public function export(TransactionRequest $request)
     {
+        $merchentID = Request()->user()->merchant_id;
+        $type = $request->type;
+        $date = $request->date;
+
+        $transaction = Transaction::where('merchant_id', $merchentID)
+            ->whereDate('created_at', $date)
+            ->get();
+        if ($transaction->isEmpty())
+            return $this->response([], 'No Data Retrieved');
+
+        $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
+
+        if ($type == 'xlsx')
+            $url = exportXLSX(new TransactionsExport($transaction), $path);
+        else
+            $url = exportPDF('transactions', $path, $transaction);
+
+        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
     }
 }

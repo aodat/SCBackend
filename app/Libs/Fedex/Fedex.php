@@ -3,12 +3,9 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
-use App\Models\Carriers;
+use App\Models\City;
 use App\Models\Merchant;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Http;
-
-use XmlParser;
 
 use SimpleXMLElement;
 
@@ -17,6 +14,7 @@ class Fedex
     private $account_number, $meter_number, $key, $password;
 
     private static $stagingUrl = 'https://wsbeta.fedex.com:443/web-services';
+    private static $productionUrl = 'https://ws.fedex.com:443/web-services';
 
 
     private static $xsd = [
@@ -24,7 +22,6 @@ class Fedex
         'ProcessShipmentRequest' => 'http://fedex.com/ws/ship/v21',
         'CancelPickupRequest' => 'http://fedex.com/ws/pickup/v22'
     ];
-
 
     private $end_point;
     private $prefix = '';
@@ -35,7 +32,10 @@ class Fedex
         $this->meter_number = config('carriers.fedex.METER_NUMBER');
         $this->key = config('carriers.fedex.KEY');
         $this->password = config('carriers.fedex.PASSWORD');
+
         $this->end_point = self::$stagingUrl;
+        if (config('app.env') == 'production')
+            $this->end_point = self::$productionUrl;
     }
 
     public function createPickup($email, $date, $address)
@@ -54,14 +54,12 @@ class Fedex
 
         $payload['CreatePickupRequest']['OriginDetail']['BuildingPartDescription'] = $address['area'];
         $payload['CreatePickupRequest']['OriginDetail']['ReadyTimestamp'] = date('c', strtotime($date . ' 03:00 PM'));
-
         $response = $this->call('CreatePickupRequest', $payload);
 
-        if (isset($response['HighestSeverity']) && $response['HighestSeverity'])
+        if (!isset($response['Notifications']['Severity']) || (isset($response['Notifications']['Severity']) && $response['Notifications']['Severity'] == 'ERROR'))
             throw new CarriersException('FedEx Create pickup – Something Went Wrong', $payload, $response);
 
-        dd($response);
-        // return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
+        return ['id' => randomNumber(32), 'guid' => $response['PickupConfirmationNumber']];
     }
 
     public function cancelPickup($pickupInfo)
@@ -88,7 +86,7 @@ class Fedex
         $payload['vid-CancelPickupRequest']['vid-Payor']['vid-ResponsibleParty']['vid-Address'] = [
             "vid-StreetLines" => "",
             "vid-City" => $address->city_code,
-            "vid-StateOrProvinceCode" => "TN",
+            // "vid-StateOrProvinceCode" => "",
             "vid-PostalCode" => "",
             "vid-CountryCode" => $address->country_code,
             "vid-GeographicCoordinates" => ""
@@ -101,15 +99,14 @@ class Fedex
         return true;
     }
 
-    public function printLabel()
-    {
-    }
-
     public function createShipment($merchentInfo, $shipmentInfo)
     {
         $payload = $this->bindJsonFile('shipment.create.json', "ProcessShipmentRequest");
 
-        $payload['ProcessShipmentRequest']['TransactionDetail']['CustomerTransactionId'] = randomNumber(32);
+        $payload['ProcessShipmentRequest']['TransactionDetail']['CustomerTransactionId'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['CustomerReferences']['Value'] =
+            randomNumber(32);
+
         $payload['ProcessShipmentRequest']['RequestedShipment']['ShipTimestamp'] = Carbon::now()->format(Carbon::ATOM);
         $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Contact'] = [
             'PersonName' => $shipmentInfo['sender_name'],
@@ -119,7 +116,7 @@ class Fedex
         $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Address'] = [
             'StreetLines' => $shipmentInfo['sender_address_description'],
             'City' => $shipmentInfo['sender_city'],
-            'StateOrProvinceCode' => 'GA',
+            // 'StateOrProvinceCode' => 'GA',
             'PostalCode' => '20000',
             'CountryCode' => $merchentInfo->country_code
         ];
@@ -130,16 +127,34 @@ class Fedex
         ];
         $payload['ProcessShipmentRequest']['RequestedShipment']['Recipient']['Address'] = [
             'StreetLines' => $shipmentInfo['consignee_address_description'],
-            'City' => $shipmentInfo['consignee_city'],
-            'StateOrProvinceCode' => 'GA',
+            'City' => $shipmentInfo['consignee_area'],
+            'StateOrProvinceCode' => City::where('name_en', $shipmentInfo['consignee_city'])->first() ? City::where('name_en', $shipmentInfo['consignee_city'])->first()->code : '',
             'PostalCode' => $shipmentInfo['consignee_zip_code'] ?? '',
             'CountryCode' => $shipmentInfo['consignee_country']
         ];
+
         $payload['ProcessShipmentRequest']['RequestedShipment']['ShippingChargesPayment']['Payor']['ResponsibleParty']['AccountNumber'] = $this->account_number;
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['Description'] = $shipmentInfo['notes'] ?? 'No Notes';
+
+
+        $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['Weight']['Value'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['Weight']['Value'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['CustomerReferences']['Value'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['TotalWeight']['Value'] =
+            number_format($shipmentInfo['actual_weight'], 2, '.', '');
+
+        $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['CustomsValue']['Amount'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['UnitPrice']['Amount'] =
+            currency_exchange($shipmentInfo['fees'], $merchentInfo->currency_code);
+
+
         $response = $this->call('ProcessShipmentRequest', $payload);
 
-        if (!isset($response['Notifications']['Severity']))
+        if (
+            (!isset($response['Notifications']['Severity'])) ||
+            (isset($response['Notifications']['Severity']) && $response['Notifications']['Severity'] == 'ERROR') ||
+            (!isset($response['CompletedShipmentDetail']))
+        )
             throw new CarriersException('FedEx Create Shipment – Something Went Wrong', $payload, $response);
 
         return [

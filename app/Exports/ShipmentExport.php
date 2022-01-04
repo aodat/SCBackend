@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 
-use App\Shipment;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithHeadings;

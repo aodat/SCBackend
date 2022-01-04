@@ -31,7 +31,8 @@ class MerchantRequest extends FormRequest
             return Shipment::where('id', Request::instance()->id)->exists();
         else if (
             ($this->getMethod() == 'DELETE' && strpos($path, 'invoice/{invoice_id}') !== false) ||
-            ($this->getMethod() == 'GET' && strpos($path, 'invoice/finalize/{invoice_id}') !== false)
+            ($this->getMethod() == 'GET' && strpos($path, 'invoice/finalize/{invoice_id}') !== false) ||
+            ($this->getMethod() == 'GET' && strpos($path, 'invoice/{invoice_id}') !== false)
         )
             return Invoices::where('id', Request::instance()->invoice_id)->exists();
         return true;
@@ -76,9 +77,12 @@ class MerchantRequest extends FormRequest
                     new PincodeVerification()
                 ],
             ];
-        } else if (strpos($path, 'merchant/verify/phone') !== false) {
+        } else if (strpos($path, 'merchant/phone/verify') !== false) {
             return [
-                'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14'
+                "pin_code" => [
+                    'required',
+                    new PincodeVerification()
+                ]
             ];
         }
         return [];

@@ -3,6 +3,7 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Models\City;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
@@ -32,7 +33,7 @@ class Aramex
             'SH005' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'SH006' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'SH069' => ['status' => 'COMPLETED', 'returned_at' => Carbon::now(), 'delivered_at' => null, 'paid_at' => null],
-            // 'SH239' => ['status' => 'COMPLETED', 'paid_at' => Carbon::now(), 'delivered_at' => Carbon::now(), 'returned_at' => null]
+            'SH239' => ['status' => 'COMPLETED', 'paid_at' => Carbon::now(), 'delivered_at' => Carbon::now(), 'returned_at' => null, 'actions' => ['create_transaction', 'update_merchant_balance']]
         ];
     }
 
@@ -45,7 +46,7 @@ class Aramex
         $payload['Pickup']['PickupAddress']['Line1'] = $address['description'];
         $payload['Pickup']['PickupAddress']['Line2'] = $address['area'];
         $payload['Pickup']['PickupAddress']['Line3'] = '';
-        $payload['Pickup']['PickupAddress']['City'] = $address['name'];
+        $payload['Pickup']['PickupAddress']['City'] = $address['city'];
         $payload['Pickup']['PickupAddress']['CountryCode'] = $address['country_code'];
 
         $payload['Pickup']['PickupContact']['PersonName'] = $address['name'];
@@ -54,7 +55,7 @@ class Aramex
         $payload['Pickup']['PickupContact']['CellPhone'] = $address['phone'];
         $payload['Pickup']['PickupContact']['EmailAddress'] = $email;
 
-        $payload['Pickup']['PickupLocation'] = $address['city_code'];
+        $payload['Pickup']['PickupLocation'] = $address['city_code'] ?? $address['city'];
         $payload['Pickup']['PickupDate'] = '/Date(' . (strtotime($date) * 1000) . ')/';
 
         $ReadyTime  = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 03:00 PM') * 1000;
@@ -67,6 +68,7 @@ class Aramex
         $response = Http::post(self::$CREATE_PICKUP_URL, $payload);
         if (!$response->successful())
             throw new CarriersException('Aramex Create Pickup – Something Went Wrong', $payload, $response->json());
+
         if ($response->json()['HasErrors'])
             throw new CarriersException('Aramex Data Provided Not Correct - Create Pickup', $payload, $response->json());
 
@@ -106,12 +108,12 @@ class Aramex
         return $files;
     }
 
-    public function createShipment($merchentInfo = null, $shipmentArray)
+    public function createShipment($merchentInfo = null, $shipmentInfo)
     {
         $payload = [
             'ClientInfo' => $this->config,
             'LabelInfo' => ['ReportID' => 9729, 'ReportType' => 'URL'],
-            'Shipments' => $shipmentArray,
+            'Shipments' => $shipmentInfo,
             'Transaction' => [
                 'Reference1' => '',
                 'Reference2' => '',
@@ -120,7 +122,9 @@ class Aramex
                 'Reference5' => '',
             ]
         ];
+
         $response = Http::post(self::$CREATE_SHIPMENTS_URL, $payload);
+
         if (!$response->successful())
             throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $response->json());
 
@@ -143,12 +147,12 @@ class Aramex
 
         $data['Shipper']['Reference1'] = $merchentInfo->id;
         $data['Shipper']['AccountNumber'] =
-            $data['ThirdParty']['AccountNumber'] =
+            $data['Consignee']['AccountNumber'] =
             $this->config['AccountNumber'];
 
         $data['Shipper']['PartyAddress']['Line1'] = $shipmentInfo['sender_address_description'];
         $data['Shipper']['PartyAddress']['Line2'] = $shipmentInfo['sender_area'];
-        $data['Shipper']['PartyAddress']['City'] = $shipmentInfo['sender_city'];
+        $data['Shipper']['PartyAddress']['City'] = ucfirst(strtolower($shipmentInfo['sender_city']));
         $data['Shipper']['PartyAddress']['CountryCode'] = $merchentInfo->country_code;
         $data['Shipper']['Contact']['PersonName'] = $shipmentInfo['sender_name'];
         $data['Shipper']['Contact']['CompanyName'] = $shipmentInfo['sender_name'];
@@ -156,46 +160,57 @@ class Aramex
         $data['Shipper']['Contact']['CellPhone'] = $shipmentInfo['sender_phone'];
 
         $data['Consignee']['PartyAddress']['Line1'] = $shipmentInfo['consignee_address_description'];
-        $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_area'];
-        $data['Consignee']['PartyAddress']['Line3'] = $shipmentInfo['consignee_second_phone'];
+        $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_second_phone'] ?? '';
+        $data['Consignee']['PartyAddress']['Line3'] = '';
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
+        $data['Consignee']['PartyAddress']['StateOrProvinceCode'] = City::where('name_en', $shipmentInfo['consignee_city'])->first() ? City::where('name_en', $shipmentInfo['consignee_city'])->first()->code : '';
+
         if ($shipmentInfo['group'] == 'EXP')
-            $data['Consignee']['PartyAddress']['PostCode'] = $shipmentInfo['consignee_zip_code'];
+            $data['Consignee']['PartyAddress']['PostCode'] = $shipmentInfo['consignee_zip_code'] ?? '';
         $data['Consignee']['PartyAddress']['CountryCode'] = ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->country_code : $shipmentInfo['consignee_country'];
 
         $data['Consignee']['Contact']['PersonName'] = $shipmentInfo['consignee_name'];
         $data['Consignee']['Contact']['CompanyName'] = $shipmentInfo['consignee_name'];
         $data['Consignee']['Contact']['PhoneNumber1'] = $shipmentInfo['consignee_phone'];
-        $data['Consignee']['Contact']['PhoneNumber2'] = $shipmentInfo['consignee_second_phone'];
+        $data['Consignee']['Contact']['PhoneNumber2'] = $shipmentInfo['consignee_second_phone'] ?? '';
         $data['Consignee']['Contact']['CellPhone'] = $shipmentInfo['consignee_phone'];
 
         $data['ShippingDateTime'] = '/Date(' . (Carbon::tomorrow()->getTimestamp() * 1000) . ')/';
         $data['DueDate'] = '/Date(' . (Carbon::tomorrow()->getTimestamp() * 1000) . ')/';
-        $data['Comments'] = $shipmentInfo['notes'] ?? '';
+        $data['Comments'] = $shipmentInfo['consignee_notes'] ?? '';
 
         $data['Details']['DescriptionOfGoods'] = $shipmentInfo['content'];
         $data['Details']['GoodsOriginCountry'] = $merchentInfo->country_code;
         $data['Details']['NumberOfPieces'] = $shipmentInfo['pieces'];
         $data['Details']['ProductGroup'] = $shipmentInfo['group'];
-        $data['Details']['CashOnDeliveryAmount'] = [
-            'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
-            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : $shipmentInfo['cod'] / 0.71,
-        ];
+
+        $data['Details']['ActualWeight']['Value'] = $shipmentInfo['actual_weight'] ?? 1;
+
+        if ($shipmentInfo['group'] == 'EXP') {
+
+            $data['Details']['ProductType'] = $shipmentInfo['is_doc'] ? 'PDX' : 'PPX';
+        }
+
+        if (isset($shipmentInfo['cod']))
+            $data['Details']['CashOnDeliveryAmount'] = [
+                'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
+                "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['cod'],$merchentInfo->currency_code),
+            ];
 
         $data['Details']['CashAdditionalAmount'] = [
             'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
             "Value" => "0",
         ];
+
         $data['Details']['CustomsValueAmount'] = [
             'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
-            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : $shipmentInfo['cod'] / 0.71,
+            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code),
         ];
 
         $data['Details']['CustomsValueAmount']['CurrencyCode'] =
             ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD';
 
-
-        $data['Details']['Services'] = ($shipmentInfo['cod'] > 0) ? 'CODS' : '';
+        $data['Details']['Services'] = (isset($shipmentInfo['cod']) && $shipmentInfo['cod'] > 0) ? 'CODS' : '';
         return $data;
     }
 

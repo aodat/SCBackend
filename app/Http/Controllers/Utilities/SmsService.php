@@ -28,7 +28,7 @@ class SmsService
 			'mobile_number' => $number,
 			'from' => 'ShipCash'
 		];
-		
-		return Http::get("http://sendsms.ngt.jo/http/send_sms_http.php?".http_build_query($data));
+
+		return Http::get("http://sendsms.ngt.jo/http/send_sms_http.php?" . http_build_query($data));
 	}
 }
