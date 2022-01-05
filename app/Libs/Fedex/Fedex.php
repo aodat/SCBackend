@@ -145,7 +145,7 @@ class Fedex
 
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['CustomsValue']['Amount'] =
             $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['UnitPrice']['Amount'] =
-            currency_exchange($shipmentInfo['fees'], $merchentInfo->currency_code);
+            currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code);
 
 
         $response = $this->call('ProcessShipmentRequest', $payload);
