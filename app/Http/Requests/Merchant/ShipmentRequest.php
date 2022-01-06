@@ -144,8 +144,7 @@ class ShipmentRequest extends MerchantRequest
                     new wordCount(1, 10)
                 ],
                 'content' => [
-                    'required',
-                    new wordCount(4)
+                    'required'
                 ],
                 'pieces' => 'required|integer',
                 'consignee_zip_code' => '',
