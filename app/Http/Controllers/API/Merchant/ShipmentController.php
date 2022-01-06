@@ -136,8 +136,9 @@ class ShipmentController extends MerchantController
         $countries = Country::pluck('code', 'name_en');
         $merchentInfo = $this->getMerchentInfo();
         $addresses = collect($merchentInfo->addresses);
+        $dom_rates = collect($merchentInfo->domestic_rates);
 
-        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $type, $countries) {
+        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $dom_rates, $type, $countries) {
             $address = $addresses->where('id', '=', $shipment['sender_address_id'])->first();
 
             if ($address == null)
@@ -191,12 +192,10 @@ class ShipmentController extends MerchantController
 
         $links = [];
         if ($payloads->isEmpty()) { // for signle Shipment Request
-            dd('rrrrr');
             if (isset($shipments->toArray()[0]))
                 $shipment = $shipments->toArray()[0];
             else
                 $shipment = $shipments->toArray();
-
             $result = $this->generateShipment($provider, $this->getMerchentInfo(), $shipment);
             $links[] = $result['link'];
 
@@ -222,9 +221,6 @@ class ShipmentController extends MerchantController
                     "amount" => $payment
                 ]);
         } else if (!$payloads->isEmpty()) {
-            dd('cccc');
-            dd($this->getMerchentInfo());
-
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
             $externalAWB = $result['id'];
             $files = $result['link'];
@@ -318,20 +314,29 @@ class ShipmentController extends MerchantController
     public function guestShipment(ShipmentRequest $request)
     {
         $shipment = $request->validated();
-        $strip_token = $shipment['strip_token'];
-        $provider = Carriers::where('id', $shipment['carrier_id'])->first()->name;
-        $countries = Country::pluck('code', 'name_en');
 
+
+        $strip_token = $shipment['strip_token'];
+
+        $countries = Country::pluck('code', 'name_en');
+        $merchentInfo = Merchant::findOrFail(1);
+        $dom_rates = collect($merchentInfo->domestic_rates);
         $shipment['sender_country'] = $countries[$shipment['sender_country']] ?? null;
-        $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
         $shipment['status'] = 'DRAFT';
         if ($shipment['type'] == 'express') {
             $shipment['group'] = 'EXP';
+            $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
             $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
         } else {
             $shipment['group'] = 'DOM';
-            $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
+            $shipment['consignee_country'] = $merchentInfo['country_code'];
+
+            $domestic_rates = $dom_rates->where('code', '=', $shipment['sender_city'])->first();
+            $shipment['fees'] = $domestic_rates['price'] ?? 0;
+            if ($shipment['fees'] == 0)
+                throw new InternalException('Domestic Rates Is Zero');
         }
+
 
         $shipment['merchant_id'] = 1;
         $shipment['created_by'] = 1;
@@ -346,7 +351,8 @@ class ShipmentController extends MerchantController
         $shipment['updated_at'] = Carbon::now();
 
         unset($shipment['strip_token'], $shipment['type']);
-        return $this->createShipmentDB(collect([$shipment]), $provider);
+        $provider = Carriers::where('id', $shipment['carrier_id'])->first()->name;
+        // return $this->createShipmentDB(collect($shipment), $provider);
 
         // $infoTransaction =   [
         //     'amount' =>  currency_exchange($data['amount'], $merchecntInfo->currency_code, 'USD'),

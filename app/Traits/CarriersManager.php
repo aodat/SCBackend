@@ -58,12 +58,9 @@ trait CarriersManager
         ];
     }
 
-    public function generateShipmentArray($provider, $shipmentInfo, $isGuest = false)
+    public function generateShipmentArray($provider, $shipmentInfo)
     {
-        if ($isGuest)
-            $this->loadProvider($provider, 1);
-        else
-            $this->loadProvider($provider);
+        $this->loadProvider($provider);
         return $this->adapter->shipmentArray($this->merchantInfo, $shipmentInfo);
     }
 
@@ -78,7 +75,7 @@ trait CarriersManager
         $shipments = Shipment::whereIn('external_awb', $shipments_number)->get();
         $shipments = $shipments->map(function ($shipment) {
             if ($shipment['group'] == 'EXP' && !$shipment['is_doc']) {
-                $shipment['url'] = mergePDF([InvoiceService::commercial($shipment), $shipment['url']]);
+                $shipment['url'] = mergePDF([InvoiceService::commercial($shipment),$shipment['url']]);
             }
             return $shipment;
         });
