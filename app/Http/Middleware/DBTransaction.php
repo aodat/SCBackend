@@ -22,7 +22,7 @@ class DBTransaction
      */
     public function handle(Request $request, Closure $next)
     {
-        
+
         DB::beginTransaction();
 
         try {
@@ -33,7 +33,6 @@ class DBTransaction
         }
 
         if (
-            $response instanceof Response &&
             ($response->getStatusCode() == 500
                 || (isset(json_decode($response->getContent())->meta->code) &&
                     json_decode($response->getContent())->meta->code > 399))
@@ -41,6 +40,7 @@ class DBTransaction
         ) {
             DB::rollBack();
         } else {
+
             DB::commit();
         }
 
@@ -61,7 +61,7 @@ class DBTransaction
         ];
 
         $data['body'] = $request->all();
-        $code = json_decode($response->getContent())->meta->code;
+        $code = json_decode($response->getContent())->meta->code ?? null;
         if ($code > 300 && $code < 499)
             Log::debug('Shipcash Error : ', ['request' => $data, 'response' => json_decode($response->getContent())]);
         else if ($code == 500 || $response->getStatusCode() == 500)
