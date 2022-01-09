@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Ship Cash'),
 
     /*
     |--------------------------------------------------------------------------
@@ -119,7 +119,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY'),
+    'key' => env('APP_KEY','base64:+J1nIXwQi981FrbN/1baMERAKenuwCPcyO7zr1yBtTQ='),
 
     'cipher' => 'AES-256-CBC',
 

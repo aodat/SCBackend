@@ -43,7 +43,8 @@
             "app/Libs/DHL",
             "app/Libs/Fedex",
             "app/Libs/GateToPay",
-            "app/Libs/PayTabs"
+            "app/Libs/PayTabs",
+            "app/Libs/Dinarak"
         ],
         "files": [
             "app/helpers.php"

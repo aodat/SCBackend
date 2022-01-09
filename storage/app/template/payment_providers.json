@@ -153,6 +153,13 @@
             "name_ar": "ماريد",
             "code": "md",
             "type": "wallet"
+        },
+        {
+            "id": "23",
+            "name_en": "Dinarak",
+            "name_ar": "دينارك",
+            "code": "dn",
+            "type": "wallet"
         }
     ],
     "SA": [
