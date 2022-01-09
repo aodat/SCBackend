@@ -103,24 +103,24 @@ function nestedLowercase($value)
 
 function currency_exchange($amount, $from, $to = 'USD')
 {
-    // $arr = [
-    //     'from' => $from,
-    //     'to' => $to,
-    //     'amount' => $amount,
-    //     'api_key' => 'demo'
-    // ];
-
-    // $response = Http::get("https://api.fastforex.io/convert?".http_build_query($arr));
-
-    // if (!$response->successful())
-    //     throw new InternalException('Currency Exchange',422);
-    // return intval($response['result'][$to]);
-     
-    $rates = [
-        'JOD' => 0.71,
-        'SAR' => 3.75
+    $arr = [
+        'from' => $from,
+        'to' => $to,
+        'amount' => $amount,
+        'api_key' => 'demo'
     ];
-    return $rates[$from] * $amount; 
+
+    $response = Http::get("https://api.fastforex.io/convert?".http_build_query($arr));
+
+    if (!$response->successful())
+        throw new InternalException('Currency Exchange',422);
+    return intval($response['result'][$to]);
+     
+    // $rates = [
+    //     'JOD' => 0.71,
+    //     'SAR' => 3.75
+    // ];
+    // return $rates[$from] * $amount; 
 }
 
 function array_to_xml(array $arr, SimpleXMLElement $xml)
