@@ -30,15 +30,26 @@ if (!function_exists('uploadFiles')) {
     }
 }
 
-function exportPDF($view, $path, $data)
-{
-    $mpdf = new Mpdf();
-    $html = view("pdf.$view", [$view  => $data])->render();
-    $mpdf->WriteHTML($html);
-    Storage::disk('s3')->put($path, $mpdf->Output('filename.pdf', 'S'));
-    return Storage::disk('s3')->url($path);
+if (!function_exists('exportPDF')) {
+    function exportPDF($view, $path, $data)
+    {
+        $mpdf = new Mpdf();
+        $html = view("pdf.$view", [$view  => $data])->render();
+        $mpdf->WriteHTML($html);
+        Storage::disk('s3')->put($path, $mpdf->Output('filename.pdf', 'S'));
+        return Storage::disk('s3')->url($path);
+    }
 }
-
+if (!function_exists('generateMessageID')) {
+    function generateMessageID()
+    {
+        $prefix = array_map(function ($chr) {
+            return 9 - +$chr;
+        }, str_split(intval((microtime(1) * 10000))));
+        $prefix = implode('', $prefix);
+        return str_replace('.', '', uniqid($prefix, true));
+    }
+}
 
 function mergePDF($files)
 {
@@ -64,7 +75,6 @@ function mergePDF($files)
     Storage::deleteDirectory($folder);
     return Storage::disk('s3')->url($export);
 }
-
 
 function exportXLSX($data, $path, $disk = 's3')
 {
@@ -92,35 +102,21 @@ function InternalAWBExists($number)
     return DB::table('shipments')->where('external_awb', $number)->exists();
 }
 
+function currency_exchange($amount, $from, $to = 'USD')
+{
+    $rates = [
+        'JOD' => 0.71,
+        'SAR' => 3.75
+    ];
+    return $rates[$from] * $amount;
+}
+
 function nestedLowercase($value)
 {
     if (is_array($value)) {
         return array_map('nestedLowercase', $value);
     }
     return strtolower($value);
-}
-
-
-function currency_exchange($amount, $from, $to = 'USD')
-{
-    $arr = [
-        'from' => $from,
-        'to' => $to,
-        'amount' => $amount,
-        'api_key' => 'demo'
-    ];
-
-    $response = Http::get("https://api.fastforex.io/convert?".http_build_query($arr));
-
-    if (!$response->successful())
-        throw new InternalException('Currency Exchange',422);
-    return intval($response['result'][$to]);
-     
-    // $rates = [
-    //     'JOD' => 0.71,
-    //     'SAR' => 3.75
-    // ];
-    // return $rates[$from] * $amount; 
 }
 
 function array_to_xml(array $arr, SimpleXMLElement $xml)

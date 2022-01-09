@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Exceptions\InternalException;
 use App\Exports\TransactionsExport;
 use App\Http\Requests\Merchant\TransactionRequest;
+use App\Jobs\WithDrawPayments;
 use App\Models\Invoices;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -79,7 +81,6 @@ class TransactionsController extends MerchantController
 
         $actualBalance = $merchecntInfo->actual_balance;
         $paymentMethod = $merchecntInfo->payment_methods;
-        $paymentMethodID = $request->payment_method_id;
 
         if ($actualBalance < $request->amount)
             return $this->error('The Actual Balance Not Enough', 400);
@@ -88,14 +89,11 @@ class TransactionsController extends MerchantController
         $merchecntInfo->actual_balance = $actualBalance - $request->amount;
         $merchecntInfo->save();
 
+        $payment = collect($paymentMethod)->where('id', $request->payment_method_id)->first();
+        if ($payment == null)
+            throw new InternalException('Invalid Payment Method ID');
 
-        $selectedPayment = collect($paymentMethod)->reject(function ($value) use ($paymentMethodID) {
-            if ($value['id'] != $paymentMethodID)
-                return $value;
-        });
-        $selectedPayment = array_values($selectedPayment->toArray());
-
-        Transaction::create(
+        $transaction = Transaction::create(
             [
                 'type' => 'CASHOUT',
                 'merchant_id' => $request->user()->merchant_id,
@@ -103,10 +101,13 @@ class TransactionsController extends MerchantController
                 'created_by' => $request->user()->id,
                 'amount' => $request->amount,
                 'balance_after' => ($actualBalance - $request->amount),
-                'payment_method' => collect($selectedPayment),
+                'payment_method' => collect($payment),
                 'resource' => Request()->header('agent') ?? 'API'
             ]
         );
+        // {"id": 1, "code": "zc", "iban": "1231231231", "name": "Zain Cash", "type": "wallet", "name_ar": "زين كاش", "name_en": "Zain Cash", "created_at": "2022-01-04 09:26:56", "provider_code": "zc"}
+        WithDrawPayments::dispatch($payment, $request->amount, $transaction);
+        return $this->successful('WithDraw Sucessfully');
     }
 
     public function deposit(TransactionRequest $request)

@@ -21,11 +21,12 @@ class Dinarak
             "password" => env('DINARAK_PASSWORD'),
             "grant_type" => env('DINARAK_GRANT_TYPE')
         ];
+        dd('xxxxx');
         $response = Http::post($this->endPoint . "/token", $loginData);
         $this->tokenKey = json_decode($response)->access_token;
     }
 
-    public function deposit($wallet_number, $amount)
+    public function deposit($wallet_number, $amount, $transaction)
     {
         // Transfer 
         $transferData = [
@@ -33,7 +34,7 @@ class Dinarak
             "Amount" => (float)$amount,
             "Description" => "Transfer from ShipCash",
             "ReceiverID" => (string)$wallet_number,
-            "MessageId" => static::generateMessageID(),
+            "MessageId" => generateMessageID(),
             "OperationName" => "Transfer",
         ];
 
@@ -43,21 +44,13 @@ class Dinarak
                 'Content-Type' => 'application/json'
             ])->post($this->endPoint . "/transfer/transfer", $transferData);
 
-        $this->transaction()->update(['notes' => json_encode($response->json())]);
+        $transaction->update(['notes' => json_encode($response->json())]);
 
         $status = json_decode($response)->status->id;
         if ($status == 1) {
-            $this->update(['status' => 'confirmed']);
+            $transaction->update(['status' => 'confirmed']);
         }
-    }
 
-
-    public static function generateMessageID()
-    {
-        $prefix = array_map(function ($chr) {
-            return 9 - +$chr;
-        }, str_split(intval((microtime(1) * 10000))));
-        $prefix = implode('', $prefix);
-        return str_replace('.', '', uniqid($prefix, true));
+        return true;
     }
 }
