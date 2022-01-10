@@ -79,7 +79,7 @@ trait CarriersManager
             }
             return $shipment;
         });
-        return ($shipments->pluck('url'));
+        return mergePDF($shipments->pluck('url'));
     }
 
     public function cancelPickup($provider, $pickupInfo)
