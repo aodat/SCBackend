@@ -21,7 +21,6 @@ class Dinarak
             "password" => env('DINARAK_PASSWORD'),
             "grant_type" => env('DINARAK_GRANT_TYPE')
         ];
-        dd('xxxxx');
         $response = Http::post($this->endPoint . "/token", $loginData);
         $this->tokenKey = json_decode($response)->access_token;
     }
@@ -50,6 +49,25 @@ class Dinarak
         if ($status == 1) {
             $transaction->update(['status' => 'confirmed']);
         }
+
+        return true;
+    }
+
+    function request($name, $wallet_number, $amount)
+    {
+        $transferData = [
+            'Name' => $name,
+            'Amount' => $amount,
+            'Description' => 'Request From Shipcash',
+            'MessageId' => generateMessageID(),
+            'WalletID' => $wallet_number,
+            'OTP' => mt_rand(111111, 999999)
+        ];
+        $response = Http::withToken($this->tokenKey)
+            ->withHeaders([
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ])->post($this->endPoint . "/transfer/deduct", $transferData);
 
         return true;
     }
