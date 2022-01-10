@@ -89,7 +89,7 @@ class AuthController extends Controller
         );
         $merchant->update(["secret_key" => $client->secret]);
 
-        Send::dispatch($user);
+        // Send::dispatch($user);
 
         return $this->successful('User Created Successfully');
     }
