@@ -64,7 +64,7 @@ function mergePDF($files)
     foreach ($files as $file) {
         $path = $folder . '/' . md5(time()) . '.pdf';
         Storage::disk('local')->put($path, file_get_contents($file));
-        $pdfMerger->addPDFString(Storage::path($path), 'all', 'P');
+        $pdfMerger->addPDF(Storage::path($path), 'all', 'P');
     }
     $pdfMerger->merge();
 
