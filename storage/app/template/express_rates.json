@@ -3,13 +3,13 @@
         "zones": [
             {
                 "id": 1,
-                "basic": 13,
+                "basic": 14.5,
                 "additional": 5,
                 "max_weight": 15
             },
             {
                 "id": 2,
-                "basic": 13,
+                "basic": 14.5,
                 "additional": 5.4,
                 "max_weight": 15
             },
@@ -97,13 +97,13 @@
         "zones": [
             {
                 "id": 1,
-                "basic": 13,
+                "basic": 14.5,
                 "additional": 6,
                 "max_weight": 20
             },
             {
                 "id": 2,
-                "basic": 13,
+                "basic": 14.5,
                 "additional": 6,
                 "max_weight": 20
             },
@@ -115,19 +115,19 @@
             },
             {
                 "id": 4,
-                "basic": 13,
+                "basic": 14.5,
                 "additional": 6.3,
                 "max_weight": 20
             },
             {
                 "id": 5,
-                "basic": 13,
+                "basic": 14.5,
                 "additional": 6,
                 "max_weight": 20
             },
             {
                 "id": 6,
-                "basic": 13,
+                "basic": 14.5,
                 "additional": 6,
                 "max_weight": 20
             },
