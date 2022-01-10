@@ -40,6 +40,8 @@ if (!function_exists('exportPDF')) {
         return Storage::disk('s3')->url($path);
     }
 }
+
+
 if (!function_exists('generateMessageID')) {
     function generateMessageID()
     {
@@ -62,7 +64,7 @@ function mergePDF($files)
     foreach ($files as $file) {
         $path = $folder . '/' . md5(time()) . '.pdf';
         Storage::disk('local')->put($path, file_get_contents($file));
-        $pdfMerger->addPDF(Storage::path($path), 'all');
+        $pdfMerger->addPDFString(Storage::path($path), 'all', 'P');
     }
     $pdfMerger->merge();
 
