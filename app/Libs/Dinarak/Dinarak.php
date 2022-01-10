@@ -53,21 +53,38 @@ class Dinarak
         return true;
     }
 
-    function request($name, $wallet_number, $amount)
+    public function request($wallet_number, $amount, $pincode)
     {
+        $this->pincode($wallet_number, $amount);
+
         $transferData = [
-            'Name' => $name,
+            'Name' => Request()->user()->merchant_id, ' - ', Request()->user()->name,
             'Amount' => $amount,
             'Description' => 'Request From Shipcash',
             'MessageId' => generateMessageID(),
             'WalletID' => $wallet_number,
-            'OTP' => mt_rand(111111, 999999)
+            'OTP' => $pincode
         ];
         $response = Http::withToken($this->tokenKey)
             ->withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json'
             ])->post($this->endPoint . "/transfer/deduct", $transferData);
+
+        return true;
+    }
+
+    private function pincode($wallet_number, $amount)
+    {
+        $transferData = [
+            'Amount' => $amount,
+            'PhoneNumber' => $wallet_number
+        ];
+        $response = Http::withToken($this->tokenKey)
+            ->withHeaders([
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ])->post($this->endPoint . "/Services/PushOTP", $transferData);
 
         return true;
     }
