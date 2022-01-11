@@ -257,7 +257,11 @@ class ShipmentController extends MerchantController
 
     public function hook(ShipmentRequest $request)
     {
-        ProcessShipCashUpdates::dispatch($request->json()->all());
+        $shipment = Shipment::withoutGlobalScope('ancient')
+            ->where('external_awb', $request->WaybillNumber)
+            ->exists();
+
+        ProcessShipCashUpdates::dispatchIf($shipment, $request->json()->all());
         return $this->successful('Webhook Completed');
     }
 
