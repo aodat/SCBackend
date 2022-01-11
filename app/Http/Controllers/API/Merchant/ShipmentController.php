@@ -201,7 +201,7 @@ class ShipmentController extends MerchantController
 
             $shipment['external_awb'] = $result['id'];
             $shipment['resource'] = $resource;
-            $shipment['url'] = mergePDF([$result['link']]);
+            $shipment['url'] = $result['link'];
 
             $payment = null;
             if (isset($shipment['payment'])) {
@@ -228,7 +228,7 @@ class ShipmentController extends MerchantController
             $shipments = $shipments->map(function ($value, $key) use ($externalAWB, $resource, $files) {
                 $value['external_awb'] = $externalAWB[$key];
                 $value['resource'] = $resource;
-                $value['url'] = mergePDF([$files[$key]]);
+                $value['url'] = $files[$key];
 
                 unset($value['payment']);
                 return $value;

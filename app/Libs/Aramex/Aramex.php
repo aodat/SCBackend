@@ -135,7 +135,7 @@ class Aramex
         foreach ($response->json()['Shipments'] as $ship) {
             $result[] = [
                 'id' => $ship['ID'],
-                'file' => $ship['ShipmentLabel']['LabelURL']
+                'file' => uploadFiles('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true)
             ];
         }
         return $result;
@@ -194,7 +194,7 @@ class Aramex
         if (isset($shipmentInfo['cod']))
             $data['Details']['CashOnDeliveryAmount'] = [
                 'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
-                "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['cod'],$merchentInfo->currency_code),
+                "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['cod'], $merchentInfo->currency_code),
             ];
 
         $data['Details']['CashAdditionalAmount'] = [
