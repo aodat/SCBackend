@@ -22,7 +22,7 @@ class ProcessShipCashUpdates implements ShouldQueue
      * @return void
      */
     protected $data;
-    public function __construct(array $data)
+    public function __construct($data)
     {
         $this->data = $data;
     }

@@ -75,7 +75,7 @@ trait CarriersManager
         $shipments = Shipment::whereIn('external_awb', $shipments_number)->get();
         $shipments = $shipments->map(function ($shipment) {
             if ($shipment['group'] == 'EXP' && !$shipment['is_doc']) {
-                $shipment['url'] = mergePDF([InvoiceService::commercial($shipment),$shipment['url']]);
+                $shipment['url'] = mergePDF([InvoiceService::commercial($shipment), $shipment['url']]);
             }
             return $shipment;
         });
@@ -101,7 +101,7 @@ trait CarriersManager
     public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
     {
         $this->merchantInfo = Request()->user() === null ? collect(App::make('merchantInfo')) : $this->getMerchantInfo();
-        if ($type == 'domestic') {
+        if ($type == 'domestic' || $type == 'DOM') {
             if (!isset($this->merchantInfo['domestic_rates'][$carrier_id]))
                 throw new CarriersException('The Carrier ID ' . $carrier_id . ' No Support domestic , Please Contact Administrators');
 
@@ -170,16 +170,16 @@ trait CarriersManager
     public function webhook($shipmentInfo, $data)
     {
         $this->loadProvider($shipmentInfo['carrier_name'], $shipmentInfo['merchant_id']);
+
         $chargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']], true)['ChargeableWeight'] ?? null;
-        if ($chargeableWeight)
+        if ($chargeableWeight == null)
             throw new CarriersException('Chargeable Weight Is Zero');
 
         if ($chargeableWeight)
             $setup['chargable_weight'] = $this->calculateFees(
-                $shipmentInfo['carrier_name'],
-                null,
                 $shipmentInfo['carrier_id'],
-                $shipmentInfo['consignee_country'],
+                null,
+                ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
                 $shipmentInfo['group'],
                 $chargeableWeight
             );
@@ -209,15 +209,14 @@ trait CarriersManager
                 $this->merchantInfo->save();
             }
         }
-
-        $logs = collect(json_decode($shipmentInfo->logs, true));
+        $logs = collect($shipmentInfo->logs);
 
         $updated['logs'] = $logs->merge([[
             'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
             'UpdateLocation' => $data['Comment1'],
             'UpdateDescription' => $updated['status']
         ]]);
-
+        
         $shipmentInfo->update($updated);
         return true;
     }
