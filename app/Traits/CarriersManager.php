@@ -169,8 +169,9 @@ trait CarriersManager
 
     public function webhook($shipmentInfo, $data)
     {
-        $this->loadProvider($shipmentInfo['carrier_name'], $shipmentInfo['merchant_id']);
-
+        $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
+        $this->loadProvider($shipmentInfo['carrier_name']);
+        
         $chargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']], true)['ChargeableWeight'] ?? null;
         if ($chargeableWeight == null)
             throw new CarriersException('Chargeable Weight Is Zero');
@@ -190,8 +191,9 @@ trait CarriersManager
         if (isset($updated['actions']))
             unset($updated['actions']);
 
+            
         foreach ($actions as $action) {
-            if ($action == 'create_transaction')
+            if ($action == 'create_transaction') {
                 Transaction::create(
                     [
                         'type' => 'CASHIN',
@@ -199,14 +201,15 @@ trait CarriersManager
                         'source' => 'SHIPMENT',
                         'status' => 'COMPLETED',
                         'created_by' => $shipmentInfo['created_by'],
-                        'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $this->merchantInfo->actual_balance,
+                        'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance,
                         'amount' => ($shipmentInfo['cod'] - $shipmentInfo['fees']),
                         'resource' => 'API'
                     ]
                 );
+            }
             else if ($action == 'update_merchant_balance') {
-                $this->merchantInfo->actual_balance =  ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $this->merchantInfo->actual_balance;
-                $this->merchantInfo->save();
+                $merchant->actual_balance =  ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance;
+                $merchant->save();
             }
         }
         $logs = collect($shipmentInfo->logs);
