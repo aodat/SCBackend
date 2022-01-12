@@ -212,11 +212,11 @@ trait CarriersManager
         $logs = collect($shipmentInfo->logs);
 
         $updated['logs'] = $logs->merge([[
-            'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+            'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
             'UpdateLocation' => $data['Comment1'],
             'UpdateDescription' => $updated['status']
         ]]);
-        
+
         $shipmentInfo->update($updated);
         return true;
     }
