@@ -171,7 +171,7 @@ trait CarriersManager
     {
         $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
         $this->loadProvider($shipmentInfo['carrier_name']);
-        
+
         $chargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']], true)['ChargeableWeight'] ?? null;
         if ($chargeableWeight == null)
             throw new CarriersException('Chargeable Weight Is Zero');
@@ -191,7 +191,7 @@ trait CarriersManager
         if (isset($updated['actions']))
             unset($updated['actions']);
 
-            
+
         foreach ($actions as $action) {
             if ($action == 'create_transaction') {
                 Transaction::create(
@@ -206,8 +206,7 @@ trait CarriersManager
                         'resource' => 'API'
                     ]
                 );
-            }
-            else if ($action == 'update_merchant_balance') {
+            } else if ($action == 'update_merchant_balance') {
                 $merchant->actual_balance =  ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance;
                 $merchant->save();
             }
@@ -217,7 +216,7 @@ trait CarriersManager
         $updated['chargable_weight'] = $chargeableWeight;
         $updated['logs'] = $logs->merge([[
             'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
-            'UpdateLocation' => $data['Comment1'],
+            'UpdateLocation' => $data['Comment2'] . ' - ' . $data['Comment1'],
             'UpdateDescription' => $updated['status']
         ]]);
 
