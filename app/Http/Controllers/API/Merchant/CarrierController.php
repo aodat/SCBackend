@@ -50,4 +50,26 @@ class CarrierController extends MerchantController
 
         return $this->successful('Updated Successfully');
     }
+
+
+    public function delete(CarrierRequest $request)
+    {
+        $carrier_id = $request->carrier_id;
+        $merchant = $this->getMerchantInfo();
+        $result = collect($merchant->carriers)->unique('carrier_id');
+        $carrier = $result->where('carrier_id', $carrier_id);
+
+        $key = $carrier->keys()->first();
+        $result->put($key, [
+            'carrier_id' => $carrier_id,
+            'is_defult' => $result[$key]['is_defult'],
+            'is_enabled' => $result[$key]['is_enabled'],
+            'env' => null,
+            'created_at' => $result[$key]['created_at'],
+            'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+        ]);
+
+        $merchant->update(['carriers' => $result]);
+        return $this->successful('Removed Successfully');
+    }
 }

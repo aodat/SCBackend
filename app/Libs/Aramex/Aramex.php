@@ -2,10 +2,10 @@
 
 namespace Libs;
 
+use Illuminate\Support\Facades\Http;
 use App\Exceptions\CarriersException;
 use App\Models\City;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Http;
 
 class Aramex
 {
@@ -17,18 +17,19 @@ class Aramex
 
     private $config;
 
-    function __construct()
+    function __construct($settings = null)
     {
         $this->config = [
-            'UserName' => config('carriers.aramex.USERNAME'),
-            'Password' => config('carriers.aramex.PASSWORD'),
-            'AccountNumber' => config('carriers.aramex.ACCOUNT_NUMBER'),
-            'AccountPin' => config('carriers.aramex.PIN'),
-            'AccountEntity' => config('carriers.aramex.ACCOUNT_ENTITY'),
-            'AccountCountryCode' => config('carriers.aramex.ACCOUNT_COUNTRY_CODE'),
-            'Version' => config('carriers.aramex.VERSION'),
-            'Source' => config('carriers.aramex.SOURCE')
+            'UserName' => $settings['aramex_username'] ?? config('carriers.aramex.USERNAME'),
+            'Password' => $settings['aramex_password'] ?? config('carriers.aramex.PASSWORD'),
+            'AccountNumber' => $settings['aramex_account_number'] ?? config('carriers.aramex.ACCOUNT_NUMBER'),
+            'AccountPin' => $settings['aramex_pin'] ?? config('carriers.aramex.PIN'),
+            'AccountEntity' => $settings['aramex_account_entity'] ?? config('carriers.aramex.ACCOUNT_ENTITY'),
+            'AccountCountryCode' => $settings['aramex_account_country_code'] ?? config('carriers.aramex.ACCOUNT_COUNTRY_CODE'),
+            'Version' => $settings['aramex_version'] ?? config('carriers.aramex.VERSION'),
+            'Source' => $settings['aramex_source'] ?? config('carriers.aramex.SOURCE')
         ];
+
         $this->setup = [
             'SH005' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'SH006' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],

@@ -26,12 +26,13 @@ class Fedex
     private $end_point;
     private $prefix = '';
     private $xmlPrefix = '';
-    function __construct()
+    function __construct($settings = null)
     {
-        $this->account_number = config('carriers.fedex.ACCOUNT_NUMBER');
-        $this->meter_number = config('carriers.fedex.METER_NUMBER');
-        $this->key = config('carriers.fedex.KEY');
-        $this->password = config('carriers.fedex.PASSWORD');
+
+        $this->account_number = $settings['fedex_account_number'] ?? config('carriers.fedex.ACCOUNT_NUMBER');
+        $this->meter_number = $settings['fedex_meter_number'] ?? config('carriers.fedex.METER_NUMBER');
+        $this->key = $settings['fedex_key'] ?? config('carriers.fedex.KEY');
+        $this->password = $settings['fedex_password'] ?? config('carriers.fedex.PASSWORD');
 
         $this->end_point = self::$stagingUrl;
         if (config('app.env') == 'production')
@@ -133,7 +134,8 @@ class Fedex
             'CountryCode' => $shipmentInfo['consignee_country']
         ];
 
-        $payload['ProcessShipmentRequest']['RequestedShipment']['ShippingChargesPayment']['Payor']['ResponsibleParty']['AccountNumber'] = $this->account_number;
+        $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['DutiesPayment']['Payor']['ResponsibleParty']['AccountNumber'] =
+            $payload['ProcessShipmentRequest']['RequestedShipment']['ShippingChargesPayment']['Payor']['ResponsibleParty']['AccountNumber'] = $this->account_number;
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['Description'] = $shipmentInfo['notes'] ?? 'No Notes';
 
 

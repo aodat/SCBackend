@@ -53,6 +53,7 @@ Route::group(['middleware' => ['json.response']], function () {
             
             Route::get('carrier/list', [CarrierController::class, 'index']);
             Route::put('carrier/{carrier_id}/update', [CarrierController::class, 'update']);
+            Route::delete('carrier/{carrier_id}/env', [CarrierController::class, 'delete']);
 
             // Dashboard Information 
             Route::post('dashboard', [DashboardController::class, 'index']);

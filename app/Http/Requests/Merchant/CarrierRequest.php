@@ -13,7 +13,9 @@ class CarrierRequest extends MerchantRequest
             'env.aramex_account_number' => 'required',
             'env.aramex_password' => 'required',
             'env.aramex_pin' => 'required',
-            'env.aramex_username' => 'required'
+            'env.aramex_username' => 'required',
+            'env.aramex_version' => 'required',
+            'env.aramex_source' => 'required',
         ],
         2 => [
             'env.dhl_account_number' => 'required',
@@ -32,7 +34,7 @@ class CarrierRequest extends MerchantRequest
     {
         $path = Request()->route()->uri;
         $data = parent::all($keys);
-        if (strpos($path, 'carrier/{carrier_id}/update') !== false)
+        if (strpos($path, 'carrier/{carrier_id}/update') !== false || strpos($path, 'carrier/{carrier_id}/env') !== false )
             $data['carrier_id'] = $this->route('carrier_id');
 
         return $data;
@@ -51,6 +53,10 @@ class CarrierRequest extends MerchantRequest
                 $validation = array_merge($validation, $this->carriers[Request::instance()->carrier_id]);
 
             return $validation;
-        }
+        } else if (strpos($path, 'carrier/{carrier_id}/env') !== false)
+            return [
+                "carrier_id" => "required|exists:carriers,id",
+            ];
+        return [];
     }
 }

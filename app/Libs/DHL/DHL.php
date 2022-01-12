@@ -6,9 +6,8 @@ use Carbon\Carbon;
 
 use App\Exceptions\CarriersException;
 
-use App\Models\Merchant;
-use App\Models\Pickup;
 use Illuminate\Support\Facades\App;
+
 use SimpleXMLElement;
 
 class DHL
@@ -33,20 +32,23 @@ class DHL
     private $end_point;
     private $account_number;
     private $merchentInfo;
-    function __construct()
+
+    function __construct($settings = null)
     {
+
         $this->config = [
             'MessageTime' => Carbon::now()->format(Carbon::ATOM),
             'MessageReference' => randomNumber(32),
-            'SiteID' => config('carriers.dhl.SITE_ID'),
-            'Password' =>  config('carriers.dhl.PASSWORD')
+            'SiteID' => $settings['dhl_site_id']  ?? config('carriers.dhl.SITE_ID'),
+            'Password' => $settings['dhl_password']  ?? config('carriers.dhl.PASSWORD')
         ];
 
         $this->end_point = self::$stagingUrl;
+
         if (config('app.env') == 'production')
             $this->end_point = self::$productionUrl;
 
-        $this->account_number = config('carriers.dhl.ACCOUNT_NUMBER');
+        $this->account_number = $settings['dhl_account_number'] ?? config('carriers.dhl.ACCOUNT_NUMBER');
         $this->merchentInfo = App::make('merchantInfo');
     }
 
