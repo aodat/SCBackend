@@ -23,7 +23,7 @@ class Carriers extends Model
     ];
 
     protected $appends = [
-        'is_enabled', 'is_defult', 'carrier_id'
+        'is_enabled', 'is_defult', 'carrier_id','env'
     ];
 
     protected $hidden = [
@@ -63,5 +63,18 @@ class Carriers extends Model
             return ($list['is_enabled']);
         }
         return ($this->is_active);
+    }
+
+    function getEnvAttribute()
+    {
+        if (!empty($this->merchantCarriers)) {
+            $list = $this->merchantCarriers->where('carrier_id', $this->id)->first();
+            if ($list == null)
+                return null;
+
+            return ($list['env']);
+        }
+        return null;
+
     }
 }
