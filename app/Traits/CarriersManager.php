@@ -214,6 +214,7 @@ trait CarriersManager
         }
         $logs = collect($shipmentInfo->logs);
 
+        $updated['chargable_weight'] = $chargeableWeight;
         $updated['logs'] = $logs->merge([[
             'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
             'UpdateLocation' => $data['Comment1'],
