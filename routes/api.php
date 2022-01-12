@@ -98,6 +98,7 @@ Route::group(['middleware' => ['json.response']], function () {
                 Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
                 Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
                 Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
+                Route::delete('shipments/{id}', [ShipmentController::class, 'delete'])->where('id', '[0-9]+');
             });
 
             // Transactions

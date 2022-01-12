@@ -17,7 +17,8 @@ class Shipment extends Model
 
     protected $casts = [
         'logs' => 'array',
-        'is_doc' => 'boolean'
+        'is_doc' => 'boolean',
+        'is_deleted' => 'boolean'
     ];
 
     public function getCarrierNameAttribute()
@@ -48,7 +49,7 @@ class Shipment extends Model
     {
         static::addGlobalScope('ancient', function (Builder $builder) {
             if (Request()->user() !== null)
-                $builder->where('merchant_id', Request()->user()->merchant_id)->orderBy('created_at', 'desc');
+                $builder->where('merchant_id', Request()->user()->merchant_id)->where('is_deleted', false)->orderBy('created_at', 'desc');
             else
                 $builder->orderBy('created_at', 'desc');
         });

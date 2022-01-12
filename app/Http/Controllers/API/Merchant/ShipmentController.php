@@ -48,6 +48,7 @@ class ShipmentController extends MerchantController
 
         $shipments = DB::table('shipments as s')->join('carriers as car', 'car.id', 's.carrier_id')
             ->where('merchant_id', Request()->user()->merchant_id)
+            ->where('is_deleted', false)
             ->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($external))
             $shipments->whereIn('s.external_awb', $external);
@@ -381,5 +382,14 @@ class ShipmentController extends MerchantController
         // ];
 
         // $this->stripe->InvoiceWithToken($infoTransaction);
+    }
+
+    public function delete($id, ShipmentRequest $request)
+    {
+        $data = Shipment::findOrFail($id);
+        $data->is_deleted = true;
+        $data->save();
+
+        return $this->successful('Shipment Deleted Successfully');
     }
 }
