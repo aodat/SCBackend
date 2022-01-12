@@ -176,6 +176,7 @@ trait CarriersManager
         if ($chargeableWeight == null)
             throw new CarriersException('Chargeable Weight Is Zero');
 
+
         if ($chargeableWeight)
             $setup['chargable_weight'] = $this->calculateFees(
                 $shipmentInfo['carrier_id'],
@@ -216,7 +217,7 @@ trait CarriersManager
         $updated['chargable_weight'] = $chargeableWeight;
         $updated['logs'] = $logs->merge([[
             'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
-            'UpdateLocation' => $data['Comment2'] . ' - ' . $data['Comment1'],
+            'UpdateLocation' => $data['Comment1'],
             'UpdateDescription' => $updated['status']
         ]]);
 
