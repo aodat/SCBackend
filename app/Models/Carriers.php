@@ -71,8 +71,7 @@ class Carriers extends Model
             $list = $this->merchantCarriers->where('carrier_id', $this->id)->first();
             if ($list == null)
                 return null;
-
-            return ($list['env']);
+            return $list['env'] ?? null;
         }
         return null;
 
