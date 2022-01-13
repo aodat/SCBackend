@@ -95,6 +95,7 @@ class ShipmentController extends MerchantController
                 'count(status) as counter'
             ))
             ->where('group', $type)
+            ->where('is_deleted', false)
             ->groupBy('status')
             ->pluck('counter', 'status');
 
