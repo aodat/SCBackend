@@ -44,7 +44,7 @@ class DBTransaction
             DB::commit();
         }
 
-        if ($response->getStatusCode() == 500)
+        if (env('APP_ENV') == 'production' && $response->getStatusCode() == 500)
             throw new InternalException('Internal Server Error - ' . App::make('request_id'), 500);
         return $response;
     }

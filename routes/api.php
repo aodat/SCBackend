@@ -53,6 +53,7 @@ Route::group(['middleware' => ['json.response']], function () {
             
             Route::get('carrier/list', [CarrierController::class, 'index']);
             Route::put('carrier/{carrier_id}/update', [CarrierController::class, 'update']);
+            Route::delete('carrier/{carrier_id}/env', [CarrierController::class, 'delete']);
 
             // Dashboard Information 
             Route::post('dashboard', [DashboardController::class, 'index']);
@@ -97,6 +98,7 @@ Route::group(['middleware' => ['json.response']], function () {
                 Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
                 Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
                 Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
+                Route::delete('shipments/{id}', [ShipmentController::class, 'delete'])->where('id', '[0-9]+');
             });
 
             // Transactions

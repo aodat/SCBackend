@@ -9,7 +9,7 @@ use Libs\Fedex;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Utilities\InvoiceService;
 use App\Exceptions\CarriersException;
-
+use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\Shipment;
@@ -22,16 +22,23 @@ trait CarriersManager
     private $merchantInfo;
     public function loadProvider($provider, $merchantID = null)
     {
+
         $provider = strtoupper($provider);
         switch ($provider) {
             case "ARAMEX":
-                $this->adapter = new Aramex();
+                $settings = Carriers::where('id', 1)->first()->env;
+
+                $this->adapter = new Aramex($settings);
                 break;
             case "DHL":
-                $this->adapter = new DHL();
+                $settings = Carriers::where('id', 2)->first()->env;
+
+                $this->adapter = new DHL($settings);
                 break;
             case "FEDEX":
-                $this->adapter = new Fedex();
+                $settings = Carriers::where('id', 3)->first()->env;
+
+                $this->adapter = new Fedex($settings);
                 break;
             default:
                 throw new CarriersException('Invalid Provider');
