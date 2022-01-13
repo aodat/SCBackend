@@ -38,7 +38,7 @@ class DashboardController extends MerchantController
             ->groupByRaw('date(updated_at), type')
             ->union(DB::table(DB::raw('shipments s'))
                 ->select(DB::raw('date(updated_at) as date'), DB::raw('"PENDING_PAYMENTS" as stype'), DB::raw('count(id) counter'))
-                ->where('s.merchant_id', '=', 11)
+                ->where('s.merchant_id', '=', $merchant_id)
                 ->where('status', '=', 'COMPLETED')
                 ->whereNull('transaction_id')
                 ->groupByRaw('date(updated_at), status'))
