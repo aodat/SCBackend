@@ -34,7 +34,7 @@ class ShipmentController extends MerchantController
     public function index(ShipmentRequest $request)
     {
         $filters = $request->json()->all();
-
+        $merchant_id = Request()->user()->merchant_id;
         $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
 
@@ -47,7 +47,7 @@ class ShipmentController extends MerchantController
 
 
         $shipments = DB::table('shipments as s')->join('carriers as car', 'car.id', 's.carrier_id')
-            ->where('merchant_id', Request()->user()->merchant_id)
+            ->where('merchant_id', $merchant_id)
             ->where('is_deleted', false)
             ->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($external))
@@ -67,7 +67,6 @@ class ShipmentController extends MerchantController
         if (count($statuses)) {
             if (in_array('PENDING_PAYMENTS', $statuses)) {
                 $shipments->where('s.status', '=', 'COMPLETED')->whereNull('s.transaction_id');
-                $this->status['PENDING_PAYMENTS'] = $shipments->count();
             } else
                 $shipments->whereIn('s.status', $statuses);
         }
@@ -89,16 +88,11 @@ class ShipmentController extends MerchantController
             'car.name as provider_name'
         );
 
-        $tabs =  DB::table('shipments')
-            ->where('merchant_id', Request()->user()->merchant_id)
-            ->select('status', DB::raw(
-                'count(status) as counter'
-            ))
-            ->where('group', $type)
-            ->where('is_deleted', false)
-            ->groupBy('status')
-            ->pluck('counter', 'status');
-
+        $tabs = DB::table(DB::raw("(select id,CASE WHEN s.status = 'COMPLETED' && s.transaction_id is null THEN 'PENDING_PAYMENTS' ELSE s.status END  as exstatus from shipments s where merchant_id = $merchant_id and `group` = '$type' and is_deleted = false) as subs"))
+                ->select('exstatus',DB::raw('count(id) as counter'))
+                ->groupByRaw('exstatus')
+                ->pluck('counter', 'exstatus');
+                
         $tabs = collect($this->status)->merge(collect($tabs));
         return $this->pagination($shipments->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
