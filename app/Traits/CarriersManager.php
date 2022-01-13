@@ -9,11 +9,13 @@ use Libs\Fedex;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Utilities\InvoiceService;
 use App\Exceptions\CarriersException;
+
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\Shipment;
 use App\Models\Transaction;
+
 use Carbon\Carbon;
 
 trait CarriersManager
