@@ -17,6 +17,7 @@ use App\Models\Shipment;
 use App\Models\Transaction;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 trait CarriersManager
 {
@@ -81,14 +82,20 @@ trait CarriersManager
 
     public function printShipment($shipments_number)
     {
-        $shipments = Shipment::whereIn('external_awb', $shipments_number)->get();
-        $shipments = $shipments->map(function ($shipment) {
-            if ($shipment['group'] == 'EXP' && !$shipment['is_doc']) {
-                $shipment['url'] = mergePDF([InvoiceService::commercial($shipment), $shipment['url']]);
-            }
-            return $shipment;
+        $shipments = DB::table('shipments')
+            ->whereIn('external_awb', $shipments_number)
+            ->get();
+
+        $exported = [];
+        $shipments->map(function ($shipment) use (&$exported) {
+            if ($shipment->group == 'EXP' && !$shipment->is_doc) {
+                $exported[] = InvoiceService::commercial($shipment);
+                $exported[] = $shipment->url;
+            } else
+                $exported[] = $shipment['url'];
         });
-        return mergePDF($shipments->pluck('url'));
+
+        return mergePDF($exported);
     }
 
     public function cancelPickup($provider, $pickupInfo)
