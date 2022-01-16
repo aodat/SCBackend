@@ -215,7 +215,7 @@ class Aramex
         return $data;
     }
 
-    public function trackShipment($shipment_waybills, $getChargeableWeight = false)
+    public function trackShipment($shipment_waybills)
     {
         $trackingPayload = ["ClientInfo" => $this->config, "Shipments" => $shipment_waybills];
 
@@ -234,7 +234,7 @@ class Aramex
         if (count($shipment_waybills) == 1)
             return last($response['TrackingResults'][0]['Value']);
 
-        return $result['TrackingResults'];
+        return $result;
     }
 
     public function bindJsonFile($file)
