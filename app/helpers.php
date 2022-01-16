@@ -107,8 +107,8 @@ function InternalAWBExists($number)
 function currency_exchange($amount, $from, $to = 'USD')
 {
     $rates = [
-        'JOD' => 0.71,
-        'SAR' => 3.75
+        'JOD' => 1.41,
+        'SAR' => 0.27
     ];
     return $rates[$from] * $amount;
 }
