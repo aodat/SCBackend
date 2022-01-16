@@ -88,11 +88,9 @@ trait CarriersManager
 
         $exported = [];
         $shipments->map(function ($shipment) use (&$exported) {
-            if ($shipment->group == 'EXP' && !$shipment->is_doc) {
+            $exported[] = $shipment->url;
+            if ($shipment->group == 'EXP' && !$shipment->is_doc) 
                 $exported[] = InvoiceService::commercial($shipment);
-                $exported[] = $shipment->url;
-            } else
-                $exported[] = $shipment['url'];
         });
 
         return mergePDF($exported);
