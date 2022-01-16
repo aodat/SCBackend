@@ -350,7 +350,7 @@ class ShipmentController extends MerchantController
         }
 
         $shipment['merchant_id'] = 900;
-        $shipment['created_by'] = 1;
+        $shipment['created_by'] = 900;
         $shipment['logs'] = collect([
             [
                 'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
