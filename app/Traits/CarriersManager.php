@@ -211,7 +211,7 @@ trait CarriersManager
 
         foreach ($actions as $action) {
             if ($action == 'create_transaction') {
-                Transaction::create(
+                $transaction = Transaction::create(
                     [
                         'type' => 'CASHIN',
                         'merchant_id' => $shipmentInfo['merchant_id'],
@@ -223,6 +223,7 @@ trait CarriersManager
                         'resource' => 'API'
                     ]
                 );
+                $updated['transaction_id'] =  $transaction->id;
             } else if ($action == 'update_merchant_balance') {
                 $merchant->actual_balance =  ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance;
                 $merchant->save();
