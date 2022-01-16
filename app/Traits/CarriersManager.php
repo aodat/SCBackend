@@ -9,12 +9,15 @@ use Libs\Fedex;
 use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Utilities\InvoiceService;
 use App\Exceptions\CarriersException;
+
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\Shipment;
 use App\Models\Transaction;
+
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 trait CarriersManager
 {
@@ -79,14 +82,18 @@ trait CarriersManager
 
     public function printShipment($shipments_number)
     {
-        $shipments = Shipment::whereIn('external_awb', $shipments_number)->get();
-        $shipments = $shipments->map(function ($shipment) {
-            if ($shipment['group'] == 'EXP' && !$shipment['is_doc']) {
-                $shipment['url'] = mergePDF([InvoiceService::commercial($shipment), $shipment['url']]);
-            }
-            return $shipment;
+        $shipments = DB::table('shipments')
+            ->whereIn('external_awb', $shipments_number)
+            ->get();
+
+        $exported = [];
+        $shipments->map(function ($shipment) use (&$exported) {
+            $exported[] = $shipment->url;
+            if ($shipment->group == 'EXP' && !$shipment->is_doc) 
+                $exported[] = InvoiceService::commercial($shipment);
         });
-        return mergePDF($shipments->pluck('url'));
+
+        return mergePDF($exported);
     }
 
     public function cancelPickup($provider, $pickupInfo)
@@ -202,9 +209,10 @@ trait CarriersManager
 
         foreach ($actions as $action) {
             if ($action == 'create_transaction') {
-                Transaction::create(
+                $transaction = Transaction::create(
                     [
                         'type' => 'CASHIN',
+                        'item_id' => $shipmentInfo['id'],
                         'merchant_id' => $shipmentInfo['merchant_id'],
                         'source' => 'SHIPMENT',
                         'status' => 'COMPLETED',
@@ -214,6 +222,7 @@ trait CarriersManager
                         'resource' => 'API'
                     ]
                 );
+                $updated['transaction_id'] =  $transaction->id;
             } else if ($action == 'update_merchant_balance') {
                 $merchant->actual_balance =  ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance;
                 $merchant->save();
@@ -225,6 +234,7 @@ trait CarriersManager
         $updated['logs'] = $logs->merge([[
             'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
             'UpdateLocation' => $data['Comment1'],
+            'Code' => $data['UpdateCode'] ?? 'N/A',
             'UpdateDescription' => $updated['status']
         ]]);
 

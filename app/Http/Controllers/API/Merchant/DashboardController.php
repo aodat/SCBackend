@@ -29,17 +29,20 @@ class DashboardController extends MerchantController
         $shipments = DB::table(DB::raw('shipments s'))
             ->select(DB::raw('date(updated_at) as date'), 'status', DB::raw('count(id) counter'))
             ->where('s.merchant_id', '=', $merchant_id)
+            ->whereBetween('s.updated_at', [$request->since_at, $request->until])
             ->groupByRaw('date(updated_at), status')
             ->get();
 
         $transactions = DB::table(DB::raw('transactions t'))
             ->select(DB::raw('date(updated_at) as date'), 'type as stype', DB::raw('count(id) counter'))
             ->where([['t.merchant_id', $merchant_id], ['t.status', 'COMPLETED']])
+            ->whereBetween('t.updated_at', [$request->since_at, $request->until])
             ->groupByRaw('date(updated_at), type')
             ->union(DB::table(DB::raw('shipments s'))
                 ->select(DB::raw('date(updated_at) as date'), DB::raw('"PENDING_PAYMENTS" as stype'), DB::raw('count(id) counter'))
-                ->where('s.merchant_id', '=', 11)
+                ->where('s.merchant_id', '=', $merchant_id)
                 ->where('status', '=', 'COMPLETED')
+                ->whereBetween('s.updated_at', [$request->since_at, $request->until])
                 ->whereNull('transaction_id')
                 ->groupByRaw('date(updated_at), status'))
             ->get();
