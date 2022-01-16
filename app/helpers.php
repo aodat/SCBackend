@@ -1,15 +1,14 @@
 <?php
 
-use App\Exceptions\InternalException;
-use App\Models\Shipment;
+
 use Maatwebsite\Excel\Facades\Excel as Excel;
 
 use Illuminate\Support\Facades\Storage;
 use LynX39\LaraPdfMerger\Facades\PdfMerger;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
 use Mpdf\Mpdf;
 
 if (!function_exists('uploadFiles')) {
@@ -62,12 +61,17 @@ function mergePDF($files)
     Storage::disk('local')->put($quotes, '');
 
     foreach ($files as $file) {
-        $path = $folder . '/' . md5(time()) . '.pdf';
-        Storage::disk('local')->put($path, file_get_contents($file));
+        $file = str_replace("https://shipcashcdn.s3.amazonaws.com/", '', $file);
+        $path = $folder . '/' . Str::uuid() . '.pdf';
+        Storage::disk('local')->put(
+            $path,
+            Storage::disk('s3')->get($file)
+        );
+
         $pdfMerger->addPDF(Storage::path($path), 'all', 'P');
     }
-    $pdfMerger->merge();
 
+    $pdfMerger->merge();
     $export = 'export/' . md5(time()) . '.pdf';
     Storage::disk('s3')->put(
         $export,
