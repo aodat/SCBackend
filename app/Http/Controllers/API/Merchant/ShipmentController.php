@@ -147,7 +147,6 @@ class ShipmentController extends MerchantController
         $countries = Country::pluck('code', 'name_en');
         $merchentInfo = $this->getMerchentInfo();
         $addresses = collect($merchentInfo->addresses);
-        $dom_rates = collect($merchentInfo->domestic_rates);
 
         $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $dom_rates, $type, $countries) {
             $address = $addresses->where('id', '=', $shipment['sender_address_id'])->first();
@@ -329,31 +328,28 @@ class ShipmentController extends MerchantController
     public function guestShipment(ShipmentRequest $request)
     {
         $shipment = $request->validated();
-
-
         $strip_token = $shipment['strip_token'];
 
         $countries = Country::pluck('code', 'name_en');
-        $merchentInfo = Merchant::findOrFail(1);
-        $dom_rates = collect($merchentInfo->domestic_rates);
+        $type = $shipment['type'];
+
+
+        unset($shipment['strip_token'], $shipment['type']);
+
         $shipment['sender_country'] = $countries[$shipment['sender_country']] ?? null;
+        $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
+
         $shipment['status'] = 'DRAFT';
-        if ($shipment['type'] == 'express') {
+        
+        if ($type == 'express') {
             $shipment['group'] = 'EXP';
-            $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
             $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
         } else {
             $shipment['group'] = 'DOM';
-            $shipment['consignee_country'] = $merchentInfo['country_code'];
-
-            $domestic_rates = $dom_rates->where('code', '=', $shipment['sender_city'])->first();
-            $shipment['fees'] = $domestic_rates['price'] ?? 0;
-            if ($shipment['fees'] == 0)
-                throw new InternalException('Domestic Rates Is Zero');
+            $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', $shipment['actual_weight']);
         }
 
-
-        $shipment['merchant_id'] = 1;
+        $shipment['merchant_id'] = 900;
         $shipment['created_by'] = 1;
         $shipment['logs'] = collect([
             [
@@ -364,19 +360,17 @@ class ShipmentController extends MerchantController
         ]);
         $shipment['created_at'] = Carbon::now();
         $shipment['updated_at'] = Carbon::now();
+        
 
-        unset($shipment['strip_token'], $shipment['type']);
-        $provider = Carriers::where('id', $shipment['carrier_id'])->first()->name;
-        // return $this->createShipmentDB(collect($shipment), $provider);
+        // if ($type == 'domestic' || $shipment['carrier_id'] == 1) {
+        //     $result = $this->createShipmentDB(collect([$shipment]), 'Aramex');
+        // } else {
+        //     $provider = Carriers::findOrFail($shipment['carrier_id'])->name;
+        //     $result = $this->createShipmentDB(collect($shipment), $provider);
+        // }
 
-        // $infoTransaction =   [
-        //     'amount' =>  currency_exchange($data['amount'], $merchecntInfo->currency_code, 'USD'),
-        //     'currency' => 'USD',
-        //     'source' => $data['token'],
-        //     'description' => "Merachnt Deposit " . $merchecntInfo->name,
-        // ];
-
-        // $this->stripe->InvoiceWithToken($infoTransaction);
+        return $this->successful('Your Shipment Created Successfully');
+            
     }
 
     public function delete($id, ShipmentRequest $request)

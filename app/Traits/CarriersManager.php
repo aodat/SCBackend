@@ -52,8 +52,8 @@ trait CarriersManager
 
     public function getMerchantInfo($merchantID = null)
     {
-        if ($merchantID)
-            return Merchant::findOrFail($merchantID);
+        if (Request()->user() === null)
+            return Merchant::findOrFail(900);
         else
             return App::make('merchantInfo');
     }
@@ -89,7 +89,7 @@ trait CarriersManager
         $exported = [];
         $shipments->map(function ($shipment) use (&$exported) {
             $exported[] = $shipment->url;
-            if ($shipment->group == 'EXP' && !$shipment->is_doc) 
+            if ($shipment->group == 'EXP' && !$shipment->is_doc)
                 $exported[] = InvoiceService::commercial($shipment);
         });
 
@@ -114,7 +114,7 @@ trait CarriersManager
 
     public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
     {
-        $this->merchantInfo = Request()->user() === null ? collect(App::make('merchantInfo')) : $this->getMerchantInfo();
+        $this->merchantInfo = $this->getMerchantInfo();
         if ($type == 'domestic' || $type == 'DOM') {
             if (!isset($this->merchantInfo['domestic_rates'][$carrier_id]))
                 throw new CarriersException('The Carrier ID ' . $carrier_id . ' No Support domestic , Please Contact Administrators');
