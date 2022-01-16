@@ -234,6 +234,7 @@ trait CarriersManager
         $updated['logs'] = $logs->merge([[
             'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
             'UpdateLocation' => $data['Comment1'],
+            'Code' => $data['UpdateCode'] ?? 'N/A',
             'UpdateDescription' => $updated['status']
         ]]);
 
