@@ -214,6 +214,7 @@ trait CarriersManager
                 $transaction = Transaction::create(
                     [
                         'type' => 'CASHIN',
+                        'item_id' => $shipmentInfo['id'],
                         'merchant_id' => $shipmentInfo['merchant_id'],
                         'source' => 'SHIPMENT',
                         'status' => 'COMPLETED',
