@@ -29,6 +29,7 @@ class DashboardController extends MerchantController
         $shipments = DB::table(DB::raw('shipments s'))
             ->select(DB::raw('date(updated_at) as date'), 'status', DB::raw('count(id) counter'))
             ->where('s.merchant_id', '=', $merchant_id)
+            ->where('s.is_deleted', false)
             ->whereBetween('s.updated_at', [$request->since_at, $request->until])
             ->groupByRaw('date(updated_at), status')
             ->get();
@@ -42,6 +43,7 @@ class DashboardController extends MerchantController
                 ->select(DB::raw('date(updated_at) as date'), DB::raw('"PENDING_PAYMENTS" as stype'), DB::raw('count(id) counter'))
                 ->where('s.merchant_id', '=', $merchant_id)
                 ->where('status', '=', 'COMPLETED')
+                ->where('s.is_deleted', false)
                 ->whereBetween('s.updated_at', [$request->since_at, $request->until])
                 ->whereNull('transaction_id')
                 ->groupByRaw('date(updated_at), status'))
