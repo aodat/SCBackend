@@ -22,7 +22,7 @@ class Dinarak
             "grant_type" => env('DINARAK_GRANT_TYPE')
         ];
         $response = Http::post($this->endPoint . "/token", $loginData);
-        $this->tokenKey = json_decode($response)->access_token;
+        return $response->json()['access_token'];
     }
 
     public function deposit($wallet_number, $amount, $transaction)
@@ -43,6 +43,9 @@ class Dinarak
                 'Content-Type' => 'application/json'
             ])->post($this->endPoint . "/transfer/transfer", $transferData);
 
+        if (!$response->successful())
+            throw new InternalException('Dinark - Deposite Payment', $response->status());
+
         $transaction->update(['notes' => json_encode($response->json())]);
 
         $status = json_decode($response)->status->id;
@@ -55,8 +58,6 @@ class Dinarak
 
     public function request($wallet_number, $amount, $pincode)
     {
-        $this->pincode($wallet_number, $amount);
-
         $transferData = [
             'Name' => Request()->user()->merchant_id, ' - ', Request()->user()->name,
             'Amount' => $amount,
@@ -70,22 +71,27 @@ class Dinarak
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json'
             ])->post($this->endPoint . "/transfer/deduct", $transferData);
+        if (!$response->successful())
+            throw new InternalException('Dinark - Request Payment', $response->status());
 
         return true;
     }
 
-    private function pincode($wallet_number, $amount)
+    public function pincode($wallet_number, $amount)
     {
         $transferData = [
             'Amount' => $amount,
             'PhoneNumber' => $wallet_number
         ];
-        $response = Http::withToken($this->tokenKey)
+
+        return $response = Http::withToken($this->tokenKey)
             ->withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json'
             ])->post($this->endPoint . "/Services/PushOTP", $transferData);
 
+        if (!$response->successful())
+            throw new InternalException('Dinark - Pin Code Error', $response->status());
         return true;
     }
 }
