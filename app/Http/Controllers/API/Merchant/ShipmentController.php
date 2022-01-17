@@ -376,6 +376,9 @@ class ShipmentController extends MerchantController
     public function delete($id, ShipmentRequest $request)
     {
         $data = Shipment::findOrFail($id);
+        if($data->status != 'DRAFT')
+            $this->error('You Cant Delete This Shipment (Only Draft)');
+            
         $data->is_deleted = true;
         $data->save();
 
