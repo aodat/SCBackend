@@ -1,0 +1,34 @@
+{
+    "TrackRequest": {
+        "WebAuthenticationDetail": {
+            "UserCredential": {
+                "Key": "",
+                "Password": ""
+            }
+        },
+        "ClientDetail": {
+            "AccountNumber": "",
+            "MeterNumber": ""
+        },
+        "TransactionDetail": {
+            "CustomerTransactionId": "",
+            "Localization": {
+                "LanguageCode": "EN",
+                "LocaleCode": "US"
+            }
+        },
+        "Version": {
+            "ServiceId": "trck",
+            "Major": "20",
+            "Intermediate": "0",
+            "Minor": "0"
+        },
+        "SelectionDetails": {
+            "CarrierCode": "FDXE",
+            "PackageIdentifier": {
+                "Type": "TRACKING_NUMBER_OR_DOORTAG",
+                "Value": ""
+            }
+        }
+    }
+}

@@ -168,7 +168,11 @@ class ShipmentRequest extends MerchantRequest
                 $validation['extra_services'] = 'required|in:DOMCOD';
             }
             return $validation;
-        }
+        } else if($this->method() == 'POST' && (strpos($path, 'shipments/track') !== false))
+            return [
+                'shipment_number' => 'required|exists:shipments,external_awb'
+            ];
+        
         return [];
     }
 }

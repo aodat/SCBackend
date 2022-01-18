@@ -215,7 +215,7 @@ trait CarriersManager
                         'item_id' => $shipmentInfo['id'],
                         'merchant_id' => $shipmentInfo['merchant_id'],
                         'source' => 'SHIPMENT',
-                        'status' => 'COMPLETED',
+                        'status' => 'PROCESSING',
                         'created_by' => $shipmentInfo['created_by'],
                         'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance,
                         'amount' => ($shipmentInfo['cod'] - $shipmentInfo['fees']),
