@@ -2,33 +2,24 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\Merchant\ShipmentRequest;
-
-use App\Jobs\ProcessShipCashUpdates;
-
-use App\Exports\ShipmentExport;
-
-use Carbon\Carbon;
-
 use App\Exceptions\InternalException;
-
-use App\Models\Transaction;
+use App\Exports\ShipmentExport;
+use App\Http\Requests\Merchant\ShipmentRequest;
+use App\Jobs\ProcessShipCashUpdates;
 use App\Models\Carriers;
-use App\Models\City;
 use App\Models\Country;
 use App\Models\Invoices;
-use App\Models\Merchant;
 use App\Models\Shipment;
-
+use App\Models\Transaction;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ShipmentController extends MerchantController
 {
 
     private $status = [
-        'DRAFT' => 0, 'PROCESSING' => 0, 'COMPLETED' => 0, 'RENTURND' => 0, 'PENDING_PAYMENTS' => 0
+        'DRAFT' => 0, 'PROCESSING' => 0, 'COMPLETED' => 0, 'RENTURND' => 0, 'PENDING_PAYMENTS' => 0,
     ];
 
     public function index(ShipmentRequest $request)
@@ -41,34 +32,38 @@ class ShipmentController extends MerchantController
         $external = $filters['external'] ?? [];
         $statuses = $filters['statuses'] ?? [];
         $phone = $filters['phone'] ?? [];
-        $cod    = $filters['cod']['val'] ?? null;
-        $operation    = $filters['cod']['operation'] ?? null;
+        $cod = $filters['cod']['val'] ?? null;
+        $operation = $filters['cod']['operation'] ?? null;
         $type = $request->type ?? 'DOM';
-
 
         $shipments = DB::table('shipments as s')->join('carriers as car', 'car.id', 's.carrier_id')
             ->where('merchant_id', $merchant_id)
             ->where('is_deleted', false)
             ->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
-        if (count($external))
+        if (count($external)) {
             $shipments->whereIn('s.external_awb', $external);
+        }
 
-        if (count($phone))
+        if (count($phone)) {
             $shipments = $shipments->where(function ($query) use ($phone) {
                 $query->whereIn('s.sender_phone', $phone)->orWhereIn('s.consignee_phone', $phone);
             });
+        }
 
-        if ($operation)
+        if ($operation) {
             $shipments->where("s.cod", $operation, $cod);
-        else if ($cod)
+        } else if ($cod) {
             $shipments->whereBetween('s.cod', [intval($cod), intval($cod) . '.99']);
+        }
 
         $shipments->where('s.group', $type);
         if (count($statuses)) {
             if (in_array('PENDING_PAYMENTS', $statuses)) {
                 $shipments->where('s.status', '=', 'COMPLETED')->whereNull('s.transaction_id');
-            } else
+            } else {
                 $shipments->whereIn('s.status', $statuses);
+            }
+
         }
         $shipments->orderBy('created_at', 'desc');
         $shipments->select(
@@ -89,10 +84,10 @@ class ShipmentController extends MerchantController
         );
 
         $tabs = DB::table(DB::raw("(select id,CASE WHEN s.status = 'COMPLETED' && s.transaction_id is null THEN 'PENDING_PAYMENTS' ELSE s.status END  as exstatus from shipments s where merchant_id = $merchant_id and `group` = '$type' and is_deleted = false) as subs"))
-                ->select('exstatus',DB::raw('count(id) as counter'))
-                ->groupByRaw('exstatus')
-                ->pluck('counter', 'exstatus');
-                
+            ->select('exstatus', DB::raw('count(id) as counter'))
+            ->groupByRaw('exstatus')
+            ->pluck('counter', 'exstatus');
+
         $tabs = collect($this->status)->merge(collect($tabs));
         return $this->pagination($shipments->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
@@ -109,15 +104,16 @@ class ShipmentController extends MerchantController
         $shipments = Shipment::where('merchant_id', $merchentID)->get();
         $path = "export/shipments-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
-        if ($type == 'xlsx')
+        if ($type == 'xlsx') {
             $url = exportXLSX(new ShipmentExport($shipments), $path);
-        else
+        } else {
             $url = exportPDF('shipments', $path, $shipments);
+        }
 
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
     }
 
-    // Create Express Shipment will be one by one only 
+    // Create Express Shipment will be one by one only
     public function createExpressShipment(ShipmentRequest $request)
     {
         return DB::transaction(function () use ($request) {
@@ -135,8 +131,10 @@ class ShipmentController extends MerchantController
             $addressList = App::make('merchantAddresses');
             $merchantInfo = App::make('merchantInfo');
             (collect($shipmentRequest)->pluck('sender_address_id'))->map(function ($address_id) use ($merchantInfo, $addressList) {
-                if ($addressList->where('id', $address_id)->where('country_code', $merchantInfo->country_code)->isEmpty())
+                if ($addressList->where('id', $address_id)->where('country_code', $merchantInfo->country_code)->isEmpty()) {
                     throw new InternalException('This is not Domestic request the merchant code different with send country code');
+                }
+
             });
             return $this->shipment('DOM', collect($shipmentRequest), 'Aramex');
         });
@@ -151,10 +149,13 @@ class ShipmentController extends MerchantController
         $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $type, $countries) {
             $address = $addresses->where('id', '=', $shipment['sender_address_id'])->first();
 
-            if ($address == null)
+            if ($address == null) {
                 throw new InternalException('Sender address id is in valid');
-            if ($merchentInfo->country_code == null)
+            }
+
+            if ($merchentInfo->country_code == null) {
                 throw new InternalException('Merchent country is empty');
+            }
 
             $shipment['sender_email'] = $merchentInfo['email'];
             $shipment['sender_name'] = $merchentInfo['name'];
@@ -181,8 +182,8 @@ class ShipmentController extends MerchantController
                 [
                     'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
                     'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
-                    'UpdateDescription' => 'Create Shipment'
-                ]
+                    'UpdateDescription' => 'Create Shipment',
+                ],
             ]);
             $shipment['created_at'] = Carbon::now();
             $shipment['updated_at'] = Carbon::now();
@@ -202,10 +203,12 @@ class ShipmentController extends MerchantController
 
         $links = [];
         if ($payloads->isEmpty()) { // for signle Shipment Request
-            if (isset($shipments->toArray()[0]))
+            if (isset($shipments->toArray()[0])) {
                 $shipment = $shipments->toArray()[0];
-            else
+            } else {
                 $shipment = $shipments->toArray();
+            }
+
             $result = $this->generateShipment($provider, $this->getMerchentInfo(), $shipment);
             $links[] = $result['link'];
 
@@ -220,7 +223,7 @@ class ShipmentController extends MerchantController
             }
 
             Shipment::withoutGlobalScope('ancient')->create($shipment);
-            if ($payment)
+            if ($payment) {
                 Invoices::create([
                     "merchant_id" => Request()->user()->merchant_id,
                     "user_id" => Request()->user()->id,
@@ -228,8 +231,10 @@ class ShipmentController extends MerchantController
                     "customer_name" => $shipment['consignee_name'],
                     "customer_email" => $shipment['consignee_email'],
                     "description" => $shipment['consignee_notes'],
-                    "amount" => $payment
+                    "amount" => $payment,
                 ]);
+            }
+
         } else if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
             $externalAWB = $result['id'];
@@ -251,7 +256,7 @@ class ShipmentController extends MerchantController
         return $this->response(
             [
                 'id' => Shipment::select('id')->first()->id,
-                'link' => mergePDF($links)
+                'link' => mergePDF($links),
             ],
             'Shipment Created Successfully'
         );
@@ -294,7 +299,7 @@ class ShipmentController extends MerchantController
                 "amount" => $merchent->actual_balance,
                 "balance_after" => $actual_balance,
                 "source" => "SHIPMENT",
-                "created_by" => Request()->user()->id
+                "created_by" => Request()->user()->id,
             ]);
         });
     }
@@ -305,16 +310,20 @@ class ShipmentController extends MerchantController
         $carriers = Carriers::where('is_active', true)
             ->where($data['type'], true);
 
-        if ($data['is_cod'])
+        if ($data['is_cod']) {
             $carriers->where('accept_cod', $data['is_cod']);
+        }
+
         $carrier = $carriers->get()->map(function ($carrier) use ($data) {
-            if ($data['type'] == 'express')
+            if ($data['type'] == 'express') {
                 $carrier['fees'] = (number_format($this->calculateFees($carrier->id, null, $data['country_code'], $data['type'], $data['weight']), 2));
-            else
+            } else {
                 $carrier['fees'] = (number_format($this->calculateFees($carrier->id, $data['city_from'], $data['city_to'], $data['type'], $data['weight']), 2));
+            }
+
             return $carrier;
         })->reject(function ($carrier) {
-            return  floatval($carrier['fees']) <= 0;
+            return floatval($carrier['fees']) <= 0;
         });
         return $this->response($carrier->flatten(), 'Fees Calculated Successfully');
     }
@@ -333,14 +342,13 @@ class ShipmentController extends MerchantController
         $countries = Country::pluck('code', 'name_en');
         $type = $shipment['type'];
 
-
         unset($shipment['strip_token'], $shipment['type']);
 
         $shipment['sender_country'] = $countries[$shipment['sender_country']] ?? null;
         $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
 
         $shipment['status'] = 'DRAFT';
-        
+
         if ($type == 'express') {
             $shipment['group'] = 'EXP';
             $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
@@ -355,12 +363,11 @@ class ShipmentController extends MerchantController
             [
                 'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
                 'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
-                'UpdateDescription' => 'Create Shipment'
-            ]
+                'UpdateDescription' => 'Create Shipment',
+            ],
         ]);
         $shipment['created_at'] = Carbon::now();
         $shipment['updated_at'] = Carbon::now();
-        
 
         // if ($type == 'domestic' || $shipment['carrier_id'] == 1) {
         //     $result = $this->createShipmentDB(collect([$shipment]), 'Aramex');
@@ -370,21 +377,23 @@ class ShipmentController extends MerchantController
         // }
 
         return $this->successful('Your Shipment Created Successfully');
-            
+
     }
 
-    public function tracking(ShipmentRequest $request) 
+    public function tracking(ShipmentRequest $request)
     {
         $shipment = Shipment::where('external_awb', $request->shipment_number)->first();
-        return $this->response($this->track($shipment->carrier_name,$request->shipment_number),'Shipment Info');
+        $details = $this->track($shipment->carrier_name, $request->shipment_number, true);
+        return $this->response($details, 'Shipment Info');
     }
 
     public function delete($id, ShipmentRequest $request)
     {
         $data = Shipment::findOrFail($id);
-        if($data->status != 'DRAFT')
+        if ($data->status != 'DRAFT') {
             $this->error('You Cant Delete This Shipment (Only Draft)');
-            
+        }
+
         $data->is_deleted = true;
         $data->save();
 

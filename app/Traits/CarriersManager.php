@@ -2,22 +2,18 @@
 
 namespace App\Traits;
 
-use Libs\Aramex;
-use Libs\DHL;
-use Libs\Fedex;
-
-use Illuminate\Support\Facades\App;
-use App\Http\Controllers\Utilities\InvoiceService;
 use App\Exceptions\CarriersException;
-
+use App\Http\Controllers\Utilities\InvoiceService;
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Merchant;
-use App\Models\Shipment;
 use App\Models\Transaction;
-
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Libs\Aramex;
+use Libs\DHL;
+use Libs\Fedex;
 
 trait CarriersManager
 {
@@ -52,10 +48,12 @@ trait CarriersManager
 
     public function getMerchantInfo($merchantID = null)
     {
-        if (Request()->user() === null)
+        if (Request()->user() === null) {
             return Merchant::findOrFail(900);
-        else
+        } else {
             return App::make('merchantInfo');
+        }
+
     }
 
     public function generateShipment($provider, $merchantInfo = null, $shipmentArray)
@@ -64,7 +62,7 @@ trait CarriersManager
         $shipments = $this->adapter->createShipment($merchantInfo, $shipmentArray);
         return [
             'link' => (isset($shipments[0])) ? collect($shipments)->pluck('file')->toArray() : $shipments['file'],
-            'id' => (isset($shipments[0])) ? collect($shipments)->pluck('id') : $shipments['id']
+            'id' => (isset($shipments[0])) ? collect($shipments)->pluck('id') : $shipments['id'],
         ];
     }
 
@@ -89,8 +87,10 @@ trait CarriersManager
         $exported = [];
         $shipments->map(function ($shipment) use (&$exported) {
             $exported[] = $shipment->url;
-            if ($shipment->group == 'EXP' && !$shipment->is_doc)
+            if ($shipment->group == 'EXP' && !$shipment->is_doc) {
                 $exported[] = InvoiceService::commercial($shipment);
+            }
+
         });
 
         return mergePDF($exported);
@@ -102,68 +102,79 @@ trait CarriersManager
         return $this->adapter->cancelPickup($pickupInfo);
     }
 
-    public function track($provider, $shipments_number)
+    public function track($provider, $shipments_number, $all = false)
     {
         $this->loadProvider($provider);
-        return $this->adapter->trackShipment($shipments_number);
+        return $this->adapter->trackShipment($shipments_number, $all);
     }
 
     /*
-        $type : DOM , Express
-    */
+    $type : DOM , Express
+     */
 
     public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
     {
         $this->merchantInfo = $this->getMerchantInfo();
         if ($type == 'domestic' || $type == 'DOM') {
-            if (!isset($this->merchantInfo['domestic_rates'][$carrier_id]))
+            if (!isset($this->merchantInfo['domestic_rates'][$carrier_id])) {
                 throw new CarriersException('The Carrier ID ' . $carrier_id . ' No Support domestic , Please Contact Administrators');
+            }
 
             $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $to);
 
-            if ($rate->isEmpty())
+            if ($rate->isEmpty()) {
                 throw new CarriersException('Country Code Not Exists, Please Contact Administrators');
+            }
 
             $price = $rate->first()['price'];
             $fees = ceil($weight / 10) * $price;
         } else {
             $express_rates = collect(Country::where('code', $this->merchantInfo['country_code'])->first());
-            if ($express_rates->isEmpty())
+            if ($express_rates->isEmpty()) {
                 throw new CarriersException('Country Code Not Exists, Please Contact Administrators');
+            }
 
             $express_rates = $express_rates['rates'];
-            if (count($express_rates) == 0)
+            if (count($express_rates) == 0) {
                 throw new CarriersException('No Setup Added To This Country, Please Contact Administrators');
+            }
 
-            if (!isset($express_rates[$to]))
+            if (!isset($express_rates[$to])) {
                 throw new CarriersException('No Setup Added To This Country, Please Contact Administrators');
+            }
 
             $rates = collect($express_rates[$to]);
             $zones = $rates->where('carrier_id', $carrier_id);
 
-            if ($zones->count() > 1)
+            if ($zones->count() > 1) {
                 throw new CarriersException('Somthing Wrong On Rates Setup, Please Contact Administrators');
+            }
 
-            if (!isset($zones->first()['zone_id']))
+            if (!isset($zones->first()['zone_id'])) {
                 throw new CarriersException('Somthing Wrong On Zone ID Setup, Please Contact Administrators');
+            }
 
             $zone_id = $zones->first()['zone_id'];
             $discounts = $this->merchantInfo['express_rates'][$carrier_id]['discounts'] ?? [];
 
             $zoneRates = collect($this->merchantInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id);
-            if ($zoneRates->count() > 1)
+            if ($zoneRates->count() > 1) {
                 throw new CarriersException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
+            }
 
             $zoneRates = $zoneRates->first();
-            if ($zoneRates == null)
+            if ($zoneRates == null) {
                 return 0;
+            }
 
             $base = $zoneRates['basic'];
             $additional = $zoneRates['additional'];
             if (!empty($discounts)) {
                 foreach ($discounts as $key => $value) {
-                    if (eval("return " .  $weight . $value['condintion'] . $value['weight'] . ";"))
+                    if (eval("return " . $weight . $value['condintion'] . $value['weight'] . ";")) {
                         $additional = $additional - ($additional * $value['percent']);
+                    }
+
                 }
             }
 
@@ -175,8 +186,9 @@ trait CarriersManager
             }
         }
 
-        if ($fees == 0)
+        if ($fees == 0) {
             throw new CarriersException('Fees Equal Zero');
+        }
 
         return $fees;
     }
@@ -184,28 +196,27 @@ trait CarriersManager
     public function webhook($shipmentInfo, $data)
     {
         $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
-        $this->loadProvider($shipmentInfo['carrier_name']);
 
-        $chargeableWeight = $this->adapter->trackShipment([$shipmentInfo['external_awb']], true)['ChargeableWeight'] ?? null;
-        if ($chargeableWeight == null)
+        $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
+
+        if (!isset($details['ChargeableWeight'])) 
             throw new CarriersException('Chargeable Weight Is Zero');
+        
 
-
-        if ($chargeableWeight)
-            $setup['chargable_weight'] = $this->calculateFees(
-                $shipmentInfo['carrier_id'],
-                null,
-                ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
-                $shipmentInfo['group'],
-                $chargeableWeight
-            );
+        $setup['chargable_weight'] = $this->calculateFees(
+            $shipmentInfo['carrier_id'],
+            null,
+            ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
+            $shipmentInfo['group'],
+            $details['ChargeableWeight']
+        );
 
         $updated = $this->adapter->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
 
         $actions = $updated['actions'] ?? [];
-        if (isset($updated['actions']))
+        if (isset($updated['actions'])) 
             unset($updated['actions']);
-
+        
 
         foreach ($actions as $action) {
             if ($action == 'create_transaction') {
@@ -219,15 +230,16 @@ trait CarriersManager
                         'created_by' => $shipmentInfo['created_by'],
                         'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance,
                         'amount' => ($shipmentInfo['cod'] - $shipmentInfo['fees']),
-                        'resource' => 'API'
+                        'resource' => 'API',
                     ]
                 );
-                $updated['transaction_id'] =  $transaction->id;
+                $updated['transaction_id'] = $transaction->id;
             } else if ($action == 'update_merchant_balance') {
-                $merchant->actual_balance =  ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance;
+                $merchant->actual_balance = ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance;
                 $merchant->save();
             }
         }
+
         $logs = collect($shipmentInfo->logs);
 
         $updated['chargable_weight'] = $chargeableWeight;
@@ -235,7 +247,8 @@ trait CarriersManager
             'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
             'UpdateLocation' => $data['Comment1'],
             'Code' => $data['UpdateCode'] ?? 'N/A',
-            'UpdateDescription' => $updated['status']
+            'TrackingDescription' => $details['UpdateDescription'] ?? '',
+            'UpdateDescription' => $updated['status'],
         ]]);
 
         $shipmentInfo->update($updated);
