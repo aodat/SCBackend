@@ -213,7 +213,7 @@ class DHL
         
         
         if (isset($response['Response']['Status']) && ($response['Response']['Status']['ActionStatus'] == 'Error' || $response['Response']['Status']['ActionStatus'] == 'Failure'))
-            throw new CarriersException('DHL Track Shipment – Something Went Wrong');
+            throw new CarriersException('Cannot track DHL shipment');
 
             return $response['AWBInfo']['ShipmentInfo'];
     }

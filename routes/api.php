@@ -93,11 +93,14 @@ Route::group(['middleware' => ['json.response']], function () {
                 Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
                 Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
                 Route::get('shipments/template', [ShipmentController::class, 'template']);
+                Route::post('shipments/track', [ShipmentController::class, 'tracking']);
+
                 Route::post('shipments/filters', [ShipmentController::class, 'index']);
                 Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
                 Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
                 Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
                 Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
+                
                 Route::delete('shipments/{id}', [ShipmentController::class, 'delete'])->where('id', '[0-9]+');
             });
 

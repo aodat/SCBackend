@@ -375,7 +375,8 @@ class ShipmentController extends MerchantController
 
     public function tracking(ShipmentRequest $request) 
     {
-        return $this->response($this->track('DHL',1259337730),'Shipment Info');
+        $shipment = Shipment::where('external_awb', $request->shipment_number)->first();
+        return $this->response($this->track($shipment->carrier_name,$request->shipment_number),'Shipment Info');
     }
 
     public function delete($id, ShipmentRequest $request)
