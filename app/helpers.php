@@ -1,14 +1,11 @@
 <?php
 
-
-use Maatwebsite\Excel\Facades\Excel as Excel;
-
-use Illuminate\Support\Facades\Storage;
-use LynX39\LaraPdfMerger\Facades\PdfMerger;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use LynX39\LaraPdfMerger\Facades\PdfMerger;
+use Maatwebsite\Excel\Facades\Excel as Excel;
 use Mpdf\Mpdf;
 
 if (!function_exists('uploadFiles')) {
@@ -33,19 +30,18 @@ if (!function_exists('exportPDF')) {
     function exportPDF($view, $path, $data)
     {
         $mpdf = new Mpdf();
-        $html = view("pdf.$view", [$view  => $data])->render();
+        $html = view("pdf.$view", [$view => $data])->render();
         $mpdf->WriteHTML($html);
         Storage::disk('s3')->put($path, $mpdf->Output('filename.pdf', 'S'));
         return Storage::disk('s3')->url($path);
     }
 }
 
-
 if (!function_exists('generateMessageID')) {
     function generateMessageID()
     {
         $prefix = array_map(function ($chr) {
-            return 9 - +$chr;
+            return 9-+$chr;
         }, str_split(intval((microtime(1) * 10000))));
         $prefix = implode('', $prefix);
         return str_replace('.', '', uniqid($prefix, true));
@@ -112,7 +108,7 @@ function currency_exchange($amount, $from, $to = 'USD')
 {
     $rates = [
         'JOD' => 1.41,
-        'SAR' => 0.27
+        'SAR' => 0.27,
     ];
     return $rates[$from] * $amount;
 }
@@ -129,16 +125,16 @@ function array_to_xml(array $arr, SimpleXMLElement $xml)
 {
     foreach ($arr as $k => $v) {
         is_array($v)
-            ? array_to_xml($v, $xml->addChild($k))
-            : $xml->addChild($k, $v);
+        ? array_to_xml($v, $xml->addChild($k))
+        : $xml->addChild($k, $v);
     }
     return $xml;
 }
 
 function removeNamespaceFromXML($xml)
 {
-    // Because I know all of the the namespaces that will possibly appear in 
-    // in the XML string I can just hard code them and check for 
+    // Because I know all of the the namespaces that will possibly appear in
+    // in the XML string I can just hard code them and check for
     // them to remove them
     $toRemove = ['rap', 'turss', 'crim', 'cred', 'j', 'rap-code', 'evic'];
     // This is part of a regex I will use to remove the namespace declaration from string
