@@ -215,9 +215,15 @@ class Aramex
         return $data;
     }
 
-    public function trackShipment($shipment_waybills)
+    public function trackShipment($shipment_waybills,$all_event = false)
     {
-        $trackingPayload = ["ClientInfo" => $this->config, "Shipments" => $shipment_waybills];
+        $awb = [];
+        if(!is_array($shipment_waybills))
+            $awb[] = $shipment_waybills;
+        else
+            $awb = $shipment_waybills;
+            
+        $trackingPayload = ["ClientInfo" => $this->config, "Shipments" => $awb];
 
         $response = Http::post(self::$TRACK_SHIPMENTS_URL, $trackingPayload);
         if (!$response->successful())
@@ -231,7 +237,9 @@ class Aramex
         if (empty($result))
             throw new CarriersException('Tracking Details Is Empty', $trackingPayload, $response->json());
 
-        if (count($shipment_waybills) == 1)
+        if($all_event)
+            return $response['TrackingResults'][0]['Value'];
+        else if (count($awb) == 1)
             return last($response['TrackingResults'][0]['Value']);
 
         return $result;
