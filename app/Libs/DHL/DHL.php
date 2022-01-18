@@ -206,15 +206,16 @@ class DHL
     }
     public function trackShipment($shipment_waybills)
     {
-        $payload = $this->bindJsonFile('track.create.json');
+        $payload = $this->bindJsonFile('track.json');
         $payload['AWBNumber'] = $shipment_waybills;
+
         $response = $this->call('KnownTrackingRequest', $payload);
-        dd($response);
-        // if (isset($response['Response']['Status']) && $response['Response']['Status']['ActionStatus'] == 'Error')
-        //     throw new CarriersException('DHL Create Pickup – Something Went Wrong', $payload, $response);
+        
+        
+        if (isset($response['Response']['Status']) && ($response['Response']['Status']['ActionStatus'] == 'Error' || $response['Response']['Status']['ActionStatus'] == 'Failure'))
+            throw new CarriersException('DHL Track Shipment – Something Went Wrong');
 
-        // return ['id' => $this->config['MessageReference'], 'guid' => $response['ConfirmationNumber']];
-
+            return $response['AWBInfo']['ShipmentInfo'];
     }
 
     public function bindJsonFile($file)

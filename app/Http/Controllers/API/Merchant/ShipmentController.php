@@ -148,7 +148,7 @@ class ShipmentController extends MerchantController
         $merchentInfo = $this->getMerchentInfo();
         $addresses = collect($merchentInfo->addresses);
 
-        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $dom_rates, $type, $countries) {
+        $shipments = $shipments->map(function ($shipment) use ($addresses, $merchentInfo, $type, $countries) {
             $address = $addresses->where('id', '=', $shipment['sender_address_id'])->first();
 
             if ($address == null)
@@ -371,6 +371,11 @@ class ShipmentController extends MerchantController
 
         return $this->successful('Your Shipment Created Successfully');
             
+    }
+
+    public function tracking(ShipmentRequest $request) 
+    {
+        return $this->response($this->track('DHL',1259337730),'Shipment Info');
     }
 
     public function delete($id, ShipmentRequest $request)
