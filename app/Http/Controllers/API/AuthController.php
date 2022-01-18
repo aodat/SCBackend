@@ -39,14 +39,15 @@ class AuthController extends Controller
             $merchant = Merchant::find($userData->merchant_id);
             if (!$merchant->is_active)
                 return $this->error('Mechant Is In-Active', 403);
+
+            $userData['country_code'] = $merchant->country_code ?? '';
+            $userData['currency_code'] = $merchant->currency_code ?? '';
         }
+        
         if ($userData->role === "member")
             $role = explode(",", $userData->role_member);
         $role[] = $userData->role;
         $userData['token'] = $userData->createToken('users', $role)->accessToken;
-        $userData['country_code'] = $merchant->country_code;
-        $userData['currency_code'] = $merchant->currency_code;
-
         return $this->response(
             $userData,
             'User Login Successfully',
