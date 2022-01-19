@@ -45,6 +45,11 @@ class Shipment extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function getLogsAttribute($logs)
+    {
+        return collect(json_decode($logs))->sortByDesc('UpdateDateTime')->flatten();
+    }
+
     protected static function booted()
     {
         static::addGlobalScope('ancient', function (Builder $builder) {
