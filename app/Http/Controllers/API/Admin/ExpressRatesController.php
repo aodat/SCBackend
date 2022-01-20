@@ -48,5 +48,6 @@ class ExpressRatesController extends Controller
         }
 
         $merchant->update(['express_rates' => collect($express_rates)]);
+        return $this->successful("Successfully Update");
     }
 }
