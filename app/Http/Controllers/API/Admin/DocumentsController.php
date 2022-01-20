@@ -10,12 +10,10 @@ use Carbon\Carbon;
 
 class DocumentsController extends Controller
 {
-
     private $merchant;
     public function __construct(DocumentsRequest $request)
     {
         $this->merchant = Merchant::findOrFail($request->merchant_id);
-
     }
 
     public function index(DocumentsRequest $request)
@@ -59,7 +57,7 @@ class DocumentsController extends Controller
         $data['verified_at'] = Carbon::now()->format('Y-m-d H:i:s');
         $data['status'] = $request->status;
         $result[$current] = $data;
-        
+
         $merchant->update(['documents' => $result]);
         return $this->successful("Successfully Update");
     }
