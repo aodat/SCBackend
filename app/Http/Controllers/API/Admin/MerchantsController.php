@@ -25,6 +25,8 @@ class MerchantsController extends Controller
         if ($id)
             $merchants->where('id', $id);
 
+        $merchants->select('id','name','email','actual_balance','type','is_active');
+
         $paginated = $merchants->paginate(request()->per_page ?? 30);
         return $this->pagination($paginated);
     }
