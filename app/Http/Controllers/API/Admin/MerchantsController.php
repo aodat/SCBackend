@@ -4,9 +4,7 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MerchantRequest;
-
 use App\Models\Merchant;
-
 use Illuminate\Support\Facades\DB;
 
 class MerchantsController extends Controller
@@ -18,14 +16,19 @@ class MerchantsController extends Controller
         $email = $request->email;
 
         $merchants = DB::table('merchants');
-        if ($name)
+        if ($name) {
             $merchants->where('name', 'like', '%' . $name . '%');
-        if ($email)
-            $merchants->where('email', 'like', '%' . $email . '%');
-        if ($id)
-            $merchants->where('id', $id);
+        }
 
-        $merchants->select('id','name','email','actual_balance','type','is_active');
+        if ($email) {
+            $merchants->where('email', 'like', '%' . $email . '%');
+        }
+
+        if ($id) {
+            $merchants->where('id', $id);
+        }
+
+        $merchants->select('id', 'name', 'email', 'actual_balance', 'type', 'is_active');
 
         $paginated = $merchants->paginate(request()->per_page ?? 30);
         return $this->pagination($paginated);
@@ -46,19 +49,4 @@ class MerchantsController extends Controller
 
         return $this->successful('Updated Successfully');
     }
-
-    public function merchantConfig(MerchantRequest $request)
-    {
-        $data = $request->validated();
-
-        $merchant = Merchant::findOrFail($data['merchant_id']);
-        $type = $data['type'];
-        return $this->response($merchant->$type, 'Data Retrieved Successfully');
-    }
-
-    public function domesticRates(MerchantRequest $request)
-    {
-        dd($request->validated());
-    }
-
 }
