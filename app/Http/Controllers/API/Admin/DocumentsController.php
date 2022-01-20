@@ -61,6 +61,6 @@ class DocumentsController extends Controller
         $result[$current] = $data;
         
         $merchant->update(['documents' => $result]);
-        return $this->successful("success Update");
+        return $this->successful("Successfully Update");
     }
 }
