@@ -69,7 +69,7 @@
                     "PaymentType": "SENDER",
                     "Payor": {
                         "ResponsibleParty": {
-                            "AccountNumber": "510087160"
+                            "AccountNumber": ""
                         }
                     }
                 },

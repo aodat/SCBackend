@@ -137,6 +137,6 @@ class MerchantController extends Controller
         if (Request()->user() !== null)
             return Merchant::findOrFail(Request()->user()->merchant_id);
         else
-            return Merchant::findOrFail(1); // Guest Account
+            return Merchant::findOrFail(900); // Guest Account
     }
 }

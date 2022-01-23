@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Utilities;
 
+use App\Models\Merchant;
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\Party;
@@ -11,7 +12,8 @@ class InvoiceService
 {
     public static function commercial($data)
     {
-        // dd($data);
+        $mertchatInfo = Merchant::findOrFail($data->merchant_id);
+
         $client = new Party([
             'name'          => $data->sender_name,
             'phone'         => $data->sender_phone,
@@ -34,12 +36,16 @@ class InvoiceService
             ],
         ]);
 
+        $price = currency_exchange($data->declared_value,$mertchatInfo->currency_code);
+
         $item = (new InvoiceItem())->title($data->content)
             ->quantity($data->pieces)
-            ->subTotalPrice($data->declared_value)
-            ->pricePerUnit($data->declared_value);
+            ->subTotalPrice($price)
+            ->pricePerUnit($price);
 
         $invoice = Invoice::make()
+            ->series($data->external_awb)
+
             ->buyer($customer)
             ->seller($client)
             ->currencySymbol('$')

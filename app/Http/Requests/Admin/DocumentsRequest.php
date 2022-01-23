@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DocumentRequest extends FormRequest
+class DocumentsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -38,7 +38,7 @@ class DocumentRequest extends FormRequest
         if ($this->getMethod() == 'POST' && strpos($path, 'merchant/{merchant_id}/document') !== false)
             return [
                 "type" => "required|in:license,passport,id",
-                "file" => "required|mimes:pdf,jpg,jpeg"
+                "file" => "required|mimes:pdf,jpg,jpeg",
             ];
         else if ($this->getMethod() == 'PUT' && strpos($path, '{merchant_id}/document/{id}') !== false)
             return [

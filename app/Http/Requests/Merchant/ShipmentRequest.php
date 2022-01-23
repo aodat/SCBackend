@@ -151,16 +151,28 @@ class ShipmentRequest extends MerchantRequest
 
             $type = Request::instance()->type;
             if ($type == 'express') {
-                $validation['consignee_second_phone'] = '';
                 $validation['cod'] = 'numeric|between:0,9999';
-                $validation['declared_value'] = 'required|numeric|between:0,9999';
                 $validation['payment'] = 'numeric|between:0,9999';
+                $validation['consignee_country'] = 'required';
+                $validation['actual_weight'] = 'required|numeric|between:0,9999';
+                $validation['is_doc'] = 'required|boolean';
+                $validation['declared_value'] = [
+                    new RequiredIf($this->is_doc == false),
+                    'numeric',
+                    'between:0,9999'
+                ];
+                $validation['consignee_zip_code'] = '';
+                $validation['consignee_second_phone'] = '';
             } else {
                 $validation['cod'] = 'required|numeric|between:0,9999';
                 $validation['extra_services'] = 'required|in:DOMCOD';
             }
             return $validation;
-        }
+        } else if($this->method() == 'POST' && (strpos($path, 'shipments/track') !== false))
+            return [
+                'shipment_number' => 'required|exists:shipments,external_awb'
+            ];
+        
         return [];
     }
 }

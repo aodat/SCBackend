@@ -33,7 +33,7 @@ class Aramex
         $this->setup = [
             'SH005' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'SH006' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
-            'SH069' => ['status' => 'COMPLETED', 'returned_at' => Carbon::now(), 'delivered_at' => null, 'paid_at' => null],
+            'SH069' => ['status' => 'RENTURND', 'returned_at' => Carbon::now(), 'delivered_at' => null, 'paid_at' => null],
             'SH239' => ['status' => 'COMPLETED', 'paid_at' => Carbon::now(), 'delivered_at' => Carbon::now(), 'returned_at' => null, 'actions' => ['create_transaction', 'update_merchant_balance']]
         ];
     }
@@ -145,7 +145,7 @@ class Aramex
     public function shipmentArray($merchentInfo, $shipmentInfo)
     {
         $data = $this->bindJsonFile('shipment.create.json');
-
+        
         $data['Shipper']['Reference1'] = $merchentInfo->id;
         $data['Shipper']['AccountNumber'] =
             $data['Consignee']['AccountNumber'] =
@@ -156,7 +156,7 @@ class Aramex
         $data['Shipper']['PartyAddress']['City'] = ucfirst(strtolower($shipmentInfo['sender_city']));
         $data['Shipper']['PartyAddress']['CountryCode'] = $merchentInfo->country_code;
         $data['Shipper']['Contact']['PersonName'] = $shipmentInfo['sender_name'];
-        $data['Shipper']['Contact']['CompanyName'] = $shipmentInfo['sender_name'];
+        $data['Shipper']['Contact']['CompanyName'] = $shipmentInfo['sender_name']; // $merchentInfo->name;
         $data['Shipper']['Contact']['PhoneNumber1'] = $shipmentInfo['sender_phone'];
         $data['Shipper']['Contact']['CellPhone'] = $shipmentInfo['sender_phone'];
 
@@ -215,9 +215,15 @@ class Aramex
         return $data;
     }
 
-    public function trackShipment($shipment_waybills)
+    public function trackShipment($shipment_waybills,$all_event = false)
     {
-        $trackingPayload = ["ClientInfo" => $this->config, "Shipments" => $shipment_waybills];
+        $awb = [];
+        if(!is_array($shipment_waybills))
+            $awb[] = $shipment_waybills;
+        else
+            $awb = $shipment_waybills;
+            
+        $trackingPayload = ["ClientInfo" => $this->config, "Shipments" => $awb];
 
         $response = Http::post(self::$TRACK_SHIPMENTS_URL, $trackingPayload);
         if (!$response->successful())
@@ -231,7 +237,9 @@ class Aramex
         if (empty($result))
             throw new CarriersException('Tracking Details Is Empty', $trackingPayload, $response->json());
 
-        if (count($shipment_waybills) == 1)
+        if($all_event)
+            return $response['TrackingResults'][0]['Value'];
+        else if (count($awb) == 1)
             return last($response['TrackingResults'][0]['Value']);
 
         return $result;

@@ -16,14 +16,16 @@ class DHL
         'BookPURequest' => 'http://www.dhl.com book-pickup-global-req_EA.xsd',
         'CancelPURequest' => 'http://www.dhl.com cancel-pickup-global-req.xsd',
         'ShipmentRequest' => 'http://www.dhl.com ship-val-global-req.xsd',
-        'RouteRequest' => 'http://www.dhl.com routing-global-req.xsd'
+        'RouteRequest' => 'http://www.dhl.com routing-global-req.xsd',
+        'KnownTrackingRequest' => 'http://www.dhl.com TrackingRequestKnown.xsd',
     ];
 
     private static $schemaVersion = [
         'BookPURequest' => '3.0',
         'CancelPURequest' => '3.0',
         'ShipmentRequest' => '10.0',
-        'RouteRequest' => '2.0'
+        'RouteRequest' => '2.0',
+        'KnownTrackingRequest' => '1.0',
     ];
 
     private static $stagingUrl = 'https://xmlpitest-ea.dhl.com/XMLShippingServlet?isUTF8Support=true';
@@ -201,6 +203,19 @@ class DHL
             'id' => $response['AirwayBillNumber'],
             'file' => uploadFiles('dhl/shipment', base64_decode($response['LabelImage']['OutputImage']), 'pdf', true)
         ];
+    }
+    public function trackShipment($shipment_waybills)
+    {
+        $payload = $this->bindJsonFile('track.json');
+        $payload['AWBNumber'] = $shipment_waybills;
+
+        $response = $this->call('KnownTrackingRequest', $payload);
+        
+        
+        if (isset($response['Response']['Status']) && ($response['Response']['Status']['ActionStatus'] == 'Error' || $response['Response']['Status']['ActionStatus'] == 'Failure'))
+            throw new CarriersException('Cannot track DHL shipment');
+
+            return $response['AWBInfo']['ShipmentInfo'];
     }
 
     public function bindJsonFile($file)

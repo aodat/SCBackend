@@ -2,48 +2,52 @@
 
 namespace App\Http\Controllers\API\Admin;
 
-use App\Http\Controllers\Controller;
-
-use App\Models\Merchant;
-use App\Http\Requests\Admin\ExpressRatesRequest;
-
 use App\Exceptions\InternalException;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\ExpressRatesRequest;
+use App\Models\Merchant;
+
 class ExpressRatesController extends Controller
 {
-    
+    private $merchant;
+    public function __construct(ExpressRatesRequest $request)
+    {
+        $this->merchant = Merchant::findOrFail($request->merchant_id);
+    }
+
     public function index(ExpressRatesRequest $request)
     {
-        $data = $request->validated();
-        $merchant = Merchant::findOrFail($data['merchant_id']);
-        return $this->response($merchant->express_rates, 'Data Retrieved Successfully', 200);
+        return $this->response($this->merchant->express_rates, 'Data Retrieved Successfully');
     }
 
     public function update(ExpressRatesRequest $request)
     {
-        $data = $request->all();
-        $id = $data['id'] ?? null;
-        $carrier_id = $data['carrier_id'];
-        $merchant_id = $data['merchant_id'];
 
-        unset($data['carrier_id']);
-        unset($data['merchant_id']);
-
-        $merchant = Merchant::findOrFail($merchant_id);
+        $carrier_id = $request->carrier_id;
+        $merchant = $this->merchant;
         $express_rates = $merchant->express_rates;
-        
+
         $rates = collect($express_rates[$carrier_id]['zones']);
+        $rate = $rates->where('id', $request->zone_id);
 
-        // update rate
-        $rate = $rates->where('id', $id);
-        if ($rate->first() == null)
+        if ($rate->first() == null) {
             throw new InternalException('Rate id not Exists');
+        }
         $current = $rate->keys()->first();
-        $rate[$current] = $data;
-        $rates = $rates->replaceRecursive($rate);
 
-        $express_rates[$carrier_id]['zones'] = $rates;
-        
-        $merchant->update(['express_rates' => $express_rates]);
-        return $this->successful('Updated Successfully');
+        if ($request->basic) {
+            $express_rates[$carrier_id]['zones'][$current]['basic'] = $request->basic;
+        }
+
+        if ($request->additional) {
+            $express_rates[$carrier_id]['zones'][$current]['additional'] = $request->additional;
+        }
+
+        if ($request->max_weight) {
+            $express_rates[$carrier_id]['zones'][$current]['max_weight'] = $request->max_weight;
+        }
+
+        $merchant->update(['express_rates' => collect($express_rates)]);
+        return $this->successful("Successfully Update");
     }
 }

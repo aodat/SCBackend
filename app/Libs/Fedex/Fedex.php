@@ -20,7 +20,8 @@ class Fedex
     private static $xsd = [
         'CreatePickupRequest' => 'http://fedex.com/ws/pickup/v17',
         'ProcessShipmentRequest' => 'http://fedex.com/ws/ship/v21',
-        'CancelPickupRequest' => 'http://fedex.com/ws/pickup/v22'
+        'CancelPickupRequest' => 'http://fedex.com/ws/pickup/v22',
+        'TrackRequest' => 'http://fedex.com/ws/track/v20'
     ];
 
     private $end_point;
@@ -165,6 +166,23 @@ class Fedex
         ];
     }
 
+    public function trackShipment($shipment_waybills)
+    {
+        $payload = $this->bindJsonFile('track.json', "TrackRequest");
+        $payload['TrackRequest']['SelectionDetails']['PackageIdentifier']['Value'] = $shipment_waybills;
+
+
+        $response = $this->call('TrackRequest', $payload);
+
+        if (
+            (!isset($response['v20Notifications']['Severity'])) ||
+            (isset($response['v20Notifications']['Severity']) && $response['v20Notifications']['Severity'] == 'ERROR')
+        )
+            throw new CarriersException('Cannot track DHL shipment');
+
+        return ($response);
+    }
+    
     public function bindJsonFile($file, $type)
     {
         $payload = json_decode(file_get_contents(app_path() . '/Libs/Fedex/' . $file), true);

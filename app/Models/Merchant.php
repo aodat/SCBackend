@@ -26,7 +26,8 @@ class Merchant extends Model
     ];
 
     protected $hidden = [
-        'is_documents_verified', 'is_active', 'is_instant_payment_active',
+        'is_documents_verified',
+        'is_instant_payment_active',
         'domestic_rates',
         'express_rates'
     ];
