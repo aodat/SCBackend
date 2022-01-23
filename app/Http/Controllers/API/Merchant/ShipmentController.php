@@ -158,7 +158,7 @@ class ShipmentController extends MerchantController
             }
 
             $shipment['sender_email'] = $merchentInfo['email'];
-            $shipment['sender_name'] = $merchentInfo['name'];
+            $shipment['sender_name'] = $address['name'];
             $shipment['sender_phone'] = $address['phone'];
             $shipment['sender_country'] = $merchentInfo['country_code'];
             $shipment['sender_city'] = $address['city'];
