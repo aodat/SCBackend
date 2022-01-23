@@ -4,9 +4,7 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CarriersRequest;
-
 use App\Models\Carriers;
-
 use Illuminate\Support\Facades\DB;
 
 class CarriersController extends Controller
@@ -18,20 +16,25 @@ class CarriersController extends Controller
         $email = $request->email;
 
         $carriers = DB::table('carriers');
-        if ($name)
+        if ($name) {
             $carriers->where('name', 'like', '%' . $name . '%');
-        if ($email)
+        }
+
+        if ($email) {
             $carriers->where('email', 'like', '%' . $email . '%');
-        if ($id)
+        }
+
+        if ($id) {
             $carriers->where('id', $id);
+        }
 
         $paginated = $carriers->paginate(request()->per_page ?? 30);
         return $this->pagination($paginated);
     }
 
-    public function show($carrier_id, CarriersRequest $request)
+    public function show(CarriersRequest $request)
     {
-        $carrier = Carriers::findOrFail($carrier_id);
+        $carrier = Carriers::findOrFail($request->carrier_id);
         return $this->response($carrier, 'Data Retrieved Successfully');
     }
 
