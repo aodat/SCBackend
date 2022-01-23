@@ -24,7 +24,43 @@ class ShipmentController extends MerchantController
 
     public function index(ShipmentRequest $request)
     {
-        $filters = $request->json()->all();
+        $shipments = $this->search($request->json()->all());
+        $merchant_id = Request()->user()->merchant_id;
+        $type = $request->type ?? 'DOM';
+
+        $tabs = DB::table(DB::raw("(select id,CASE WHEN s.status = 'COMPLETED' && s.transaction_id is null THEN 'PENDING_PAYMENTS' ELSE s.status END  as exstatus from shipments s where merchant_id = $merchant_id and `group` = '$type' and is_deleted = false) as subs"))
+            ->select('exstatus', DB::raw('count(id) as counter'))
+            ->groupByRaw('exstatus')
+            ->pluck('counter', 'exstatus');
+
+        $tabs = collect($this->status)->merge(collect($tabs));
+        return $this->pagination($shipments->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
+    }
+
+    public function show($id, ShipmentRequest $request)
+    {
+        $data = Shipment::findOrFail($id);
+        return $this->response($data, 'Data Retrieved Sucessfully');
+    }
+
+    public function export($type, ShipmentRequest $request)
+    {
+        $merchentID = Request()->user()->merchant_id;
+        $shipments = $this->search($request->json()->all())->get();
+        $path = "export/shipments-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
+
+        if ($type == 'xlsx') {
+            $url = exportXLSX(new ShipmentExport($shipments), $path);
+        } else {
+            $url = exportPDF('shipments', $path, $shipments);
+        }
+
+        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+    }
+
+
+    private function search($filters)
+    {
         $merchant_id = Request()->user()->merchant_id;
         $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
@@ -34,7 +70,7 @@ class ShipmentController extends MerchantController
         $phone = $filters['phone'] ?? [];
         $cod = $filters['cod']['val'] ?? null;
         $operation = $filters['cod']['operation'] ?? null;
-        $type = $request->type ?? 'DOM';
+        $type = $filters->type ?? 'DOM';
 
         $shipments = DB::table('shipments as s')->join('carriers as car', 'car.id', 's.carrier_id')
             ->where('merchant_id', $merchant_id)
@@ -80,37 +116,16 @@ class ShipmentController extends MerchantController
             's.consignee_country',
             's.consignee_city',
             's.consignee_area',
-            'car.name as provider_name'
+            'car.name as provider_name',
+            's.sender_name',
+            's.consignee_address_description',
+            's.cod',
+            's.delivered_at',
+            's.pieces',
+            's.content'
         );
 
-        $tabs = DB::table(DB::raw("(select id,CASE WHEN s.status = 'COMPLETED' && s.transaction_id is null THEN 'PENDING_PAYMENTS' ELSE s.status END  as exstatus from shipments s where merchant_id = $merchant_id and `group` = '$type' and is_deleted = false) as subs"))
-            ->select('exstatus', DB::raw('count(id) as counter'))
-            ->groupByRaw('exstatus')
-            ->pluck('counter', 'exstatus');
-
-        $tabs = collect($this->status)->merge(collect($tabs));
-        return $this->pagination($shipments->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
-    }
-
-    public function show($id, ShipmentRequest $request)
-    {
-        $data = Shipment::findOrFail($id);
-        return $this->response($data, 'Data Retrieved Sucessfully');
-    }
-
-    public function export($type, ShipmentRequest $request)
-    {
-        $merchentID = Request()->user()->merchant_id;
-        $shipments = Shipment::where('merchant_id', $merchentID)->get();
-        $path = "export/shipments-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
-
-        if ($type == 'xlsx') {
-            $url = exportXLSX(new ShipmentExport($shipments), $path);
-        } else {
-            $url = exportPDF('shipments', $path, $shipments);
-        }
-
-        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+        return $shipments;
     }
 
     // Create Express Shipment will be one by one only
