@@ -145,7 +145,7 @@ class Aramex
     public function shipmentArray($merchentInfo, $shipmentInfo)
     {
         $data = $this->bindJsonFile('shipment.create.json');
-
+        
         $data['Shipper']['Reference1'] = $merchentInfo->id;
         $data['Shipper']['AccountNumber'] =
             $data['Consignee']['AccountNumber'] =
@@ -156,7 +156,7 @@ class Aramex
         $data['Shipper']['PartyAddress']['City'] = ucfirst(strtolower($shipmentInfo['sender_city']));
         $data['Shipper']['PartyAddress']['CountryCode'] = $merchentInfo->country_code;
         $data['Shipper']['Contact']['PersonName'] = $shipmentInfo['sender_name'];
-        $data['Shipper']['Contact']['CompanyName'] = $shipmentInfo['sender_name'];
+        $data['Shipper']['Contact']['CompanyName'] = $shipmentInfo['sender_name']; // $merchentInfo->name;
         $data['Shipper']['Contact']['PhoneNumber1'] = $shipmentInfo['sender_phone'];
         $data['Shipper']['Contact']['CellPhone'] = $shipmentInfo['sender_phone'];
 
