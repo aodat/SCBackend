@@ -32,9 +32,7 @@ class Carriers extends Model
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
-        $path = Request()->route()->uri;
-
-        if (strpos($path, 'admin/carriers/') !== false) {
+        if (Request()->user()->role != 'super_admin') {
             $this->appends = ['carrier_id'];
             $this->hidden = ['id','is_phone_verified','is_documents_verified','is_email_verified'];
         } else {

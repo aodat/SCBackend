@@ -2,10 +2,9 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use DateTimeInterface;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 
@@ -13,23 +12,22 @@ class Shipment extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = ['carrier_name', 'generator_name'];
+    protected $appends = [ 'generator_name'];
 
     protected $casts = [
         'logs' => 'array',
         'is_doc' => 'boolean',
-        'is_deleted' => 'boolean'
+        'is_deleted' => 'boolean',
     ];
 
     public function getCarrierNameAttribute()
-    {
-        $provider = App::make('carriers')->where('id', $this->carrier_id)->first();
-        return $provider->name ?? '';
+    {     
+        return Carriers::find($this->carrier_id)->name;
     }
 
     public function getGeneratorNameAttribute()
     {
-        return User::findOrFail($this->created_by)->name;
+        return User::find($this->created_by)->name;
     }
 
     protected function castAttribute($key, $value)
@@ -53,10 +51,12 @@ class Shipment extends Model
     protected static function booted()
     {
         static::addGlobalScope('ancient', function (Builder $builder) {
-            if (Request()->user() !== null)
+            if (Request()->user() !== null && Request()->user()->role != 'super_admin') {
                 $builder->where('merchant_id', Request()->user()->merchant_id)->where('is_deleted', false)->orderBy('created_at', 'desc');
-            else
+            } else {
                 $builder->orderBy('created_at', 'desc');
+            }
         });
+
     }
 }

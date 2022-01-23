@@ -1,16 +1,15 @@
 <?php
 
-
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\API\Admin\MerchantsController;
+use App\Http\Controllers\API\Admin\AddressesController;
 use App\Http\Controllers\API\Admin\CarriersController;
+use App\Http\Controllers\API\Admin\DocumentsController;
 use App\Http\Controllers\API\Admin\DomesticRatesController;
 use App\Http\Controllers\API\Admin\ExpressRatesController;
+use App\Http\Controllers\API\Admin\MerchantsController;
 use App\Http\Controllers\API\Admin\PaymentMethodsController;
-use App\Http\Controllers\API\Admin\AddressesController;
-use App\Http\Controllers\API\Admin\DocumentsController;
+use App\Http\Controllers\API\Admin\ShipmentController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -20,7 +19,7 @@ use App\Http\Controllers\API\Admin\DocumentsController;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "admin" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::group(['middleware' => ['json.response']], function () {
     Route::group(['middleware' => ['auth:api', 'scope:super_admin']], function () {
@@ -54,5 +53,12 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::post('create', [CarriersController::class, 'store']);
             Route::put('{carrier_id}/update', [CarriersController::class, 'update']);
         });
+
+        // Shipments
+        Route::get('{merchant_id}/shipments/{shipment_id}', [ShipmentController::class, 'show'])
+            ->where('merchant_id', '[0-9]+')
+            ->where('shipment_id', '[0-9]+');
+        Route::post('shipments/{merchant_id}/filters', [ShipmentController::class, 'index'])->where('merchant_id', '[0-9]+');
+        Route::post('shipments/track', [ShipmentController::class, 'tracking']);
     });
 });
