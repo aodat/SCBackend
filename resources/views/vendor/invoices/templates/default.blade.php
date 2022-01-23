@@ -139,7 +139,7 @@
                 <tr>
                     <td class="border-0 pl-0" width="70%">
                         <h4 class="text-uppercase">
-                            <strong>{{ $invoice->name }}</strong>
+                            <strong>Commercial Invoice</strong>
                         </h4>
                     </td>
                     <td class="border-0 pl-0">
@@ -363,13 +363,6 @@
                 {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
             </p>
         @endif
-
-        <p>
-            {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
-        </p>
-        <p>
-            {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
-        </p>
 
         <script type="text/php">
             if (isset($pdf) && $PAGE_COUNT > 1) {
