@@ -15,7 +15,7 @@ class CarriersController extends Controller
         $name = $request->name ?? '';
         $email = $request->email;
 
-        $carriers = DB::table('carriers');
+        $carriers = Carriers::paginate(request()->per_page ?? 30);
         if ($name) {
             $carriers->where('name', 'like', '%' . $name . '%');
         }
@@ -28,8 +28,7 @@ class CarriersController extends Controller
             $carriers->where('id', $id);
         }
 
-        $paginated = $carriers->paginate(request()->per_page ?? 30);
-        return $this->pagination($paginated);
+        return $this->pagination($carriers);
     }
 
     public function show(CarriersRequest $request)

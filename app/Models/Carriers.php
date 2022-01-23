@@ -34,7 +34,7 @@ class Carriers extends Model
         parent::__construct($attributes);
         $path = Request()->route()->uri;
 
-        if (strpos($path, 'admin/carriers/{carrier_id}/info') !== false) {
+        if (strpos($path, 'admin/carriers/') !== false) {
             $this->appends = ['carrier_id'];
             $this->hidden = ['id','is_phone_verified','is_documents_verified','is_email_verified'];
         } else {
