@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Admin;
 
+use App\Rules\CheckIbanWalletCharRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PaymentMethodsRequest extends FormRequest
@@ -30,15 +31,20 @@ class PaymentMethodsRequest extends FormRequest
     public function rules()
     {
         $path = Request()->route()->uri;
-        if ($this->getMethod() == 'GET' && strpos($path, '{merchant_id}/payment_methods') !== false)
-            return [
-                'merchant_id' => 'required|exists:merchants,id'
-            ];
-        else if ($this->getMethod() == 'PUT' && strpos($path, '{merchant_id}/payment_methods') !== false)
+        if ($this->getMethod() == 'GET' && strpos($path, '{merchant_id}/payment_methods') !== false) {
             return [
                 'merchant_id' => 'required|exists:merchants,id',
-                'id' => 'required'
             ];
+        } else if ($this->getMethod() == 'PUT' && strpos($path, '{merchant_id}/payment_methods') !== false) {
+            return [
+                'id' => 'required',
+                'merchant_id' => 'required|exists:merchants,id',
+                "name" => "required|string",
+                "provider_code" => ["required"],
+                "iban" => ["required"],
+            ];
+        }
+
         return [];
     }
 }

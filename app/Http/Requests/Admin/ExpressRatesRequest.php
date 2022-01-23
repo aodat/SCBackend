@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -38,9 +37,10 @@ class ExpressRatesRequest extends FormRequest
             return [
                 'merchant_id' => 'required|exists:merchants,id',
                 'carrier_id' => 'required|exists:carriers,id',
-                'id' => 'required',
-                'additional' => 'required|numeric',
-                'basic' => 'required|numeric'
+                'zone_id' => 'required',
+                'basic' => 'numeric',
+                'additional' => 'numeric',
+                'max_weight' => 'numeric'
             ];
         return [];
     }

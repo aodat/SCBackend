@@ -22,8 +22,8 @@ class CheckMerchant
     public function handle(Request $request, Closure $next)
     {
 
-        $Merchaninfo = App::make('merchantInfo');
-        if (auth()->user()->status == 'in_active' || (!$Merchaninfo->is_active))
+        $merchaninfo = App::make('merchantInfo');
+        if (auth()->user()->status == 'in_active' || (!$merchaninfo->is_active))
             throw new InternalException('Your Account is inactive please contact us', 403);
         return $next($request);
     }

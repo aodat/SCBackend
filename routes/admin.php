@@ -10,7 +10,7 @@ use App\Http\Controllers\API\Admin\DomesticRatesController;
 use App\Http\Controllers\API\Admin\ExpressRatesController;
 use App\Http\Controllers\API\Admin\PaymentMethodsController;
 use App\Http\Controllers\API\Admin\AddressesController;
-use App\Http\Controllers\API\Admin\DocumentController;
+use App\Http\Controllers\API\Admin\DocumentsController;
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -42,9 +42,9 @@ Route::group(['middleware' => ['json.response']], function () {
             Route::get('{merchant_id}/addresses', [AddressesController::class, 'index']);
             Route::put('{merchant_id}/addresses', [AddressesController::class, 'update']);
 
-            Route::get('{merchant_id}/document', [DocumentController::class, 'index']);
-            Route::post('{merchant_id}/document', [DocumentController::class, 'store']);
-            Route::put('{merchant_id}/document/{id}', [DocumentController::class, 'status']);
+            Route::get('{merchant_id}/document', [DocumentsController::class, 'index']);
+            Route::post('{merchant_id}/document', [DocumentsController::class, 'store']);
+            Route::put('{merchant_id}/document/{id}', [DocumentsController::class, 'status']);
         });
 
         Route::group(['prefix' => 'carriers/'], function () {

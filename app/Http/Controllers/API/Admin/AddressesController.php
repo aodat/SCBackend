@@ -4,40 +4,71 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Exceptions\InternalException;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Merchant;
 use App\Http\Requests\Admin\AddressesRequests;
+use App\Models\Area;
+use App\Models\City;
+use App\Models\Country;
+use App\Models\Merchant;
 use Carbon\Carbon;
 
 class AddressesController extends Controller
 {
+    private $merchant;
+    public function __construct(AddressesRequests $request)
+    {
+        $this->merchant = Merchant::findOrFail($request->merchant_id);
+
+    }
+
     public function index(AddressesRequests $request)
     {
-        $data  =  $this->getMerchentInfo()->addresses;
-        return $this->response($data, "Data Retrieved Successfully");
+        return $this->response($this->merchant->addresses, "Data Retrieved Successfully");
     }
 
     public function update(AddressesRequests $request)
     {
-        $data = $request->all();
-        $id = $data['id'] ?? null;
-        $data['updated_at'] = Carbon::now()->format('Y-m-d H:i:s')->format('Y-m-d H:i:s');
-        $merchant_id = $data['merchant_id'];
+        $merchant = $this->merchant;
 
-        unset($data['merchant_id']);
+        $county_id = $request->county_id;
+        $city_id = $request->city_id;
+        $area_id = $request->area_id;
 
-        $merchant = Merchant::findOrFail($merchant_id);
-        $addresses = $merchant->addresses;
+        $result = collect($this->merchant->addresses);
 
-        $addresses = collect($addresses);
-        $addresse = $addresses->where('id', $id);
+        if ($result->where('id', $request->id)->count() == 0) {
+            throw new InternalException('Address id not Exists');
+        }
 
-        if ($addresse->first() == null)
-            throw new InternalException('Address id does not exist');
+        $country = Country::find($county_id);
+        $city = City::find($city_id);
+        $area = Area::find($area_id);
 
-        $current = $addresse->keys()->first();
-        $addresses[$current] = $data;
-        $merchant->update(['addresses' => $addresses]);
-        return $this->successful('Updated Sucessfully');
+        if ($result->contains("name", $request->name)) {
+            throw new InternalException('name already Exists', 400);
+        } else if ($country->code != $merchant->country_code) {
+            throw new InternalException('The Country address not same of merchant country', 400);
+        }
+
+        $address = $result->where('id', $request->id);
+        $current = $address->keys()->first();
+
+        $data = $address->toArray()[$current];
+        $result[$current] = [
+            'id' => $request->id,
+            'name' => $request->name,
+            'country_code' => $country->code,
+            'country' => $country->name_en,
+            'city_code' => $city->code,
+            'city' => $city->name_en,
+            'area' => $area->name_en,
+            'phone' => $request->phone,
+            'description' => $request->description,
+            'is_default' => $request->is_default ?? false,
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+        ];
+
+        $merchant->update(['addresses' => $result]);
+
+        return $this->successful('Created Successfully');
     }
 }
