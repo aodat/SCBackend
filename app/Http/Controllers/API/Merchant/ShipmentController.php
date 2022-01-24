@@ -58,7 +58,6 @@ class ShipmentController extends MerchantController
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
     }
 
-
     private function search($filters)
     {
         $merchant_id = Request()->user()->merchant_id;
@@ -141,7 +140,6 @@ class ShipmentController extends MerchantController
     public function createDomesticShipment(ShipmentRequest $request)
     {
         return DB::transaction(function () use ($request) {
-            // Check Domastic
             $shipmentRequest = $request->validated();
             $addressList = App::make('merchantAddresses');
             $merchantInfo = App::make('merchantInfo');
@@ -190,6 +188,12 @@ class ShipmentController extends MerchantController
                 $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
             }
 
+            // Check if COD is Zero OR Shipment Type Express
+            // Check and dedact
+            if ($type == 'EXP' || $shipment['cod'] == 0) {
+                $this->checkbalance($shipment['fees']);
+            }
+
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
             $shipment['status'] = 'DRAFT';
@@ -207,10 +211,33 @@ class ShipmentController extends MerchantController
         return $this->createShipmentDB($shipments, $provider);
     }
 
+    private function checkbalance($fees)
+    {
+        $merchant = $this->getMerchentInfo();
+        if ($fees <= $merchant->bundle_balance) {
+            $merchant->bundle_balance -= $fees;
+            $merchant->save();
+
+            Transaction::create([
+                "type" => "CASHOUT",
+                "subtype" => "BUNDLE",
+                "item_id" => null,
+                "created_by" => Request()->user()->id,
+                "merchant_id" => Request()->user()->merchant_id,
+                "amount" => $fees,
+                "status" => "COMPLETED",
+                "balance_after" => $merchant->bundle_balance,
+                "source" => "SHIPMENT",
+            ]);
+            
+            return true;
+        }
+        throw new InternalException('You cannot complete the shipment process. The current balance is not enough, so please recharge your balance.', 500);
+    }
+
     private function createShipmentDB($shipments, $provider)
     {
         $resource = Request()->header('agent') ?? 'API';
-
         $getbulk = $shipments->where('carrier_id', 1);
         $payloads = $getbulk->map(function ($data) {
             return $this->generateShipmentArray('Aramex', $data);
@@ -299,8 +326,8 @@ class ShipmentController extends MerchantController
     {
         return DB::transaction(function () use ($shipment_id, $amount) {
             $merchent = $this->getMerchentInfo();
-            $actual_balance = $merchent->actual_balance;
-            $merchent->actual_balance = $actual_balance + $amount;
+            $bundle_balance = $merchent->bundle_balance;
+            $merchent->bundle_balance = $bundle_balance + $amount;
             $merchent->save();
 
             $carriers = Carriers::find($shipment_id);
@@ -311,8 +338,8 @@ class ShipmentController extends MerchantController
                 "type" => "CASHIN",
                 "item_id" => $shipment_id,
                 "merchant_id" => Request()->user()->merchant_id,
-                "amount" => $merchent->actual_balance,
-                "balance_after" => $actual_balance,
+                "amount" => $merchent->bundle_balance,
+                "balance_after" => $bundle_balance,
                 "source" => "SHIPMENT",
                 "created_by" => Request()->user()->id,
             ]);

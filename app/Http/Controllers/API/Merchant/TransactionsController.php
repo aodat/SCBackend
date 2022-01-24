@@ -79,14 +79,14 @@ class TransactionsController extends MerchantController
     {
         $merchecntInfo = $this->getMerchentInfo();
 
-        $actualBalance = $merchecntInfo->actual_balance;
+        $actualBalance = $merchecntInfo->bundle_balance;
         $paymentMethod = $merchecntInfo->payment_methods;
 
         if ($actualBalance < $request->amount)
             return $this->error('The Actual Balance Not Enough', 400);
 
 
-        $merchecntInfo->actual_balance = $actualBalance - $request->amount;
+        $merchecntInfo->bundle_balance = $actualBalance - $request->amount;
         $merchecntInfo->save();
 
         $payment = collect($paymentMethod)->where('id', $request->payment_method_id)->first();
@@ -131,13 +131,13 @@ class TransactionsController extends MerchantController
                 'source' => 'CREDITCARD',
                 'status' => 'COMPLETED',
                 'created_by' => $request->user()->id,
-                'balance_after' => $request->amount + $merchecntInfo->actual_balance,
+                'balance_after' => $request->amount + $merchecntInfo->bundle_balance,
                 'amount' => $request->amount,
                 'resource' => Request()->header('agent') ?? 'API'
             ]
         );
 
-        $merchecntInfo->actual_balance = $request->amount + $merchecntInfo->actual_balance;
+        $merchecntInfo->bundle_balance = $request->amount + $merchecntInfo->bundle_balance;
         $merchecntInfo->save();
 
         return $this->successful('Deposit Sucessfully');

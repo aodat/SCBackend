@@ -205,7 +205,7 @@ trait CarriersManager
             throw new CarriersException('Chargeable Weight Is Zero');
         }
 
-        $setup['chargable_weight'] = $this->calculateFees(
+        $fees = $this->calculateFees(
             $shipmentInfo['carrier_id'],
             null,
             ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
@@ -225,20 +225,24 @@ trait CarriersManager
                 $transaction = Transaction::create(
                     [
                         'type' => 'CASHIN',
+                        'type' => 'COD',
                         'item_id' => $shipmentInfo['id'],
                         'merchant_id' => $shipmentInfo['merchant_id'],
                         'source' => 'SHIPMENT',
                         'status' => 'PROCESSING',
                         'created_by' => $shipmentInfo['created_by'],
-                        'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance,
+                        'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->bundle_balance,
                         'amount' => ($shipmentInfo['cod'] - $shipmentInfo['fees']),
                         'resource' => 'API',
                     ]
                 );
                 $updated['transaction_id'] = $transaction->id;
             } else if ($action == 'update_merchant_balance') {
-                $merchant->actual_balance = ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance;
-                $merchant->save();
+                if ($shipmentInfo['cod'] > 0) {
+                    $merchant->cod_balance += $shipmentInfo['cod'];
+                    $merchant->bundle_balance -= $fees;
+                    $merchant->save();
+                }
             }
         }
 
