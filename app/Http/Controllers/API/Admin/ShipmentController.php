@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\Admin;
 
-use App\Exports\ShipmentExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ShipmentRequest;
 use App\Models\Shipment;
@@ -91,6 +90,11 @@ class ShipmentController extends Controller
         $data = Shipment::where('merchant_id', $request->merchant_id)
             ->where('id', $request->shipment_id)
             ->first();
+
+        if ($data === null) {
+            return $this->error('Shipment ID Not Found', 400);
+        }
+
         return $this->response($data, 'Data Retrieved Sucessfully');
     }
 }
