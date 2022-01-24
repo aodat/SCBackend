@@ -101,9 +101,11 @@ Route::group(['middleware' => ['json.response']], function () {
                 // Transactions
                 Route::post('transactions', [TransactionsController::class, 'index']);
                 Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+');
-                Route::put('transactions/withdraw', [TransactionsController::class, 'withDraw']);
-                Route::put('transactions/deposit', [TransactionsController::class, 'deposit']);
                 Route::post('transactions/export', [TransactionsController::class, 'export']);
+
+                Route::put('transfer', [TransactionsController::class, 'transfer']);
+                Route::put('deposit', [TransactionsController::class, 'deposit']);
+                Route::put('withdraw', [TransactionsController::class, 'withdraw']);
 
                 // Pickups
                 Route::post('pickups', [PickupsController::class, 'index']);

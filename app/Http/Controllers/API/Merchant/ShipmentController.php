@@ -322,30 +322,6 @@ class ShipmentController extends MerchantController
         return $this->successful('Webhook Completed');
     }
 
-    protected function transactionDeposit($shipment_id, $amount)
-    {
-        return DB::transaction(function () use ($shipment_id, $amount) {
-            $merchent = $this->getMerchentInfo();
-            $bundle_balance = $merchent->bundle_balance;
-            $merchent->bundle_balance = $bundle_balance + $amount;
-            $merchent->save();
-
-            $carriers = Carriers::find($shipment_id);
-            $carriers->balance = $carriers->balance - $amount;
-            $carriers->save();
-
-            Transaction::create([
-                "type" => "CASHIN",
-                "item_id" => $shipment_id,
-                "merchant_id" => Request()->user()->merchant_id,
-                "amount" => $merchent->bundle_balance,
-                "balance_after" => $bundle_balance,
-                "source" => "SHIPMENT",
-                "created_by" => Request()->user()->id,
-            ]);
-        });
-    }
-
     public function calculate(ShipmentRequest $request)
     {
         $data = $request->validated();
