@@ -19,34 +19,31 @@ trait CarriersManager
 {
     public $adapter;
     private $merchantInfo;
-    public function loadProvider($provider, $merchantID = null)
+    public function loadProvider($provider, $settings = array())
     {
-
         $provider = strtoupper($provider);
+        if (empty($settings)) {
+            $settings = Carriers::where('id', 3)->first()->env ?? null;
+        }
+
         switch ($provider) {
             case "ARAMEX":
-                $settings = Carriers::where('id', 1)->first()->env;
-
                 $this->adapter = new Aramex($settings);
                 break;
             case "DHL":
-                $settings = Carriers::where('id', 2)->first()->env;
-
                 $this->adapter = new DHL($settings);
                 break;
             case "FEDEX":
-                $settings = Carriers::where('id', 3)->first()->env;
-
                 $this->adapter = new Fedex($settings);
                 break;
             default:
                 throw new CarriersException('Invalid Provider');
         }
 
-        $this->merchantInfo = $this->getMerchantInfo($merchantID);
+        $this->merchantInfo = $this->getMerchantInfo();
     }
 
-    public function getMerchantInfo($merchantID = null)
+    public function getMerchantInfo()
     {
         if (Request()->user() === null) {
             return Merchant::findOrFail(900);
@@ -54,6 +51,12 @@ trait CarriersManager
             return App::make('merchantInfo');
         }
 
+    }
+
+    public function check($provider, $settings)
+    {
+        $this->loadProvider($provider, $settings);
+        $this->adapter->validate($this->merchantInfo);
     }
 
     public function generateShipment($provider, $merchantInfo = null, $shipmentArray)
@@ -111,7 +114,6 @@ trait CarriersManager
     /*
     $type : DOM , Express
      */
-
     public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
     {
         $this->merchantInfo = $this->getMerchantInfo();
@@ -199,9 +201,9 @@ trait CarriersManager
 
         $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
 
-        if (!isset($details['ChargeableWeight'])) 
+        if (!isset($details['ChargeableWeight'])) {
             throw new CarriersException('Chargeable Weight Is Zero');
-        
+        }
 
         $setup['chargable_weight'] = $this->calculateFees(
             $shipmentInfo['carrier_id'],
@@ -214,9 +216,9 @@ trait CarriersManager
         $updated = $this->adapter->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
 
         $actions = $updated['actions'] ?? [];
-        if (isset($updated['actions'])) 
+        if (isset($updated['actions'])) {
             unset($updated['actions']);
-        
+        }
 
         foreach ($actions as $action) {
             if ($action == 'create_transaction') {

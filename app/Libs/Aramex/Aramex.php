@@ -2,10 +2,10 @@
 
 namespace Libs;
 
-use Illuminate\Support\Facades\Http;
 use App\Exceptions\CarriersException;
 use App\Models\City;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 
 class Aramex
 {
@@ -17,7 +17,7 @@ class Aramex
 
     private $config;
 
-    function __construct($settings = null)
+    public function __construct($settings = null)
     {
         $this->config = [
             'UserName' => $settings['aramex_username'] ?? config('carriers.aramex.USERNAME'),
@@ -27,15 +27,46 @@ class Aramex
             'AccountEntity' => $settings['aramex_account_entity'] ?? config('carriers.aramex.ACCOUNT_ENTITY'),
             'AccountCountryCode' => $settings['aramex_account_country_code'] ?? config('carriers.aramex.ACCOUNT_COUNTRY_CODE'),
             'Version' => $settings['aramex_version'] ?? config('carriers.aramex.VERSION'),
-            'Source' => $settings['aramex_source'] ?? config('carriers.aramex.SOURCE')
+            'Source' => $settings['aramex_source'] ?? config('carriers.aramex.SOURCE'),
         ];
 
         $this->setup = [
             'SH005' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'SH006' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'SH069' => ['status' => 'RENTURND', 'returned_at' => Carbon::now(), 'delivered_at' => null, 'paid_at' => null],
-            'SH239' => ['status' => 'COMPLETED', 'paid_at' => Carbon::now(), 'delivered_at' => Carbon::now(), 'returned_at' => null, 'actions' => ['create_transaction', 'update_merchant_balance']]
+            'SH239' => ['status' => 'COMPLETED', 'paid_at' => Carbon::now(), 'delivered_at' => Carbon::now(), 'returned_at' => null, 'actions' => ['create_transaction', 'update_merchant_balance']],
         ];
+    }
+
+    public function validate($merchentInfo)
+    {
+        $shipmentInfo = [
+            "sender_email" => "test@shipcash.net",
+            "sender_name" => "Shipcash Test - Sender",
+            "sender_phone" => "012345678",
+            "sender_country" => "Jordan",
+            "sender_city" => "Amman",
+            "sender_area" => "Amman",
+            "sender_address_description" => "Amman - 1st Cricle",
+            "consignee_name" => "Shipcash Test - Consignee",
+            "consignee_email" => "test@shipcash.net",
+            "consignee_phone" => "123456789",
+            "consignee_country" => "GB",
+            "consignee_city" => "England",
+            "consignee_area" => "ALL",
+            "consignee_zip_code" => "CR5 3FT",
+            "consignee_address_description" => "13 DICKENS DR",
+            "content" => "Test Content",
+            "pieces" => 1,
+            "actual_weight" => 1,
+            "declared_value" => 1,
+            "is_doc" => true,
+            "group" => "EXP",
+        ];
+
+        $shipment = $this->shipmentArray($merchentInfo, $shipmentInfo);
+        return $this->createShipment(null, $shipment, true);
+
     }
 
     public function createPickup($email, $date, $address)
@@ -59,7 +90,7 @@ class Aramex
         $payload['Pickup']['PickupLocation'] = $address['city_code'] ?? $address['city'];
         $payload['Pickup']['PickupDate'] = '/Date(' . (strtotime($date) * 1000) . ')/';
 
-        $ReadyTime  = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 03:00 PM') * 1000;
+        $ReadyTime = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 03:00 PM') * 1000;
         $LastPickupTime = $ClosingTime = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 04:00 PM') * 1000;
 
         $payload['Pickup']['ReadyTime'] = '/Date(' . $ReadyTime . ')/';
@@ -67,11 +98,13 @@ class Aramex
         $payload['Pickup']['ClosingTime'] = '/Date(' . $ClosingTime . ')/';
 
         $response = Http::post(self::$CREATE_PICKUP_URL, $payload);
-        if (!$response->successful())
+        if (!$response->successful()) {
             throw new CarriersException('Aramex Create Pickup – Something Went Wrong', $payload, $response->json());
+        }
 
-        if ($response->json()['HasErrors'])
+        if ($response->json()['HasErrors']) {
             throw new CarriersException('Aramex Data Provided Not Correct - Create Pickup', $payload, $response->json());
+        }
 
         $final = $response->json();
         return ['id' => $final['ProcessedPickup']['ID'], 'guid' => $final['ProcessedPickup']['GUID']];
@@ -81,35 +114,42 @@ class Aramex
     {
         $payload = ["ClientInfo" => $this->config, "PickupGUID" => $pickupInfo->hash];
         $response = Http::post(self::$CANCEL_PICKUP_URL, $payload);
-        if (!$response->successful())
+        if (!$response->successful()) {
             throw new CarriersException('Aramex Cancel Pickup – Something Went Wrong', $payload, $response->json());
-        if ($response->json()['HasErrors'])
+        }
+
+        if ($response->json()['HasErrors']) {
             throw new CarriersException('Aramex Data Provided Not Correct', $payload, $response->json());
+        }
+
         return true;
     }
 
     public function printLabel($shipments, $ReportID = 9729)
     {
-        $payload =  [
+        $payload = [
             "ClientInfo" => $this->config,
-            "LabelInfo" => ["ReportID" => $ReportID, "ReportType" => "URL"]
+            "LabelInfo" => ["ReportID" => $ReportID, "ReportType" => "URL"],
         ];
         $files = [];
         foreach ($shipments as $shipment) {
             $payload['ShipmentNumber'] = $shipment;
 
             $response = Http::post(self::$PRINT_LABEL_URL, $payload);
-            if (!$response->successful())
+            if (!$response->successful()) {
                 throw new CarriersException('Aramex Print Label – Something Went Wrong', $payload, $response->json());
-            if ($response->json()['HasErrors'])
+            }
+
+            if ($response->json()['HasErrors']) {
                 throw new CarriersException('Aramex Data Provided Not Correct', $payload, $response->json());
+            }
 
             $files[] = $response->json()['ShipmentLabel']['LabelURL'];
         }
         return $files;
     }
 
-    public function createShipment($merchentInfo = null, $shipmentInfo)
+    public function createShipment($merchentInfo = null, $shipmentInfo, $checkAuth = false)
     {
         $payload = [
             'ClientInfo' => $this->config,
@@ -121,22 +161,27 @@ class Aramex
                 'Reference3' => '',
                 'Reference4' => '',
                 'Reference5' => '',
-            ]
+            ],
         ];
 
         $response = Http::post(self::$CREATE_SHIPMENTS_URL, $payload);
 
-        if (!$response->successful())
-            throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $response->json());
+        if($checkAuth)
+            return $response->successful();
 
-        if ($response->json()['HasErrors'])
+        if (!$response->successful()) {
+            throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $response->json());
+        }
+
+        if ($response->json()['HasErrors']) {
             throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment', $payload, $response->json());
+        }
 
         $result = [];
         foreach ($response->json()['Shipments'] as $ship) {
             $result[] = [
                 'id' => $ship['ID'],
-                'file' => uploadFiles('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true)
+                'file' => uploadFiles('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true),
             ];
         }
         return $result;
@@ -145,11 +190,11 @@ class Aramex
     public function shipmentArray($merchentInfo, $shipmentInfo)
     {
         $data = $this->bindJsonFile('shipment.create.json');
-        
+
         $data['Shipper']['Reference1'] = $merchentInfo->id;
         $data['Shipper']['AccountNumber'] =
-            $data['Consignee']['AccountNumber'] =
-            $this->config['AccountNumber'];
+        $data['Consignee']['AccountNumber'] =
+        $this->config['AccountNumber'];
 
         $data['Shipper']['PartyAddress']['Line1'] = $shipmentInfo['sender_address_description'];
         $data['Shipper']['PartyAddress']['Line2'] = $shipmentInfo['sender_area'];
@@ -166,8 +211,10 @@ class Aramex
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
         $data['Consignee']['PartyAddress']['StateOrProvinceCode'] = City::where('name_en', $shipmentInfo['consignee_city'])->first() ? City::where('name_en', $shipmentInfo['consignee_city'])->first()->code : '';
 
-        if ($shipmentInfo['group'] == 'EXP')
+        if ($shipmentInfo['group'] == 'EXP') {
             $data['Consignee']['PartyAddress']['PostCode'] = $shipmentInfo['consignee_zip_code'] ?? '';
+        }
+
         $data['Consignee']['PartyAddress']['CountryCode'] = ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->country_code : $shipmentInfo['consignee_country'];
 
         $data['Consignee']['Contact']['PersonName'] = $shipmentInfo['consignee_name'];
@@ -192,11 +239,12 @@ class Aramex
             $data['Details']['ProductType'] = $shipmentInfo['is_doc'] ? 'PDX' : 'PPX';
         }
 
-        if (isset($shipmentInfo['cod']))
+        if (isset($shipmentInfo['cod'])) {
             $data['Details']['CashOnDeliveryAmount'] = [
                 'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
                 "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['cod'], $merchentInfo->currency_code),
             ];
+        }
 
         $data['Details']['CashAdditionalAmount'] = [
             'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
@@ -209,38 +257,42 @@ class Aramex
         ];
 
         $data['Details']['CustomsValueAmount']['CurrencyCode'] =
-            ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD';
+        ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD';
 
         $data['Details']['Services'] = (isset($shipmentInfo['cod']) && $shipmentInfo['cod'] > 0) ? 'CODS' : '';
         return $data;
     }
 
-    public function trackShipment($shipment_waybills,$all_event = false)
+    public function trackShipment($shipment_waybills, $all_event = false)
     {
         $awb = [];
-        if(!is_array($shipment_waybills))
+        if (!is_array($shipment_waybills)) {
             $awb[] = $shipment_waybills;
-        else
+        } else {
             $awb = $shipment_waybills;
-            
+        }
+
         $trackingPayload = ["ClientInfo" => $this->config, "Shipments" => $awb];
 
         $response = Http::post(self::$TRACK_SHIPMENTS_URL, $trackingPayload);
-        if (!$response->successful())
+        if (!$response->successful()) {
             throw new CarriersException('Aramex Track Shipments – Something Went Wrong', $trackingPayload, $response->json());
+        }
 
-        if ($response->json()['HasErrors'])
+        if ($response->json()['HasErrors']) {
             throw new CarriersException('Cannot track Aramex shipment', $trackingPayload, $response->json());
-
+        }
 
         $result = $response->json()['TrackingResults'];
-        if (empty($result))
+        if (empty($result)) {
             throw new CarriersException('Tracking Details Is Empty', $trackingPayload, $response->json());
+        }
 
-        if($all_event)
+        if ($all_event) {
             return $response['TrackingResults'][0]['Value'];
-        else if (count($awb) == 1)
+        } else if (count($awb) == 1) {
             return last($response['TrackingResults'][0]['Value']);
+        }
 
         return $result;
     }
