@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Exceptions\InternalException;
 use App\Exports\ShipmentExport;
 use App\Http\Requests\Merchant\ShipmentRequest;
-use App\Jobs\ProcessShipCashUpdates;
+use App\Jobs\ShipmentWebHooks;
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Invoices;
@@ -318,7 +318,7 @@ class ShipmentController extends MerchantController
             ->where('external_awb', $request->WaybillNumber)
             ->exists();
 
-        ProcessShipCashUpdates::dispatchIf($shipment, $request->json()->all());
+        ShipmentWebHooks::dispatchIf($shipment, $request->json()->all());
         return $this->successful('Webhook Completed');
     }
 

@@ -85,36 +85,30 @@ class TransactionsController extends MerchantController
     {
         $merchecntInfo = $this->getMerchentInfo();
 
-        $actualBalance = $merchecntInfo->bundle_balance;
-        $paymentMethod = $merchecntInfo->payment_methods;
-
-        if ($actualBalance < $request->amount) {
-            return $this->error('The Actual Balance Not Enough', 400);
+        if ($merchecntInfo->bundle_balance <= 1) {
+            return $this->error('The Bundle Balance Is Zero', 400);
         }
 
-        $merchecntInfo->bundle_balance = $actualBalance - $request->amount;
-        $merchecntInfo->save();
-
+        $paymentMethod = $merchecntInfo->payment_methods;
         $payment = collect($paymentMethod)->where('id', $request->payment_method_id)->first();
         if ($payment == null) {
             throw new InternalException('Invalid Payment Method ID');
         }
 
-        $transaction = Transaction::create(
-            [
-                'type' => 'CASHOUT',
-                'merchant_id' => $request->user()->merchant_id,
-                'source' => $request->source,
-                'created_by' => $request->user()->id,
-                'amount' => $request->amount,
-                'balance_after' => ($actualBalance - $request->amount),
-                'payment_method' => collect($payment),
-                'resource' => Request()->header('agent') ?? 'API',
-            ]
-        );
-        // {"id": 1, "code": "zc", "iban": "1231231231", "name": "Zain Cash", "type": "wallet", "name_ar": "زين كاش", "name_en": "Zain Cash", "created_at": "2022-01-04 09:26:56", "provider_code": "zc"}
-        WithDrawPayments::dispatch($payment, $request->amount, $transaction);
-        return $this->successful('WithDraw Sucessfully');
+        $transaction = Transaction::create([
+            "type" => "CASHOUT",
+            "subtype" => "BUNDLE",
+            "item_id" => null,
+            "created_by" => Request()->user()->id,
+            "merchant_id" => Request()->user()->merchant_id,
+            'amount' => $merchecntInfo->bundle_balance,
+            "balance_after" => 0,
+            "source" => "CREDITCARD",
+        ]);
+
+        WithDrawPayments::dispatch($merchecntInfo->id, $merchecntInfo->bundle_balance, $payment, $transaction->id);
+
+        return $this->successful('WithDraw Transaction Under Processing');
     }
 
     public function deposit(TransactionRequest $request)
