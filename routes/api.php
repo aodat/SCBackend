@@ -103,10 +103,6 @@ Route::group(['middleware' => ['json.response']], function () {
                 Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+');
                 Route::post('transactions/export', [TransactionsController::class, 'export']);
 
-                Route::put('transfer', [TransactionsController::class, 'transfer']);
-                Route::put('deposit', [TransactionsController::class, 'deposit']);
-                Route::put('withdraw', [TransactionsController::class, 'withdraw']);
-
                 // Pickups
                 Route::post('pickups', [PickupsController::class, 'index']);
                 Route::get('pickup/{pickup_id}', [PickupsController::class, 'show']);
@@ -125,6 +121,11 @@ Route::group(['middleware' => ['json.response']], function () {
                     Route::post('rules/create', [RulesController::class, 'store']);
                     Route::put('rules/{rule_id}', [RulesController::class, 'status']);
                     Route::delete('rules/{rule_id}', [RulesController::class, 'delete']);
+
+                    Route::put('transfer', [TransactionsController::class, 'transfer']);
+                    Route::put('deposit', [TransactionsController::class, 'deposit']);
+                    Route::put('deposit/request', [TransactionsController::class, 'depositwRequest']);
+                    Route::put('withdraw', [TransactionsController::class, 'withdraw']);
                 });
 
                 Route::get('countries', [MerchantController::class, 'getCountries']);

@@ -16,10 +16,16 @@ class TransactionRequest extends MerchantRequest
             return [
                 'payment_method_id' => 'required',
             ];
+        } else if ($this->getMethod() == 'PUT' && strpos($path, 'deposit/request') !== false) {
+            return [
+                'amount' => 'required|numeric',
+                'wallet_number' => 'required|string',
+            ];
         } else if ($this->getMethod() == 'PUT' && strpos($path, 'deposit') !== false) {
             return [
                 'amount' => 'required|numeric',
-                "token" => 'required|string',
+                'wallet_number' => 'required|string',
+                'pin_code' => 'required',
             ];
         } else if ($this->getMethod() == 'PUT' && strpos($path, 'transfer') !== false) {
             return [

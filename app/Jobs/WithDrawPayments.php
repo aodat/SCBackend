@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 use Libs\Dinarak;
 
 class WithDrawPayments implements ShouldQueue
@@ -35,34 +36,32 @@ class WithDrawPayments implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(Dinarak $dinarak)
     {
-        $merchecntInfo = Merchant::findOrFail($this->mercanhtID);
+        DB::transaction(function () use ($dinarak) {
+            $merchecntInfo = Merchant::findOrFail($this->mercanhtID);
 
-        if ($merchecntInfo->bundle_balance <= 1) {
-            return true;
-        }
+            if ($merchecntInfo->bundle_balance <= 0) {
+                return true;
+            }
 
-        $rounds = ceil($merchecntInfo->bundle_balance / 1000);
-        $amounts = array_fill(0, $rounds - 1, 1000);
-        $amounts[] = $merchecntInfo->bundle_balance - array_sum($amounts);
+            $rounds = ceil($merchecntInfo->bundle_balance / 1000);
+            $amounts = array_fill(0, $rounds - 1, 1000);
+            $amounts[] = $merchecntInfo->bundle_balance - array_sum($amounts);
 
-        $merchecntInfo->bundle_balance = 0;
-        $merchecntInfo->save();
-        
-        $obj = new Dinarak();
-        foreach ($amounts as $amount) {
-            $result = $obj->deposit($this->payment['iban'], $amount);
-        }
+            $result = [];
+            foreach ($amounts as $amount) {
+                $result[] = $dinarak->withdraw($merchecntInfo, $this->payment['iban'], $amount);
+            }
 
-        $transaction = Transaction::findOrFail($this->transactionID);
+            $merchecntInfo->bundle_balance = 0;
+            $merchecntInfo->save();
 
-        $result->update(['notes' => json_encode($result->json())]);
+            $transaction = Transaction::findOrFail($this->transactionID);
 
-        $status = json_decode($result)->status->id;
-        if ($status == 1) {
-            $transaction->update(['status' => 'confirmed']);
-        }
-
+            // $transaction->notes = collect($result);
+            $transaction->status = 'COMPLETED';
+            $transaction->save();
+        });
     }
 }

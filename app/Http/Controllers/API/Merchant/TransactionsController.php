@@ -9,13 +9,10 @@ use App\Jobs\WithDrawPayments;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Libs\Stripe;
+use Libs\Dinarak;
 
 class TransactionsController extends MerchantController
 {
-
-    protected $stripe;
-
     private $type = [
         'ALL' => 0, 'CASHIN' => 0, 'CASHOUT' => 0,
     ];
@@ -23,11 +20,6 @@ class TransactionsController extends MerchantController
     private $subType = [
         'ALL' => 0, 'COD' => 0, 'BUNDLE' => 0,
     ];
-
-    public function __construct()
-    {
-        $this->stripe = new Stripe();
-    }
 
     public function index(TransactionRequest $request)
     {
@@ -85,7 +77,7 @@ class TransactionsController extends MerchantController
     {
         $merchecntInfo = $this->getMerchentInfo();
 
-        if ($merchecntInfo->bundle_balance <= 1) {
+        if ($merchecntInfo->bundle_balance <= 0) {
             return $this->error('The Bundle Balance Is Zero', 400);
         }
 
@@ -111,23 +103,21 @@ class TransactionsController extends MerchantController
         return $this->successful('WithDraw Transaction Under Processing');
     }
 
-    public function deposit(TransactionRequest $request)
+    public function depositwRequest(TransactionRequest $request, Dinarak $dinarak)
     {
-        $data = $request->validated();
+        $dinarak->pincode($request->wallet_number, $request->amount);
+        $this->successful('Check Your OTP');
+    }
+
+    public function deposit(TransactionRequest $request, Dinarak $dinarak)
+    {
         $merchecntInfo = $this->getMerchentInfo();
-
-        $infoTransaction = [
-            'amount' => currency_exchange($data['amount'], $merchecntInfo->currency_code, 'USD'),
-            'currency' => 'USD',
-            'source' => $data['token'],
-            'description' => "Merachnt Deposit " . $merchecntInfo->name,
-        ];
-
-        $this->stripe->InvoiceWithToken($infoTransaction);
+        $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
 
         Transaction::create(
             [
-                'type' => 'CASHOUT',
+                'type' => 'CASHIN',
+                'subtype' => 'BUNDLE',
                 'merchant_id' => $request->user()->merchant_id,
                 'source' => 'CREDITCARD',
                 'status' => 'COMPLETED',
