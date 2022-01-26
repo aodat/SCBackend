@@ -9,6 +9,7 @@ use App\Jobs\ShipmentWebHooks;
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Invoices;
+use App\Models\Merchant;
 use App\Models\Shipment;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -21,6 +22,12 @@ class ShipmentController extends MerchantController
     private $status = [
         'DRAFT' => 0, 'PROCESSING' => 0, 'COMPLETED' => 0, 'RENTURND' => 0, 'PENDING_PAYMENTS' => 0,
     ];
+
+    private $merchant;
+    public function __construct()
+    {
+        $this->merchant = $this->getMerchantInfo();
+    }
 
     public function index(ShipmentRequest $request)
     {
@@ -210,19 +217,6 @@ class ShipmentController extends MerchantController
         if ($fees <= $merchant->bundle_balance || $merchant->payment_type == 'POSTPAID') {
             $merchant->bundle_balance -= $fees;
             $merchant->save();
-
-            Transaction::create([
-                "type" => "CASHOUT",
-                "subtype" => "BUNDLE",
-                "item_id" => null,
-                "created_by" => Request()->user()->id,
-                "merchant_id" => Request()->user()->merchant_id,
-                "amount" => $fees,
-                "status" => "COMPLETED",
-                "balance_after" => $merchant->bundle_balance,
-                "source" => "SHIPMENT",
-            ]);
-            
             return true;
         }
         throw new InternalException('You cannot complete the shipment process. The current balance is not enough, so please recharge your balance.', 500);
@@ -231,6 +225,7 @@ class ShipmentController extends MerchantController
     private function createShipmentDB($shipments, $provider)
     {
         $resource = Request()->header('agent') ?? 'API';
+        $fees = $shipments->sum('fees');
         $getbulk = $shipments->where('carrier_id', 1);
         $payloads = $getbulk->map(function ($data) {
             return $this->generateShipmentArray('Aramex', $data);
@@ -287,6 +282,19 @@ class ShipmentController extends MerchantController
 
             Shipment::insert($shipments->toArray());
         }
+
+
+        Transaction::create([
+            "type" => "CASHOUT",
+            "subtype" => "BUNDLE",
+            "item_id" => Shipment::select('id')->first()->id,
+            "created_by" => Request()->user()->id,
+            "merchant_id" => Request()->user()->merchant_id,
+            "amount" => $fees,
+            "status" => "COMPLETED",
+            "balance_after" => $this->merchant->bundle_balance,
+            "source" => "SHIPMENT",
+        ]);
 
         return $this->response(
             [
