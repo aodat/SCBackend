@@ -59,10 +59,15 @@ class TransactionsController extends MerchantController
         }
 
         $tabs = DB::table('transactions')
-            ->where('merchant_id', Request()->user()->merchant_id)
-            ->select('type', DB::raw(
-                'count(type) as counter'
-            ))
+            ->where('merchant_id', Request()->user()->merchant_id);
+
+        if ($subtype && $subtype != '*') {
+            $tabs->where('subtype', $subtype);
+        }
+
+        $tabs->select('type', DB::raw(
+            'count(type) as counter'
+        ))
             ->groupBy('type')
             ->pluck('counter', 'type');
 
@@ -82,7 +87,7 @@ class TransactionsController extends MerchantController
     {
         $merchecntInfo = $this->getMerchentInfo();
 
-        if ($merchecntInfo->bundle_balance <= 0) {
+        if ($merchecntInfo->cod_balance <= 0) {
             return $this->error('The Bundle Balance Is Zero', 400);
         }
 
@@ -91,6 +96,7 @@ class TransactionsController extends MerchantController
         if ($payment == null) {
             throw new InternalException('Invalid Payment Method ID');
         }
+        $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
 
         $transaction = Transaction::create([
             "type" => "CASHOUT",
@@ -98,12 +104,12 @@ class TransactionsController extends MerchantController
             "item_id" => null,
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
-            'amount' => $merchecntInfo->bundle_balance,
+            'amount' => $dedaction,
             "balance_after" => 0,
             "source" => "CREDITCARD",
         ]);
 
-        WithDrawPayments::dispatch($merchecntInfo->id, $merchecntInfo->bundle_balance, $payment, $transaction->id);
+        WithDrawPayments::dispatch($merchecntInfo->id, $dedaction, $payment, $transaction->id);
 
         return $this->successful('WithDraw Transaction Under Processing');
     }
@@ -187,10 +193,17 @@ class TransactionsController extends MerchantController
         $merchentID = Request()->user()->merchant_id;
         $type = $request->type;
         $date = $request->date;
+        $subtype = $filters['subtype'] ?? null;
 
         $transaction = Transaction::where('merchant_id', $merchentID)
-            ->whereDate('created_at', $date)
-            ->get();
+            ->whereDate('created_at', $date);
+
+        if ($subtype && $subtype != '*') {
+            $transaction->where('subtype', $subtype);
+        }
+
+        $transaction->get();
+
         if ($transaction->isEmpty()) {
             return $this->response([], 'No Data Retrieved');
         }

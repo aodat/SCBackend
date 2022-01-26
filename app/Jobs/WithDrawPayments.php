@@ -41,20 +41,13 @@ class WithDrawPayments implements ShouldQueue
         DB::transaction(function () use ($dinarak) {
             $merchecntInfo = Merchant::findOrFail($this->mercanhtID);
 
-            if ($merchecntInfo->bundle_balance <= 0) {
+            if ($merchecntInfo->cod_balance <= 0 || $this->amount > $merchecntInfo->cod_balance) {
                 return true;
             }
+            
+            $dinarak->withdraw($merchecntInfo, $$this->payment['iban'], $this->amount);
 
-            $rounds = ceil($merchecntInfo->bundle_balance / 1000);
-            $amounts = array_fill(0, $rounds - 1, 1000);
-            $amounts[] = $merchecntInfo->bundle_balance - array_sum($amounts);
-
-            $result = [];
-            foreach ($amounts as $amount) {
-                $result[] = $dinarak->withdraw($merchecntInfo, $this->payment['iban'], $amount);
-            }
-
-            $merchecntInfo->bundle_balance = 0;
+            $merchecntInfo->cod_balance -= $merchecntInfo->amount;
             $merchecntInfo->save();
 
             $transaction = Transaction::findOrFail($this->transactionID);
