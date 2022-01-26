@@ -3,14 +3,18 @@
 namespace App\Traits;
 
 use App\Exceptions\CarriersException;
+
 use App\Http\Controllers\Utilities\InvoiceService;
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Merchant;
 use App\Models\Transaction;
 use Carbon\Carbon;
+
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
 use Libs\Aramex;
 use Libs\DHL;
 use Libs\Fedex;
@@ -239,7 +243,12 @@ trait CarriersManager
                 $updated['transaction_id'] = $transaction->id;
             } else if ($action == 'update_merchant_balance') {
                 if ($shipmentInfo['cod'] > 0) {
-                    $merchant->cod_balance += $shipmentInfo['cod'];
+                    
+                    if (isset($data['Comment2'])) {
+                        if (!Str::contains($data['Comment2'], 'Cheque'))
+                            $merchant->cod_balance += $shipmentInfo['cod'];
+                    }
+
                     $merchant->bundle_balance -= $fees;
                     $merchant->save();
                 }
