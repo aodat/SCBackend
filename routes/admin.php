@@ -60,5 +60,9 @@ Route::group(['middleware' => ['json.response']], function () {
             ->where('shipment_id', '[0-9]+');
         Route::post('shipments/{merchant_id}/filters', [ShipmentController::class, 'index'])->where('merchant_id', '[0-9]+');
         Route::post('shipments/track', [ShipmentController::class, 'tracking']);
+        Route::put('{merchant_id}/shipments/{shipment_id}', [ShipmentController::class, 'update'])
+            ->where('merchant_id', '[0-9]+')
+            ->where('shipment_id', '[0-9]+');
+        
     });
 });

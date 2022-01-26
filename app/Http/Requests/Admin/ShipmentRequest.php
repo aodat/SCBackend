@@ -45,6 +45,10 @@ class ShipmentRequest extends FormRequest
             return [
                 'shipment_number' => 'required|exists:shipments,external_awb',
             ];
+        } else if ($this->method() == 'PUT' && (strpos($path, '{merchant_id}/shipments/{shipment_id}') !== false)) {
+            return [
+                'amount' => 'required|min:0.01',
+            ];
         }
 
         return [];

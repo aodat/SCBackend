@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\ShipmentRequest;
 use App\Models\Shipment;
+use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -96,5 +97,37 @@ class ShipmentController extends Controller
         }
 
         return $this->response($data, 'Data Retrieved Sucessfully');
+    }
+
+    public function update(ShipmentRequest $request)
+    {
+        $shipmentInfo = Shipment::findOrFail($request->shipment_id);
+        if ($shipmentInfo->status == 'COMPLETED') {
+            return $this->error('You Cant Update The Completed Shipment');
+        }
+
+        $shipmentInfo->cod = $request->amount;
+        $shipmentInfo->logs = collect($shipmentInfo->logs)->merge([[
+            'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+            'UpdateLocation' => '',
+            'UpdateDescription' => 'Update COD Value From ' . $shipmentInfo->cod . ' To ' . $request->amount,
+        ]]);
+        $shipmentInfo->save();
+
+        Transaction::create(
+            [
+                'type' => 'CASHIN',
+                'subtype' => 'COD',
+                'item_id' => $shipmentInfo->id,
+                'merchant_id' => $request->merchant_id,
+                'source' => 'SHIPMENT',
+                'status' => 'COMPLETED',
+                'created_by' => Request()->user()->id,
+                'balance_after' => $request->amount,
+                'amount' => $request->amount,
+                'resource' => 'API',
+            ]
+        );
+        return $this->successful('COD Amount Updated');
     }
 }
