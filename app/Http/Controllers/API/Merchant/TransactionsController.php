@@ -33,6 +33,7 @@ class TransactionsController extends MerchantController
         $sources = $filters['sources'] ?? [];
         $amount = $filters['amount']['val'] ?? null;
         $operation = $filters['amount']['operation'] ?? null;
+        $subtype = $filters['subtype'] ?? null;
 
         $transaction = Transaction::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($statuses)) {
@@ -45,6 +46,10 @@ class TransactionsController extends MerchantController
 
         if (count($types)) {
             $transaction->whereIn('type', $types);
+        }
+
+        if ($subtype && $subtype != '*') {
+            $transaction->where('subtype', $subtype);
         }
 
         if ($operation) {
