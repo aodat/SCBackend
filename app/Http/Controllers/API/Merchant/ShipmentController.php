@@ -23,12 +23,6 @@ class ShipmentController extends MerchantController
         'DRAFT' => 0, 'PROCESSING' => 0, 'COMPLETED' => 0, 'RENTURND' => 0, 'PENDING_PAYMENTS' => 0,
     ];
 
-    private $merchant;
-    public function __construct()
-    {
-        $this->merchant = $this->getMerchantInfo();
-    }
-
     public function index(ShipmentRequest $request)
     {
         $shipments = $this->search($request->json()->all());
@@ -283,7 +277,7 @@ class ShipmentController extends MerchantController
             Shipment::insert($shipments->toArray());
         }
 
-
+        $merchant = Merchant::findOrFail(Request()->user()->merchant_id);
         Transaction::create([
             "type" => "CASHOUT",
             "subtype" => "BUNDLE",
@@ -292,7 +286,7 @@ class ShipmentController extends MerchantController
             "merchant_id" => Request()->user()->merchant_id,
             "amount" => $fees,
             "status" => "COMPLETED",
-            "balance_after" => $this->merchant->bundle_balance,
+            "balance_after" => $merchant->bundle_balance,
             "source" => "SHIPMENT",
         ]);
 
