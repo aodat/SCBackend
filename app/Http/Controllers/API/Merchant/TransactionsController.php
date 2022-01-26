@@ -191,9 +191,9 @@ class TransactionsController extends MerchantController
     public function export(TransactionRequest $request)
     {
         $merchentID = Request()->user()->merchant_id;
+        $subtype = $request->subtype;
         $type = $request->type;
         $date = $request->date;
-        $subtype = $filters['subtype'] ?? null;
 
         $transaction = Transaction::where('merchant_id', $merchentID)
             ->whereDate('created_at', $date);
@@ -202,18 +202,14 @@ class TransactionsController extends MerchantController
             $transaction->where('subtype', $subtype);
         }
 
-        $transaction->get();
-
-        if ($transaction->isEmpty()) {
-            return $this->response([], 'No Data Retrieved');
-        }
+        $transactions = $transaction->get();
 
         $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
         if ($type == 'xlsx') {
-            $url = exportXLSX(new TransactionsExport($transaction), $path);
+            $url = exportXLSX(new TransactionsExport($transactions), $path);
         } else {
-            $url = exportPDF('transactions', $path, $transaction);
+            $url = exportPDF('transactions', $path, $transactions);
         }
 
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
