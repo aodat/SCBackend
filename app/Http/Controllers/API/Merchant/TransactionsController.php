@@ -65,11 +65,11 @@ class TransactionsController extends MerchantController
             $tabs->where('subtype', $subtype);
         }
 
-        $tabs->select('type', DB::raw(
+        $tabs = $tabs->select('type', DB::raw(
             'count(type) as counter'
         ))
-            ->groupBy('type')
-            ->pluck('counter', 'type');
+        ->groupBy('type')
+        ->pluck('counter', 'type');
 
         $tabs = collect($this->type)->merge(collect($tabs));
         $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
