@@ -197,13 +197,6 @@ class ShipmentController extends MerchantController
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
             $shipment['status'] = 'DRAFT';
-            $shipment['logs'] = collect([
-                [
-                    'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
-                    'UpdateDescription' => 'Create Shipment',
-                ],
-            ]);
             $shipment['created_at'] = Carbon::now();
             $shipment['updated_at'] = Carbon::now();
             return $shipment;
