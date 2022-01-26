@@ -130,7 +130,13 @@ trait CarriersManager
             }
 
             $price = $rate->first()['price'];
-            $fees = ceil($weight / 10) * $price;
+            $extra = $rate->first()['additional'] ?? 1.5;
+
+            $basic = (ceil($weight / 10) - 1) * $price;
+            $additional = (ceil($weight / 10) - 1) * $extra;
+
+
+            return $basic + $additional;
         } else {
             $express_rates = collect(Country::where('code', $this->merchantInfo['country_code'])->first());
             if ($express_rates->isEmpty()) {
