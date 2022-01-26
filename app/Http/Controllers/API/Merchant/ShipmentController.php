@@ -207,7 +207,7 @@ class ShipmentController extends MerchantController
     private function checkbalance($fees)
     {
         $merchant = $this->getMerchentInfo();
-        if ($fees <= $merchant->bundle_balance) {
+        if ($fees <= $merchant->bundle_balance || $merchant->payment_type == 'POSTPAID') {
             $merchant->bundle_balance -= $fees;
             $merchant->save();
 
