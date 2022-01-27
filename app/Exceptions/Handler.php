@@ -2,15 +2,12 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Access\AuthorizationException;
-
-use Stripe\Exception\InvalidRequestException;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Response;
-
+use Illuminate\Validation\ValidationException;
+use Stripe\Exception\InvalidRequestException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -53,6 +50,10 @@ class Handler extends ExceptionHandler
         } else if ($exception instanceof InvalidRequestException) {
             $response['meta']['code'] = 422;
             $response['meta']['msg'] = 'Invalid Strip Request';
+            return Response::make($response);
+        } else if ($exception instanceof \Swift_TransportException) {
+            $response['meta']['code'] = 500;
+            $response['meta']['msg'] = 'Request to AWS SES API failed';
             return Response::make($response);
         }
         return parent::render($request, $exception);

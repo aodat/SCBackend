@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::group(['middleware' => ['json.response']], function () {
+Route::group(['middleware' => ['json.response','db.row']], function () {
     Route::middleware(['throttle:ip_address'])->group(function () {
         Route::post('auth/login', [AuthController::class, 'login']);
         Route::post('auth/register', [AuthController::class, 'register']);
