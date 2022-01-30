@@ -11,13 +11,22 @@ class Shipment extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = ['carrier_name', 'generator_name'];
+    protected $appends = ['carrier_name', 'generator_name', 'payment_link'];
 
     protected $casts = [
         'logs' => 'array',
         'is_doc' => 'boolean',
         'is_deleted' => 'boolean',
     ];
+
+    public function getPaymentLinkAttribute()
+    {
+        if (Invoices::where('fk_id', $this->id)->first()) {
+            return url('/shipment/' . $this->id . '/payment/');
+        }
+
+        return null;
+    }
 
     public function getCarrierNameAttribute()
     {
