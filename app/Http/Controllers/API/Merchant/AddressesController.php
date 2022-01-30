@@ -9,8 +9,6 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\Merchant;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Auth;
 
 class AddressesController extends MerchantController
 {
@@ -33,14 +31,14 @@ class AddressesController extends MerchantController
         $city = City::find($city_id);
         $area = Area::find($area_id);
 
-
         $result = collect($merchant->addresses);
         $counter = $result->max('id') ?? 0;
 
-        if ($result->contains("name", $request->name))
+        if ($result->contains("name", $request->name)) {
             throw new InternalException('name already Exists', 400);
-        else if ($country->code != $merchant->country_code)
+        } else if ($country->code != $merchant->country_code) {
             throw new InternalException('The Country address not same of merchant country', 400);
+        }
 
         $json = [
             'id' => ++$counter,
@@ -53,7 +51,7 @@ class AddressesController extends MerchantController
             'phone' => $request->phone,
             'description' => $request->description,
             'is_default' => $request->is_default ?? false,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ];
 
         $merchant->update(['addresses' => $result->merge([$json])]);
@@ -68,8 +66,10 @@ class AddressesController extends MerchantController
         $result = collect(Merchant::where('id', $merchantID)->select('addresses')->first()->addresses);
 
         $json = $result->reject(function ($value) use ($id) {
-            if ($value['id'] == $id)
+            if ($value['id'] == $id) {
                 return $value;
+            }
+
         });
         $json = array_values($json->toArray());
         $list->update(['addresses' => collect($json)]);
