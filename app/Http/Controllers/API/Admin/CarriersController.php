@@ -4,10 +4,7 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CarriersRequest;
-
 use App\Models\Carriers;
-
-use Illuminate\Support\Facades\DB;
 
 class CarriersController extends Controller
 {
@@ -17,21 +14,25 @@ class CarriersController extends Controller
         $name = $request->name ?? '';
         $email = $request->email;
 
-        $carriers = DB::table('carriers');
-        if ($name)
+        $carriers = Carriers::paginate(request()->per_page ?? 30);
+        if ($name) {
             $carriers->where('name', 'like', '%' . $name . '%');
-        if ($email)
-            $carriers->where('email', 'like', '%' . $email . '%');
-        if ($id)
-            $carriers->where('id', $id);
+        }
 
-        $paginated = $carriers->paginate(request()->per_page ?? 30);
-        return $this->pagination($paginated);
+        if ($email) {
+            $carriers->where('email', 'like', '%' . $email . '%');
+        }
+
+        if ($id) {
+            $carriers->where('id', $id);
+        }
+
+        return $this->pagination($carriers);
     }
 
-    public function show($carrier_id, CarriersRequest $request)
+    public function show(CarriersRequest $request)
     {
-        $carrier = Carriers::findOrFail($carrier_id);
+        $carrier = Carriers::findOrFail($request->carrier_id);
         return $this->response($carrier, 'Data Retrieved Successfully');
     }
 
@@ -44,11 +45,11 @@ class CarriersController extends Controller
 
     public function update(CarriersRequest $request)
     {
-        $data = $request->validated();
-        $carrier = Carriers::findOrFail($data['id']);
-        $carrier->country_code = $data['country_code'];
-        $carrier->currency_code = $data['currency_code'];
-        $carrier->is_active = $data['is_active'];
+        $carrier = Carriers::findOrFail($request->carrier_id);
+        $carrier->country_code = $request->country_code;
+        $carrier->currency_code = $request->currency_code;
+        $carrier->is_active = $request->is_active;
+        $carrier->phone = $request->phone;
         $carrier->save();
 
         return $this->successful('Updated Successfully');

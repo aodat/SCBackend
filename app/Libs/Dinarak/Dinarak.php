@@ -2,14 +2,14 @@
 
 namespace Libs;
 
-use Illuminate\Support\Facades\Http;
 use App\Exceptions\InternalException;
+use Illuminate\Support\Facades\Http;
 
 class Dinarak
 {
     private $endPoint = 'https://api.dinarak.com/v2.0';
     private $tokenKey;
-    function __construct()
+    public function __construct()
     {
         $this->tokenKey = $this->generatedKey();
     }
@@ -19,20 +19,20 @@ class Dinarak
         $loginData = [
             "username" => env('DINARAK_USERNAME'),
             "password" => env('DINARAK_PASSWORD'),
-            "grant_type" => env('DINARAK_GRANT_TYPE')
+            "grant_type" => env('DINARAK_GRANT_TYPE'),
         ];
         $response = Http::post($this->endPoint . "/token", $loginData);
         return $response->json()['access_token'];
     }
 
-    public function deposit($wallet_number, $amount, $transaction)
+    public function withdraw($merchecntInfo, $wallet_number, $amount)
     {
-        // Transfer 
+        // Transfer
         $transferData = [
-            "Name" =>  auth()->user()->name,
-            "Amount" => (float)$amount,
+            "Name" => $merchecntInfo->name,
+            "Amount" => (float) $amount,
             "Description" => "Transfer from ShipCash",
-            "ReceiverID" => (string)$wallet_number,
+            "ReceiverID" => (string) $wallet_number,
             "MessageId" => generateMessageID(),
             "OperationName" => "Transfer",
         ];
@@ -40,39 +40,33 @@ class Dinarak
         $response = Http::withToken($this->tokenKey)
             ->withHeaders([
                 'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
             ])->post($this->endPoint . "/transfer/transfer", $transferData);
 
-        if (!$response->successful())
+        if (!$response->successful()) {
             throw new InternalException('Dinark - Deposite Payment', $response->status());
-
-        $transaction->update(['notes' => json_encode($response->json())]);
-
-        $status = json_decode($response)->status->id;
-        if ($status == 1) {
-            $transaction->update(['status' => 'confirmed']);
         }
-
-        return true;
+        return $response->json();
     }
 
-    public function request($wallet_number, $amount, $pincode)
+    public function deposit($merchecntInfo, $wallet_number, $amount, $pincode)
     {
         $transferData = [
-            'Name' => Request()->user()->merchant_id, ' - ', Request()->user()->name,
+            'Name' => $merchecntInfo->id, ' - ', $merchecntInfo->name,
             'Amount' => $amount,
             'Description' => 'Request From Shipcash',
             'MessageId' => generateMessageID(),
             'WalletID' => $wallet_number,
-            'OTP' => $pincode
+            'OTP' => $pincode,
         ];
         $response = Http::withToken($this->tokenKey)
             ->withHeaders([
                 'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
             ])->post($this->endPoint . "/transfer/deduct", $transferData);
-        if (!$response->successful())
-            throw new InternalException('Dinark - Request Payment', $response->status());
+        if (!$response->successful()) {
+            throw new InternalException('Dinark - Deposit Payment', $response->status());
+        }
 
         return true;
     }
@@ -81,17 +75,16 @@ class Dinarak
     {
         $transferData = [
             'Amount' => $amount,
-            'PhoneNumber' => $wallet_number
+            'PhoneNumber' => $wallet_number,
         ];
-
-        return $response = Http::withToken($this->tokenKey)
+        $response = Http::withToken($this->tokenKey)
             ->withHeaders([
                 'Accept' => 'application/json',
-                'Content-Type' => 'application/json'
+                'Content-Type' => 'application/json',
             ])->post($this->endPoint . "/Services/PushOTP", $transferData);
 
-        if (!$response->successful())
+        if (!$response->successful()) {
             throw new InternalException('Dinark - Pin Code Error', $response->status());
-        return true;
+        }
     }
 }

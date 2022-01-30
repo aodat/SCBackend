@@ -3,25 +3,18 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-
-use Illuminate\Http\Request;
-
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\RecoveryRequest;
-use App\Jobs\Send;
-use App\Jobs\SendMails;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
-
-use Illuminate\Auth\Events\PasswordReset;
-use Illuminate\Support\Str;
-
+use App\Jobs\UserEmail;
 use App\Models\Merchant;
 use App\Models\User;
-
+use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Laravel\Passport\Client;
 use Laravel\Passport\ClientRepository;
 
@@ -37,15 +30,18 @@ class AuthController extends Controller
 
         if ($userData->merchant_id) {
             $merchant = Merchant::find($userData->merchant_id);
-            if (!$merchant->is_active)
+            if (!$merchant->is_active) {
                 return $this->error('Mechant Is In-Active', 403);
+            }
 
             $userData['country_code'] = $merchant->country_code ?? '';
             $userData['currency_code'] = $merchant->currency_code ?? '';
         }
-        
-        if ($userData->role === "member")
+
+        if ($userData->role === "member") {
             $role = explode(",", $userData->role_member);
+        }
+
         $role[] = $userData->role;
         $userData['token'] = $userData->createToken('users', $role)->accessToken;
         return $this->response(
@@ -54,7 +50,6 @@ class AuthController extends Controller
             200
         );
     }
-
 
     public function register(AuthRequest $request, ClientRepository $clientRepository)
     {
@@ -67,7 +62,7 @@ class AuthController extends Controller
                 'country_code' => $request->country_code,
                 'currency_code' => ($request->country_code == 'JO') ? 'JOD' : 'SAR',
                 'domestic_rates' => collect(json_decode(Storage::disk('local')->get('template/domestic_rates.json'), true)),
-                'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'), true))
+                'express_rates' => collect(json_decode(Storage::disk('local')->get('template/express_rates.json'), true)),
             ]
         );
         $user = User::create(
@@ -78,7 +73,7 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
                 'phone' => $request->phone,
                 'is_owner' => true,
-                'role' => 'admin'
+                'role' => 'admin',
             ]
         );
 
@@ -90,7 +85,7 @@ class AuthController extends Controller
         );
         $merchant->update(["secret_key" => $client->secret]);
 
-        // Send::dispatch($user);
+        UserEmail::dispatch($user);
 
         return $this->successful('User Created Successfully');
     }
@@ -119,10 +114,12 @@ class AuthController extends Controller
     // Forget Password
     public function forgetPassword(RecoveryRequest $request)
     {
-        $response =  Password::sendResetLink($request->only('email'));
+        $response = Password::sendResetLink($request->only('email'));
 
-        if ($response == Password::RESET_LINK_SENT)
+        if ($response == Password::RESET_LINK_SENT) {
             return $this->successful('Mail send successfully');
+        }
+
         return $this->error('Email could not be sent to this email address');
     }
 
@@ -133,7 +130,7 @@ class AuthController extends Controller
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
                 $user->forceFill([
-                    'password' => Hash::make($password)
+                    'password' => Hash::make($password),
                 ])->setRememberToken(Str::random(60));
 
                 $user->save();
@@ -141,8 +138,10 @@ class AuthController extends Controller
                 event(new PasswordReset($user));
             }
         );
-        if ($response == Password::PASSWORD_RESET)
+        if ($response == Password::PASSWORD_RESET) {
             return $this->successful('Password reset successfully');
+        }
+
         return $this->error('Email could not be sent to this email address');
     }
 
@@ -167,10 +166,11 @@ class AuthController extends Controller
     // Resend Email for verfification
     public function resend()
     {
-        if (auth()->user()->hasVerifiedEmail())
+        if (auth()->user()->hasVerifiedEmail()) {
             return $this->error('Email already verified.', 400);
+        }
 
-        Send::dispatch(auth()->user());
+        UserEmail::dispatch(auth()->user());
         return $this->successful('Check your email');
     }
 
@@ -180,15 +180,16 @@ class AuthController extends Controller
         $merchant = Merchant::findOrFail(Request()->user()->merchant_id);
         $client = Client::where('user_id', $merchant->id)->where('revoked', false)->first();
 
-        if ($client == null)
+        if ($client == null) {
             $this->error('No Secret Key Created Yet');
+        }
 
         $request->request->add([
             'grant_type' => 'client_credentials',
             'client_id' => $client->id,
             'client_secret' => $merchant->secret_key,
             'redirect_uri' => 'http://example.com/callback.php',
-            'code' => ''
+            'code' => '',
         ]);
 
         $proxy = Request::create(
@@ -200,7 +201,7 @@ class AuthController extends Controller
     }
 
     // Genrate Access Token
-    function generateSecretKey(Request $request, ClientRepository $clientRepository)
+    public function generateSecretKey(Request $request, ClientRepository $clientRepository)
     {
         $merchant = Merchant::findOrFail(Request()->user()->merchant_id);
 

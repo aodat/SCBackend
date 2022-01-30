@@ -43,16 +43,13 @@ class AddressesController extends Controller
         $city = City::find($city_id);
         $area = Area::find($area_id);
 
-        if ($result->contains("name", $request->name)) {
-            throw new InternalException('name already Exists', 400);
-        } else if ($country->code != $merchant->country_code) {
+        if ($country->code != $merchant->country_code) {
             throw new InternalException('The Country address not same of merchant country', 400);
         }
 
         $address = $result->where('id', $request->id);
         $current = $address->keys()->first();
 
-        $data = $address->toArray()[$current];
         $result[$current] = [
             'id' => $request->id,
             'name' => $request->name,

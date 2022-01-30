@@ -11,6 +11,7 @@ use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Libs\Aramex;
 use Libs\DHL;
 use Libs\Fedex;
@@ -19,34 +20,31 @@ trait CarriersManager
 {
     public $adapter;
     private $merchantInfo;
-    public function loadProvider($provider, $merchantID = null)
+    public function loadProvider($provider, $settings = array())
     {
-
         $provider = strtoupper($provider);
+        if (empty($settings)) {
+            $settings = Carriers::where('id', 3)->first()->env ?? null;
+        }
+
         switch ($provider) {
             case "ARAMEX":
-                $settings = Carriers::where('id', 1)->first()->env;
-
                 $this->adapter = new Aramex($settings);
                 break;
             case "DHL":
-                $settings = Carriers::where('id', 2)->first()->env;
-
                 $this->adapter = new DHL($settings);
                 break;
             case "FEDEX":
-                $settings = Carriers::where('id', 3)->first()->env;
-
                 $this->adapter = new Fedex($settings);
                 break;
             default:
                 throw new CarriersException('Invalid Provider');
         }
 
-        $this->merchantInfo = $this->getMerchantInfo($merchantID);
+        $this->merchantInfo = $this->getMerchantInfo();
     }
 
-    public function getMerchantInfo($merchantID = null)
+    public function getMerchantInfo()
     {
         if (Request()->user() === null) {
             return Merchant::findOrFail(900);
@@ -54,6 +52,12 @@ trait CarriersManager
             return App::make('merchantInfo');
         }
 
+    }
+
+    public function check($provider, $settings)
+    {
+        $this->loadProvider($provider, $settings);
+        $this->adapter->validate($this->merchantInfo);
     }
 
     public function generateShipment($provider, $merchantInfo = null, $shipmentArray)
@@ -111,7 +115,6 @@ trait CarriersManager
     /*
     $type : DOM , Express
      */
-
     public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
     {
         $this->merchantInfo = $this->getMerchantInfo();
@@ -127,7 +130,13 @@ trait CarriersManager
             }
 
             $price = $rate->first()['price'];
-            $fees = ceil($weight / 10) * $price;
+            $extra = $rate->first()['additional'] ?? 1.5;
+
+            $basic = (ceil($weight / 10) - 1) * $price;
+            $additional = (ceil($weight / 10) - 1) * $extra;
+
+
+            return $basic + $additional;
         } else {
             $express_rates = collect(Country::where('code', $this->merchantInfo['country_code'])->first());
             if ($express_rates->isEmpty()) {
@@ -199,11 +208,11 @@ trait CarriersManager
 
         $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
 
-        if (!isset($details['ChargeableWeight'])) 
+        if (!isset($details['ChargeableWeight'])) {
             throw new CarriersException('Chargeable Weight Is Zero');
-        
+        }
 
-        $setup['chargable_weight'] = $this->calculateFees(
+        $fees = $this->calculateFees(
             $shipmentInfo['carrier_id'],
             null,
             ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
@@ -214,29 +223,40 @@ trait CarriersManager
         $updated = $this->adapter->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
 
         $actions = $updated['actions'] ?? [];
-        if (isset($updated['actions'])) 
+        if (isset($updated['actions'])) {
             unset($updated['actions']);
-        
+        }
 
         foreach ($actions as $action) {
             if ($action == 'create_transaction') {
                 $transaction = Transaction::create(
                     [
                         'type' => 'CASHIN',
+                        'type' => 'COD',
                         'item_id' => $shipmentInfo['id'],
                         'merchant_id' => $shipmentInfo['merchant_id'],
                         'source' => 'SHIPMENT',
                         'status' => 'PROCESSING',
                         'created_by' => $shipmentInfo['created_by'],
-                        'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance,
+                        'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->bundle_balance,
                         'amount' => ($shipmentInfo['cod'] - $shipmentInfo['fees']),
                         'resource' => 'API',
                     ]
                 );
                 $updated['transaction_id'] = $transaction->id;
             } else if ($action == 'update_merchant_balance') {
-                $merchant->actual_balance = ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->actual_balance;
-                $merchant->save();
+                if ($shipmentInfo['cod'] > 0) {
+
+                    if (isset($data['Comment2'])) {
+                        if (!Str::contains($data['Comment2'], 'Cheque')) {
+                            $merchant->cod_balance += $shipmentInfo['cod'];
+                        }
+
+                    }
+
+                    $merchant->bundle_balance -= $fees;
+                    $merchant->save();
+                }
             }
         }
 

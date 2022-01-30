@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::group(['middleware' => ['json.response']], function () {
+Route::group(['middleware' => ['json.response','db.row']], function () {
     Route::middleware(['throttle:ip_address'])->group(function () {
         Route::post('auth/login', [AuthController::class, 'login']);
         Route::post('auth/register', [AuthController::class, 'register']);
@@ -84,11 +84,12 @@ Route::group(['middleware' => ['json.response']], function () {
                 // Shipments
                 Route::group(['middleware' => ['scope:shipping,admin']], function () {
                     Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
-                    Route::get('shipments/export/{type}', [ShipmentController::class, 'export']);
+                    Route::post('shipments/export/{type}', [ShipmentController::class, 'export']);
                     Route::get('shipments/template', [ShipmentController::class, 'template']);
                     Route::post('shipments/track', [ShipmentController::class, 'tracking']);
 
                     Route::post('shipments/filters', [ShipmentController::class, 'index']);
+                    Route::post('shipments/export/{type}', [ShipmentController::class, 'export']);
                     Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
                     Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
                     Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
@@ -100,8 +101,6 @@ Route::group(['middleware' => ['json.response']], function () {
                 // Transactions
                 Route::post('transactions', [TransactionsController::class, 'index']);
                 Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+');
-                Route::put('transactions/withdraw', [TransactionsController::class, 'withDraw']);
-                Route::put('transactions/deposit', [TransactionsController::class, 'deposit']);
                 Route::post('transactions/export', [TransactionsController::class, 'export']);
 
                 // Pickups
@@ -122,6 +121,11 @@ Route::group(['middleware' => ['json.response']], function () {
                     Route::post('rules/create', [RulesController::class, 'store']);
                     Route::put('rules/{rule_id}', [RulesController::class, 'status']);
                     Route::delete('rules/{rule_id}', [RulesController::class, 'delete']);
+
+                    Route::put('transfer', [TransactionsController::class, 'transfer']);
+                    Route::put('deposit', [TransactionsController::class, 'deposit']);
+                    Route::put('deposit/request', [TransactionsController::class, 'depositwRequest']);
+                    Route::put('withdraw', [TransactionsController::class, 'withdraw']);
                 });
 
                 Route::get('countries', [MerchantController::class, 'getCountries']);

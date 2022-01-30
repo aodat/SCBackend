@@ -5,10 +5,11 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Exceptions\InternalException;
 use App\Exports\ShipmentExport;
 use App\Http\Requests\Merchant\ShipmentRequest;
-use App\Jobs\ProcessShipCashUpdates;
+use App\Jobs\ShipmentWebHooks;
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Invoices;
+use App\Models\Merchant;
 use App\Models\Shipment;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -24,7 +25,42 @@ class ShipmentController extends MerchantController
 
     public function index(ShipmentRequest $request)
     {
-        $filters = $request->json()->all();
+        $shipments = $this->search($request->json()->all());
+        $merchant_id = Request()->user()->merchant_id;
+        $type = $request->type ?? 'DOM';
+
+        $tabs = DB::table(DB::raw("(select id,CASE WHEN s.status = 'COMPLETED' && s.transaction_id is null THEN 'PENDING_PAYMENTS' ELSE s.status END  as exstatus from shipments s where merchant_id = $merchant_id and `group` = '$type' and is_deleted = false) as subs"))
+            ->select('exstatus', DB::raw('count(id) as counter'))
+            ->groupByRaw('exstatus')
+            ->pluck('counter', 'exstatus');
+
+        $tabs = collect($this->status)->merge(collect($tabs));
+        return $this->pagination($shipments->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
+    }
+
+    public function show($id, ShipmentRequest $request)
+    {
+        $data = Shipment::findOrFail($id);
+        return $this->response($data, 'Data Retrieved Sucessfully');
+    }
+
+    public function export($type, ShipmentRequest $request)
+    {
+        $merchentID = Request()->user()->merchant_id;
+        $shipments = $this->search($request->json()->all())->get();
+        $path = "export/shipments-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
+
+        if ($type == 'xlsx') {
+            $url = exportXLSX(new ShipmentExport($shipments), $path);
+        } else {
+            $url = exportPDF('shipments', $path, $shipments);
+        }
+
+        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+    }
+
+    private function search($filters)
+    {
         $merchant_id = Request()->user()->merchant_id;
         $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
@@ -34,7 +70,7 @@ class ShipmentController extends MerchantController
         $phone = $filters['phone'] ?? [];
         $cod = $filters['cod']['val'] ?? null;
         $operation = $filters['cod']['operation'] ?? null;
-        $type = $request->type ?? 'DOM';
+        $type = $filters['type'] ?? 'DOM';
 
         $shipments = DB::table('shipments as s')->join('carriers as car', 'car.id', 's.carrier_id')
             ->where('merchant_id', $merchant_id)
@@ -80,37 +116,16 @@ class ShipmentController extends MerchantController
             's.consignee_country',
             's.consignee_city',
             's.consignee_area',
-            'car.name as provider_name'
+            'car.name as provider_name',
+            's.sender_name',
+            's.consignee_address_description',
+            's.cod',
+            's.delivered_at',
+            's.pieces',
+            's.content'
         );
 
-        $tabs = DB::table(DB::raw("(select id,CASE WHEN s.status = 'COMPLETED' && s.transaction_id is null THEN 'PENDING_PAYMENTS' ELSE s.status END  as exstatus from shipments s where merchant_id = $merchant_id and `group` = '$type' and is_deleted = false) as subs"))
-            ->select('exstatus', DB::raw('count(id) as counter'))
-            ->groupByRaw('exstatus')
-            ->pluck('counter', 'exstatus');
-
-        $tabs = collect($this->status)->merge(collect($tabs));
-        return $this->pagination($shipments->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
-    }
-
-    public function show($id, ShipmentRequest $request)
-    {
-        $data = Shipment::findOrFail($id);
-        return $this->response($data, 'Data Retrieved Sucessfully');
-    }
-
-    public function export($type, ShipmentRequest $request)
-    {
-        $merchentID = Request()->user()->merchant_id;
-        $shipments = Shipment::where('merchant_id', $merchentID)->get();
-        $path = "export/shipments-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
-
-        if ($type == 'xlsx') {
-            $url = exportXLSX(new ShipmentExport($shipments), $path);
-        } else {
-            $url = exportPDF('shipments', $path, $shipments);
-        }
-
-        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+        return $shipments;
     }
 
     // Create Express Shipment will be one by one only
@@ -126,7 +141,6 @@ class ShipmentController extends MerchantController
     public function createDomesticShipment(ShipmentRequest $request)
     {
         return DB::transaction(function () use ($request) {
-            // Check Domastic
             $shipmentRequest = $request->validated();
             $addressList = App::make('merchantAddresses');
             $merchantInfo = App::make('merchantInfo');
@@ -175,16 +189,15 @@ class ShipmentController extends MerchantController
                 $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
             }
 
+            // Check if COD is Zero OR Shipment Type Express
+            // Check and dedact
+            if ($type == 'EXP' || $shipment['cod'] == 0) {
+                $this->checkbalance($shipment['fees']);
+            }
+
             $shipment['merchant_id'] = Request()->user()->merchant_id;
             $shipment['created_by'] = Request()->user()->id;
             $shipment['status'] = 'DRAFT';
-            $shipment['logs'] = collect([
-                [
-                    'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
-                    'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
-                    'UpdateDescription' => 'Create Shipment',
-                ],
-            ]);
             $shipment['created_at'] = Carbon::now();
             $shipment['updated_at'] = Carbon::now();
             return $shipment;
@@ -192,10 +205,21 @@ class ShipmentController extends MerchantController
         return $this->createShipmentDB($shipments, $provider);
     }
 
+    private function checkbalance($fees)
+    {
+        $merchant = $this->getMerchentInfo();
+        if ($fees <= $merchant->bundle_balance || $merchant->payment_type == 'POSTPAID') {
+            $merchant->bundle_balance -= $fees;
+            $merchant->save();
+            return true;
+        }
+        throw new InternalException('You cannot complete the shipment process. The current balance is not enough, so please recharge your balance.', 500);
+    }
+
     private function createShipmentDB($shipments, $provider)
     {
         $resource = Request()->header('agent') ?? 'API';
-
+        $fees = $shipments->sum('fees');
         $getbulk = $shipments->where('carrier_id', 1);
         $payloads = $getbulk->map(function ($data) {
             return $this->generateShipmentArray('Aramex', $data);
@@ -253,6 +277,19 @@ class ShipmentController extends MerchantController
             Shipment::insert($shipments->toArray());
         }
 
+        $merchant = Merchant::findOrFail(Request()->user()->merchant_id);
+        Transaction::create([
+            "type" => "CASHOUT",
+            "subtype" => "BUNDLE",
+            "item_id" => Shipment::select('id')->first()->id,
+            "created_by" => Request()->user()->id,
+            "merchant_id" => Request()->user()->merchant_id,
+            "amount" => $fees,
+            "status" => "COMPLETED",
+            "balance_after" => $merchant->bundle_balance,
+            "source" => "SHIPMENT",
+        ]);
+
         return $this->response(
             [
                 'id' => Shipment::select('id')->first()->id,
@@ -276,32 +313,8 @@ class ShipmentController extends MerchantController
             ->where('external_awb', $request->WaybillNumber)
             ->exists();
 
-        ProcessShipCashUpdates::dispatchIf($shipment, $request->json()->all());
+        ShipmentWebHooks::dispatchIf($shipment, $request->json()->all());
         return $this->successful('Webhook Completed');
-    }
-
-    protected function transactionDeposit($shipment_id, $amount)
-    {
-        return DB::transaction(function () use ($shipment_id, $amount) {
-            $merchent = $this->getMerchentInfo();
-            $actual_balance = $merchent->actual_balance;
-            $merchent->actual_balance = $actual_balance + $amount;
-            $merchent->save();
-
-            $carriers = Carriers::find($shipment_id);
-            $carriers->balance = $carriers->balance - $amount;
-            $carriers->save();
-
-            Transaction::create([
-                "type" => "CASHIN",
-                "item_id" => $shipment_id,
-                "merchant_id" => Request()->user()->merchant_id,
-                "amount" => $merchent->actual_balance,
-                "balance_after" => $actual_balance,
-                "source" => "SHIPMENT",
-                "created_by" => Request()->user()->id,
-            ]);
-        });
     }
 
     public function calculate(ShipmentRequest $request)

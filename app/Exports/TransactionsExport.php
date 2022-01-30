@@ -29,13 +29,14 @@ class TransactionsExport implements FromCollection, WithMapping, WithHeadings, S
     {
         return [
             'Type',
+            'Sub Type',
             'Amount',
             'Balance After',
             'Description',
             'Notes',
             'Status',
             'Source',
-            'Create AT',
+            'Date',
         ];
     }
 
@@ -43,10 +44,10 @@ class TransactionsExport implements FromCollection, WithMapping, WithHeadings, S
     {
         return [
             $transaction->type,
+            $transaction->subtype,
             $transaction->amount,
             $transaction->balance_after,
             $transaction->description,
-            $transaction->notes,
             $transaction->status,
             $transaction->source,
             date('Y-m-d', strtotime($transaction->created_at)),
