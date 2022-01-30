@@ -21,7 +21,7 @@
         "maatwebsite/excel": "^3.1",
         "maxbanton/cwh": "^2.0",
         "petercoles/multilingual-country-list": "^1.2",
-        "stripe/stripe-php": "^7.100"
+        "stripe/stripe-php": "^7.112"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
