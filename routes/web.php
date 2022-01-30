@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\Merchant\ShipmentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('shipment/{id}/payment', [ShipmentController::class, 'strip']);
+Route::post('stripe', [ShipmentController::class, 'stripePost'])->name('stripe.post');

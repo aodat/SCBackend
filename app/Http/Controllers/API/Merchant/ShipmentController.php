@@ -412,4 +412,9 @@ class ShipmentController extends MerchantController
 
         return $this->successful('Shipment Deleted Successfully');
     }
+
+    public function strip()
+    {
+        return view('strip.shipment');
+    }
 }
