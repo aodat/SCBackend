@@ -17,7 +17,7 @@ class Stripe
 
     function __construct()
     {
-        $this->access_key = env('STRIPE_ACCESS_KEY');
+        $this->access_key = env('STRIPE_KEY');
     }
 
     public function invoice($custmerID, $description, $amount, $currancy_code = 'USD')

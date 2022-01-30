@@ -50,6 +50,10 @@ class CarriersController extends Controller
         $carrier->currency_code = $request->currency_code;
         $carrier->is_active = $request->is_active;
         $carrier->phone = $request->phone;
+        $carrier->accept_arabic = $request->accept_arabic;
+        $carrier->accept_cod = $request->accept_cod;
+        $carrier->domestic = $request->domestic;
+        $carrier->express = $request->express;   
         $carrier->save();
 
         return $this->successful('Updated Successfully');

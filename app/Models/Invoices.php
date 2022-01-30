@@ -16,11 +16,4 @@ class Invoices extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
-
-    protected static function booted()
-    {
-        static::addGlobalScope('ancient', function (Builder $builder) {
-            $builder->where('merchant_id', Request()->user()->merchant_id)->orderBy('created_at', 'desc');
-        });
-    }
 }

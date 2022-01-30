@@ -6,13 +6,12 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\App;
 
 class Shipment extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    protected $appends = [ 'generator_name'];
+    protected $appends = ['carrier_name', 'generator_name', 'payment_link'];
 
     protected $casts = [
         'logs' => 'array',
@@ -20,8 +19,17 @@ class Shipment extends Model
         'is_deleted' => 'boolean',
     ];
 
+    public function getPaymentLinkAttribute()
+    {
+        if (Invoices::where('fk_id', $this->id)->first()) {
+            return url('/shipment/' . $this->id . '/payment/');
+        }
+
+        return null;
+    }
+
     public function getCarrierNameAttribute()
-    {     
+    {
         return Carriers::find($this->carrier_id)->name;
     }
 

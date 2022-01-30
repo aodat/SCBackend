@@ -200,6 +200,7 @@ class ShipmentController extends MerchantController
             $shipment['status'] = 'DRAFT';
             $shipment['created_at'] = Carbon::now();
             $shipment['updated_at'] = Carbon::now();
+
             return $shipment;
         });
         return $this->createShipmentDB($shipments, $provider);
@@ -219,6 +220,7 @@ class ShipmentController extends MerchantController
     private function createShipmentDB($shipments, $provider)
     {
         $resource = Request()->header('agent') ?? 'API';
+        $payments = $shipments->sum('payment');
         $fees = $shipments->sum('fees');
         $getbulk = $shipments->where('carrier_id', 1);
         $payloads = $getbulk->map(function ($data) {
@@ -239,25 +241,7 @@ class ShipmentController extends MerchantController
             $shipment['external_awb'] = $result['id'];
             $shipment['resource'] = $resource;
             $shipment['url'] = $result['link'];
-
-            $payment = null;
-            if (isset($shipment['payment'])) {
-                $payment = $shipment['payment'];
-                unset($shipment['payment']);
-            }
-
-            Shipment::withoutGlobalScope('ancient')->create($shipment);
-            if ($payment) {
-                Invoices::create([
-                    "merchant_id" => Request()->user()->merchant_id,
-                    "user_id" => Request()->user()->id,
-                    "fk_id" => Shipment::select('id')->first()->id,
-                    "customer_name" => $shipment['consignee_name'],
-                    "customer_email" => $shipment['consignee_email'],
-                    "description" => $shipment['consignee_notes'],
-                    "amount" => $payment,
-                ]);
-            }
+            shipment::withoutGlobalScope('ancient')->create($shipment);
 
         } else if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
@@ -273,15 +257,30 @@ class ShipmentController extends MerchantController
                 return $value;
             });
             $links = array_merge($links, $result['link']);
-
             Shipment::insert($shipments->toArray());
+        }
+
+        $lastShipment = Shipment::first();
+
+        if ($payments > 0) {
+            Invoices::create(
+                [
+                    "merchant_id" => Request()->user()->merchant_id,
+                    "user_id" => Request()->user()->id,
+                    "fk_id" => $lastShipment->id,
+                    "customer_name" => $lastShipment->consignee_name,
+                    "customer_email" => $lastShipment->consignee_email,
+                    "description" => $lastShipment->consignee_notes,
+                    "amount" => $payments,
+                ]
+            );
         }
 
         $merchant = Merchant::findOrFail(Request()->user()->merchant_id);
         Transaction::create([
             "type" => "CASHOUT",
             "subtype" => "BUNDLE",
-            "item_id" => Shipment::select('id')->first()->id,
+            "item_id" => $lastShipment->id,
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
             "amount" => $fees,
@@ -292,7 +291,7 @@ class ShipmentController extends MerchantController
 
         return $this->response(
             [
-                'id' => Shipment::select('id')->first()->id,
+                'id' => $lastShipment->id,
                 'link' => mergePDF($links),
             ],
             'Shipment Created Successfully'

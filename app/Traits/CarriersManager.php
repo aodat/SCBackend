@@ -132,11 +132,14 @@ trait CarriersManager
             $price = $rate->first()['price'];
             $extra = $rate->first()['additional'] ?? 1.5;
 
-            $basic = (ceil($weight / 10) - 1) * $price;
-            $additional = (ceil($weight / 10) - 1) * $extra;
-
-
-            return $basic + $additional;
+            $fees = 0;
+            if ($weight > 0) {
+                $weights_count = ceil($weight / 10);
+                $weight_fees = (($weights_count - 1) * $extra) + $price;
+                $fees += $weight_fees;
+            }
+            
+            return $fees;
         } else {
             $express_rates = collect(Country::where('code', $this->merchantInfo['country_code'])->first());
             if ($express_rates->isEmpty()) {
@@ -263,6 +266,7 @@ trait CarriersManager
         $logs = collect($shipmentInfo->logs);
 
         $updated['chargable_weight'] = $details['ChargeableWeight'];
+        $updated['fees'] = $details['fees'];
         $updated['logs'] = $logs->merge([[
             'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
             'UpdateLocation' => $data['Comment1'],
