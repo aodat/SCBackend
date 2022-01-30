@@ -70,7 +70,7 @@ class ShipmentController extends MerchantController
         $phone = $filters['phone'] ?? [];
         $cod = $filters['cod']['val'] ?? null;
         $operation = $filters['cod']['operation'] ?? null;
-        $type = $filters->type ?? 'DOM';
+        $type = $filters['type'] ?? 'DOM';
 
         $shipments = DB::table('shipments as s')->join('carriers as car', 'car.id', 's.carrier_id')
             ->where('merchant_id', $merchant_id)
