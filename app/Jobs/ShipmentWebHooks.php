@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 
 use App\Traits\CarriersManager;
 
-class ProcessShipCashUpdates implements ShouldQueue
+class ShipmentWebHooks implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     use CarriersManager;

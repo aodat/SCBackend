@@ -5,84 +5,96 @@
             "code": "Amman",
             "name_en": "Amman",
             "name_ar": "عمان",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 2,
             "code": "Irbid",
             "name_en": "Irbid",
             "name_ar": "اربد",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 3,
             "code": "Balqa",
             "name_en": "Balqa",
             "name_ar": "البلقاء",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 4,
             "code": "Madaba",
             "name_en": "Madaba",
             "name_ar": "مادبا",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 5,
             "code": "Zarqa",
             "name_en": "Zarqa",
             "name_ar": "الزرقاء",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 6,
             "code": "Mafraq",
             "name_en": "Mafraq",
             "name_ar": "المفرق",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 7,
             "code": "Ajloon",
             "name_en": "Ajloon",
             "name_ar": "عجلون",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 8,
             "code": "Jerash",
             "name_en": "Jerash",
             "name_ar": "جرش",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 9,
             "code": "Karak",
             "name_en": "Karak",
             "name_ar": "الكرك",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 10,
             "code": "Tafileh",
             "name_en": "Tafileh",
             "name_ar": "الطفيلة",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 11,
             "code": "Ma'An",
             "name_en": "Ma'An",
             "name_ar": "معان",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         },
         {
             "id": 12,
             "code": "Aqaba",
             "name_en": "Aqaba",
             "name_ar": "العقبة",
-            "price": 3.5
+            "price": 3.5,
+            "additional": 1.5
         }
     ]
 }

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 use App\Http\Requests\Merchant\MerchantRequest;
 
-use App\Jobs\Send;
+use App\Jobs\UserEmail;
 use App\Jobs\Sms;
 use App\Models\City;
 use App\Models\Country;
@@ -56,7 +56,7 @@ class MerchantController extends Controller
         if ($user->isDirty('email')) {
             $user->is_email_verified = false;
             $user->email_verified_at = null;
-            Send::dispatch($user);
+            UserEmail::dispatch($user);
         }
 
         $user->name = $request->name;

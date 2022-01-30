@@ -12,29 +12,32 @@ class TransactionRequest extends MerchantRequest
     public function rules()
     {
         $path = Request()->route()->uri;
-        if (
-            ($this->getMethod() == 'PUT' && strpos($path, 'transactions/withdraw') !== false)
-        )
+        if (($this->getMethod() == 'PUT' && strpos($path, 'withdraw') !== false)) {
             return [
-                'amount' => 'required|numeric',
                 'payment_method_id' => 'required',
-                'source' => 'required|in:shipment,creditcard,invoice,order'
             ];
-        else if (
-            $this->getMethod() == 'PUT' && strpos($path, 'transactions/deposit') !== false
-        )
+        } else if ($this->getMethod() == 'PUT' && strpos($path, 'deposit/request') !== false) {
             return [
                 'amount' => 'required|numeric',
-                "token" => 'required|string',
+                'wallet_number' => 'required|string',
             ];
-
-        else if (
-            $this->getMethod() == 'POST' && strpos($path, 'transactions/export') !== false
-        )
+        } else if ($this->getMethod() == 'PUT' && strpos($path, 'deposit') !== false) {
+            return [
+                'amount' => 'required|numeric',
+                'wallet_number' => 'required|string',
+                'pin_code' => 'required',
+            ];
+        } else if ($this->getMethod() == 'PUT' && strpos($path, 'transfer') !== false) {
+            return [
+                'amount' => 'required|numeric',
+            ];
+        } else if ($this->getMethod() == 'POST' && strpos($path, 'export') !== false) {
             return [
                 'date' => 'required|date|date_format:Y-m-d',
-                'type' => 'in:xlsx,pdf'
+                'type' => 'in:xlsx,pdf',
             ];
+        }
+
         return [];
     }
 }

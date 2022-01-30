@@ -4,12 +4,10 @@ namespace App\Http\Middleware;
 
 use App\Exceptions\InternalException;
 use Closure;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Response;
 
 class DBTransaction
 {
@@ -27,7 +25,7 @@ class DBTransaction
 
         try {
             $response = $next($request);
-        } catch (\Exception $e) {
+        } catch (\Exception$e) {
             DB::rollBack();
             throw $e;
         }
@@ -44,11 +42,12 @@ class DBTransaction
             DB::commit();
         }
 
-        if (env('APP_ENV') == 'production' && $response->getStatusCode() == 500)
+        if (env('APP_ENV') == 'production' && $response->getStatusCode() == 500) {
             throw new InternalException('Internal Server Error - ' . App::make('request_id'), 500);
+        }
+
         return $response;
     }
-
 
     public function terminate($request, $response)
     {
@@ -57,14 +56,16 @@ class DBTransaction
             'user_id' => $request->user()->id ?? null,
             'merchant_id' => $request->user()->merchant_id ?? null,
             'token' => $request->bearerToken() ?? null,
-            'request_id' => App::make('request_id')
+            'request_id' => App::make('request_id'),
         ];
 
         $data['body'] = $request->all();
         $code = json_decode($response->getContent())->meta->code ?? null;
-        if ($code > 300 && $code < 499)
+        if ($code > 300 && $code < 499) {
             Log::debug('Shipcash Error : ', ['request' => $data, 'response' => json_decode($response->getContent())]);
-        else if ($code == 500 || $response->getStatusCode() == 500)
+        } else if ($code == 500 || $response->getStatusCode() == 500) {
             Log::error('Inernal server Error :', ['request' => $data, 'response' => json_decode($response->getContent())]);
+        }
+
     }
 }
