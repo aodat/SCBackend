@@ -31,7 +31,7 @@ class Aramex
         ];
 
         $this->setup = [
-            'sh014' => ['status' => 'DRAFT', 'delivered_at' => null, 'returned_at' => null, 'paid_at' => null],
+            'Sh014' => ['status' => 'DRAFT', 'delivered_at' => null, 'returned_at' => null, 'paid_at' => null],
             'SH005' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'SH006' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'SH069' => ['status' => 'RENTURND', 'returned_at' => Carbon::now(), 'delivered_at' => null, 'paid_at' => null],
