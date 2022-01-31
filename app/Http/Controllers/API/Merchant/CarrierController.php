@@ -24,7 +24,7 @@ class CarrierController extends MerchantController
         $carrier = $result->where('carrier_id', $carrier_id);
 
         // Check the ENV Files
-        if (!$this->check($name, $request->env)) {
+        if ($request->env !== null && !$this->check($name, $request->env)) {
             return $this->error("Invalid $name Configuration Keys", 500);
         }
 
