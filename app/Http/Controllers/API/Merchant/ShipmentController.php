@@ -214,7 +214,7 @@ class ShipmentController extends MerchantController
             $merchant->save();
             return true;
         }
-        throw new InternalException('You cannot complete the shipment process. The current balance is not enough, so please recharge your balance.', 500);
+        throw new InternalException('Your bundle balance is not enough to create shipment.', 400);
     }
 
     private function createShipmentDB($shipments, $provider)
