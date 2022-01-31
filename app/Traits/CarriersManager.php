@@ -138,7 +138,7 @@ trait CarriersManager
                 $weight_fees = (($weights_count - 1) * $extra) + $price;
                 $fees += $weight_fees;
             }
-            
+
             return $fees;
         } else {
             $express_rates = collect(Country::where('code', $this->merchantInfo['country_code'])->first());
@@ -223,7 +223,11 @@ trait CarriersManager
             $details['ChargeableWeight']
         );
 
-        $updated = $this->adapter->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
+        $updated = $this->adapter->setup[$data['UpdateCode']] ?? [];
+        
+        if (empty($updated)) {
+            return true;
+        }
 
         $actions = $updated['actions'] ?? [];
         if (isset($updated['actions'])) {
