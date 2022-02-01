@@ -5,13 +5,8 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Exceptions\InternalException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Utilities\SmsService;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-
 use App\Http\Requests\Merchant\MerchantRequest;
-
 use App\Jobs\UserEmail;
-use App\Jobs\Sms;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Merchant;
@@ -19,6 +14,8 @@ use App\Models\Pincode;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class MerchantController extends Controller
 {
@@ -75,8 +72,9 @@ class MerchantController extends Controller
     public function updatePassword(MerchantRequest $request)
     {
         $user = User::findOrFail(Auth::id());
-        if (Hash::check($request->current, $user->password) == false)
+        if (Hash::check($request->current, $user->password) == false) {
             return $this->error('Current Password Is Wrong', 400);
+        }
 
         $user->password = Hash::make($request->new);
         $user->save();
@@ -108,11 +106,12 @@ class MerchantController extends Controller
             SmsService::sendSMS($random, App::make('merchantInfo')->phone);
             PinCode::create([
                 "code" => $random,
-                'Merchant_id' =>  App::make('merchantInfo')->id,
+                'Merchant_id' => App::make('merchantInfo')->id,
                 "status" => 'active',
             ]);
-        } else
+        } else {
             throw new InternalException('Pincode Code Was Sent before 5 Min');
+        }
 
         return $this->successful('Pincode Code Was Sent');
     }
@@ -134,9 +133,11 @@ class MerchantController extends Controller
 
     public function getMerchentInfo()
     {
-        if (Request()->user() !== null)
+        if (Request()->user() !== null) {
             return Merchant::findOrFail(Request()->user()->merchant_id);
-        else
-            return Merchant::findOrFail(900); // Guest Account
+        } else {
+            return Merchant::findOrFail(900);
+        }
+        // Guest Account
     }
 }

@@ -115,7 +115,6 @@ class AuthController extends Controller
     public function forgetPassword(RecoveryRequest $request)
     {
         $response = Password::sendResetLink($request->only('email'));
-
         if ($response == Password::RESET_LINK_SENT) {
             return $this->successful('Mail send successfully');
         }
