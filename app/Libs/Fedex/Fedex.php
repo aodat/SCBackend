@@ -213,7 +213,7 @@ class Fedex
     {
 
         $curl = curl_init();
-        $ua = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/525.13 (KHTML, like Gecko) Chrome/0.A.B.C Safari/525.13';
+        $ua = 'Mozilla/5.0 (Windows NT 6.1; rv:19.0) Gecko/20100101 Firefox/19.0';
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => 'https://api.fedex.com/track/v2/shipments',
