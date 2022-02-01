@@ -6,6 +6,7 @@ use App\Exceptions\CarriersException;
 use App\Models\City;
 use App\Models\Merchant;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Http;
 use SimpleXMLElement;
 
 class Fedex
@@ -210,19 +211,69 @@ class Fedex
 
     public function trackShipment($shipment_waybills)
     {
-        $payload = $this->bindJsonFile('track.json', "TrackRequest");
-        $payload['TrackRequest']['SelectionDetails']['PackageIdentifier']['Value'] = $shipment_waybills;
 
-        $response = $this->call('TrackRequest', $payload);
+        $curl = curl_init();
 
-        if (
-            (!isset($response['v20Notifications']['Severity'])) ||
-            (isset($response['v20Notifications']['Severity']) && $response['v20Notifications']['Severity'] == 'ERROR')
-        ) {
-            throw new CarriersException('Cannot track DHL shipment');
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.fedex.com/track/v2/shipments',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+                "appDeviceType": "WTRK",
+                "appType": "WTRK",
+                "supportCurrentLocation": true,
+                "trackingInfo": [
+                    {
+                        "trackNumberInfo": {
+                            "trackingCarrier": "",
+                            "trackingNumber": "775425575357",
+                            "trackingQualifier": ""
+                        }
+                    }
+                ],
+                "uniqueKey": ""
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'authorization: Bearer l7b8ada987a4544ff7a839c8e1f6548eea',
+                'content-type: application/json',
+                'Cookie: JSESSIONID=C6CA368652300AE3470004419B7D4072; __VCAP_ID__=109d69f9-1f2c-4930-61b7-89fb; _abck=0CBC46A016D94BE2084297A90129FE60~-1~YAAQciaL1aAV53l+AQAAyhcltQcZNawun4CTC15jK7d3AuT1pAsCxmjOuaqa6vSl34Axk3zmtMeCKkkOhwOfnylK7ratpSFCzjcO0nZ2czwo+JfTEpeRIVjNa1p1Z/W+j7GrziglGBkPVgck6By2yAjkf/ytlUF2N42byyLDAlxqzOP1Jwg9+fZM1RygR3ncBgWIO7njEJ4wEgNld+BMZ07jLcZYHkwuEIOouXlhWY1opeW0BuBrpBOyWcbUayaliOuHlnC2jm3Bltud4Sz1/qlRtUTtzvNwT4ZnuP+oMyYoWMLcmNqnaTFnYHeJiKpHTE1HXVutoChTsHwSkxxQnDLJvHJ0WVjOAm6We33UjsRcXJFa43X4OzkYvO+h3dpFB4oIT0+USr0=~-1~-1~-1; bm_sz=32B4E99795381BEA87E358C610ADC0F7~YAAQciaL1YsB53l+AQAA59vbtA6Ln4fW7kX1qFxe6b4DCfI60QKgzTLcPmSCR/ibpgFWsJeBtjWXZE8R0wZEMrdBfIAK2WzsQu2PxP7rR+s1tjrPJQDFmTKz4Rb6CcFkWhXWpwwQuvfDw9yThjPycoTlLssHLxWrA/OMDIvTJ1kdrfKB3sq2SzFPcSHKQFmuKsOF/s1FV9MvKkzT6XALom+aNMV7s8f2rQjKLp/XJp0sg/BKZJv1Z9OgN6KWosxCFB6zty6o5++OxvAgT678+akAZuT0yj+77VtOPOu/Ja8PWptLreitMOn7pLYEHQF6H4MCFKa1dsZV2Q==~3486787~3294790; fdx_cbid=29869035001643715446099760011021; siteDC=edc; xacc=JO',
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
+
+        die;
+        $payload = json_decode(file_get_contents(app_path() . '/Libs/Fedex/track.json'), true);
+
+        $re = Http::withHeaders([
+            'content-type' => 'application/json',
+        ])->post('https://api.fedex.com/track/v2/shipments', $payload);
+
+        dd($re);
+
+        // $payload['trackingInfo'][0]['trackNumberInfo']['trackingNumber'] = $shipment_waybills;
+        $response = Http::withToken('l7b8ada987a4544ff7a839c8e1f6548eea')->withHeaders([
+            // 'authorization' => 'Bearer l7b8ada987a4544ff7a839c8e1f6548eea', //$this->auth(),
+            'content-type' => 'application/json',
+            // 'user-agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.99 Safari/537.36',
+            // 'Content-Length' => '397',
+        ])->post('https://api.fedex.com/track/v2/shipments', $payload);
+
+        dd($response);
+        return $response->json();
+        if ($response->successful()) {
+            return $response;
         }
 
-        return ($response);
+        return $response;
     }
 
     public function bindJsonFile($file, $type)
@@ -282,5 +333,25 @@ class Fedex
 
         $body = $xml->xpath('//SOAP-ENV:Body')[0];
         return last(json_decode(json_encode((array) $body), true));
+    }
+
+    private function auth()
+    {
+        $data = [
+            'client_id' => config('carriers.fedex.CLIENT_ID'),
+            'client_secret' => config('carriers.fedex.CLIENT_SECRET'),
+            'grant_type' => config('carriers.fedex.GRANT_TYPE'),
+            'scope' => config('carriers.fedex.SCOPE'),
+        ];
+
+        $response = Http::withHeaders([
+            'content-type' => 'application/x-www-form-urlencoded',
+        ])->post("https://api.fedex.com/auth/oauth/v2/token?" . http_build_query($data));
+
+        if ($response->successful()) {
+            return $response->json()['token_type'] . ' ' . $response->json()['access_token'];
+        }
+
+        throw new CarriersException('Fedex - Auth Server Error');
     }
 }
