@@ -209,25 +209,7 @@ trait CarriersManager
     {
         $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
 
-        $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
-
-        if (!isset($details['ChargeableWeight'])) {
-            throw new CarriersException('Chargeable Weight Is Zero');
-        }
-
-        $fees = $this->calculateFees(
-            $shipmentInfo['carrier_id'],
-            null,
-            ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
-            $shipmentInfo['group'],
-            $details['ChargeableWeight']
-        );
-
-        $updated = $this->adapter->setup[$data['UpdateCode']] ?? [];
-        
-        if (empty($updated)) {
-            return true;
-        }
+        $updated = $this->adapter->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
 
         $actions = $updated['actions'] ?? [];
         if (isset($updated['actions'])) {
@@ -264,21 +246,31 @@ trait CarriersManager
                     $merchant->bundle_balance -= $fees;
                     $merchant->save();
                 }
+            } else if ($action == 'check_chargable_weight') {
+                $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
+                $updated['chargable_weight'] = $details['ChargeableWeight'];
+                if ($shipmentInfo['actual_weight'] <= $updated['chargable_weight']) {
+
+                    $fees = $this->calculateFees(
+                        $shipmentInfo['carrier_id'],
+                        null,
+                        ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
+                        $shipmentInfo['group'],
+                        $details['ChargeableWeight']
+                    );
+                    $updated['fees'] = $fees;
+
+                    $logs = collect($shipmentInfo->admin_logs);
+
+                    $updated['admin_logs'] = $logs->merge([[
+                        'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'UpdateLocation' => '',
+                        'UpdateDescription' => 'Update Shipment Weight From ' . $shipmentInfo['actual_weight'] . ' To ' . $updated['chargable_weight'],
+
+                    ]]);
+                }
             }
         }
-
-        $logs = collect($shipmentInfo->logs);
-
-        $updated['chargable_weight'] = $details['ChargeableWeight'];
-        $updated['fees'] = $fees;
-        $updated['logs'] = $logs->merge([[
-            'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
-            'UpdateLocation' => $data['Comment1'],
-            'Code' => $data['UpdateCode'] ?? 'N/A',
-            'TrackingDescription' => $details['UpdateDescription'] ?? '',
-            'UpdateDescription' => $updated['status'],
-        ]]);
-
         $shipmentInfo->update($updated);
         return true;
     }

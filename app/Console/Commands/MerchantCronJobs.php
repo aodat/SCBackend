@@ -20,7 +20,7 @@ class MerchantCronJobs extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Cancel Pickup';
 
     /**
      * Create a new command instance.
