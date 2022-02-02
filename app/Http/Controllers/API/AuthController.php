@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\RecoveryRequest;
-use App\Jobs\UserEmail;
 use App\Models\Merchant;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
@@ -85,8 +84,7 @@ class AuthController extends Controller
         );
         $merchant->update(["secret_key" => $client->secret]);
 
-        UserEmail::dispatch($user);
-
+        $user->sendEmailVerificationNotification();
         return $this->successful('User Created Successfully');
     }
 
@@ -169,7 +167,7 @@ class AuthController extends Controller
             return $this->error('Email already verified.', 400);
         }
 
-        UserEmail::dispatch(auth()->user());
+        auth()->user()->sendEmailVerificationNotification();
         return $this->successful('Check your email');
     }
 
