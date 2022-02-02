@@ -14,7 +14,7 @@ class AddRenameCol2Table extends Migration
     public function up()
     {
         Schema::table('shipments', function (Blueprint $table) {
-            $table->string('last_update')->after('shipment_logs');
+            $table->string('last_update')->nullable()->after('shipment_logs');
             $table->renameColumn('shipment_logs', 'shipping_logs');
         });
     }
