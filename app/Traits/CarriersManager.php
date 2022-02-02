@@ -7,6 +7,7 @@ use App\Http\Controllers\Utilities\InvoiceService;
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Merchant;
+use App\Models\Shipment;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -210,15 +211,16 @@ trait CarriersManager
 
     public function webhook($shipmentInfo, $data)
     {
-        $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
+        $this->loadProvider($shipmentInfo->carrier_name, [], false);
 
         $updated = $this->adapter->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
+        $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
 
         $actions = $updated['actions'] ?? [];
         if (isset($updated['actions'])) {
             unset($updated['actions']);
         }
-        
+
         if (!empty($actions)) {
             $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
             $fees = $this->calculateFees(
@@ -235,7 +237,7 @@ trait CarriersManager
                 $transaction = Transaction::create(
                     [
                         'type' => 'CASHIN',
-                        'type' => 'COD',
+                        'subtype' => 'COD',
                         'item_id' => $shipmentInfo['id'],
                         'merchant_id' => $shipmentInfo['merchant_id'],
                         'source' => 'SHIPMENT',
@@ -277,7 +279,10 @@ trait CarriersManager
                 }
             }
         }
-        $shipmentInfo->update($updated);
+        
+        Shipment::withoutGlobalScope('ancient')
+            ->where('external_awb', $shipmentInfo['external_awb'])
+            ->update($updated);
         return true;
     }
 }

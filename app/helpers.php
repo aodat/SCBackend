@@ -48,40 +48,44 @@ if (!function_exists('generateMessageID')) {
     }
 }
 
-function mergePDF($files)
-{
-    $pdfMerger = PDFMerger::init();
+if (!function_exists('mergePDF')) {
+    function mergePDF($files)
+    {
+        $pdfMerger = PDFMerger::init();
 
-    $folder = time();
-    $quotes = $folder . '/quotes.pdf';
-    Storage::disk('local')->put($quotes, '');
+        $folder = time();
+        $quotes = $folder . '/quotes.pdf';
+        Storage::disk('local')->put($quotes, '');
 
-    foreach ($files as $file) {
-        $file = str_replace("https://shipcashcdn.s3.amazonaws.com/", '', $file);
-        $path = $folder . '/' . Str::uuid() . '.pdf';
-        Storage::disk('local')->put(
-            $path,
-            Storage::disk('s3')->get($file)
+        foreach ($files as $file) {
+            $file = str_replace("https://shipcashcdn.s3.amazonaws.com/", '', $file);
+            $path = $folder . '/' . Str::uuid() . '.pdf';
+            Storage::disk('local')->put(
+                $path,
+                Storage::disk('s3')->get($file)
+            );
+
+            $pdfMerger->addPDF(Storage::path($path), 'all', 'P');
+        }
+
+        $pdfMerger->merge();
+        $export = 'export/' . md5(time()) . '.pdf';
+        Storage::disk('s3')->put(
+            $export,
+            $pdfMerger->save(Storage::path($quotes), "string")
         );
 
-        $pdfMerger->addPDF(Storage::path($path), 'all', 'P');
+        Storage::deleteDirectory($folder);
+        return Storage::disk('s3')->url($export);
     }
-
-    $pdfMerger->merge();
-    $export = 'export/' . md5(time()) . '.pdf';
-    Storage::disk('s3')->put(
-        $export,
-        $pdfMerger->save(Storage::path($quotes), "string")
-    );
-
-    Storage::deleteDirectory($folder);
-    return Storage::disk('s3')->url($export);
 }
 
-function exportXLSX($data, $path, $disk = 's3')
-{
-    Excel::store($data, $path, $disk);
-    return Storage::disk('s3')->url($path);
+if (!function_exists('mergePDF')) {
+    function exportXLSX($data, $path, $disk = 's3')
+    {
+        Excel::store($data, $path, $disk);
+        return Storage::disk('s3')->url($path);
+    }
 }
 
 function randomNumber($length = 16)
