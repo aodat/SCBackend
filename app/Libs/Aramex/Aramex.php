@@ -31,9 +31,9 @@ class Aramex
         ];
 
         $this->setup = [
-            'sh014' => ['status' => 'DRAFT', 'delivered_at' => null, 'returned_at' => null, 'paid_at' => null],
-            'SH005' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
-            'SH006' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
+            'Sh014' => ['status' => 'DRAFT', 'delivered_at' => null, 'returned_at' => null, 'paid_at' => null],
+            'SH005' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null, 'actions' => ['check_chargable_weight']],
+            'SH006' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null, 'actions' => ['check_chargable_weight']],
             'SH069' => ['status' => 'RENTURND', 'returned_at' => Carbon::now(), 'delivered_at' => null, 'paid_at' => null],
             'SH239' => ['status' => 'COMPLETED', 'paid_at' => Carbon::now(), 'delivered_at' => Carbon::now(), 'returned_at' => null, 'actions' => ['create_transaction', 'update_merchant_balance']],
         ];
@@ -167,8 +167,9 @@ class Aramex
 
         $response = Http::post(self::$CREATE_SHIPMENTS_URL, $payload);
 
-        if($checkAuth)
+        if ($checkAuth) {
             return $response->successful();
+        }
 
         if (!$response->successful()) {
             throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $response->json());
@@ -290,7 +291,7 @@ class Aramex
         }
 
         if ($all_event) {
-            return $response['TrackingResults'][0]['Value'];
+            return $result;
         } else if (count($awb) == 1) {
             return last($response['TrackingResults'][0]['Value']);
         }

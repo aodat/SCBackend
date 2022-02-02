@@ -25,7 +25,7 @@ class CarrierController extends MerchantController
 
         // Check the ENV Files
         if ($request->env !== null && !$this->check($name, $request->env)) {
-            return $this->error("Invalid $name Configuration Keys", 500);
+            return $this->error("Invalid $name Configuration Keys", 400);
         }
 
         if ($carrier->count() == 0) {

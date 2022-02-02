@@ -163,3 +163,16 @@ function XMLToArray($xml)
     // One function to both clean the XML string and return an array
     return json_decode(json_encode(simplexml_load_string(removeNamespaceFromXML($xml))), true);
 }
+
+function get_string_between($string, $start, $end)
+{
+    $string = ' ' . $string;
+    $ini = strpos($string, $start);
+    if ($ini == 0) {
+        return '';
+    }
+
+    $ini += strlen($start);
+    $len = strpos($string, $end, $ini) - $ini;
+    return substr($string, $ini, $len);
+}

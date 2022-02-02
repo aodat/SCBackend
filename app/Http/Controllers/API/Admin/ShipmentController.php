@@ -107,7 +107,7 @@ class ShipmentController extends Controller
         }
 
         $shipmentInfo->cod = $request->amount;
-        $shipmentInfo->logs = collect($shipmentInfo->logs)->merge([[
+        $shipmentInfo->admin_logs = collect($shipmentInfo->admin_logs)->merge([[
             'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
             'UpdateLocation' => '',
             'UpdateDescription' => 'Update COD Value From ' . $shipmentInfo->cod . ' To ' . $request->amount,

@@ -2,15 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Builder;
+use App\Jobs\UserEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-
-use App\Notifications\MailResetPasswordNotification as MailResetPasswordNotification;
-
 
 class User extends Authenticatable
 {
@@ -30,7 +25,7 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-        'is_email_verified', 'is_phone_verified', 'email_verified_at', 'phone_verified_at'
+        'is_email_verified', 'is_phone_verified', 'email_verified_at', 'phone_verified_at',
     ];
 
     /**
@@ -40,12 +35,12 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'is_owner' => 'boolean'
+        'is_owner' => 'boolean',
     ];
 
     public function sendPasswordResetNotification($token)
     {
-        $this->notify(new MailResetPasswordNotification($token));
+        UserEmail::dispatch($this, 'reset_password', $token);
     }
 
     public function merchant()

@@ -2,25 +2,25 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Pickup;
-use Carbon\Carbon;
+use App\Jobs\AramexTracking as JobsAramexTracking;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\DB;
 
-class MerchantCronJobs extends Command
+class AramexTracking extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'merchant:cron';
+    protected $signature = 'aramex-tracking:cron';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Cancel Pickup';
+    protected $description = 'Aramex Tracking';
 
     /**
      * Create a new command instance.
@@ -39,8 +39,12 @@ class MerchantCronJobs extends Command
      */
     public function handle()
     {
-        Pickup::whereDate('pickup_date', '<=', Carbon::today())->update(['status' => 'DONE']);
-        Pickup::whereNotNull('cancel_ref')->update(['status' => 'CANCELD']);
-        return Command::SUCCESS;
+        $lists = DB::table('shipments')->where('carrier_id', 1)
+            ->where('status', 'PROCESSING')
+            ->pluck('external_awb');
+        $lists->map(function ($external_awb) {
+            JobsAramexTracking::dispatch($external_awb);
+        });
+        return true;
     }
 }

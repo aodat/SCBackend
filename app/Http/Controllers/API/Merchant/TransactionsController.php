@@ -185,7 +185,7 @@ class TransactionsController extends MerchantController
 
             return $this->successful('The Amount Transferred Successfully');
         }
-        return $this->error('The COD Balance Is Not Enough', 500);
+        return $this->error('The COD Balance Is Not Enough', 400);
     }
 
     public function export(TransactionRequest $request)
