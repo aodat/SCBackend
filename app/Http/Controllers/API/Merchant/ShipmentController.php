@@ -309,11 +309,9 @@ class ShipmentController extends MerchantController
 
     public function hook(ShipmentRequest $request)
     {
-        $shipment = Shipment::withoutGlobalScope('ancient')
-            ->where('external_awb', $request->WaybillNumber)
-            ->exists();
-
-        ShipmentWebHooks::dispatchIf($shipment, $request->json()->all());
+        $shipmentInfo = Shipment::withoutGlobalScope('ancient')->where('external_awb', $request->WaybillNumber)->first();
+        $this->webhook($shipmentInfo, $request->all());
+    
         return $this->successful('Webhook Completed');
     }
 
@@ -411,5 +409,31 @@ class ShipmentController extends MerchantController
         $data->save();
 
         return $this->successful('Shipment Deleted Successfully');
+    }
+
+    public function aramexTracking(ShipmentRequest $request)
+    {
+        $lists = DB::table('shipments')->where('carrier_id', 1)
+            ->where('status', 'PROCESSING')
+            ->pluck('external_awb');
+        $lists->map(function ($external_awb) {
+            $result = collect($this->track('Aramex', [$external_awb], true));
+            $result->map(function ($info) use ($external_awb) {
+                $shipmentInfo = $info['Value'];
+                $new = [];
+                foreach ($shipmentInfo as $key => $value) {
+                    $time = get_string_between($value['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
+                    $new[] = [
+                        'UpdateDateTime' => Carbon::parse($time)->format('Y-m-d H:i:s'),
+                        'UpdateLocation' => $value['UpdateLocation'],
+                        'UpdateDescription' => $value['Comments'],
+                        'TrackingDescription' => $value['UpdateDescription'],
+                    ];
+                }
+                Shipment::withoutGlobalScope('ancient')->where('external_awb', $external_awb)->update(['shipment_logs' => collect($new)]);
+            });
+        });
+
+        return $this->successful('Track Shipment Completed Sucessfully');
     }
 }
