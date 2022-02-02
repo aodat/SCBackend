@@ -49,7 +49,10 @@ class AramexTracking extends Command
             $result = collect($this->track('Aramex', [$external_awb], true));
             $result->map(function ($info) use ($external_awb) {
                 $shipmentInfo = $info['Value'];
+
                 $new = [];
+                $last_update = $shipmentInfo[0]['Comments'] ?? '';
+
                 foreach ($shipmentInfo as $key => $value) {
                     $time = get_string_between($value['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
                     $new[] = [
@@ -59,7 +62,13 @@ class AramexTracking extends Command
                         'TrackingDescription' => $value['UpdateDescription'],
                     ];
                 }
-                Shipment::withoutGlobalScope('ancient')->where('external_awb', $external_awb)->update(['shipment_logs' => collect($new)]);
+
+                Shipment::withoutGlobalScope('ancient')
+                    ->where('external_awb', $external_awb)
+                    ->update([
+                        'shipping_logs' => collect($new),
+                        'last_update' => $last_update,
+                    ]);
             });
         });
         return Command::SUCCESS;

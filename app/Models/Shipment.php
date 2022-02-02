@@ -14,7 +14,7 @@ class Shipment extends Model
     protected $appends = ['carrier_name', 'generator_name', 'payment_link'];
 
     protected $casts = [
-        'shipment_logs' => 'array',
+        'shipping_logs' => 'array',
         'admin_logs' => 'array',
         'is_doc' => 'boolean',
         'is_deleted' => 'boolean',

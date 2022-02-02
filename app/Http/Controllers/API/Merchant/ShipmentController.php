@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Exceptions\InternalException;
 use App\Exports\ShipmentExport;
 use App\Http\Requests\Merchant\ShipmentRequest;
-use App\Jobs\ShipmentWebHooks;
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Invoices;
@@ -122,7 +121,8 @@ class ShipmentController extends MerchantController
             's.cod',
             's.delivered_at',
             's.pieces',
-            's.content'
+            's.content',
+            's.last_update'
         );
 
         return $shipments;
@@ -311,7 +311,7 @@ class ShipmentController extends MerchantController
     {
         $shipmentInfo = Shipment::withoutGlobalScope('ancient')->where('external_awb', $request->WaybillNumber)->first();
         $this->webhook($shipmentInfo, $request->all());
-    
+
         return $this->successful('Webhook Completed');
     }
 
@@ -370,7 +370,7 @@ class ShipmentController extends MerchantController
 
         $shipment['merchant_id'] = 900;
         $shipment['created_by'] = 900;
-        $shipment['shipment_logs'] = collect([
+        $shipment['shipping_logs'] = collect([
             [
                 'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
                 'UpdateLocation' => $shipment['consignee_address_description'] ?: '',

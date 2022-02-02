@@ -47,7 +47,7 @@ class AramexTracking implements ShouldQueue
                     'TrackingDescription' => $value['UpdateDescription'],
                 ];
             }
-            Shipment::withoutGlobalScope('ancient')->where('external_awb', $this->external_awb)->update(['shipment_logs' => collect($new)]);
+            Shipment::withoutGlobalScope('ancient')->where('external_awb', $this->external_awb)->update(['shipping_logs' => collect($new)]);
         });
 
         return true;
