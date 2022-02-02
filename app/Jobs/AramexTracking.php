@@ -10,7 +10,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 
 class AramexTracking implements ShouldQueue
 {
@@ -40,7 +39,7 @@ class AramexTracking implements ShouldQueue
             $shipmentInfo = $info['Value'];
             $new = [];
             foreach ($shipmentInfo as $key => $value) {
-                $time = get_string_between($value['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
+                $time = $this->get_string_between($value['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
                 $new[] = [
                     'UpdateDateTime' => Carbon::parse($time)->format('Y-m-d H:i:s'),
                     'UpdateLocation' => $value['UpdateLocation'],
@@ -53,4 +52,18 @@ class AramexTracking implements ShouldQueue
 
         return true;
     }
+
+    public function get_string_between($string, $start, $end)
+    {
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) {
+            return '';
+        }
+
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+    }
+
 }
