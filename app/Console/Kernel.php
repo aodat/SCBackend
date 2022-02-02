@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Jobs\AramexTracking;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\MerchantCronJobs::class
+        Commands\MerchantCronJobs::class,
+        Commands\AramexTracking::class
     ];
 
     /**
@@ -26,7 +26,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('merchant:cron')->daily();
-        $schedule->job(new AramexTracking())->everyMinute(); // everyThirtyMinutes();
+        $schedule->command('aramex-tracking:cron')->everyMinute();  // everyThirtyMinutes();
     }
 
     /**

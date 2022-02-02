@@ -20,11 +20,11 @@ trait CarriersManager
 {
     public $adapter;
     private $merchantInfo;
-    public function loadProvider($provider, $settings = array())
+    public function loadProvider($provider, $settings = array(), $getMerchant = true)
     {
         $provider = strtoupper($provider);
         if (empty($settings)) {
-            $settings = Carriers::where('id', 3)->first()->env ?? null;
+            $settings = Carriers::where('name', $provider)->first()->env ?? null;
         }
 
         switch ($provider) {
@@ -41,7 +41,10 @@ trait CarriersManager
                 throw new CarriersException('Invalid Provider');
         }
 
-        $this->merchantInfo = $this->getMerchantInfo();
+        if ($getMerchant) {
+            $this->merchantInfo = $this->getMerchantInfo();
+        }
+
     }
 
     public function getMerchantInfo()
@@ -108,7 +111,7 @@ trait CarriersManager
 
     public function track($provider, $shipments_number, $all = false)
     {
-        $this->loadProvider($provider);
+        $this->loadProvider($provider, [], false);
         return $this->adapter->trackShipment($shipments_number, $all);
     }
 
@@ -215,6 +218,17 @@ trait CarriersManager
         if (isset($updated['actions'])) {
             unset($updated['actions']);
         }
+        
+        if (!empty($actions)) {
+            $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
+            $fees = $this->calculateFees(
+                $shipmentInfo['carrier_id'],
+                null,
+                ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
+                $shipmentInfo['group'],
+                $details['ChargeableWeight']
+            );
+        }
 
         foreach ($actions as $action) {
             if ($action == 'create_transaction') {
@@ -247,17 +261,9 @@ trait CarriersManager
                     $merchant->save();
                 }
             } else if ($action == 'check_chargable_weight') {
-                $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
                 $updated['chargable_weight'] = $details['ChargeableWeight'];
                 if ($shipmentInfo['actual_weight'] <= $updated['chargable_weight']) {
 
-                    $fees = $this->calculateFees(
-                        $shipmentInfo['carrier_id'],
-                        null,
-                        ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
-                        $shipmentInfo['group'],
-                        $details['ChargeableWeight']
-                    );
                     $updated['fees'] = $fees;
 
                     $logs = collect($shipmentInfo->admin_logs);

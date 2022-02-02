@@ -291,7 +291,7 @@ class Aramex
         }
 
         if ($all_event) {
-            return $response['TrackingResults'][0]['Value'];
+            return $result;
         } else if (count($awb) == 1) {
             return last($response['TrackingResults'][0]['Value']);
         }
