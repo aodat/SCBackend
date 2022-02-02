@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Http\Controllers\Utilities\SmsService;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -13,18 +12,17 @@ use Illuminate\Queue\SerializesModels;
 class Sms implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    protected $phone;
-    protected $randomPinCode;
+    protected $phone, $code;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct($randomPinCode, $phone)
+    public function __construct($code, $phone)
     {
         //
         $this->phone = $phone;
-        $this->randomPinCode = $randomPinCode;
+        $this->code = $code;
     }
 
     /**
@@ -34,7 +32,6 @@ class Sms implements ShouldQueue
      */
     public function handle()
     {
-        //
-        SmsService::sendSMS($this->randomPinCode, $this->phone);
+        SmsService::sendSMS($this->code, $this->phone);
     }
 }

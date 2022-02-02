@@ -219,7 +219,7 @@ class Fedex
             (!isset($response['v20Notifications']['Severity'])) ||
             (isset($response['v20Notifications']['Severity']) && $response['v20Notifications']['Severity'] == 'ERROR')
         ) {
-            throw new CarriersException('Cannot track DHL shipment');
+            throw new CarriersException('Cannot track Fedex shipment');
         }
 
         return ($response);

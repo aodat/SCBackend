@@ -20,11 +20,11 @@ trait CarriersManager
 {
     public $adapter;
     private $merchantInfo;
-    public function loadProvider($provider, $settings = array())
+    public function loadProvider($provider, $settings = array(), $getMerchant = true)
     {
         $provider = strtoupper($provider);
         if (empty($settings)) {
-            $settings = Carriers::where('id', 3)->first()->env ?? null;
+            $settings = Carriers::where('name', $provider)->first()->env ?? null;
         }
 
         switch ($provider) {
@@ -41,7 +41,10 @@ trait CarriersManager
                 throw new CarriersException('Invalid Provider');
         }
 
-        $this->merchantInfo = $this->getMerchantInfo();
+        if ($getMerchant) {
+            $this->merchantInfo = $this->getMerchantInfo();
+        }
+
     }
 
     public function getMerchantInfo()
@@ -108,7 +111,7 @@ trait CarriersManager
 
     public function track($provider, $shipments_number, $all = false)
     {
-        $this->loadProvider($provider);
+        $this->loadProvider($provider, [], false);
         return $this->adapter->trackShipment($shipments_number, $all);
     }
 
@@ -209,29 +212,22 @@ trait CarriersManager
     {
         $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
 
-        $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
-
-        if (!isset($details['ChargeableWeight'])) {
-            throw new CarriersException('Chargeable Weight Is Zero');
-        }
-
-        $fees = $this->calculateFees(
-            $shipmentInfo['carrier_id'],
-            null,
-            ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
-            $shipmentInfo['group'],
-            $details['ChargeableWeight']
-        );
-
-        $updated = $this->adapter->setup[$data['UpdateCode']] ?? [];
-        
-        if (empty($updated)) {
-            return true;
-        }
+        $updated = $this->adapter->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
 
         $actions = $updated['actions'] ?? [];
         if (isset($updated['actions'])) {
             unset($updated['actions']);
+        }
+        
+        if (!empty($actions)) {
+            $details = $this->track($shipmentInfo['carrier_name'], $shipmentInfo['external_awb']) ?? null;
+            $fees = $this->calculateFees(
+                $shipmentInfo['carrier_id'],
+                null,
+                ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
+                $shipmentInfo['group'],
+                $details['ChargeableWeight']
+            );
         }
 
         foreach ($actions as $action) {
@@ -264,21 +260,23 @@ trait CarriersManager
                     $merchant->bundle_balance -= $fees;
                     $merchant->save();
                 }
+            } else if ($action == 'check_chargable_weight') {
+                $updated['chargable_weight'] = $details['ChargeableWeight'];
+                if ($shipmentInfo['actual_weight'] <= $updated['chargable_weight']) {
+
+                    $updated['fees'] = $fees;
+
+                    $logs = collect($shipmentInfo->admin_logs);
+
+                    $updated['admin_logs'] = $logs->merge([[
+                        'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'UpdateLocation' => '',
+                        'UpdateDescription' => 'Update Shipment Weight From ' . $shipmentInfo['actual_weight'] . ' To ' . $updated['chargable_weight'],
+
+                    ]]);
+                }
             }
         }
-
-        $logs = collect($shipmentInfo->logs);
-
-        $updated['chargable_weight'] = $details['ChargeableWeight'];
-        $updated['fees'] = $fees;
-        $updated['logs'] = $logs->merge([[
-            'UpdateDateTime' => Carbon::parse($data['UpdateDateTime'])->format('Y-m-d H:i:s'),
-            'UpdateLocation' => $data['Comment1'],
-            'Code' => $data['UpdateCode'] ?? 'N/A',
-            'TrackingDescription' => $details['UpdateDescription'] ?? '',
-            'UpdateDescription' => $updated['status'],
-        ]]);
-
         $shipmentInfo->update($updated);
         return true;
     }
