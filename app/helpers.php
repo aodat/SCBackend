@@ -80,10 +80,12 @@ if (!function_exists('mergePDF')) {
     }
 }
 
-function exportXLSX($data, $path, $disk = 's3')
-{
-    Excel::store($data, $path, $disk);
-    return Storage::disk('s3')->url($path);
+if (!function_exists('mergePDF')) {
+    function exportXLSX($data, $path, $disk = 's3')
+    {
+        Excel::store($data, $path, $disk);
+        return Storage::disk('s3')->url($path);
+    }
 }
 
 function randomNumber($length = 16)
