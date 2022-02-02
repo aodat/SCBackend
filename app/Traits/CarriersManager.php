@@ -122,12 +122,19 @@ trait CarriersManager
     public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
     {
         $this->merchantInfo = $this->getMerchantInfo();
+        $to = str_replace("'", "", $to);
         if ($type == 'domestic' || $type == 'DOM') {
+
             if (!isset($this->merchantInfo['domestic_rates'][$carrier_id])) {
                 throw new CarriersException('The Carrier ID ' . $carrier_id . ' No Support domestic , Please Contact Administrators');
             }
 
-            $rate = collect($this->merchantInfo['domestic_rates'][$carrier_id])->where('code', $to);
+            $data = array_map(function ($value) {
+                return str_replace("'", "", $value);
+            }, $this->merchantInfo['domestic_rates'][$carrier_id]);
+
+
+            $rate = collect($data)->where('code', $to);
 
             if ($rate->isEmpty()) {
                 throw new CarriersException('Country Code Not Exists, Please Contact Administrators');
@@ -142,7 +149,6 @@ trait CarriersManager
                 $weight_fees = (($weights_count - 1) * $extra) + $price;
                 $fees += $weight_fees;
             }
-
             return $fees;
         } else {
             $express_rates = collect(Country::where('code', $this->merchantInfo['country_code'])->first());
@@ -279,7 +285,7 @@ trait CarriersManager
                 }
             }
         }
-        
+
         Shipment::withoutGlobalScope('ancient')
             ->where('external_awb', $shipmentInfo['external_awb'])
             ->update($updated);
