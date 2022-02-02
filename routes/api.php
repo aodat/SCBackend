@@ -14,7 +14,9 @@ use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\API\TeamController;
 use App\Http\Controllers\Controller;
+
 use Illuminate\Support\Facades\Route;
+use Libs\Aramex;
 
 /*
 |--------------------------------------------------------------------------
@@ -145,7 +147,8 @@ Route::group(['middleware' => ['json.response','db.row']], function () {
 
         Route::post('auth/logout', [AuthController::class, 'logout']);
     });
-    Route::post('shipment/webhook', [ShipmentController::class, 'hook']);
+    
+    Route::post('aramex-webhook', [Aramex::class, 'webhook']);
     Route::get('process/stripe', [InvoiceController::class, 'stripeProcessSQS']);
 });
 Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');

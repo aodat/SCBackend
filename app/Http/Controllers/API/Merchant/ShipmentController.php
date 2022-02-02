@@ -307,14 +307,6 @@ class ShipmentController extends MerchantController
         );
     }
 
-    public function hook(ShipmentRequest $request)
-    {
-        $shipmentInfo = Shipment::withoutGlobalScope('ancient')->where('external_awb', $request->WaybillNumber)->first();
-        $this->webhook($shipmentInfo, $request->all());
-
-        return $this->successful('Webhook Completed');
-    }
-
     public function calculate(ShipmentRequest $request)
     {
         $data = $request->validated();
@@ -410,4 +402,100 @@ class ShipmentController extends MerchantController
 
         return $this->successful('Shipment Deleted Successfully');
     }
+
+    public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
+    {
+        $merchentInfo = $this->getMerchentInfo();
+        $to = str_replace("'", "", $to);
+        if ($type == 'domestic' || $type == 'DOM') {
+
+            if (!isset($merchentInfo['domestic_rates'][$carrier_id])) {
+                throw new InternalException('The Carrier ID ' . $carrier_id . ' No Support domestic , Please Contact Administrators');
+            }
+
+            $data = array_map(function ($value) {
+                return str_replace("'", "", $value);
+            }, $merchentInfo['domestic_rates'][$carrier_id]);
+
+            $rate = collect($data)->where('code', $to);
+
+            if ($rate->isEmpty()) {
+                throw new InternalException('Country Code Not Exists, Please Contact Administrators');
+            }
+
+            $price = $rate->first()['price'];
+            $extra = $rate->first()['additional'] ?? 1.5;
+
+            $fees = 0;
+            if ($weight > 0) {
+                $weights_count = ceil($weight / 10);
+                $weight_fees = (($weights_count - 1) * $extra) + $price;
+                $fees += $weight_fees;
+            }
+            return $fees;
+        } else {
+            $express_rates = collect(Country::where('code', $merchentInfo['country_code'])->first());
+            if ($express_rates->isEmpty()) {
+                throw new InternalException('Country Code Not Exists, Please Contact Administrators');
+            }
+
+            $express_rates = $express_rates['rates'];
+            if (count($express_rates) == 0) {
+                throw new InternalException('No Setup Added To This Country, Please Contact Administrators');
+            }
+
+            if (!isset($express_rates[$to])) {
+                throw new InternalException('No Setup Added To This Country, Please Contact Administrators');
+            }
+
+            $rates = collect($express_rates[$to]);
+            $zones = $rates->where('carrier_id', $carrier_id);
+
+            if ($zones->count() > 1) {
+                throw new InternalException('Somthing Wrong On Rates Setup, Please Contact Administrators');
+            }
+
+            if (!isset($zones->first()['zone_id'])) {
+                throw new InternalException('Somthing Wrong On Zone ID Setup, Please Contact Administrators');
+            }
+
+            $zone_id = $zones->first()['zone_id'];
+            $discounts = $merchentInfo['express_rates'][$carrier_id]['discounts'] ?? [];
+
+            $zoneRates = collect($merchentInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id);
+            if ($zoneRates->count() > 1) {
+                throw new InternalException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
+            }
+
+            $zoneRates = $zoneRates->first();
+            if ($zoneRates == null) {
+                return 0;
+            }
+
+            $base = $zoneRates['basic'];
+            $additional = $zoneRates['additional'];
+            if (!empty($discounts)) {
+                foreach ($discounts as $key => $value) {
+                    if (eval("return " . $weight . $value['condintion'] . $value['weight'] . ";")) {
+                        $additional = $additional - ($additional * $value['percent']);
+                    }
+
+                }
+            }
+
+            $fees = 0;
+            if ($weight > 0) {
+                $weights_count = ceil($weight / 0.5);
+                $weight_fees = (($weights_count - 1) * $additional) + $base;
+                $fees += $weight_fees;
+            }
+        }
+
+        if ($fees == 0) {
+            throw new InternalException('Fees Equal Zero');
+        }
+
+        return $fees;
+    }
+
 }
