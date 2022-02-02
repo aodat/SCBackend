@@ -3,12 +3,14 @@
 namespace App\Console\Commands;
 
 use App\Models\Shipment;
+use App\Traits\CarriersManager;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
 class AramexTracking extends Command
 {
+    use CarriersManager;
     /**
      * The name and signature of the console command.
      *
