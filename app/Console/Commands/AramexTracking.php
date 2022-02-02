@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\AramexTracking as JobsAramexTracking;
+use App\Models\Shipment;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -43,8 +44,22 @@ class AramexTracking extends Command
             ->where('status', 'PROCESSING')
             ->pluck('external_awb');
         $lists->map(function ($external_awb) {
-            JobsAramexTracking::dispatch($external_awb);
+            $result = collect($this->track('Aramex', [$external_awb], true));
+            $result->map(function ($info) use ($external_awb) {
+                $shipmentInfo = $info['Value'];
+                $new = [];
+                foreach ($shipmentInfo as $key => $value) {
+                    $time = get_string_between($value['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
+                    $new[] = [
+                        'UpdateDateTime' => Carbon::parse($time)->format('Y-m-d H:i:s'),
+                        'UpdateLocation' => $value['UpdateLocation'],
+                        'UpdateDescription' => $value['Comments'],
+                        'TrackingDescription' => $value['UpdateDescription'],
+                    ];
+                }
+                Shipment::withoutGlobalScope('ancient')->where('external_awb', $external_awb)->update(['shipment_logs' => collect($new)]);
+            });
         });
-        return true;
+        return Command::SUCCESS;
     }
 }

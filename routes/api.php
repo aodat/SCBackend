@@ -147,8 +147,5 @@ Route::group(['middleware' => ['json.response','db.row']], function () {
     });
     Route::post('shipment/webhook', [ShipmentController::class, 'hook']);
     Route::get('process/stripe', [InvoiceController::class, 'stripeProcessSQS']);
-
-
-    Route::get('aramex/tracking',[ShipmentController::class,'aramexTracking']);
 });
 Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');
