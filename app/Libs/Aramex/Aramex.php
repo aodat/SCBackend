@@ -16,7 +16,7 @@ class Aramex
     private static $TRACK_SHIPMENTS_URL = 'https://ws.aramex.net/ShippingAPI.V2/Tracking/Service_1_0.svc/json/TrackShipments';
 
     private $config;
-
+    public $setup;
     public function __construct($settings = null)
     {
         $this->config = [
