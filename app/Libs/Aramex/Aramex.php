@@ -4,20 +4,21 @@ namespace Libs;
 
 use App\Exceptions\CarriersException;
 use App\Http\Controllers\API\Merchant\ShipmentController;
+use App\Http\Controllers\Utilities\AWSServices;
 use App\Http\Requests\Carrier\AramexRequest;
 use App\Models\City;
 use App\Models\Merchant;
 use App\Models\Shipment;
 use App\Models\Transaction;
+use App\Traits\ResponseHandler;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-use App\Traits\ResponseHandler;
 
 class Aramex
 {
     use ResponseHandler;
-    
+
     private static $CREATE_PICKUP_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CreatePickup';
     private static $CANCEL_PICKUP_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CancelPickup';
     private static $PRINT_LABEL_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/PrintLabel';
@@ -191,7 +192,7 @@ class Aramex
         foreach ($response->json()['Shipments'] as $ship) {
             $result[] = [
                 'id' => $ship['ID'],
-                'file' => uploadFiles('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true),
+                'file' => AWSServices::uploadToS3('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true),
             ];
         }
         return $result;
@@ -319,7 +320,7 @@ class Aramex
         if (isset($updated['actions'])) {
             unset($updated['actions']);
         }
-        
+
         if (!empty($actions)) {
             $details = $this->trackShipment($shipmentInfo['external_awb']) ?? null;
             $fees = (new ShipmentController)->calculateFees(

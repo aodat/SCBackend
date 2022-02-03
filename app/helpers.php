@@ -1,30 +1,11 @@
 <?php
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use LynX39\LaraPdfMerger\Facades\PdfMerger;
 use Maatwebsite\Excel\Facades\Excel as Excel;
 use Mpdf\Mpdf;
-
-if (!function_exists('uploadFiles')) {
-    function uploadFiles($folder, $file, $type = '', $isOutput = false)
-    {
-        $path = $folder . "/" . md5(Carbon::now());
-        if (!$isOutput) {
-            $path .= $file->getClientOriginalExtension();
-            $data = file_get_contents($file);
-        } else {
-            $data = $file;
-            $path .= ".$type";
-        }
-
-        Storage::disk('s3')->put($path, $data);
-
-        return Storage::disk('s3')->url($path);
-    }
-}
 
 if (!function_exists('exportPDF')) {
     function exportPDF($view, $path, $data)

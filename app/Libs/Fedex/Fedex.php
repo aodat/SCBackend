@@ -3,6 +3,7 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Http\Controllers\Utilities\AWSServices;
 use App\Models\City;
 use App\Models\Merchant;
 use Carbon\Carbon;
@@ -204,7 +205,7 @@ class Fedex
 
         return [
             'id' => $response['CompletedShipmentDetail']['CompletedPackageDetails']['TrackingIds']['TrackingNumber'],
-            'file' => uploadFiles('fedex/shipment', base64_decode($response['CompletedShipmentDetail']['CompletedPackageDetails']['Label']['Parts']['Image']), 'pdf', true),
+            'file' => AWSServices::uploadToS3('fedex/shipment', base64_decode($response['CompletedShipmentDetail']['CompletedPackageDetails']['Label']['Parts']['Image']), 'pdf', true),
         ];
     }
 

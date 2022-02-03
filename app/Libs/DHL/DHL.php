@@ -3,6 +3,7 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Http\Controllers\Utilities\AWSServices;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use SimpleXMLElement;
@@ -240,7 +241,7 @@ class DHL
 
         return [
             'id' => $response['AirwayBillNumber'],
-            'file' => uploadFiles('dhl/shipment', base64_decode($response['LabelImage']['OutputImage']), 'pdf', true),
+            'file' => AWSServices::uploadToS3('dhl/shipment', base64_decode($response['LabelImage']['OutputImage']), 'pdf', true),
         ];
     }
 
