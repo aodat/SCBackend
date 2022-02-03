@@ -11,6 +11,7 @@ use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -157,7 +158,8 @@ class AuthController extends Controller
             User::where('id', $user->id)->update(['is_email_verified' => true]);
             Merchant::where('email', $user->email)->update(['is_email_verified' => true]);
         }
-        return $this->successful('Email verified Successfully');
+        
+        return Redirect::to('https://beta.shipcash.net');
     }
 
     // Resend Email for verfification
