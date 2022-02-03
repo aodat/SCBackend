@@ -9,7 +9,6 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Libs\Stripe;
 use Stripe\Invoice;
-use App\Http\Controllers\Utilities\Shipcash;
 
 class InvoiceController extends MerchantController
 {
