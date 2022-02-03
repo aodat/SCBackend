@@ -4,6 +4,7 @@ namespace Libs;
 
 use App\Exceptions\CarriersException;
 use App\Http\Controllers\Utilities\AWSServices;
+use App\Models\Shipment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use SimpleXMLElement;
@@ -35,10 +36,9 @@ class DHL
 
     public function __construct($settings = null)
     {
-
         $this->config = [
             'MessageTime' => Carbon::now()->format(Carbon::ATOM),
-            'MessageReference' => randomNumber(32),
+            'MessageReference' => Shipment::AWBID(32),
             'SiteID' => $settings['dhl_site_id'] ?? config('carriers.dhl.SITE_ID'),
             'Password' => $settings['dhl_password'] ?? config('carriers.dhl.PASSWORD'),
         ];
@@ -136,7 +136,7 @@ class DHL
 
         $payload['ShipmentDetails']['AccountNumber'] = $this->account_number;
         $payload['ShipmentDetails']['BillToAccountNumber'] = $this->account_number;
-        $payload['ShipmentDetails']['AWBNumber'] = randomNumber(9);
+        $payload['ShipmentDetails']['AWBNumber'] = Shipment::AWBID(9);
 
         $payload['ConsigneeDetails']['CompanyName'] = $this->merchentInfo->name;
         $payload['ConsigneeDetails']['AddressLine'] = $address['area'];

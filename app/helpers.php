@@ -69,26 +69,6 @@ if (!function_exists('mergePDF')) {
     }
 }
 
-function randomNumber($length = 16)
-{
-    $result = '';
-
-    for ($i = 0; $i < $length; $i++) {
-        $result .= mt_rand(0, 9);
-    }
-
-    if (InternalAWBExists($result)) {
-        return randomNumber($length);
-    }
-
-    return $result;
-}
-
-function InternalAWBExists($number)
-{
-    return DB::table('shipments')->where('external_awb', $number)->exists();
-}
-
 function currency_exchange($amount, $from, $to = 'USD')
 {
     $rates = [

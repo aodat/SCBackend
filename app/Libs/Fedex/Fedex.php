@@ -6,6 +6,7 @@ use App\Exceptions\CarriersException;
 use App\Http\Controllers\Utilities\AWSServices;
 use App\Models\City;
 use App\Models\Merchant;
+use App\Models\Shipment;
 use Carbon\Carbon;
 use SimpleXMLElement;
 
@@ -93,7 +94,7 @@ class Fedex
             throw new CarriersException('FedEx Create pickup – Something Went Wrong', $payload, $response);
         }
 
-        return ['id' => randomNumber(32), 'guid' => $response['PickupConfirmationNumber']];
+        return ['id' => Shipment::AWBID(32), 'guid' => $response['PickupConfirmationNumber']];
     }
 
     public function cancelPickup($pickupInfo)
@@ -139,7 +140,7 @@ class Fedex
 
         $payload['ProcessShipmentRequest']['TransactionDetail']['CustomerTransactionId'] =
         $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['CustomerReferences']['Value'] =
-            randomNumber(32);
+            Shipment::AWBID(32);
 
         $payload['ProcessShipmentRequest']['RequestedShipment']['ShipTimestamp'] = Carbon::now()->format(Carbon::ATOM);
         $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Contact'] = [
