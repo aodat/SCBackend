@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Exceptions\CarriersException;
+use App\Http\Controllers\Utilities\Documents;
 use App\Http\Controllers\Utilities\InvoiceService;
 use App\Models\Carriers;
 use App\Models\Merchant;
@@ -95,8 +96,8 @@ trait CarriersManager
             }
 
         });
-
-        return mergePDF($exported);
+        
+        return Documents::merge($exported);
     }
 
     public function cancelPickup($provider, $pickupInfo)

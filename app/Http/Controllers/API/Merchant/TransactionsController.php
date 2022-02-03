@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Exceptions\InternalException;
 use App\Exports\TransactionsExport;
+use App\Http\Controllers\Utilities\Documents;
 use App\Http\Requests\Merchant\TransactionRequest;
 use App\Jobs\WithDrawPayments;
 use App\Models\Transaction;
@@ -68,8 +69,8 @@ class TransactionsController extends MerchantController
         $tabs = $tabs->select('type', DB::raw(
             'count(type) as counter'
         ))
-        ->groupBy('type')
-        ->pluck('counter', 'type');
+            ->groupBy('type')
+            ->pluck('counter', 'type');
 
         $tabs = collect($this->type)->merge(collect($tabs));
         $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
@@ -207,9 +208,9 @@ class TransactionsController extends MerchantController
         $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
         if ($type == 'xlsx') {
-            $url = exportXLSX(new TransactionsExport($transactions), $path);
+            $url = Documents::xlsx(new TransactionsExport($transactions), $path);
         } else {
-            $url = exportPDF('transactions', $path, $transactions);
+            $url = Documents::pdf('transactions', $path, $transactions);
         }
 
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);

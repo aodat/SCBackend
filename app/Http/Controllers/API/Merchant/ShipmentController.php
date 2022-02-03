@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Exceptions\InternalException;
 use App\Exports\ShipmentExport;
+use App\Http\Controllers\Utilities\Documents;
 use App\Http\Requests\Merchant\ShipmentRequest;
 use App\Models\Carriers;
 use App\Models\Country;
@@ -50,9 +51,9 @@ class ShipmentController extends MerchantController
         $path = "export/shipments-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
         if ($type == 'xlsx') {
-            $url = exportXLSX(new ShipmentExport($shipments), $path);
+            $url = Documents::xlsx(new ShipmentExport($shipments), $path);
         } else {
-            $url = exportPDF('shipments', $path, $shipments);
+            $url = Documents::pdf('shipments', $path, $shipments);
         }
 
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
@@ -293,7 +294,7 @@ class ShipmentController extends MerchantController
         return $this->response(
             [
                 'id' => $lastShipment->id,
-                'link' => mergePDF($links),
+                'link' => Documents::merge($links),
             ],
             'Shipment Created Successfully'
         );
