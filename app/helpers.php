@@ -9,14 +9,6 @@ function currency_exchange($amount, $from, $to = 'USD')
     return $rates[$from] * $amount;
 }
 
-function nestedLowercase($value)
-{
-    if (is_array($value)) {
-        return array_map('nestedLowercase', $value);
-    }
-    return strtolower($value);
-}
-
 function array_to_xml(array $arr, SimpleXMLElement $xml)
 {
     foreach ($arr as $k => $v) {
