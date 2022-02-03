@@ -54,7 +54,7 @@ class AramexTracking extends Command
                 $last_update = $shipmentInfo[0]['Comments'] ?? '';
 
                 foreach ($shipmentInfo as $key => $value) {
-                    $time = get_string_between($value['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
+                    $time = $this->get_string_between($value['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
                     $new[] = [
                         'UpdateDateTime' => Carbon::parse($time)->format('Y-m-d H:i:s'),
                         'UpdateLocation' => $value['UpdateLocation'],
@@ -73,4 +73,18 @@ class AramexTracking extends Command
         });
         return Command::SUCCESS;
     }
+
+    public function get_string_between($string, $start, $end)
+    {
+        $string = ' ' . $string;
+        $ini = strpos($string, $start);
+        if ($ini == 0) {
+            return '';
+        }
+
+        $ini += strlen($start);
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+    }
+
 }
