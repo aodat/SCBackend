@@ -4,6 +4,7 @@ namespace Libs;
 
 use App\Exceptions\CarriersException;
 use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\XML;
 use App\Models\City;
 use App\Models\Merchant;
 use App\Models\Shipment;
@@ -247,7 +248,7 @@ class Fedex
         $xml->addAttribute('xmlns:SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope/', 'http://schemas.xmlsoap.org/soap/envelope/');
         $xml->addAttribute('xmlns', self::$xsd[$type]);
 
-        $body = array_to_xml($data, new SimpleXMLElement('<SOAP-ENV:Body></SOAP-ENV:Body>', LIBXML_NOERROR, false, 'ws', true));
+        $body = XML::toXML($data, new SimpleXMLElement('<SOAP-ENV:Body></SOAP-ENV:Body>', LIBXML_NOERROR, false, 'ws', true));
 
         $main = dom_import_simplexml($xml);
         $content = dom_import_simplexml($body);

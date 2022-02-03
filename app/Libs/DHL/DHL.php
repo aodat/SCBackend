@@ -4,6 +4,7 @@ namespace Libs;
 
 use App\Exceptions\CarriersException;
 use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\XML;
 use App\Models\Shipment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -281,7 +282,8 @@ class DHL
             $xml->addAttribute('xsi:schemaLocation', self::$xsd[$type]);
             $xml->addAttribute('schemaVersion', self::$schemaVersion[$type]);
         }
-        return array_to_xml($data, $xml);
+
+        return XML::toXML($data, $xml);
     }
 
     private function call($type, $data, $prefix = 'req')
@@ -294,6 +296,6 @@ class DHL
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->dhlXMLFile($type, $data, $prefix)->asXML());
         $result = curl_exec($ch);
         curl_error($ch);
-        return XMLToArray($result);
+        return XML::toArray($result);
     }
 }
