@@ -7,6 +7,7 @@ use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Invoice;
+use App\Http\Controllers\Utilities\Shipcash;
 
 class InvoiceService
 {
@@ -36,7 +37,7 @@ class InvoiceService
             ],
         ]);
 
-        $price = currency_exchange($data->declared_value, $mertchatInfo->currency_code);
+        $price = Shipcash::exchange($data->declared_value, $mertchatInfo->currency_code);
 
         $item = (new InvoiceItem())->title($data->content)
             ->quantity($data->pieces)

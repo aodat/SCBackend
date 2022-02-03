@@ -4,6 +4,7 @@ namespace Libs;
 
 use App\Exceptions\CarriersException;
 use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Controllers\Utilities\XML;
 use App\Models\City;
 use App\Models\Merchant;
@@ -141,7 +142,7 @@ class Fedex
 
         $payload['ProcessShipmentRequest']['TransactionDetail']['CustomerTransactionId'] =
         $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['CustomerReferences']['Value'] =
-            Shipment::AWBID(32);
+        Shipment::AWBID(32);
 
         $payload['ProcessShipmentRequest']['RequestedShipment']['ShipTimestamp'] = Carbon::now()->format(Carbon::ATOM);
         $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Contact'] = [
@@ -181,7 +182,7 @@ class Fedex
 
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['CustomsValue']['Amount'] =
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['UnitPrice']['Amount'] =
-            currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code);
+        Shipcash::exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code);
 
         $response = $this->call('ProcessShipmentRequest', $payload);
 

@@ -5,6 +5,7 @@ namespace Libs;
 use App\Exceptions\CarriersException;
 use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Requests\Carrier\AramexRequest;
 use App\Models\City;
 use App\Models\Merchant;
@@ -253,7 +254,7 @@ class Aramex
         if (isset($shipmentInfo['cod'])) {
             $data['Details']['CashOnDeliveryAmount'] = [
                 'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
-                "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['cod'], $merchentInfo->currency_code),
+                "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : Shipcash::exchange($shipmentInfo['cod'], $merchentInfo->currency_code),
             ];
         }
 
@@ -264,7 +265,7 @@ class Aramex
 
         $data['Details']['CustomsValueAmount'] = [
             'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
-            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code),
+            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : Shipcash::exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code),
         ];
 
         $data['Details']['CustomsValueAmount']['CurrencyCode'] =

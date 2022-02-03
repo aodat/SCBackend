@@ -9,12 +9,13 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Libs\Stripe;
 use Stripe\Invoice;
+use App\Http\Controllers\Utilities\Shipcash;
 
 class InvoiceController extends MerchantController
 {
     protected $stripe;
     private $status = [
-        'DRAFT' => 0, 'PAID' => 0, 'FAILED' => 0, 'RENTURND' => 0
+        'DRAFT' => 0, 'PAID' => 0, 'FAILED' => 0, 'RENTURND' => 0,
     ];
 
     public function __construct()
@@ -31,8 +32,9 @@ class InvoiceController extends MerchantController
         $statuses = $filters['statuses'] ?? [];
 
         $invoices = Invoices::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
-        if (count($statuses))
+        if (count($statuses)) {
             $invoices->whereIn('status', $statuses);
+        }
 
         $tabs = DB::table('invoices')
             ->where('merchant_id', Request()->user()->merchant_id)
@@ -82,11 +84,12 @@ class InvoiceController extends MerchantController
     public function delete($invoiceID, InvoiceRequest $request)
     {
         $invoiceInfo = Invoices::where('id', $invoiceID)->first();
-        if ($invoiceInfo->status != 'DRAFT')
+        if ($invoiceInfo->status != 'DRAFT') {
             return $this->error('you cant delete this invoice');
+        }
+
         $this->stripe->deleteInvoice($invoiceInfo->fk_id);
         $invoiceInfo->delete();
-
 
         return $this->successful('Deleted Successfully');
     }

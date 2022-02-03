@@ -4,6 +4,7 @@ namespace Libs;
 
 use App\Exceptions\CarriersException;
 use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Controllers\Utilities\XML;
 use App\Models\Shipment;
 use Carbon\Carbon;
@@ -223,7 +224,7 @@ class DHL
         $payload['Shipper']['Contact']['MobilePhoneNumber'] = $shipmentInfo['sender_phone'];
         $payload['Shipper']['Contact']['Email'] = $merchentInfo->email;
 
-        $payload['Dutiable']['DeclaredValue'] = currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code, 'USD');
+        $payload['Dutiable']['DeclaredValue'] = Shipcash::exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code, 'USD');
         $payload['Dutiable']['DeclaredCurrency'] = 'USD';
 
         $response = $this->call('ShipmentRequest', $payload);

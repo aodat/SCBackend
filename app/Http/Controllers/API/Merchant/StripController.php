@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Utilities\Shipcash;
 use App\Models\Invoices;
 use App\Models\Merchant;
 use App\Models\Transaction;
@@ -18,8 +19,10 @@ class StripController extends Controller
         $invoice = Invoices::where('fk_id', $shipmentID)
             ->where('status', '<>', 'PAID')
             ->first();
-        if(!$invoice)
+        if (!$invoice) {
             return Redirect::to('https://beta.shipcash.net');
+        }
+
         return view('strip.payment_form')->with('invoice', $invoice);
     }
 
@@ -30,7 +33,7 @@ class StripController extends Controller
         try {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
             Stripe\Charge::create([
-                "amount" => currency_exchange($invoice->amount, 'JOD') * 100,
+                "amount" => Shipcash::exchange($invoice->amount, 'JOD') * 100,
                 "currency" => "usd",
                 "source" => $request->stripeToken,
                 "description" => "Payment From Shipcash : Merchant ID " . $invoice->merchant_id . " / " . $merchant->name . " To " . $invoice->customer_name,
