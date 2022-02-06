@@ -45,11 +45,9 @@ class DHL
             'Password' => $settings['dhl_password'] ?? config('carriers.dhl.PASSWORD'),
         ];
 
-        $this->end_point = self::$stagingUrl;
-
-        if (config('app.env') == 'production') {
-            $this->end_point = self::$productionUrl;
-        }
+        $this->end_point = self::$productionUrl;
+        if(env('APP_ENV') == 'local')
+            $this->end_point = self::$stagingUrl;
 
         $this->account_number = $settings['dhl_account_number'] ?? config('carriers.dhl.ACCOUNT_NUMBER');
         $this->merchentInfo = App::make('merchantInfo');
@@ -69,9 +67,8 @@ class DHL
         $payload['OriginCountryCode'] = $countryCode;
 
         $response = $this->call('RouteRequest', $payload);
-
         if (!empty($response['Response']['Status']['Condition'])) {
-            throw new CarriersException('DHL This Country Not Supported');
+            throw new CarriersException('This Country Not Supported IN DHL');
         }
 
         return true;
@@ -109,6 +106,8 @@ class DHL
     public function createPickup($email, $date, $address)
     {
         $this->__check($address['country'], $address['country_code'], $address['city'], $address['area']);
+
+        // dd('xxxx');
         $payload = $this->bindJsonFile('pickup.create.json');
         $payload['Requestor']['AccountNumber'] = $this->account_number;
 
@@ -160,7 +159,6 @@ class DHL
     public function cancelPickup($pickupInfo)
     {
         $payload = $this->bindJsonFile('pickup.cancel.json');
-
         $payload['RegionCode'] = 'EU';
         $payload['ConfirmationNumber'] = $pickupInfo->hash;
         $payload['RequestorName'] = $pickupInfo->address_info['name'];
