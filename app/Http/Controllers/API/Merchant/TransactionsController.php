@@ -87,10 +87,11 @@ class TransactionsController extends MerchantController
 
     public function withDraw(TransactionRequest $request, Dinarak $dinarak)
     {
+
         $merchecntInfo = $this->getMerchentInfo();
 
         if ($merchecntInfo->cod_balance <= 0) {
-            return $this->error('The Bundle Balance Is Zero', 400);
+            return $this->error('The COD Balance Is Zero', 400);
         }
 
         $paymentMethod = $merchecntInfo->payment_methods;
@@ -100,17 +101,15 @@ class TransactionsController extends MerchantController
         }
 
         $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
-        $merchecntInfo = Merchant::findOrFail($merchecntInfo->id);
-
         if ($merchecntInfo->cod_balance <= 0 || $dedaction > $merchecntInfo->cod_balance) {
-            return $this->error('Unexpected Error');
+            return $this->error('You dont have COD Balance');
         }
 
-        $dinarak->withdraw($merchecntInfo, $payment['iban'], $dedaction);
+        // $dinarak->withdraw($merchecntInfo, $payment['iban'], $dedaction);
 
         $merchecntInfo->cod_balance -= $merchecntInfo->amount;
         $merchecntInfo->save();
-
+        
         Transaction::create([
             "type" => "CASHOUT",
             "subtype" => "COD",
@@ -118,7 +117,7 @@ class TransactionsController extends MerchantController
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
             'amount' => $dedaction,
-            'status' => 'COMPLETED',
+            'status' => 'shipcash',
             "balance_after" => 0,
             "source" => "CREDITCARD",
         ]);
