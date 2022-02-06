@@ -7,6 +7,7 @@ use App\Exports\TransactionsExport;
 use App\Http\Controllers\Utilities\Documents;
 use App\Http\Requests\Merchant\TransactionRequest;
 use App\Jobs\WithDrawPayments;
+use App\Models\Merchant;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -84,7 +85,7 @@ class TransactionsController extends MerchantController
         return $this->response($data, 'Data Retrieved Successfully');
     }
 
-    public function withDraw(TransactionRequest $request)
+    public function withDraw(TransactionRequest $request, Dinarak $dinarak)
     {
         $merchecntInfo = $this->getMerchentInfo();
 
@@ -97,22 +98,31 @@ class TransactionsController extends MerchantController
         if ($payment == null) {
             throw new InternalException('Invalid Payment Method ID');
         }
-        $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
 
-        $transaction = Transaction::create([
+        $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
+        $merchecntInfo = Merchant::findOrFail($merchecntInfo->id);
+
+        if ($merchecntInfo->cod_balance <= 0 || $dedaction > $merchecntInfo->cod_balance) {
+            return $this->error('Unexpected Error');
+        }
+
+        $dinarak->withdraw($merchecntInfo, $payment['iban'], $dedaction);
+
+        $merchecntInfo->cod_balance -= $merchecntInfo->amount;
+        $merchecntInfo->save();
+
+        Transaction::create([
             "type" => "CASHOUT",
             "subtype" => "BUNDLE",
             "item_id" => null,
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
             'amount' => $dedaction,
+            'status' => 'COMPLETED',
             "balance_after" => 0,
             "source" => "CREDITCARD",
         ]);
-
-        WithDrawPayments::dispatch($merchecntInfo->id, $dedaction, $payment, $transaction->id);
-
-        return $this->successful('WithDraw Transaction Under Processing');
+        return $this->successful('WithDraw Transaction Completed');
     }
 
     public function depositwRequest(TransactionRequest $request, Dinarak $dinarak)
