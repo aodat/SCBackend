@@ -210,7 +210,7 @@ class DHL
         $payload['ShipmentDetails']['Pieces']['Piece']['Weight'] = $shipmentInfo['actual_weight'] ?? '';
 
         $payload['Shipper']['ShipperID'] = $merchentInfo->id;
-        $payload['Shipper']['CompanyName'] = $shipmentInfo['sender_name'];
+        $payload['Shipper']['CompanyName'] = substr($shipmentInfo['sender_name'], 0, 25);
         $payload['Shipper']['AddressLine1'] = substr($shipmentInfo['sender_address_description'], 0, 25);
         $payload['Shipper']['AddressLine2'] = substr($shipmentInfo['sender_area'], 0, 25);
         $payload['Shipper']['AddressLine3'] = substr($shipmentInfo['sender_area'], 0, 25);
@@ -221,7 +221,7 @@ class DHL
         $payload['Shipper']['BuildingName'] = substr($shipmentInfo['sender_area'], 0, 30);
         $payload['Shipper']['StreetNumber'] = substr($shipmentInfo['sender_address_description'], 0, 15);
 
-        $payload['Shipper']['Contact']['PersonName'] = $shipmentInfo['sender_name'];
+        $payload['Shipper']['Contact']['PersonName'] = substr($shipmentInfo['sender_name'], 0, 25);
         $payload['Shipper']['Contact']['PhoneNumber'] = $shipmentInfo['sender_phone'];
         $payload['Shipper']['Contact']['MobilePhoneNumber'] = $shipmentInfo['sender_phone'];
         $payload['Shipper']['Contact']['Email'] = $merchentInfo->email;
