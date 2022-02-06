@@ -113,7 +113,7 @@ class TransactionsController extends MerchantController
 
         Transaction::create([
             "type" => "CASHOUT",
-            "subtype" => "BUNDLE",
+            "subtype" => "COD",
             "item_id" => null,
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
