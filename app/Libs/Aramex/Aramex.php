@@ -66,7 +66,7 @@ class Aramex
             "consignee_city" => "England",
             "consignee_area" => "ALL",
             "consignee_zip_code" => "CR5 3FT",
-            "consignee_address_description" => "13 DICKENS DR",
+            "consignee_address_description_1" => "13 DICKENS DR",
             "content" => "Test Content",
             "pieces" => 1,
             "actual_weight" => 1,
@@ -217,8 +217,8 @@ class Aramex
         $data['Shipper']['Contact']['PhoneNumber1'] = $shipmentInfo['sender_phone'];
         $data['Shipper']['Contact']['CellPhone'] = $shipmentInfo['sender_phone'];
 
-        $data['Consignee']['PartyAddress']['Line1'] = $shipmentInfo['consignee_address_description'];
-        $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_second_phone'] ?? '';
+        $data['Consignee']['PartyAddress']['Line1'] = $shipmentInfo['consignee_address_description_1'];
+        $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_address_description_2'] ?? $shipmentInfo['consignee_address_description_1'];
         $data['Consignee']['PartyAddress']['Line3'] = '';
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
         $data['Consignee']['PartyAddress']['StateOrProvinceCode'] = City::where('name_en', $shipmentInfo['consignee_city'])->first() ? City::where('name_en', $shipmentInfo['consignee_city'])->first()->code : '';

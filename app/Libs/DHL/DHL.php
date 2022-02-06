@@ -46,14 +46,15 @@ class DHL
         ];
 
         $this->end_point = self::$productionUrl;
-        if (env('APP_ENV') == 'local')
+        if (env('APP_ENV') == 'local') {
             $this->end_point = self::$stagingUrl;
+        }
 
         $this->account_number = $settings['dhl_account_number'] ?? config('carriers.dhl.ACCOUNT_NUMBER');
         $this->merchentInfo = App::make('merchantInfo');
 
         $this->setup = [
-            'PU' => ['status' => 'PROCESSING']
+            'PU' => ['status' => 'PROCESSING'],
         ];
     }
 
@@ -95,7 +96,7 @@ class DHL
             "consignee_city" => "England",
             "consignee_area" => "ALL",
             "consignee_zip_code" => "CR5 3FT",
-            "consignee_address_description" => "13 DICKENS DR",
+            "consignee_address_description_1" => "13 DICKENS DR",
             "content" => "Test Content",
             "pieces" => 1,
             "actual_weight" => 1,
@@ -186,12 +187,12 @@ class DHL
         $payload['Billing']['BillingAccountNumber'] = $this->account_number;
 
         $payload['Consignee']['CompanyName'] = $shipmentInfo['consignee_name'];
-        $payload['Consignee']['AddressLine1'] = substr($shipmentInfo['consignee_address_description'], 0, 10);
-        $payload['Consignee']['AddressLine2'] = substr($shipmentInfo['consignee_address_description'], 0, 10);
-        $payload['Consignee']['AddressLine3'] = substr($shipmentInfo['consignee_address_description'], 0, 10);
-        $payload['Consignee']['StreetName'] = substr($shipmentInfo['consignee_address_description'], 0, 25);
-        $payload['Consignee']['BuildingName'] = substr($shipmentInfo['consignee_address_description'], 0, 25);
-        $payload['Consignee']['StreetNumber'] = substr($shipmentInfo['consignee_address_description'], 0, 15);
+        $payload['Consignee']['AddressLine1'] = substr($shipmentInfo['consignee_address_description_1'], 0, 10);
+        $payload['Consignee']['AddressLine2'] = substr($shipmentInfo['consignee_address_description_2'] ?? $shipmentInfo['consignee_address_description_1'], 0, 10);
+        $payload['Consignee']['AddressLine3'] = substr($shipmentInfo['consignee_address_description_1'], 0, 10);
+        $payload['Consignee']['StreetName'] = substr($shipmentInfo['consignee_address_description_1'], 0, 25);
+        $payload['Consignee']['BuildingName'] = substr($shipmentInfo['consignee_address_description_1'], 0, 25);
+        $payload['Consignee']['StreetNumber'] = substr($shipmentInfo['consignee_address_description_1'], 0, 15);
         $payload['Consignee']['City'] = $shipmentInfo['consignee_city'];
         $payload['Consignee']['PostalCode'] = $shipmentInfo['consignee_zip_code'] ?? '';
         $payload['Consignee']['CountryCode'] = $shipmentInfo['consignee_country'];
@@ -199,7 +200,7 @@ class DHL
 
         $payload['Consignee']['Contact']['PersonName'] = $shipmentInfo['consignee_name'];
         $payload['Consignee']['Contact']['PhoneNumber'] = $shipmentInfo['consignee_phone'];
-        $payload['Consignee']['Contact']['MobilePhoneNumber'] = $shipmentInfo['consignee_second_phone'] ?? '';
+        $payload['Consignee']['Contact']['MobilePhoneNumber'] = $shipmentInfo['consignee_second_phone'] ?? $shipmentInfo['consignee_phone'];
         $payload['Consignee']['Contact']['Email'] = $shipmentInfo['consignee_email'];
         $payload['Consignee']['Contact']['PhoneExtension'] = '';
 

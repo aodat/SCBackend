@@ -243,8 +243,18 @@ class ShipmentController extends MerchantController
             $shipment['external_awb'] = $result['id'];
             $shipment['resource'] = $resource;
             $shipment['url'] = $result['link'];
-            shipment::withoutGlobalScope('ancient')->create($shipment);
 
+            $address2 = '';
+            if (isset($shipment['consignee_address_description_2'])) {
+                $address2 = $shipment['consignee_address_description_2'];
+                unset($shipment['consignee_address_description_2']);
+            }
+            $shipment['consignee_address_description'] = $shipment['consignee_address_description_1'] . ' ' . $address2;
+
+            if (isset($shipment['consignee_address_description_1'])) {
+                unset($shipment['consignee_address_description_1']);
+            }
+            shipment::withoutGlobalScope('ancient')->create($shipment);
         } else if (!$payloads->isEmpty()) {
             $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
             $externalAWB = $result['id'];
@@ -255,9 +265,22 @@ class ShipmentController extends MerchantController
                 $value['resource'] = $resource;
                 $value['url'] = $files[$key];
 
+                $address2 = '';
+                if (isset($value['consignee_address_description_2'])) {
+                    $address2 = $value['consignee_address_description_2'];
+                    unset($value['consignee_address_description_2']);
+                }
+
+                $value['consignee_address_description'] = $value['consignee_address_description_1'] . ' ' . $address2;
+
+                if (isset($value['consignee_address_description_1'])) {
+                    unset($value['consignee_address_description_1']);
+                }
+
                 unset($value['payment']);
                 return $value;
             });
+
             $links = array_merge($links, $result['link']);
             Shipment::insert($shipments->toArray());
         }
@@ -363,13 +386,6 @@ class ShipmentController extends MerchantController
 
         $shipment['merchant_id'] = 900;
         $shipment['created_by'] = 900;
-        $shipment['shipping_logs'] = collect([
-            [
-                'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
-                'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
-                'UpdateDescription' => 'Create Shipment',
-            ],
-        ]);
         $shipment['created_at'] = Carbon::now();
         $shipment['updated_at'] = Carbon::now();
 

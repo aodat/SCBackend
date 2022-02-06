@@ -62,7 +62,7 @@ class Fedex
             "consignee_city" => "England",
             "consignee_area" => "ALL",
             "consignee_zip_code" => "CR5 3FT",
-            "consignee_address_description" => "13 DICKENS DR",
+            "consignee_address_description_1" => "13 DICKENS DR",
             "content" => "Test Content",
             "pieces" => 1,
             "actual_weight" => 1,
@@ -163,7 +163,7 @@ class Fedex
             'PhoneNumber' => $shipmentInfo['consignee_phone'],
         ];
         $payload['ProcessShipmentRequest']['RequestedShipment']['Recipient']['Address'] = [
-            'StreetLines' => $shipmentInfo['consignee_address_description'],
+            'StreetLines' => $shipmentInfo['consignee_address_description_1'],
             'City' => $shipmentInfo['consignee_area'],
             'StateOrProvinceCode' => City::where('name_en', $shipmentInfo['consignee_city'])->first() ? City::where('name_en', $shipmentInfo['consignee_city'])->first()->code : '',
             'PostalCode' => $shipmentInfo['consignee_zip_code'] ?? '',
