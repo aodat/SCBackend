@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Exceptions\InternalException;
 use App\Exports\ShipmentExport;
+use App\Http\Controllers\Utilities\Documents;
 use App\Http\Requests\Merchant\ShipmentRequest;
-use App\Jobs\ShipmentWebHooks;
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Invoices;
@@ -51,9 +51,9 @@ class ShipmentController extends MerchantController
         $path = "export/shipments-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
         if ($type == 'xlsx') {
-            $url = exportXLSX(new ShipmentExport($shipments), $path);
+            $url = Documents::xlsx(new ShipmentExport($shipments), $path);
         } else {
-            $url = exportPDF('shipments', $path, $shipments);
+            $url = Documents::pdf('shipments', $path, $shipments);
         }
 
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
@@ -122,7 +122,8 @@ class ShipmentController extends MerchantController
             's.cod',
             's.delivered_at',
             's.pieces',
-            's.content'
+            's.content',
+            's.last_update'
         );
 
         return $shipments;
@@ -293,7 +294,7 @@ class ShipmentController extends MerchantController
         return $this->response(
             [
                 'id' => $lastShipment->id,
-                'link' => mergePDF($links),
+                'link' => Documents::merge($links),
             ],
             'Shipment Created Successfully'
         );
@@ -305,16 +306,6 @@ class ShipmentController extends MerchantController
             ['link' => $this->printShipment($request->shipment_number)],
             'Labels returned successfully'
         );
-    }
-
-    public function hook(ShipmentRequest $request)
-    {
-        $shipment = Shipment::withoutGlobalScope('ancient')
-            ->where('external_awb', $request->WaybillNumber)
-            ->exists();
-
-        ShipmentWebHooks::dispatchIf($shipment, $request->json()->all());
-        return $this->successful('Webhook Completed');
     }
 
     public function calculate(ShipmentRequest $request)
@@ -372,7 +363,7 @@ class ShipmentController extends MerchantController
 
         $shipment['merchant_id'] = 900;
         $shipment['created_by'] = 900;
-        $shipment['shipment_logs'] = collect([
+        $shipment['shipping_logs'] = collect([
             [
                 'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
                 'UpdateLocation' => $shipment['consignee_address_description'] ?: '',
@@ -412,4 +403,100 @@ class ShipmentController extends MerchantController
 
         return $this->successful('Shipment Deleted Successfully');
     }
+
+    public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
+    {
+        $merchentInfo = $this->getMerchentInfo();
+        $to = str_replace("'", "", $to);
+        if ($type == 'domestic' || $type == 'DOM') {
+
+            if (!isset($merchentInfo['domestic_rates'][$carrier_id])) {
+                throw new InternalException('The Carrier ID ' . $carrier_id . ' No Support domestic , Please Contact Administrators');
+            }
+
+            $data = array_map(function ($value) {
+                return str_replace("'", "", $value);
+            }, $merchentInfo['domestic_rates'][$carrier_id]);
+
+            $rate = collect($data)->where('code', $to);
+
+            if ($rate->isEmpty()) {
+                throw new InternalException('Country Code Not Exists, Please Contact Administrators');
+            }
+
+            $price = $rate->first()['price'];
+            $extra = $rate->first()['additional'] ?? 1.5;
+
+            $fees = 0;
+            if ($weight > 0) {
+                $weights_count = ceil($weight / 10);
+                $weight_fees = (($weights_count - 1) * $extra) + $price;
+                $fees += $weight_fees;
+            }
+            return $fees;
+        } else {
+            $express_rates = collect(Country::where('code', $merchentInfo['country_code'])->first());
+            if ($express_rates->isEmpty()) {
+                throw new InternalException('Country Code Not Exists, Please Contact Administrators');
+            }
+
+            $express_rates = $express_rates['rates'];
+            if (count($express_rates) == 0) {
+                throw new InternalException('No Setup Added To This Country, Please Contact Administrators');
+            }
+
+            if (!isset($express_rates[$to])) {
+                throw new InternalException('No Setup Added To This Country, Please Contact Administrators');
+            }
+
+            $rates = collect($express_rates[$to]);
+            $zones = $rates->where('carrier_id', $carrier_id);
+
+            if ($zones->count() > 1) {
+                throw new InternalException('Somthing Wrong On Rates Setup, Please Contact Administrators');
+            }
+
+            if (!isset($zones->first()['zone_id'])) {
+                throw new InternalException('Somthing Wrong On Zone ID Setup, Please Contact Administrators');
+            }
+
+            $zone_id = $zones->first()['zone_id'];
+            $discounts = $merchentInfo['express_rates'][$carrier_id]['discounts'] ?? [];
+
+            $zoneRates = collect($merchentInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id);
+            if ($zoneRates->count() > 1) {
+                throw new InternalException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
+            }
+
+            $zoneRates = $zoneRates->first();
+            if ($zoneRates == null) {
+                return 0;
+            }
+
+            $base = $zoneRates['basic'];
+            $additional = $zoneRates['additional'];
+            if (!empty($discounts)) {
+                foreach ($discounts as $key => $value) {
+                    if (eval("return " . $weight . $value['condintion'] . $value['weight'] . ";")) {
+                        $additional = $additional - ($additional * $value['percent']);
+                    }
+
+                }
+            }
+
+            $fees = 0;
+            if ($weight > 0) {
+                $weights_count = ceil($weight / 0.5);
+                $weight_fees = (($weights_count - 1) * $additional) + $base;
+                $fees += $weight_fees;
+            }
+        }
+
+        if ($fees == 0) {
+            throw new InternalException('Fees Equal Zero');
+        }
+
+        return $fees;
+    }
+
 }

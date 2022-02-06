@@ -3,6 +3,10 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
+use App\Http\Controllers\Utilities\XML;
+use App\Models\Shipment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use SimpleXMLElement;
@@ -30,26 +34,27 @@ class DHL
 
     private $end_point;
     private $account_number;
-    private $merchentInfo;
+    private $merchentInfo, $setup;
 
     public function __construct($settings = null)
     {
-
         $this->config = [
             'MessageTime' => Carbon::now()->format(Carbon::ATOM),
-            'MessageReference' => randomNumber(32),
+            'MessageReference' => Shipment::AWBID(32),
             'SiteID' => $settings['dhl_site_id'] ?? config('carriers.dhl.SITE_ID'),
             'Password' => $settings['dhl_password'] ?? config('carriers.dhl.PASSWORD'),
         ];
 
-        $this->end_point = self::$stagingUrl;
-
-        if (config('app.env') == 'production') {
-            $this->end_point = self::$productionUrl;
-        }
+        $this->end_point = self::$productionUrl;
+        if (env('APP_ENV') == 'local')
+            $this->end_point = self::$stagingUrl;
 
         $this->account_number = $settings['dhl_account_number'] ?? config('carriers.dhl.ACCOUNT_NUMBER');
         $this->merchentInfo = App::make('merchantInfo');
+
+        $this->setup = [
+            'PU' => ['status' => 'PROCESSING']
+        ];
     }
 
     public function __check($countryName, $countryCode, $city, $area = '')
@@ -66,9 +71,8 @@ class DHL
         $payload['OriginCountryCode'] = $countryCode;
 
         $response = $this->call('RouteRequest', $payload);
-
         if (!empty($response['Response']['Status']['Condition'])) {
-            throw new CarriersException('DHL This Country Not Supported');
+            throw new CarriersException('This Country Not Supported IN DHL');
         }
 
         return true;
@@ -106,6 +110,8 @@ class DHL
     public function createPickup($email, $date, $address)
     {
         $this->__check($address['country'], $address['country_code'], $address['city'], $address['area']);
+
+        // dd('xxxx');
         $payload = $this->bindJsonFile('pickup.create.json');
         $payload['Requestor']['AccountNumber'] = $this->account_number;
 
@@ -135,7 +141,7 @@ class DHL
 
         $payload['ShipmentDetails']['AccountNumber'] = $this->account_number;
         $payload['ShipmentDetails']['BillToAccountNumber'] = $this->account_number;
-        $payload['ShipmentDetails']['AWBNumber'] = randomNumber(9);
+        $payload['ShipmentDetails']['AWBNumber'] = Shipment::AWBID(9);
 
         $payload['ConsigneeDetails']['CompanyName'] = $this->merchentInfo->name;
         $payload['ConsigneeDetails']['AddressLine'] = $address['area'];
@@ -157,7 +163,6 @@ class DHL
     public function cancelPickup($pickupInfo)
     {
         $payload = $this->bindJsonFile('pickup.cancel.json');
-
         $payload['RegionCode'] = 'EU';
         $payload['ConfirmationNumber'] = $pickupInfo->hash;
         $payload['RequestorName'] = $pickupInfo->address_info['name'];
@@ -221,7 +226,7 @@ class DHL
         $payload['Shipper']['Contact']['MobilePhoneNumber'] = $shipmentInfo['sender_phone'];
         $payload['Shipper']['Contact']['Email'] = $merchentInfo->email;
 
-        $payload['Dutiable']['DeclaredValue'] = currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code, 'USD');
+        $payload['Dutiable']['DeclaredValue'] = Shipcash::exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code, 'USD');
         $payload['Dutiable']['DeclaredCurrency'] = 'USD';
 
         $response = $this->call('ShipmentRequest', $payload);
@@ -240,7 +245,7 @@ class DHL
 
         return [
             'id' => $response['AirwayBillNumber'],
-            'file' => uploadFiles('dhl/shipment', base64_decode($response['LabelImage']['OutputImage']), 'pdf', true),
+            'file' => AWSServices::uploadToS3('dhl/shipment', base64_decode($response['LabelImage']['OutputImage']), 'pdf', true),
         ];
     }
 
@@ -254,8 +259,7 @@ class DHL
         if (isset($response['Response']['Status']) && ($response['Response']['Status']['ActionStatus'] == 'Error' || $response['Response']['Status']['ActionStatus'] == 'Failure')) {
             throw new CarriersException('Cannot track DHL shipment');
         }
-
-        return $response['AWBInfo']['ShipmentInfo'];
+        return array_reverse($response['AWBInfo']['ShipmentInfo']['ShipmentEvent']);
     }
 
     public function bindJsonFile($file)
@@ -280,7 +284,8 @@ class DHL
             $xml->addAttribute('xsi:schemaLocation', self::$xsd[$type]);
             $xml->addAttribute('schemaVersion', self::$schemaVersion[$type]);
         }
-        return array_to_xml($data, $xml);
+
+        return XML::toXML($data, $xml);
     }
 
     private function call($type, $data, $prefix = 'req')
@@ -293,6 +298,6 @@ class DHL
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->dhlXMLFile($type, $data, $prefix)->asXML());
         $result = curl_exec($ch);
         curl_error($ch);
-        return XMLToArray($result);
+        return XML::toArray($result);
     }
 }

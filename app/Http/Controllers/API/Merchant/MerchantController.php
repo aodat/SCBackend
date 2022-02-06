@@ -6,7 +6,6 @@ use App\Exceptions\InternalException;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Utilities\SmsService;
 use App\Http\Requests\Merchant\MerchantRequest;
-use App\Jobs\UserEmail;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Merchant;
@@ -53,7 +52,7 @@ class MerchantController extends Controller
         if ($user->isDirty('email')) {
             $user->is_email_verified = false;
             $user->email_verified_at = null;
-            UserEmail::dispatch($user);
+            $user->sendEmailVerificationNotification();
         }
 
         $user->name = $request->name;
@@ -137,7 +136,7 @@ class MerchantController extends Controller
             return Merchant::findOrFail(Request()->user()->merchant_id);
         } else {
             return Merchant::findOrFail(900);
+            // Guest Account
         }
-        // Guest Account
     }
 }

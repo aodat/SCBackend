@@ -5,13 +5,13 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\RecoveryRequest;
-use App\Jobs\UserEmail;
 use App\Models\Merchant;
 use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -85,8 +85,7 @@ class AuthController extends Controller
         );
         $merchant->update(["secret_key" => $client->secret]);
 
-        UserEmail::dispatch($user);
-
+        $user->sendEmailVerificationNotification();
         return $this->successful('User Created Successfully');
     }
 
@@ -159,7 +158,8 @@ class AuthController extends Controller
             User::where('id', $user->id)->update(['is_email_verified' => true]);
             Merchant::where('email', $user->email)->update(['is_email_verified' => true]);
         }
-        return $this->successful('Email verified Successfully');
+        
+        return Redirect::to('https://beta.shipcash.net');
     }
 
     // Resend Email for verfification
@@ -169,7 +169,7 @@ class AuthController extends Controller
             return $this->error('Email already verified.', 400);
         }
 
-        UserEmail::dispatch(auth()->user());
+        auth()->user()->sendEmailVerificationNotification();
         return $this->successful('Check your email');
     }
 

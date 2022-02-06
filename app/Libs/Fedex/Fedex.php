@@ -3,8 +3,12 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
+use App\Http\Controllers\Utilities\XML;
 use App\Models\City;
 use App\Models\Merchant;
+use App\Models\Shipment;
 use Carbon\Carbon;
 use SimpleXMLElement;
 
@@ -92,7 +96,7 @@ class Fedex
             throw new CarriersException('FedEx Create pickup – Something Went Wrong', $payload, $response);
         }
 
-        return ['id' => randomNumber(32), 'guid' => $response['PickupConfirmationNumber']];
+        return ['id' => Shipment::AWBID(32), 'guid' => $response['PickupConfirmationNumber']];
     }
 
     public function cancelPickup($pickupInfo)
@@ -138,7 +142,7 @@ class Fedex
 
         $payload['ProcessShipmentRequest']['TransactionDetail']['CustomerTransactionId'] =
         $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['CustomerReferences']['Value'] =
-            randomNumber(32);
+        Shipment::AWBID(32);
 
         $payload['ProcessShipmentRequest']['RequestedShipment']['ShipTimestamp'] = Carbon::now()->format(Carbon::ATOM);
         $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Contact'] = [
@@ -178,7 +182,7 @@ class Fedex
 
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['CustomsValue']['Amount'] =
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['UnitPrice']['Amount'] =
-            currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code);
+        Shipcash::exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code);
 
         $response = $this->call('ProcessShipmentRequest', $payload);
 
@@ -204,7 +208,7 @@ class Fedex
 
         return [
             'id' => $response['CompletedShipmentDetail']['CompletedPackageDetails']['TrackingIds']['TrackingNumber'],
-            'file' => uploadFiles('fedex/shipment', base64_decode($response['CompletedShipmentDetail']['CompletedPackageDetails']['Label']['Parts']['Image']), 'pdf', true),
+            'file' => AWSServices::uploadToS3('fedex/shipment', base64_decode($response['CompletedShipmentDetail']['CompletedPackageDetails']['Label']['Parts']['Image']), 'pdf', true),
         ];
     }
 
@@ -245,7 +249,7 @@ class Fedex
         $xml->addAttribute('xmlns:SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope/', 'http://schemas.xmlsoap.org/soap/envelope/');
         $xml->addAttribute('xmlns', self::$xsd[$type]);
 
-        $body = array_to_xml($data, new SimpleXMLElement('<SOAP-ENV:Body></SOAP-ENV:Body>', LIBXML_NOERROR, false, 'ws', true));
+        $body = XML::toXML($data, new SimpleXMLElement('<SOAP-ENV:Body></SOAP-ENV:Body>', LIBXML_NOERROR, false, 'ws', true));
 
         $main = dom_import_simplexml($xml);
         $content = dom_import_simplexml($body);

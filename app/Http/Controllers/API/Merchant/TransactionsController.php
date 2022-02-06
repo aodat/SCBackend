@@ -4,8 +4,10 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Exceptions\InternalException;
 use App\Exports\TransactionsExport;
+use App\Http\Controllers\Utilities\Documents;
 use App\Http\Requests\Merchant\TransactionRequest;
 use App\Jobs\WithDrawPayments;
+use App\Models\Merchant;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -68,8 +70,8 @@ class TransactionsController extends MerchantController
         $tabs = $tabs->select('type', DB::raw(
             'count(type) as counter'
         ))
-        ->groupBy('type')
-        ->pluck('counter', 'type');
+            ->groupBy('type')
+            ->pluck('counter', 'type');
 
         $tabs = collect($this->type)->merge(collect($tabs));
         $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
@@ -83,12 +85,13 @@ class TransactionsController extends MerchantController
         return $this->response($data, 'Data Retrieved Successfully');
     }
 
-    public function withDraw(TransactionRequest $request)
+    public function withDraw(TransactionRequest $request, Dinarak $dinarak)
     {
+
         $merchecntInfo = $this->getMerchentInfo();
 
         if ($merchecntInfo->cod_balance <= 0) {
-            return $this->error('The Bundle Balance Is Zero', 400);
+            return $this->error('The COD Balance Is Zero', 400);
         }
 
         $paymentMethod = $merchecntInfo->payment_methods;
@@ -96,22 +99,29 @@ class TransactionsController extends MerchantController
         if ($payment == null) {
             throw new InternalException('Invalid Payment Method ID');
         }
-        $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
 
-        $transaction = Transaction::create([
+        $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
+        if ($merchecntInfo->cod_balance <= 0 || $dedaction > $merchecntInfo->cod_balance) {
+            return $this->error('You dont have COD Balance');
+        }
+
+        // $dinarak->withdraw($merchecntInfo, $payment['iban'], $dedaction);
+
+        $merchecntInfo->cod_balance -= $merchecntInfo->amount;
+        $merchecntInfo->save();
+        
+        Transaction::create([
             "type" => "CASHOUT",
-            "subtype" => "BUNDLE",
+            "subtype" => "COD",
             "item_id" => null,
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
             'amount' => $dedaction,
+            'status' => 'shipcash',
             "balance_after" => 0,
             "source" => "CREDITCARD",
         ]);
-
-        WithDrawPayments::dispatch($merchecntInfo->id, $dedaction, $payment, $transaction->id);
-
-        return $this->successful('WithDraw Transaction Under Processing');
+        return $this->successful('WithDraw Transaction Completed');
     }
 
     public function depositwRequest(TransactionRequest $request, Dinarak $dinarak)
@@ -207,9 +217,9 @@ class TransactionsController extends MerchantController
         $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
         if ($type == 'xlsx') {
-            $url = exportXLSX(new TransactionsExport($transactions), $path);
+            $url = Documents::xlsx(new TransactionsExport($transactions), $path);
         } else {
-            $url = exportPDF('transactions', $path, $transactions);
+            $url = Documents::pdf('transactions', $path, $transactions);
         }
 
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
