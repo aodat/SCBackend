@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Utilities\Shipcash;
 use App\Models\Merchant;
 use App\Models\User;
 use App\Traits\CarriersManager;
@@ -66,7 +67,7 @@ class Controller extends BaseController
             )->get();
 
             collect($merchants)->map(function ($data) {
-                $phone = $this->phone($data->phone);
+                $phone = shipcash::phone($data->phone);
                 Merchant::create(
                     [
                         'id' => $data->id,
@@ -210,7 +211,7 @@ class Controller extends BaseController
 
                     } else {
                         $name = ucfirst($value->method) . ' - ' . $value->wallet_provider;
-                        $iban = $this->phone($value->wallet_number);
+                        $iban = shipcash::phone($value->wallet_number);
                         $provider_code = $methods->where('name_en', $value->wallet_provider)->first()['code'] ?? '';
                     }
                     if ($provider_code != '') {
@@ -233,14 +234,4 @@ class Controller extends BaseController
         });
     }
 
-    public function phone($phone)
-    {
-        $phone = str_replace(' ', '', $phone) ?? '';
-        $phone = str_replace('00962', '+962', $phone) ?? '';
-        if ($phone != '' && strpos('00962', $phone) === false) {
-            $phone = str_replace('+962', '', $phone);
-        }
-
-        return $phone;
-    }
 }

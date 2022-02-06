@@ -258,9 +258,10 @@ class DHL
         $response = $this->call('KnownTrackingRequest', $payload);
 
         if (isset($response['Response']['Status']) && ($response['Response']['Status']['ActionStatus'] == 'Error' || $response['Response']['Status']['ActionStatus'] == 'Failure')) {
-            throw new CarriersException('Cannot track DHL shipment');
+            return [];
         }
-        return array_reverse($response['AWBInfo']['ShipmentInfo']['ShipmentEvent']);
+
+        return array_reverse($response['AWBInfo']['ShipmentInfo']['ShipmentEvent'] ?? []);
     }
 
     public function bindJsonFile($file)

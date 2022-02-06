@@ -288,16 +288,14 @@ class Aramex
 
         $response = Http::post(self::$TRACK_SHIPMENTS_URL, $trackingPayload);
         if (!$response->successful()) {
-            throw new CarriersException('Aramex Track Shipments – Something Went Wrong', $trackingPayload, $response->json());
-        }
-
-        if ($response->json()['HasErrors']) {
-            throw new CarriersException('Cannot track Aramex shipment', $trackingPayload, $response->json());
+            return [];
+        } else if ($response->json()['HasErrors']) {
+            return [];
         }
 
         $result = $response->json()['TrackingResults'];
         if (empty($result)) {
-            throw new CarriersException('Tracking Details Is Empty', $trackingPayload, $response->json());
+            return [];
         }
 
         if ($all_event) {
