@@ -34,7 +34,7 @@ class DHL
 
     private $end_point;
     private $account_number;
-    private $merchentInfo;
+    private $merchentInfo, $setup;
 
     public function __construct($settings = null)
     {
@@ -46,11 +46,15 @@ class DHL
         ];
 
         $this->end_point = self::$productionUrl;
-        if(env('APP_ENV') == 'local')
+        if (env('APP_ENV') == 'local')
             $this->end_point = self::$stagingUrl;
 
         $this->account_number = $settings['dhl_account_number'] ?? config('carriers.dhl.ACCOUNT_NUMBER');
         $this->merchentInfo = App::make('merchantInfo');
+
+        $this->setup = [
+            'PU' => ['status' => 'PROCESSING']
+        ];
     }
 
     public function __check($countryName, $countryCode, $city, $area = '')
@@ -255,8 +259,7 @@ class DHL
         if (isset($response['Response']['Status']) && ($response['Response']['Status']['ActionStatus'] == 'Error' || $response['Response']['Status']['ActionStatus'] == 'Failure')) {
             throw new CarriersException('Cannot track DHL shipment');
         }
-
-        return $response['AWBInfo']['ShipmentInfo'];
+        return array_reverse($response['AWBInfo']['ShipmentInfo']['ShipmentEvent']);
     }
 
     public function bindJsonFile($file)
