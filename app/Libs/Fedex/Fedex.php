@@ -218,15 +218,14 @@ class Fedex
         $payload['TrackRequest']['SelectionDetails']['PackageIdentifier']['Value'] = $shipment_waybills;
 
         $response = $this->call('TrackRequest', $payload);
-
         if (
-            (!isset($response['v20Notifications']['Severity'])) ||
-            (isset($response['v20Notifications']['Severity']) && $response['v20Notifications']['Severity'] == 'ERROR')
+            (!isset($response['CompletedTrackDetails']['HighestSeverity'])) ||
+            (isset($response['CompletedTrackDetails']['HighestSeverity']) && $response['CompletedTrackDetails']['HighestSeverity'] == 'ERROR')
         ) {
-            throw new CarriersException('Cannot track Fedex shipment');
+            return [];
         }
 
-        return ($response);
+        return ($response['CompletedTrackDetails']['TrackDetails']);
     }
 
     public function bindJsonFile($file, $type)

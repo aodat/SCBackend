@@ -74,6 +74,4 @@ class AramexTracking extends Command
         });
         return Command::SUCCESS;
     }
-
-
 }

@@ -11,7 +11,6 @@
             "MeterNumber": ""
         },
         "TransactionDetail": {
-            "CustomerTransactionId": "",
             "Localization": {
                 "LanguageCode": "EN",
                 "LocaleCode": "US"
@@ -24,10 +23,9 @@
             "Minor": "0"
         },
         "SelectionDetails": {
-            "CarrierCode": "FDXE",
             "PackageIdentifier": {
                 "Type": "TRACKING_NUMBER_OR_DOORTAG",
-                "Value": ""
+                "Value": "Input_Your_Information"
             }
         }
     }

@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('merchant:cron')->daily();
         $schedule->command('aramex-tracking:cron')->everyThirtyMinutes();
         $schedule->command('dhl-tracking:cron')->everyThirtyMinutes();
+        $schedule->command('fedex-tracking:cron')->everyThirtyMinutes();
     }
 
     /**
