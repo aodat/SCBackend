@@ -80,7 +80,7 @@ class Aramex
 
     }
 
-    public function createPickup($email, $date, $address)
+    public function createPickup($email, $info, $address)
     {
         $payload = $this->bindJsonFile('pickup.create.json');
         $payload['ClientInfo'] = $this->config;
@@ -99,10 +99,9 @@ class Aramex
         $payload['Pickup']['PickupContact']['EmailAddress'] = $email;
 
         $payload['Pickup']['PickupLocation'] = $address['city_code'] ?? $address['city'];
-        $payload['Pickup']['PickupDate'] = '/Date(' . (strtotime($date) * 1000) . ')/';
-
-        $ReadyTime = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 03:00 PM') * 1000;
-        $LastPickupTime = $ClosingTime = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 04:00 PM') * 1000;
+        $payload['Pickup']['PickupDate'] = '/Date(' . (strtotime($info['date']) * 1000) . ')/';
+        $ReadyTime = strtotime($info['ready']->format('Y-m-d h:i A')) * 1000;
+        $LastPickupTime = $ClosingTime = strtotime($info['close']->format('Y-m-d h:i A')) * 1000;
 
         $payload['Pickup']['ReadyTime'] = '/Date(' . $ReadyTime . ')/';
         $payload['Pickup']['LastPickupTime'] = '/Date(' . $LastPickupTime . ')/';

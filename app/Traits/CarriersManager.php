@@ -76,10 +76,10 @@ trait CarriersManager
         return $this->adapter->shipmentArray($this->merchantInfo, $shipmentInfo);
     }
 
-    public function generatePickup($provider, $pickup_date, $address)
+    public function generatePickup($provider, $pickInfo, $address)
     {
         $this->loadProvider($provider);
-        return $this->adapter->createPickup($this->merchantInfo->email, $pickup_date, $address);
+        return $this->adapter->createPickup($this->merchantInfo->email, $pickInfo, $address);
     }
 
     public function printShipment($shipments_number)

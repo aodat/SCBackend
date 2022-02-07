@@ -8,6 +8,7 @@ use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Controllers\Utilities\XML;
 use App\Models\City;
 use App\Models\Merchant;
+use App\Models\Pickup;
 use App\Models\Shipment;
 use Carbon\Carbon;
 use SimpleXMLElement;
@@ -74,7 +75,7 @@ class Fedex
         return $this->createShipment($merchentInfo, $shipmentInfo, true);
     }
 
-    public function createPickup($email, $date, $address)
+    public function createPickup($email, $info, $address)
     {
         $payload = $this->bindJsonFile('pickup.create.json', "CreatePickupRequest");
 
@@ -89,14 +90,13 @@ class Fedex
         $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Address']['CountryCode'] = $address['country_code'];
 
         $payload['CreatePickupRequest']['OriginDetail']['BuildingPartDescription'] = $address['area'];
-        $payload['CreatePickupRequest']['OriginDetail']['ReadyTimestamp'] = date('c', strtotime($date . ' 03:00 PM'));
+        $payload['CreatePickupRequest']['OriginDetail']['ReadyTimestamp'] = date('c', strtotime($info['ready']->format('Y-m-d h:i A')));
         $response = $this->call('CreatePickupRequest', $payload);
 
         if (!isset($response['Notifications']['Severity']) || (isset($response['Notifications']['Severity']) && $response['Notifications']['Severity'] == 'ERROR')) {
             throw new CarriersException('FedEx Create pickup – Something Went Wrong', $payload, $response);
         }
-
-        return ['id' => Shipment::AWBID(32), 'guid' => $response['PickupConfirmationNumber']];
+        return ['id' => Pickup::ID(32), 'guid' => $response['PickupConfirmationNumber']];
     }
 
     public function cancelPickup($pickupInfo)

@@ -108,11 +108,9 @@ class DHL
         return $this->createShipment($merchentInfo, $shipmentInfo, true);
     }
 
-    public function createPickup($email, $date, $address)
+    public function createPickup($email, $info, $address)
     {
         $this->__check($address['country'], $address['country_code'], $address['city'], $address['area']);
-
-        // dd('xxxx');
         $payload = $this->bindJsonFile('pickup.create.json');
         $payload['Requestor']['AccountNumber'] = $this->account_number;
 
@@ -133,9 +131,9 @@ class DHL
         $payload['Place']['PostalCode'] = "";
 
         // Pickup
-        $payload['Pickup']['PickupDate'] = $date;
-        $payload['Pickup']['ReadyByTime'] = '15:00';
-        $payload['Pickup']['CloseTime'] = '16:00';
+        $payload['Pickup']['PickupDate'] = $info['date'];
+        $payload['Pickup']['ReadyByTime'] = $info['ready']->format('H:i');
+        $payload['Pickup']['CloseTime'] = $info['close']->format('H:i');
 
         $payload['PickupContact']['PersonName'] = $address['name'];
         $payload['PickupContact']['Phone'] = $address['phone'];
