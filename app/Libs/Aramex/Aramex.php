@@ -3,20 +3,30 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Http\Controllers\API\Merchant\ShipmentController;
+use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
+use App\Http\Requests\Carrier\AramexRequest;
 use App\Models\City;
+use App\Models\Merchant;
+use App\Models\Shipment;
+use App\Models\Transaction;
+use App\Traits\ResponseHandler;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class Aramex
 {
+    use ResponseHandler;
+
     private static $CREATE_PICKUP_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CreatePickup';
     private static $CANCEL_PICKUP_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CancelPickup';
     private static $PRINT_LABEL_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/PrintLabel';
     private static $CREATE_SHIPMENTS_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CreateShipments';
     private static $TRACK_SHIPMENTS_URL = 'https://ws.aramex.net/ShippingAPI.V2/Tracking/Service_1_0.svc/json/TrackShipments';
 
-    private $config;
-
+    private $config, $setup;
     public function __construct($settings = null)
     {
         $this->config = [
@@ -56,7 +66,7 @@ class Aramex
             "consignee_city" => "England",
             "consignee_area" => "ALL",
             "consignee_zip_code" => "CR5 3FT",
-            "consignee_address_description" => "13 DICKENS DR",
+            "consignee_address_description_1" => "13 DICKENS DR",
             "content" => "Test Content",
             "pieces" => 1,
             "actual_weight" => 1,
@@ -70,7 +80,7 @@ class Aramex
 
     }
 
-    public function createPickup($email, $date, $address)
+    public function createPickup($email, $info, $address)
     {
         $payload = $this->bindJsonFile('pickup.create.json');
         $payload['ClientInfo'] = $this->config;
@@ -89,10 +99,9 @@ class Aramex
         $payload['Pickup']['PickupContact']['EmailAddress'] = $email;
 
         $payload['Pickup']['PickupLocation'] = $address['city_code'] ?? $address['city'];
-        $payload['Pickup']['PickupDate'] = '/Date(' . (strtotime($date) * 1000) . ')/';
-
-        $ReadyTime = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 03:00 PM') * 1000;
-        $LastPickupTime = $ClosingTime = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 04:00 PM') * 1000;
+        $payload['Pickup']['PickupDate'] = '/Date(' . (strtotime($info['date']) * 1000) . ')/';
+        $ReadyTime = strtotime($info['ready']->format('Y-m-d h:i A')) * 1000;
+        $LastPickupTime = $ClosingTime = strtotime($info['close']->format('Y-m-d h:i A')) * 1000;
 
         $payload['Pickup']['ReadyTime'] = '/Date(' . $ReadyTime . ')/';
         $payload['Pickup']['LastPickupTime'] = '/Date(' . $LastPickupTime . ')/';
@@ -183,7 +192,7 @@ class Aramex
         foreach ($response->json()['Shipments'] as $ship) {
             $result[] = [
                 'id' => $ship['ID'],
-                'file' => uploadFiles('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true),
+                'file' => AWSServices::uploadToS3('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true),
             ];
         }
         return $result;
@@ -207,8 +216,8 @@ class Aramex
         $data['Shipper']['Contact']['PhoneNumber1'] = $shipmentInfo['sender_phone'];
         $data['Shipper']['Contact']['CellPhone'] = $shipmentInfo['sender_phone'];
 
-        $data['Consignee']['PartyAddress']['Line1'] = $shipmentInfo['consignee_address_description'];
-        $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_second_phone'] ?? '';
+        $data['Consignee']['PartyAddress']['Line1'] = $shipmentInfo['consignee_address_description_1'];
+        $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_address_description_2'] ?? $shipmentInfo['consignee_address_description_1'];
         $data['Consignee']['PartyAddress']['Line3'] = '';
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
         $data['Consignee']['PartyAddress']['StateOrProvinceCode'] = City::where('name_en', $shipmentInfo['consignee_city'])->first() ? City::where('name_en', $shipmentInfo['consignee_city'])->first()->code : '';
@@ -244,7 +253,7 @@ class Aramex
         if (isset($shipmentInfo['cod'])) {
             $data['Details']['CashOnDeliveryAmount'] = [
                 'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
-                "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['cod'], $merchentInfo->currency_code),
+                "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : Shipcash::exchange($shipmentInfo['cod'], $merchentInfo->currency_code),
             ];
         }
 
@@ -255,7 +264,7 @@ class Aramex
 
         $data['Details']['CustomsValueAmount'] = [
             'CurrencyCode' => ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD',
-            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code),
+            "Value" => ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['cod'] : Shipcash::exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code),
         ];
 
         $data['Details']['CustomsValueAmount']['CurrencyCode'] =
@@ -278,16 +287,14 @@ class Aramex
 
         $response = Http::post(self::$TRACK_SHIPMENTS_URL, $trackingPayload);
         if (!$response->successful()) {
-            throw new CarriersException('Aramex Track Shipments – Something Went Wrong', $trackingPayload, $response->json());
-        }
-
-        if ($response->json()['HasErrors']) {
-            throw new CarriersException('Cannot track Aramex shipment', $trackingPayload, $response->json());
+            return [];
+        } else if ($response->json()['HasErrors']) {
+            return [];
         }
 
         $result = $response->json()['TrackingResults'];
         if (empty($result)) {
-            throw new CarriersException('Tracking Details Is Empty', $trackingPayload, $response->json());
+            return [];
         }
 
         if ($all_event) {
@@ -297,6 +304,83 @@ class Aramex
         }
 
         return $result;
+    }
+
+    public function webhook(AramexRequest $request)
+    {
+        $data = $request->all();
+        $shipmentInfo = Shipment::withoutGlobalScope('ancient')->where('external_awb', $request->WaybillNumber)->first();
+
+        $updated = $this->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
+        $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
+
+        $actions = $updated['actions'] ?? [];
+        if (isset($updated['actions'])) {
+            unset($updated['actions']);
+        }
+
+        if (!empty($actions)) {
+            $details = $this->trackShipment($shipmentInfo['external_awb']) ?? null;
+            $fees = (new ShipmentController)->calculateFees(
+                $shipmentInfo['carrier_id'],
+                null,
+                ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
+                $shipmentInfo['group'],
+                $details['ChargeableWeight']
+            );
+        }
+
+        foreach ($actions as $action) {
+            if ($action == 'create_transaction') {
+                $transaction = Transaction::create(
+                    [
+                        'type' => 'CASHIN',
+                        'subtype' => 'COD',
+                        'item_id' => $shipmentInfo['id'],
+                        'merchant_id' => $shipmentInfo['merchant_id'],
+                        'source' => 'SHIPMENT',
+                        'status' => 'PROCESSING',
+                        'created_by' => $shipmentInfo['created_by'],
+                        'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->bundle_balance,
+                        'amount' => ($shipmentInfo['cod'] - $shipmentInfo['fees']),
+                        'resource' => 'API',
+                    ]
+                );
+                $updated['transaction_id'] = $transaction->id;
+            } else if ($action == 'update_merchant_balance') {
+                if ($shipmentInfo['cod'] > 0) {
+
+                    if (isset($data['Comment2'])) {
+                        if (!Str::contains($data['Comment2'], 'Cheque')) {
+                            $merchant->cod_balance += $shipmentInfo['cod'];
+                        }
+
+                    }
+
+                    $merchant->bundle_balance -= $fees;
+                    $merchant->save();
+                }
+            } else if ($action == 'check_chargable_weight') {
+                $updated['chargable_weight'] = $details['ChargeableWeight'];
+                if ($shipmentInfo['actual_weight'] <= $updated['chargable_weight']) {
+
+                    $updated['fees'] = $fees;
+
+                    $logs = collect($shipmentInfo->admin_logs);
+
+                    $updated['admin_logs'] = $logs->merge([[
+                        'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'UpdateLocation' => '',
+                        'UpdateDescription' => 'Update Shipment Weight From ' . $shipmentInfo['actual_weight'] . ' To ' . $updated['chargable_weight'],
+
+                    ]]);
+                }
+            }
+        }
+
+        $shipmentInfo->update($updated);
+        return $this->successful('Webhook Completed');
+
     }
 
     public function bindJsonFile($file)

@@ -3,6 +3,10 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
+use App\Http\Controllers\Utilities\XML;
+use App\Models\Shipment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 use SimpleXMLElement;
@@ -30,26 +34,28 @@ class DHL
 
     private $end_point;
     private $account_number;
-    private $merchentInfo;
+    private $merchentInfo, $setup;
 
     public function __construct($settings = null)
     {
-
         $this->config = [
             'MessageTime' => Carbon::now()->format(Carbon::ATOM),
-            'MessageReference' => randomNumber(32),
+            'MessageReference' => Shipment::AWBID(32),
             'SiteID' => $settings['dhl_site_id'] ?? config('carriers.dhl.SITE_ID'),
             'Password' => $settings['dhl_password'] ?? config('carriers.dhl.PASSWORD'),
         ];
 
-        $this->end_point = self::$stagingUrl;
-
-        if (config('app.env') == 'production') {
-            $this->end_point = self::$productionUrl;
+        $this->end_point = self::$productionUrl;
+        if (env('APP_ENV') == 'local') {
+            $this->end_point = self::$stagingUrl;
         }
 
         $this->account_number = $settings['dhl_account_number'] ?? config('carriers.dhl.ACCOUNT_NUMBER');
         $this->merchentInfo = App::make('merchantInfo');
+
+        $this->setup = [
+            'PU' => ['status' => 'PROCESSING'],
+        ];
     }
 
     public function __check($countryName, $countryCode, $city, $area = '')
@@ -66,9 +72,8 @@ class DHL
         $payload['OriginCountryCode'] = $countryCode;
 
         $response = $this->call('RouteRequest', $payload);
-
         if (!empty($response['Response']['Status']['Condition'])) {
-            throw new CarriersException('DHL This Country Not Supported');
+            throw new CarriersException('This Country Not Supported IN DHL');
         }
 
         return true;
@@ -91,7 +96,7 @@ class DHL
             "consignee_city" => "England",
             "consignee_area" => "ALL",
             "consignee_zip_code" => "CR5 3FT",
-            "consignee_address_description" => "13 DICKENS DR",
+            "consignee_address_description_1" => "13 DICKENS DR",
             "content" => "Test Content",
             "pieces" => 1,
             "actual_weight" => 1,
@@ -103,7 +108,7 @@ class DHL
         return $this->createShipment($merchentInfo, $shipmentInfo, true);
     }
 
-    public function createPickup($email, $date, $address)
+    public function createPickup($email, $info, $address)
     {
         $this->__check($address['country'], $address['country_code'], $address['city'], $address['area']);
         $payload = $this->bindJsonFile('pickup.create.json');
@@ -126,16 +131,16 @@ class DHL
         $payload['Place']['PostalCode'] = "";
 
         // Pickup
-        $payload['Pickup']['PickupDate'] = $date;
-        $payload['Pickup']['ReadyByTime'] = '15:00';
-        $payload['Pickup']['CloseTime'] = '16:00';
+        $payload['Pickup']['PickupDate'] = $info['date'];
+        $payload['Pickup']['ReadyByTime'] = $info['ready']->format('H:i');
+        $payload['Pickup']['CloseTime'] = $info['close']->format('H:i');
 
         $payload['PickupContact']['PersonName'] = $address['name'];
         $payload['PickupContact']['Phone'] = $address['phone'];
 
         $payload['ShipmentDetails']['AccountNumber'] = $this->account_number;
         $payload['ShipmentDetails']['BillToAccountNumber'] = $this->account_number;
-        $payload['ShipmentDetails']['AWBNumber'] = randomNumber(9);
+        $payload['ShipmentDetails']['AWBNumber'] = Shipment::AWBID(9);
 
         $payload['ConsigneeDetails']['CompanyName'] = $this->merchentInfo->name;
         $payload['ConsigneeDetails']['AddressLine'] = $address['area'];
@@ -157,7 +162,6 @@ class DHL
     public function cancelPickup($pickupInfo)
     {
         $payload = $this->bindJsonFile('pickup.cancel.json');
-
         $payload['RegionCode'] = 'EU';
         $payload['ConfirmationNumber'] = $pickupInfo->hash;
         $payload['RequestorName'] = $pickupInfo->address_info['name'];
@@ -181,12 +185,12 @@ class DHL
         $payload['Billing']['BillingAccountNumber'] = $this->account_number;
 
         $payload['Consignee']['CompanyName'] = $shipmentInfo['consignee_name'];
-        $payload['Consignee']['AddressLine1'] = substr($shipmentInfo['consignee_address_description'], 0, 10);
-        $payload['Consignee']['AddressLine2'] = substr($shipmentInfo['consignee_address_description'], 0, 10);
-        $payload['Consignee']['AddressLine3'] = substr($shipmentInfo['consignee_address_description'], 0, 10);
-        $payload['Consignee']['StreetName'] = substr($shipmentInfo['consignee_address_description'], 0, 25);
-        $payload['Consignee']['BuildingName'] = substr($shipmentInfo['consignee_address_description'], 0, 25);
-        $payload['Consignee']['StreetNumber'] = substr($shipmentInfo['consignee_address_description'], 0, 15);
+        $payload['Consignee']['AddressLine1'] = substr($shipmentInfo['consignee_address_description_1'], 0, 10);
+        $payload['Consignee']['AddressLine2'] = substr($shipmentInfo['consignee_address_description_2'] ?? $shipmentInfo['consignee_address_description_1'], 0, 10);
+        $payload['Consignee']['AddressLine3'] = substr($shipmentInfo['consignee_area'], 0, 10);
+        $payload['Consignee']['StreetName'] = substr($shipmentInfo['consignee_address_description_1'], 0, 25);
+        $payload['Consignee']['BuildingName'] = substr($shipmentInfo['consignee_address_description_1'], 0, 25);
+        $payload['Consignee']['StreetNumber'] = substr($shipmentInfo['consignee_address_description_1'], 0, 15);
         $payload['Consignee']['City'] = $shipmentInfo['consignee_city'];
         $payload['Consignee']['PostalCode'] = $shipmentInfo['consignee_zip_code'] ?? '';
         $payload['Consignee']['CountryCode'] = $shipmentInfo['consignee_country'];
@@ -194,7 +198,7 @@ class DHL
 
         $payload['Consignee']['Contact']['PersonName'] = $shipmentInfo['consignee_name'];
         $payload['Consignee']['Contact']['PhoneNumber'] = $shipmentInfo['consignee_phone'];
-        $payload['Consignee']['Contact']['MobilePhoneNumber'] = $shipmentInfo['consignee_second_phone'] ?? '';
+        $payload['Consignee']['Contact']['MobilePhoneNumber'] = $shipmentInfo['consignee_second_phone'] ?? $shipmentInfo['consignee_phone'];
         $payload['Consignee']['Contact']['Email'] = $shipmentInfo['consignee_email'];
         $payload['Consignee']['Contact']['PhoneExtension'] = '';
 
@@ -205,7 +209,7 @@ class DHL
         $payload['ShipmentDetails']['Pieces']['Piece']['Weight'] = $shipmentInfo['actual_weight'] ?? '';
 
         $payload['Shipper']['ShipperID'] = $merchentInfo->id;
-        $payload['Shipper']['CompanyName'] = $shipmentInfo['sender_name'];
+        $payload['Shipper']['CompanyName'] = substr($shipmentInfo['sender_name'], 0, 25);
         $payload['Shipper']['AddressLine1'] = substr($shipmentInfo['sender_address_description'], 0, 25);
         $payload['Shipper']['AddressLine2'] = substr($shipmentInfo['sender_area'], 0, 25);
         $payload['Shipper']['AddressLine3'] = substr($shipmentInfo['sender_area'], 0, 25);
@@ -216,12 +220,12 @@ class DHL
         $payload['Shipper']['BuildingName'] = substr($shipmentInfo['sender_area'], 0, 30);
         $payload['Shipper']['StreetNumber'] = substr($shipmentInfo['sender_address_description'], 0, 15);
 
-        $payload['Shipper']['Contact']['PersonName'] = $shipmentInfo['sender_name'];
+        $payload['Shipper']['Contact']['PersonName'] = substr($shipmentInfo['sender_name'], 0, 25);
         $payload['Shipper']['Contact']['PhoneNumber'] = $shipmentInfo['sender_phone'];
         $payload['Shipper']['Contact']['MobilePhoneNumber'] = $shipmentInfo['sender_phone'];
         $payload['Shipper']['Contact']['Email'] = $merchentInfo->email;
 
-        $payload['Dutiable']['DeclaredValue'] = currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code, 'USD');
+        $payload['Dutiable']['DeclaredValue'] = Shipcash::exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code, 'USD');
         $payload['Dutiable']['DeclaredCurrency'] = 'USD';
 
         $response = $this->call('ShipmentRequest', $payload);
@@ -240,7 +244,7 @@ class DHL
 
         return [
             'id' => $response['AirwayBillNumber'],
-            'file' => uploadFiles('dhl/shipment', base64_decode($response['LabelImage']['OutputImage']), 'pdf', true),
+            'file' => AWSServices::uploadToS3('dhl/shipment', base64_decode($response['LabelImage']['OutputImage']), 'pdf', true),
         ];
     }
 
@@ -252,10 +256,10 @@ class DHL
         $response = $this->call('KnownTrackingRequest', $payload);
 
         if (isset($response['Response']['Status']) && ($response['Response']['Status']['ActionStatus'] == 'Error' || $response['Response']['Status']['ActionStatus'] == 'Failure')) {
-            throw new CarriersException('Cannot track DHL shipment');
+            return [];
         }
 
-        return $response['AWBInfo']['ShipmentInfo'];
+        return array_reverse($response['AWBInfo']['ShipmentInfo']['ShipmentEvent'] ?? []);
     }
 
     public function bindJsonFile($file)
@@ -280,7 +284,8 @@ class DHL
             $xml->addAttribute('xsi:schemaLocation', self::$xsd[$type]);
             $xml->addAttribute('schemaVersion', self::$schemaVersion[$type]);
         }
-        return array_to_xml($data, $xml);
+
+        return XML::toXML($data, $xml);
     }
 
     private function call($type, $data, $prefix = 'req')
@@ -293,6 +298,6 @@ class DHL
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->dhlXMLFile($type, $data, $prefix)->asXML());
         $result = curl_exec($ch);
         curl_error($ch);
-        return XMLToArray($result);
+        return XML::toArray($result);
     }
 }

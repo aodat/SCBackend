@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Http\Requests\Merchant\DocumentsRequest;
-
-use App\Models\Merchant;
-use Carbon\Carbon;
 use App\Exceptions\InternalException;
+use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Requests\Merchant\DocumentsRequest;
+use Carbon\Carbon;
 
 class DocumentsController extends MerchantController
 {
@@ -26,10 +25,10 @@ class DocumentsController extends MerchantController
         $data = [
             'id' => ++$counter,
             'type' => $request->type,
-            'url' => uploadFiles('documents', $request->file('file')),
+            'url' => AWSServices::uploadToS3('documents', $request->file('file')),
             'status' => 'pending',
             'verified_at' => null,
-            'created_at' => Carbon::now()->format('Y-m-d H:i:s')
+            'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
         ];
 
         $merchant->update(['documents' => $result->merge([$data])]);
@@ -41,10 +40,12 @@ class DocumentsController extends MerchantController
         $list = $this->getMerchentInfo();
         $result = collect($list->documents);
         $json = $result->reject(function ($value) use ($id) {
-            if ($value['id'] == $id && $value['verified_at'] == null)
+            if ($value['id'] == $id && $value['verified_at'] == null) {
                 return $value;
-            else if ($value['id'] == $id && $value['verified_at'] !== null)
+            } else if ($value['id'] == $id && $value['verified_at'] !== null) {
                 throw new InternalException('You Can\'t Delete this Document', 400);
+            }
+
         });
 
         $json = array_values($json->toArray());

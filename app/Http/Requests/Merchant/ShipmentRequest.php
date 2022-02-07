@@ -3,9 +3,8 @@
 namespace App\Http\Requests\Merchant;
 
 use App\Rules\wordCount;
-
-use Illuminate\Validation\Rules\RequiredIf;
 use Illuminate\Support\Facades\Request;
+use Illuminate\Validation\Rules\RequiredIf;
 
 class ShipmentRequest extends MerchantRequest
 {
@@ -13,8 +12,10 @@ class ShipmentRequest extends MerchantRequest
     {
         $path = Request()->route()->uri;
         $data = parent::all($keys);
-        if ($this->method() == 'GET' && strpos($path, 'shipments/export/{type}') !== false)
+        if ($this->method() == 'GET' && strpos($path, 'shipments/export/{type}') !== false) {
             $data['type'] = $this->route('type');
+        }
+
         return $data;
     }
     /**
@@ -37,7 +38,6 @@ class ShipmentRequest extends MerchantRequest
                 $type = '*.';
             }
 
-
             $validation = [
                 $type . 'carrier_id' => [
                     'required',
@@ -47,17 +47,18 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'consignee_name' => 'required|max:255',
                 $type . 'consignee_email' => ($isRequired ? 'required|' : '') . 'email',
                 $type . 'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                $type . 'consignee_second_phone' => $isRequired ? 'required' : '',
+                $type . 'consignee_second_phone' => '',
                 $type . 'consignee_notes' => [
-                    new wordCount(1, 10)
+                    new wordCount(1, 10),
                 ],
                 $type . 'consignee_city' => 'required',
                 $type . 'consignee_area' => 'required',
-                $type . 'consignee_address_description' => [
-                    'required'
+                $type . 'consignee_address_description_1' => [
+                    'required',
                 ],
+                $type . 'consignee_address_description_2' => '',
                 $type . 'content' => 'required',
-                $type . 'pieces' => 'required|integer'
+                $type . 'pieces' => 'required|integer',
             ];
 
             if (strpos($path, 'shipments/domestic/create') !== false) {
@@ -73,30 +74,30 @@ class ShipmentRequest extends MerchantRequest
                 $validation[$type . 'declared_value'] = [
                     new RequiredIf($this->is_doc == false),
                     'numeric',
-                    'between:0,9999'
+                    'between:0,9999',
                 ];
                 $validation[$type . 'consignee_zip_code'] = '';
             }
             return $validation;
-        } else if ($this->method() == 'POST' && strpos($path, 'shipments/filters') !== false)
+        } else if ($this->method() == 'POST' && strpos($path, 'shipments/filters') !== false) {
             return [
                 'created_at.since' => 'nullable|date|date_format:Y-m-d',
                 'created_at.until' => 'nullable|date|date_format:Y-m-d|after:created_at.since',
                 'external' => 'array',
                 'statuses' => 'array',
                 'phone' => 'array',
-                'cod.val' =>  'nullable|numeric|between:1,999',
-                'cod.operation' => 'nullable'
+                'cod.val' => 'nullable|numeric|between:1,999',
+                'cod.operation' => 'nullable',
             ];
-        else if ($this->method() == 'GET' && strpos($path, 'shipments/export/{type}') !== false)
+        } else if ($this->method() == 'GET' && strpos($path, 'shipments/export/{type}') !== false) {
             return [
-                'type' => 'in:xlsx,pdf'
+                'type' => 'in:xlsx,pdf',
             ];
-        else if ($this->method() == 'POST' && strpos($path, 'shipments/print') !== false)
+        } else if ($this->method() == 'POST' && strpos($path, 'shipments/print') !== false) {
             return [
-                'shipment_number.*' => 'required|exists:shipments,external_awb'
+                'shipment_number.*' => 'required|exists:shipments,external_awb',
             ];
-        else if ($this->method() == 'POST' && strpos($path, 'shipments/calculate/fees')) {
+        } else if ($this->method() == 'POST' && strpos($path, 'shipments/calculate/fees')) {
             $type = Request::instance()->type;
             $validation = [
                 'weight' => 'required|numeric|between:0,9999',
@@ -116,12 +117,12 @@ class ShipmentRequest extends MerchantRequest
                 'type' => 'required|in:express,domestic',
                 'carrier_id' => [
                     'required',
-                    'exists:carriers,id,is_active,1'
+                    'exists:carriers,id,is_active,1',
                 ],
                 'sender_email' => 'required|email',
                 'sender_name' => [
                     'required',
-                    new wordCount(2)
+                    new wordCount(2),
                 ],
                 'sender_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
                 'sender_country' => 'required',
@@ -133,16 +134,17 @@ class ShipmentRequest extends MerchantRequest
                 'consignee_email' => 'email',
                 'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
                 'consignee_notes' => [
-                    new wordCount(1, 10)
+                    new wordCount(1, 10),
                 ],
                 'consignee_country' => 'required',
                 'consignee_city' => 'required',
                 'consignee_area' => 'required',
-                'consignee_address_description' => [
-                    'required'
+                'consignee_address_description_1' => [
+                    'required',
                 ],
+                'consignee_address_description_2' => '',
                 'content' => [
-                    'required'
+                    'required',
                 ],
                 'pieces' => 'required|integer',
                 'consignee_zip_code' => '',
@@ -159,7 +161,7 @@ class ShipmentRequest extends MerchantRequest
                 $validation['declared_value'] = [
                     new RequiredIf($this->is_doc == false),
                     'numeric',
-                    'between:0,9999'
+                    'between:0,9999',
                 ];
                 $validation['consignee_zip_code'] = '';
                 $validation['consignee_second_phone'] = '';
@@ -168,11 +170,12 @@ class ShipmentRequest extends MerchantRequest
                 $validation['extra_services'] = 'required|in:DOMCOD';
             }
             return $validation;
-        } else if($this->method() == 'POST' && (strpos($path, 'shipments/track') !== false))
+        } else if ($this->method() == 'POST' && (strpos($path, 'shipments/track') !== false)) {
             return [
-                'shipment_number' => 'required|exists:shipments,external_awb'
+                'shipment_number' => 'required|exists:shipments,external_awb',
             ];
-        
+        }
+
         return [];
     }
 }

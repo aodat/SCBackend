@@ -45,7 +45,7 @@ class WithDrawPayments implements ShouldQueue
                 return true;
             }
             
-            $dinarak->withdraw($merchecntInfo, $$this->payment['iban'], $this->amount);
+            $dinarak->withdraw($merchecntInfo, $this->payment['iban'], $this->amount);
 
             $merchecntInfo->cod_balance -= $merchecntInfo->amount;
             $merchecntInfo->save();

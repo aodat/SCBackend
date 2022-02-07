@@ -6,6 +6,7 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Shipment extends Model
 {
@@ -14,7 +15,7 @@ class Shipment extends Model
     protected $appends = ['carrier_name', 'generator_name', 'payment_link'];
 
     protected $casts = [
-        'shipment_logs' => 'array',
+        'shipping_logs' => 'array',
         'admin_logs' => 'array',
         'is_doc' => 'boolean',
         'is_deleted' => 'boolean',
@@ -55,6 +56,26 @@ class Shipment extends Model
     public function getLogsAttribute($logs)
     {
         return collect(json_decode($logs))->sortByDesc('UpdateDateTime')->flatten();
+    }
+
+    public static function AWBID($length = 16)
+    {
+        $result = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $result .= mt_rand(0, 9);
+        }
+
+        if (static::InternalAWBExists($result)) {
+            return self::AWBID($length);
+        }
+
+        return $result;
+    }
+
+    public static function InternalAWBExists($number)
+    {
+        return DB::table('shipments')->where('external_awb', $number)->exists();
     }
 
     protected static function booted()

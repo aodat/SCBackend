@@ -3,8 +3,13 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
+use App\Http\Controllers\Utilities\XML;
 use App\Models\City;
 use App\Models\Merchant;
+use App\Models\Pickup;
+use App\Models\Shipment;
 use Carbon\Carbon;
 use SimpleXMLElement;
 
@@ -58,7 +63,7 @@ class Fedex
             "consignee_city" => "England",
             "consignee_area" => "ALL",
             "consignee_zip_code" => "CR5 3FT",
-            "consignee_address_description" => "13 DICKENS DR",
+            "consignee_address_description_1" => "13 DICKENS DR",
             "content" => "Test Content",
             "pieces" => 1,
             "actual_weight" => 1,
@@ -70,7 +75,7 @@ class Fedex
         return $this->createShipment($merchentInfo, $shipmentInfo, true);
     }
 
-    public function createPickup($email, $date, $address)
+    public function createPickup($email, $info, $address)
     {
         $payload = $this->bindJsonFile('pickup.create.json', "CreatePickupRequest");
 
@@ -85,14 +90,13 @@ class Fedex
         $payload['CreatePickupRequest']['OriginDetail']['PickupLocation']['Address']['CountryCode'] = $address['country_code'];
 
         $payload['CreatePickupRequest']['OriginDetail']['BuildingPartDescription'] = $address['area'];
-        $payload['CreatePickupRequest']['OriginDetail']['ReadyTimestamp'] = date('c', strtotime($date . ' 03:00 PM'));
+        $payload['CreatePickupRequest']['OriginDetail']['ReadyTimestamp'] = date('c', strtotime($info['ready']->format('Y-m-d h:i A')));
         $response = $this->call('CreatePickupRequest', $payload);
 
         if (!isset($response['Notifications']['Severity']) || (isset($response['Notifications']['Severity']) && $response['Notifications']['Severity'] == 'ERROR')) {
             throw new CarriersException('FedEx Create pickup – Something Went Wrong', $payload, $response);
         }
-
-        return ['id' => randomNumber(32), 'guid' => $response['PickupConfirmationNumber']];
+        return ['id' => Pickup::ID(32), 'guid' => $response['PickupConfirmationNumber']];
     }
 
     public function cancelPickup($pickupInfo)
@@ -138,7 +142,7 @@ class Fedex
 
         $payload['ProcessShipmentRequest']['TransactionDetail']['CustomerTransactionId'] =
         $payload['ProcessShipmentRequest']['RequestedShipment']['RequestedPackageLineItems']['CustomerReferences']['Value'] =
-            randomNumber(32);
+        Shipment::AWBID(32);
 
         $payload['ProcessShipmentRequest']['RequestedShipment']['ShipTimestamp'] = Carbon::now()->format(Carbon::ATOM);
         $payload['ProcessShipmentRequest']['RequestedShipment']['Shipper']['Contact'] = [
@@ -159,7 +163,7 @@ class Fedex
             'PhoneNumber' => $shipmentInfo['consignee_phone'],
         ];
         $payload['ProcessShipmentRequest']['RequestedShipment']['Recipient']['Address'] = [
-            'StreetLines' => $shipmentInfo['consignee_address_description'],
+            'StreetLines' => $shipmentInfo['consignee_address_description_1'],
             'City' => $shipmentInfo['consignee_area'],
             'StateOrProvinceCode' => City::where('name_en', $shipmentInfo['consignee_city'])->first() ? City::where('name_en', $shipmentInfo['consignee_city'])->first()->code : '',
             'PostalCode' => $shipmentInfo['consignee_zip_code'] ?? '',
@@ -178,7 +182,7 @@ class Fedex
 
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['CustomsValue']['Amount'] =
         $payload['ProcessShipmentRequest']['RequestedShipment']['CustomsClearanceDetail']['Commodities']['UnitPrice']['Amount'] =
-            currency_exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code);
+        Shipcash::exchange($shipmentInfo['declared_value'], $merchentInfo->currency_code);
 
         $response = $this->call('ProcessShipmentRequest', $payload);
 
@@ -204,7 +208,7 @@ class Fedex
 
         return [
             'id' => $response['CompletedShipmentDetail']['CompletedPackageDetails']['TrackingIds']['TrackingNumber'],
-            'file' => uploadFiles('fedex/shipment', base64_decode($response['CompletedShipmentDetail']['CompletedPackageDetails']['Label']['Parts']['Image']), 'pdf', true),
+            'file' => AWSServices::uploadToS3('fedex/shipment', base64_decode($response['CompletedShipmentDetail']['CompletedPackageDetails']['Label']['Parts']['Image']), 'pdf', true),
         ];
     }
 
@@ -214,15 +218,14 @@ class Fedex
         $payload['TrackRequest']['SelectionDetails']['PackageIdentifier']['Value'] = $shipment_waybills;
 
         $response = $this->call('TrackRequest', $payload);
-
         if (
-            (!isset($response['v20Notifications']['Severity'])) ||
-            (isset($response['v20Notifications']['Severity']) && $response['v20Notifications']['Severity'] == 'ERROR')
+            (!isset($response['CompletedTrackDetails']['HighestSeverity'])) ||
+            (isset($response['CompletedTrackDetails']['HighestSeverity']) && $response['CompletedTrackDetails']['HighestSeverity'] == 'ERROR')
         ) {
-            throw new CarriersException('Cannot track Fedex shipment');
+            return [];
         }
 
-        return ($response);
+        return ($response['CompletedTrackDetails']['TrackDetails']);
     }
 
     public function bindJsonFile($file, $type)
@@ -245,7 +248,7 @@ class Fedex
         $xml->addAttribute('xmlns:SOAP-ENV', 'http://schemas.xmlsoap.org/soap/envelope/', 'http://schemas.xmlsoap.org/soap/envelope/');
         $xml->addAttribute('xmlns', self::$xsd[$type]);
 
-        $body = array_to_xml($data, new SimpleXMLElement('<SOAP-ENV:Body></SOAP-ENV:Body>', LIBXML_NOERROR, false, 'ws', true));
+        $body = XML::toXML($data, new SimpleXMLElement('<SOAP-ENV:Body></SOAP-ENV:Body>', LIBXML_NOERROR, false, 'ws', true));
 
         $main = dom_import_simplexml($xml);
         $content = dom_import_simplexml($body);

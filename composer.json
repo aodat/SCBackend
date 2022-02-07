@@ -45,9 +45,6 @@
             "app/Libs/GateToPay",
             "app/Libs/PayTabs",
             "app/Libs/Dinarak"
-        ],
-        "files": [
-            "app/helpers.php"
         ]
     },
     "autoload-dev": {

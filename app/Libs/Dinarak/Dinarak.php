@@ -33,7 +33,7 @@ class Dinarak
             "Amount" => (float) $amount,
             "Description" => "Transfer from ShipCash",
             "ReceiverID" => (string) $wallet_number,
-            "MessageId" => generateMessageID(),
+            "MessageId" => $this->generateMessageID(),
             "OperationName" => "Transfer",
         ];
 
@@ -55,7 +55,7 @@ class Dinarak
             'Name' => $merchecntInfo->id, ' - ', $merchecntInfo->name,
             'Amount' => $amount,
             'Description' => 'Request From Shipcash',
-            'MessageId' => generateMessageID(),
+            'MessageId' => $this->generateMessageID(),
             'WalletID' => $wallet_number,
             'OTP' => $pincode,
         ];
@@ -86,5 +86,14 @@ class Dinarak
         if (!$response->successful()) {
             throw new InternalException('Dinark - Pin Code Error', $response->status());
         }
+    }
+
+    public function generateMessageID()
+    {
+        $prefix = array_map(function ($chr) {
+            return 9-+$chr;
+        }, str_split(intval((microtime(1) * 10000))));
+        $prefix = implode('', $prefix);
+        return str_replace('.', '', uniqid($prefix, true));
     }
 }

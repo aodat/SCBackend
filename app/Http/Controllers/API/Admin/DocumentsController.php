@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Admin;
 
 use App\Exceptions\InternalException;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Utilities\AWSServices;
 use App\Http\Requests\Admin\DocumentsRequest;
 use App\Models\Merchant;
 use Carbon\Carbon;
@@ -30,7 +31,7 @@ class DocumentsController extends Controller
         $data = [
             'id' => ++$counter,
             'type' => $request->type,
-            'url' => uploadFiles('documents', $request->file('file')),
+            'url' => AWSServices::uploadToS3('documents', $request->file('file')),
             'status' => 'pending',
             'verified_at' => null,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
