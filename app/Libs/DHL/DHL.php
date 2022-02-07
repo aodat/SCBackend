@@ -187,7 +187,7 @@ class DHL
         $payload['Consignee']['CompanyName'] = $shipmentInfo['consignee_name'];
         $payload['Consignee']['AddressLine1'] = substr($shipmentInfo['consignee_address_description_1'], 0, 10);
         $payload['Consignee']['AddressLine2'] = substr($shipmentInfo['consignee_address_description_2'] ?? $shipmentInfo['consignee_address_description_1'], 0, 10);
-        $payload['Consignee']['AddressLine3'] = substr($shipmentInfo['consignee_address_description_1'], 0, 10);
+        $payload['Consignee']['AddressLine3'] = substr($shipmentInfo['consignee_area'], 0, 10);
         $payload['Consignee']['StreetName'] = substr($shipmentInfo['consignee_address_description_1'], 0, 25);
         $payload['Consignee']['BuildingName'] = substr($shipmentInfo['consignee_address_description_1'], 0, 25);
         $payload['Consignee']['StreetNumber'] = substr($shipmentInfo['consignee_address_description_1'], 0, 15);
