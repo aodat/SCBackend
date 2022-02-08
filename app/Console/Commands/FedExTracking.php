@@ -2,11 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\API\Merchant\ShipmentController;
+use App\Models\Merchant;
 use App\Models\Shipment;
+use App\Models\Transaction;
 use App\Traits\CarriersManager;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class FedExTracking extends Command
 {
@@ -43,30 +45,69 @@ class FedExTracking extends Command
      */
     public function handle()
     {
-        $lists = DB::table('shipments')->where('carrier_id', 3)
+        $shipments = Shipment::where('carrier_id', 3)
             ->where('status', '<>', 'COMPLETED')
-            ->pluck('external_awb');
+            ->get();
 
-        $lists->map(function ($external_awb) {
-            $shipmentInfo = $this->track('FedEx', $external_awb)['DatesOrTimes'] ?? [];
-            $last_update = $shipmentInfo[0]['Type'] ?? '';
+        $setup = [
+            'DL' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
+            'OD' => ['status' => 'DRAFT'],
+        ];
 
-            foreach ($shipmentInfo as $key => $value) {
+        $shipments->map(function ($shipment) use ($setup) {
+            $trackDetails = $this->track('FedEx', $shipment->external_awb) ?? [];
+            $event = $trackDetails['Events'];
+            $last_update = $trackDetails['DatesOrTimes'][0]['Type'] ?? '';
+
+            foreach ($trackDetails['DatesOrTimes'] as $key => $value) {
                 $new[] = [
                     'UpdateDateTime' => Carbon::parse($value['DateOrTimestamp'])->format('Y-m-d H:i:s'),
                     'UpdateLocation' => 'N/A',
                     'UpdateDescription' => str_replace('_', ' ', $value['Type']),
                     'TrackingDescription' => 'N/A',
                 ];
-
             }
-            Shipment::withoutGlobalScope('ancient')
-                ->where('external_awb', $external_awb)
-                ->update([
-                    'shipping_logs' => collect($new),
-                    'last_update' => str_replace('_', ' ', $last_update),
-                ]);
+
+            $updated = $setup[$event['EventType']] ?? ['status' => 'PROCESSING', 'actions' => ['check_chargable_weight']];
+            $updated['shipping_logs'] = collect($new);
+            $updated['last_update'] = str_replace('_', ' ', $last_update);
+
+            if (isset($updated['actions'])) {
+                $merchant = Merchant::findOrFail($shipment->merchant_id);
+                if ($shipment->actual_weight < $trackDetails['ShipmentWeight']['Value']) {
+                    $fees = (new ShipmentController)->calculateFees(
+                        3,
+                        null,
+                        ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
+                        $shipment->group,
+                        $trackDetails['ShipmentWeight']['Value']
+                    );
+
+                    // Check the paid fees in this shipment
+                    $diff = $fees - $shipment->fees;
+                    $merchant->bundle_balance -= $diff;
+                    $merchant->save();
+
+                    Transaction::create(
+                        [
+                            'type' => 'CASHOUT',
+                            'subtype' => 'BUNDLE',
+                            'item_id' => $shipment->id,
+                            'merchant_id' => $shipment->merchant_id,
+                            'source' => 'SHIPMENT',
+                            'status' => 'COMPLETED',
+                            'created_by' => $shipment->created_by,
+                            'balance_after' => $merchant->bundle_balance,
+                            'amount' => $diff,
+                            'resource' => 'API',
+                        ]
+                    );
+                }
+                unset($updated['actions']);
+            }
+            $shipment->update($updated);
         });
+
         return Command::SUCCESS;
     }
 }
