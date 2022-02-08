@@ -56,7 +56,12 @@ class FedExTracking extends Command
 
         $shipments->map(function ($shipment) use ($setup) {
             $trackDetails = $this->track('FedEx', $shipment->external_awb) ?? [];
-            $event = $trackDetails['Events'];
+            $event = $trackDetails['Events'] ?? [];
+
+            if (empty($event)) {
+                return $shipment;
+            }
+
             $last_update = $trackDetails['DatesOrTimes'][0]['Type'] ?? '';
 
             foreach ($trackDetails['DatesOrTimes'] as $key => $value) {
@@ -74,7 +79,7 @@ class FedExTracking extends Command
 
             if (isset($updated['actions'])) {
                 $merchant = Merchant::findOrFail($shipment->merchant_id);
-                if ($shipment->actual_weight < $trackDetails['ShipmentWeight']['Value']) {
+                if ($shipment->chargable_weight != $trackDetails['ShipmentWeight']['Value']) {
                     $fees = (new ShipmentController)->calculateFees(
                         3,
                         null,
@@ -102,6 +107,18 @@ class FedExTracking extends Command
                             'resource' => 'API',
                         ]
                     );
+                    $updated['fees'] = $fees;
+                    $updated['chargable_weight'] = $trackDetails['ShipmentWeight']['Value'];
+
+                    $logs = collect($shipment->admin_logs);
+
+                    $updated['admin_logs'] = $logs->merge([[
+                        'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'UpdateLocation' => '',
+                        'UpdateDescription' => 'Update Shipment Weight From ' . $shipment->actual_weight . ' To ' . $trackDetails['ShipmentWeight']['Value'],
+
+                    ]]);
+
                 }
                 unset($updated['actions']);
             }

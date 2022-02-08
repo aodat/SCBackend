@@ -259,7 +259,7 @@ class DHL
             return [];
         }
 
-        return array_reverse($response['AWBInfo']['ShipmentInfo']['ShipmentEvent'] ?? []);
+        return $response['AWBInfo']['ShipmentInfo'] ?? [];
     }
 
     public function bindJsonFile($file)

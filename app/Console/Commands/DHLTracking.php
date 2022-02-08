@@ -2,10 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\API\Merchant\ShipmentController;
+use App\Models\Merchant;
 use App\Models\Shipment;
+use App\Models\Transaction;
 use App\Traits\CarriersManager;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 
 class DHLTracking extends Command
 {
@@ -42,30 +45,86 @@ class DHLTracking extends Command
      */
     public function handle()
     {
-        $lists = DB::table('shipments')->where('carrier_id', 2)
+        $shipments = Shipment::where('carrier_id', 2)
             ->where('status', '<>', 'COMPLETED')
-            ->pluck('external_awb');
+            ->get();
 
-        $lists->map(function ($external_awb) {
-            $shipmentInfo = $this->track('DHL', $external_awb);
-            $last_update = $shipmentInfo[0]['ServiceEvent']['Description'] ?? '';
+        $setup = [
+            'OK' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
+            'PU' => ['status' => 'DRAFT'],
+        ];
 
-            foreach ($shipmentInfo as $key => $value) {
+        $shipments->map(function ($shipment) use ($setup) {
+            $trackDetails = $this->track('DHL', $shipment->external_awb) ?? [];
+            $lastEvent = $trackDetails[0]['ServiceEvent']['EventCode'] ?? [];
+            if (empty($lastEvent)) {
+                return $shipment;
+            }
+
+            $last_update = $trackDetails[0]['ServiceEvent']['Description'] ?? null;
+
+            $ShipmentEvent = array_reverse($trackDetails['ShipmentEvent']);
+            foreach ($ShipmentEvent as $key => $value) {
                 $new[] = [
                     'UpdateDateTime' => $value['Date'] . ' ' . $value['Time'],
                     'UpdateLocation' => $value['ServiceArea']['Description'],
                     'UpdateDescription' => $value['ServiceEvent']['Description'],
                     'TrackingDescription' => 'N/A',
                 ];
-
             }
-            Shipment::withoutGlobalScope('ancient')
-                ->where('external_awb', $external_awb)
-                ->update([
-                    'shipping_logs' => collect($new),
-                    'last_update' => $last_update,
-                ]);
+
+            $updated = $setup[$lastEvent] ?? ['status' => 'PROCESSING', 'actions' => ['check_chargable_weight']];
+            $updated['shipping_logs'] = collect($new);
+            $updated['last_update'] = str_replace('_', ' ', $last_update);
+
+            if (isset($updated['actions'])) {
+                $merchant = Merchant::findOrFail($shipment->merchant_id);
+                if ($shipment->chargable_weight != $trackDetails['Weight']) {
+                    $fees = (new ShipmentController)->calculateFees(
+                        3,
+                        null,
+                        ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
+                        $shipment->group,
+                        $trackDetails['Weight']
+                    );
+
+                    // Check the paid fees in this shipment
+                    $diff = $fees - $shipment->fees;
+                    $merchant->bundle_balance -= $diff;
+                    $merchant->save();
+
+                    Transaction::create(
+                        [
+                            'type' => 'CASHOUT',
+                            'subtype' => 'BUNDLE',
+                            'item_id' => $shipment->id,
+                            'merchant_id' => $shipment->merchant_id,
+                            'source' => 'SHIPMENT',
+                            'status' => 'COMPLETED',
+                            'created_by' => $shipment->created_by,
+                            'balance_after' => $merchant->bundle_balance,
+                            'amount' => $diff,
+                            'resource' => 'API',
+                        ]
+                    );
+                    $updated['fees'] = $fees;
+                    $updated['chargable_weight'] = $trackDetails['Weight'];
+
+                    $logs = collect($shipment->admin_logs);
+
+                    $updated['admin_logs'] = $logs->merge([[
+                        'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'UpdateLocation' => '',
+                        'UpdateDescription' => 'Update Shipment Weight From ' . $shipment->actual_weight . ' To ' . $trackDetails['Weight'],
+
+                    ]]);
+
+                }
+                unset($updated['actions']);
+            }
+            $shipment->update($updated);
         });
+
         return Command::SUCCESS;
     }
 }
