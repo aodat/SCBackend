@@ -30,7 +30,7 @@ class Controller extends BaseController
     public function json()
     {
 
-        // die('No Working Yet !!!!');
+        die('No Working Yet !!!!');
         set_time_limit(0);
 
         DB::transaction(function () {
