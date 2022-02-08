@@ -311,7 +311,7 @@ class Aramex
         $data = $request->all();
         $shipmentInfo = Shipment::withoutGlobalScope('ancient')->where('external_awb', $request->WaybillNumber)->first();
 
-        $updated = $this->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
+        $updated = $this->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING', 'actions' => ['check_chargable_weight']];
         $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
 
         $actions = $updated['actions'] ?? [];
@@ -361,9 +361,28 @@ class Aramex
                     $merchant->save();
                 }
             } else if ($action == 'check_chargable_weight') {
-                $updated['chargable_weight'] = $details['ChargeableWeight'];
-                if ($shipmentInfo['actual_weight'] <= $updated['chargable_weight']) {
+                if ($shipmentInfo['chargable_weight'] != $details['ChargeableWeight']) {
+                    // Check the paid fees in this shipment
+                    $diff = $fees - $shipmentInfo['fees'];
+                    $merchant->bundle_balance -= $diff;
+                    $merchant->save();
 
+                    Transaction::create(
+                        [
+                            'type' => 'CASHOUT',
+                            'subtype' => 'BUNDLE',
+                            'item_id' => $shipmentInfo['id'],
+                            'merchant_id' => $shipmentInfo['merchant_id'],
+                            'source' => 'SHIPMENT',
+                            'status' => 'COMPLETED',
+                            'created_by' => $shipmentInfo['created_by'],
+                            'balance_after' => $merchant->bundle_balance,
+                            'amount' => $diff,
+                            'resource' => 'API',
+                        ]
+                    );
+
+                    $updated['chargable_weight'] = $details['ChargeableWeight'];
                     $updated['fees'] = $fees;
 
                     $logs = collect($shipmentInfo->admin_logs);
