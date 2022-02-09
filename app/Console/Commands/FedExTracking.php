@@ -46,7 +46,9 @@ class FedExTracking extends Command
     public function handle()
     {
         $shipments = Shipment::where('carrier_id', 3)
-            ->where('status', '<>', 'COMPLETED')
+            ->where(function ($where) {
+                $where->orWhere('status', '<>', 'COMPLETED')->orWhere('status', '<>', 'RENTURND');
+            })
             ->get();
 
         $setup = [
