@@ -23,7 +23,7 @@ class MerchantServiceProvider extends ServiceProvider
     {
         $this->app->singleton('merchantInfo', function () {
             if (Request()->user() === null)
-                return Merchant::findOrFail(900);
+                return Merchant::findOrFail(1);
             return Merchant::findOrFail(Auth::user()->merchant_id);
         });
 

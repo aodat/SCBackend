@@ -311,7 +311,7 @@ class Aramex
         $data = $request->all();
         $shipmentInfo = Shipment::withoutGlobalScope('ancient')->where('external_awb', $request->WaybillNumber)->first();
 
-        $updated = $this->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
+        $updated = $this->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING', 'actions' => ['check_chargable_weight']];
         $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
 
         $actions = $updated['actions'] ?? [];
@@ -329,6 +329,7 @@ class Aramex
                 $details['ChargeableWeight']
             );
         }
+        $logs = collect($shipmentInfo->admin_logs);
 
         foreach ($actions as $action) {
             if ($action == 'create_transaction') {
@@ -349,24 +350,49 @@ class Aramex
                 $updated['transaction_id'] = $transaction->id;
             } else if ($action == 'update_merchant_balance') {
                 if ($shipmentInfo['cod'] > 0) {
+                    $updated['admin_logs'] = $logs->merge([[
+                        'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+                        'UpdateLocation' => '',
+                        'UpdateDescription' => 'Shipment Completed SH239',
 
-                    if (isset($data['Comment2'])) {
-                        if (!Str::contains($data['Comment2'], 'Cheque')) {
-                            $merchant->cod_balance += $shipmentInfo['cod'];
-                        }
+                    ]]);
 
-                    }
 
-                    $merchant->bundle_balance -= $fees;
-                    $merchant->save();
+                    // if (isset($data['Comment2'])) {
+                    //     if (!Str::contains($data['Comment2'], 'Cheque')) {
+                    //         $merchant->cod_balance += $shipmentInfo['cod'];
+                    //     }
+
+                    // }
+
+                    // $merchant->bundle_balance -= $fees;
+                    // $merchant->save();
                 }
             } else if ($action == 'check_chargable_weight') {
-                $updated['chargable_weight'] = $details['ChargeableWeight'];
-                if ($shipmentInfo['actual_weight'] <= $updated['chargable_weight']) {
+                if ($shipmentInfo['chargable_weight'] != $details['ChargeableWeight'] && $shipmentInfo['group'] == 'EXP') {
+                    // Check the paid fees in this shipment
+                    // $diff = $fees - $shipmentInfo['fees'];
+                    // $merchant->bundle_balance -= $diff;
+                    // $merchant->save();
 
+                    // Transaction::create(
+                    //     [
+                    //         'type' => 'CASHOUT',
+                    //         'subtype' => 'BUNDLE',
+                    //         'item_id' => $shipmentInfo['id'],
+                    //         'merchant_id' => $shipmentInfo['merchant_id'],
+                    //         'source' => 'SHIPMENT',
+                    //         'status' => 'COMPLETED',
+                    //         'created_by' => $shipmentInfo['created_by'],
+                    //         'balance_after' => $merchant->bundle_balance,
+                    //         'amount' => $diff,
+                    //         'resource' => 'API',
+                    //     ]
+                    // );
+
+                    $updated['chargable_weight'] = $details['ChargeableWeight'];
                     $updated['fees'] = $fees;
 
-                    $logs = collect($shipmentInfo->admin_logs);
 
                     $updated['admin_logs'] = $logs->merge([[
                         'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
