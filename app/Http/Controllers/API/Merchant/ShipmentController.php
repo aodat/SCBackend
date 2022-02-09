@@ -384,8 +384,8 @@ class ShipmentController extends MerchantController
             $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', $shipment['actual_weight']);
         }
 
-        $shipment['merchant_id'] = 900;
-        $shipment['created_by'] = 900;
+        $shipment['merchant_id'] = 1;
+        $shipment['created_by'] = 1;
         $shipment['created_at'] = Carbon::now();
         $shipment['updated_at'] = Carbon::now();
 

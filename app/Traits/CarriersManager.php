@@ -47,7 +47,7 @@ trait CarriersManager
     public function getMerchantInfo()
     {
         if (Request()->user() === null) {
-            return Merchant::findOrFail(900);
+            return Merchant::findOrFail(1);
         } else {
             return App::make('merchantInfo');
         }
