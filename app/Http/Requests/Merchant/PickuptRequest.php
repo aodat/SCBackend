@@ -21,7 +21,10 @@ class PickuptRequest extends MerchantRequest
             return [
                 'address_id' => 'required',
                 'carrier_id' => 'required|exists:carriers,id',
-                "pickup_date" => "required|date|date_format:Y-m-d|after:today|before:$new_date"
+                "pickup_date" => "required|date|date_format:Y-m-d|after_or_equal:today|before:$new_date",
+                "from" => "required|date_format:H:i",
+                "to" => "required|date_format:H:i|after:from",
+                
             ];
         else if(strpos($path,'pickup/cancel') !== false)
             return [

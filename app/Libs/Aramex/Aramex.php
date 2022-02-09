@@ -66,7 +66,7 @@ class Aramex
             "consignee_city" => "England",
             "consignee_area" => "ALL",
             "consignee_zip_code" => "CR5 3FT",
-            "consignee_address_description" => "13 DICKENS DR",
+            "consignee_address_description_1" => "13 DICKENS DR",
             "content" => "Test Content",
             "pieces" => 1,
             "actual_weight" => 1,
@@ -80,7 +80,7 @@ class Aramex
 
     }
 
-    public function createPickup($email, $date, $address)
+    public function createPickup($email, $info, $address)
     {
         $payload = $this->bindJsonFile('pickup.create.json');
         $payload['ClientInfo'] = $this->config;
@@ -99,10 +99,9 @@ class Aramex
         $payload['Pickup']['PickupContact']['EmailAddress'] = $email;
 
         $payload['Pickup']['PickupLocation'] = $address['city_code'] ?? $address['city'];
-        $payload['Pickup']['PickupDate'] = '/Date(' . (strtotime($date) * 1000) . ')/';
-
-        $ReadyTime = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 03:00 PM') * 1000;
-        $LastPickupTime = $ClosingTime = strtotime(Carbon::createFromFormat('Y-m-d', $date)->format('Y-m-d') . ' 04:00 PM') * 1000;
+        $payload['Pickup']['PickupDate'] = '/Date(' . (strtotime($info['date']) * 1000) . ')/';
+        $ReadyTime = strtotime($info['ready']->format('Y-m-d h:i A')) * 1000;
+        $LastPickupTime = $ClosingTime = strtotime($info['close']->format('Y-m-d h:i A')) * 1000;
 
         $payload['Pickup']['ReadyTime'] = '/Date(' . $ReadyTime . ')/';
         $payload['Pickup']['LastPickupTime'] = '/Date(' . $LastPickupTime . ')/';
@@ -217,8 +216,8 @@ class Aramex
         $data['Shipper']['Contact']['PhoneNumber1'] = $shipmentInfo['sender_phone'];
         $data['Shipper']['Contact']['CellPhone'] = $shipmentInfo['sender_phone'];
 
-        $data['Consignee']['PartyAddress']['Line1'] = $shipmentInfo['consignee_address_description'];
-        $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_second_phone'] ?? '';
+        $data['Consignee']['PartyAddress']['Line1'] = $shipmentInfo['consignee_address_description_1'];
+        $data['Consignee']['PartyAddress']['Line2'] = $shipmentInfo['consignee_address_description_2'] ?? $shipmentInfo['consignee_address_description_1'];
         $data['Consignee']['PartyAddress']['Line3'] = '';
         $data['Consignee']['PartyAddress']['City'] = $shipmentInfo['consignee_city'];
         $data['Consignee']['PartyAddress']['StateOrProvinceCode'] = City::where('name_en', $shipmentInfo['consignee_city'])->first() ? City::where('name_en', $shipmentInfo['consignee_city'])->first()->code : '';
@@ -288,16 +287,14 @@ class Aramex
 
         $response = Http::post(self::$TRACK_SHIPMENTS_URL, $trackingPayload);
         if (!$response->successful()) {
-            throw new CarriersException('Aramex Track Shipments – Something Went Wrong', $trackingPayload, $response->json());
-        }
-
-        if ($response->json()['HasErrors']) {
-            throw new CarriersException('Cannot track Aramex shipment', $trackingPayload, $response->json());
+            return [];
+        } else if ($response->json()['HasErrors']) {
+            return [];
         }
 
         $result = $response->json()['TrackingResults'];
         if (empty($result)) {
-            throw new CarriersException('Tracking Details Is Empty', $trackingPayload, $response->json());
+            return [];
         }
 
         if ($all_event) {
@@ -314,7 +311,7 @@ class Aramex
         $data = $request->all();
         $shipmentInfo = Shipment::withoutGlobalScope('ancient')->where('external_awb', $request->WaybillNumber)->first();
 
-        $updated = $this->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING'];
+        $updated = $this->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING', 'actions' => ['check_chargable_weight']];
         $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
 
         $actions = $updated['actions'] ?? [];
@@ -364,9 +361,28 @@ class Aramex
                     $merchant->save();
                 }
             } else if ($action == 'check_chargable_weight') {
-                $updated['chargable_weight'] = $details['ChargeableWeight'];
-                if ($shipmentInfo['actual_weight'] <= $updated['chargable_weight']) {
+                if ($shipmentInfo['chargable_weight'] != $details['ChargeableWeight']) {
+                    // Check the paid fees in this shipment
+                    $diff = $fees - $shipmentInfo['fees'];
+                    $merchant->bundle_balance -= $diff;
+                    $merchant->save();
 
+                    Transaction::create(
+                        [
+                            'type' => 'CASHOUT',
+                            'subtype' => 'BUNDLE',
+                            'item_id' => $shipmentInfo['id'],
+                            'merchant_id' => $shipmentInfo['merchant_id'],
+                            'source' => 'SHIPMENT',
+                            'status' => 'COMPLETED',
+                            'created_by' => $shipmentInfo['created_by'],
+                            'balance_after' => $merchant->bundle_balance,
+                            'amount' => $diff,
+                            'resource' => 'API',
+                        ]
+                    );
+
+                    $updated['chargable_weight'] = $details['ChargeableWeight'];
                     $updated['fees'] = $fees;
 
                     $logs = collect($shipmentInfo->admin_logs);
