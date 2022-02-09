@@ -46,10 +46,10 @@ class DHLTracking extends Command
     public function handle()
     {
         $shipments = Shipment::where('carrier_id', 2)
-            ->where('status', '<>', 'COMPLETED')
-            ->orWhere('status', '<>', 'RENTURND')
+            ->where(function ($where) {
+                $where->orWhere('status', '<>', 'COMPLETED')->orWhere('status', '<>', 'RENTURND');
+            })
             ->get();
-
         $setup = [
             'OK' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'PU' => ['status' => 'DRAFT'],
@@ -57,12 +57,11 @@ class DHLTracking extends Command
 
         $shipments->map(function ($shipment) use ($setup) {
             $trackDetails = $this->track('DHL', $shipment->external_awb) ?? [];
-            $lastEvent = $trackDetails[0]['ServiceEvent']['EventCode'] ?? [];
-            if (empty($lastEvent)) {
-                return $shipment;
-            }
 
-            $last_update = $trackDetails[0]['ServiceEvent']['Description'] ?? null;
+            $events = array_reverse($trackDetails['ShipmentEvent'] ?? []);
+
+            $lastEvent = $events[0]['ServiceEvent']['EventCode'] ?? [];
+            $last_update = $events[0]['ServiceEvent']['Description'] ?? null;
 
             $ShipmentEvent = array_reverse($trackDetails['ShipmentEvent']);
             foreach ($ShipmentEvent as $key => $value) {
@@ -124,8 +123,8 @@ class DHLTracking extends Command
                 unset($updated['actions']);
             }
             $shipment->update($updated);
-        });
 
+        });
         return Command::SUCCESS;
     }
 }
