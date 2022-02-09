@@ -371,24 +371,24 @@ class Aramex
             } else if ($action == 'check_chargable_weight') {
                 if ($shipmentInfo['chargable_weight'] != $details['ChargeableWeight'] && $shipmentInfo['group'] == 'EXP') {
                     // Check the paid fees in this shipment
-                    // $diff = $fees - $shipmentInfo['fees'];
+                    $diff = $fees - $shipmentInfo['fees'];
                     // $merchant->bundle_balance -= $diff;
                     // $merchant->save();
 
-                    // Transaction::create(
-                    //     [
-                    //         'type' => 'CASHOUT',
-                    //         'subtype' => 'BUNDLE',
-                    //         'item_id' => $shipmentInfo['id'],
-                    //         'merchant_id' => $shipmentInfo['merchant_id'],
-                    //         'source' => 'SHIPMENT',
-                    //         'status' => 'COMPLETED',
-                    //         'created_by' => $shipmentInfo['created_by'],
-                    //         'balance_after' => $merchant->bundle_balance,
-                    //         'amount' => $diff,
-                    //         'resource' => 'API',
-                    //     ]
-                    // );
+                    Transaction::create(
+                        [
+                            'type' => 'CASHOUT',
+                            'subtype' => 'BUNDLE',
+                            'item_id' => $shipmentInfo['id'],
+                            'merchant_id' => $shipmentInfo['merchant_id'],
+                            'source' => 'SHIPMENT',
+                            'status' => 'COMPLETED',
+                            'created_by' => $shipmentInfo['created_by'],
+                            'balance_after' => $merchant->bundle_balance,
+                            'amount' => $diff,
+                            'resource' => 'API',
+                        ]
+                    );
 
                     $updated['chargable_weight'] = $details['ChargeableWeight'];
                     $updated['fees'] = $fees;
