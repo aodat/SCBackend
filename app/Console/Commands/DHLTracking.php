@@ -47,6 +47,7 @@ class DHLTracking extends Command
     {
         $shipments = Shipment::where('carrier_id', 2)
             ->where('status', '<>', 'COMPLETED')
+            ->orWhere('status', '<>', 'RENTURND')
             ->get();
 
         $setup = [
