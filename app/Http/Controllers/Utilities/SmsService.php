@@ -22,7 +22,7 @@ class SmsService
 
 		$data = [
 			'login_name' => 'shipcash',
-			'login_password' => 'Cashpass_2032',
+			'login_password' => 'AAaa002003$$##',
 			'charset' => 'UTF-8',
 			'msg' => $body,
 			'mobile_number' => $number,
