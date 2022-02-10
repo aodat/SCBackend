@@ -88,7 +88,6 @@ Route::group(['middleware' => ['json.response','db.row']], function () {
                     Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
                     Route::post('shipments/export/{type}', [ShipmentController::class, 'export']);
                     Route::get('shipments/template', [ShipmentController::class, 'template']);
-                    Route::post('shipments/track', [ShipmentController::class, 'tracking']);
 
                     Route::post('shipments/filters', [ShipmentController::class, 'index']);
                     Route::post('shipments/export/{type}', [ShipmentController::class, 'export']);
