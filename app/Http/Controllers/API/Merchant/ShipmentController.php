@@ -77,7 +77,11 @@ class ShipmentController extends MerchantController
             ->where('is_deleted', false)
             ->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($external)) {
-            $shipments->whereIn('s.external_awb', $external);
+            $shipments->where(function ($where) use ($external) {
+                foreach ($external as $ext) {
+                    $where->orWhere('s.external_awb', 'like', '%' . $ext . '%');
+                }
+            });
         }
 
         if (count($phone)) {
