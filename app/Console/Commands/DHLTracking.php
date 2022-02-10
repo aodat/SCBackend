@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Models\Merchant;
 use App\Models\Shipment;
-use App\Models\Transaction;
 use App\Traits\CarriersManager;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -68,7 +67,7 @@ class DHLTracking extends Command
                 $new[] = [
                     'UpdateDateTime' => $value['Date'] . ' ' . $value['Time'],
                     'UpdateLocation' => $value['ServiceArea']['Description'],
-                    'UpdateDescription' => $value['ServiceEvent']['Description']
+                    'UpdateDescription' => $value['ServiceEvent']['Description'],
                 ];
             }
 
@@ -80,32 +79,18 @@ class DHLTracking extends Command
                 $merchant = Merchant::findOrFail($shipment->merchant_id);
                 if ($shipment->chargable_weight != $trackDetails['Weight']) {
                     $fees = (new ShipmentController)->calculateFees(
-                        3,
+                        2,
                         null,
-                        ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
+                        $shipment->consignee_country,
                         $shipment->group,
                         $trackDetails['Weight']
                     );
 
                     // Check the paid fees in this shipment
-                    $diff = $fees - $shipment->fees;
-                    $merchant->bundle_balance -= $diff;
-                    $merchant->save();
+                    // $diff = $fees - $shipment->fees;
+                    // $merchant->bundle_balance -= $diff;
+                    // $merchant->save();
 
-                    Transaction::create(
-                        [
-                            'type' => 'CASHOUT',
-                            'subtype' => 'BUNDLE',
-                            'item_id' => $shipment->id,
-                            'merchant_id' => $shipment->merchant_id,
-                            'source' => 'SHIPMENT',
-                            'status' => 'COMPLETED',
-                            'created_by' => $shipment->created_by,
-                            'balance_after' => $merchant->bundle_balance,
-                            'amount' => $diff,
-                            'resource' => 'API',
-                        ]
-                    );
                     $updated['fees'] = $fees;
                     $updated['chargable_weight'] = $trackDetails['Weight'];
 

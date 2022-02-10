@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Models\Merchant;
 use App\Models\Shipment;
-use App\Models\Transaction;
 use App\Traits\CarriersManager;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -70,7 +69,7 @@ class FedExTracking extends Command
                 $new[] = [
                     'UpdateDateTime' => Carbon::parse($value['DateOrTimestamp'])->format('Y-m-d H:i:s'),
                     'UpdateLocation' => 'N/A',
-                    'UpdateDescription' => str_replace('_', ' ', $value['Type'])
+                    'UpdateDescription' => str_replace('_', ' ', $value['Type']),
                 ];
             }
 
@@ -84,30 +83,16 @@ class FedExTracking extends Command
                     $fees = (new ShipmentController)->calculateFees(
                         3,
                         null,
-                        ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
+                        $shipment->consignee_country,
                         $shipment->group,
                         $trackDetails['ShipmentWeight']['Value']
                     );
 
                     // Check the paid fees in this shipment
-                    $diff = $fees - $shipment->fees;
-                    $merchant->bundle_balance -= $diff;
-                    $merchant->save();
+                    // $diff = $fees - $shipment->fees;
+                    // $merchant->bundle_balance -= $diff;
+                    // $merchant->save();
 
-                    Transaction::create(
-                        [
-                            'type' => 'CASHOUT',
-                            'subtype' => 'BUNDLE',
-                            'item_id' => $shipment->id,
-                            'merchant_id' => $shipment->merchant_id,
-                            'source' => 'SHIPMENT',
-                            'status' => 'COMPLETED',
-                            'created_by' => $shipment->created_by,
-                            'balance_after' => $merchant->bundle_balance,
-                            'amount' => $diff,
-                            'resource' => 'API',
-                        ]
-                    );
                     $updated['fees'] = $fees;
                     $updated['chargable_weight'] = $trackDetails['ShipmentWeight']['Value'];
 
