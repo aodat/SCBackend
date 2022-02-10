@@ -29,10 +29,6 @@ class Controller extends BaseController
 
     public function json()
     {
-
-        die('No Working Yet !!!!');
-        set_time_limit(0);
-
         DB::transaction(function () {
             $zones = DB::table('v1_zones')->pluck('name_en', 'id');
             $areas = DB::table('v1_areas')->pluck('name_en', 'id');
@@ -136,6 +132,7 @@ class Controller extends BaseController
 
                 $mercahnt = Merchant::create(
                     [
+                        'id' => $company->id,
                         'name' => $company->name ?? 'No-Name',
                         'email' => str_replace(' ', '-', $company->name ?? 'no-name') . '+fake@shipcash.net',
                         'type' => 'individual',
@@ -153,7 +150,7 @@ class Controller extends BaseController
                 DB::table('v1_users')->where('company_id', $company->id)->get()->map(function ($user) use ($mercahnt) {
                     User::create(
                         [
-                            'merchant_id' => $mercahnt->id,
+                            'merchant_id' => $user->company_id,
                             'name' => $user->name,
                             'email' => $user->email,
                             'password' => $user->password,
@@ -166,5 +163,4 @@ class Controller extends BaseController
             });
         });
     }
-
 }
