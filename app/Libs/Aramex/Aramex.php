@@ -3,7 +3,6 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
-use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Http\Controllers\Utilities\AWSServices;
 use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Requests\Carrier\AramexRequest;
@@ -26,7 +25,7 @@ class Aramex
     private static $CREATE_SHIPMENTS_URL = 'https://ws.aramex.net/ShippingAPI.V2/Shipping/Service_1_0.svc/json/CreateShipments';
     private static $TRACK_SHIPMENTS_URL = 'https://ws.aramex.net/ShippingAPI.V2/Tracking/Service_1_0.svc/json/TrackShipments';
 
-    private $config, $setup;
+    private $config;
     public function __construct($settings = null)
     {
         $this->config = [
@@ -38,14 +37,6 @@ class Aramex
             'AccountCountryCode' => $settings['aramex_account_country_code'] ?? config('carriers.aramex.ACCOUNT_COUNTRY_CODE'),
             'Version' => $settings['aramex_version'] ?? config('carriers.aramex.VERSION'),
             'Source' => $settings['aramex_source'] ?? config('carriers.aramex.SOURCE'),
-        ];
-
-        $this->setup = [
-            'Sh014' => ['status' => 'DRAFT', 'delivered_at' => null, 'returned_at' => null, 'paid_at' => null],
-            'SH005' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null, 'actions' => ['check_chargable_weight']],
-            'SH006' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null, 'actions' => ['check_chargable_weight']],
-            'SH069' => ['status' => 'RENTURND', 'returned_at' => Carbon::now(), 'delivered_at' => null, 'paid_at' => null],
-            'SH239' => ['status' => 'COMPLETED', 'paid_at' => Carbon::now(), 'delivered_at' => Carbon::now(), 'returned_at' => null, 'actions' => ['create_transaction', 'update_merchant_balance']],
         ];
     }
 
@@ -308,99 +299,56 @@ class Aramex
 
     public function webhook(AramexRequest $request)
     {
+
         $data = $request->all();
-        $shipmentInfo = Shipment::withoutGlobalScope('ancient')->where('external_awb', $request->WaybillNumber)->first();
-
-        $updated = $this->setup[$data['UpdateCode']] ?? ['status' => 'PROCESSING', 'actions' => ['check_chargable_weight']];
+        $shipmentInfo = Shipment::where('external_awb', $request->WaybillNumber)->first();
         $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
-
-        $actions = $updated['actions'] ?? [];
-        if (isset($updated['actions'])) {
-            unset($updated['actions']);
-        }
-
-        if (!empty($actions)) {
-            $details = $this->trackShipment($shipmentInfo['external_awb']) ?? null;
-            $fees = (new ShipmentController)->calculateFees(
-                $shipmentInfo['carrier_id'],
-                null,
-                ($shipmentInfo['group'] == 'DOM') ? $shipmentInfo['consignee_city'] : $shipmentInfo['consignee_country'],
-                $shipmentInfo['group'],
-                $details['ChargeableWeight']
-            );
-        }
         $logs = collect($shipmentInfo->admin_logs);
 
-        foreach ($actions as $action) {
-            if ($action == 'create_transaction') {
+        $updated = [
+            'status' => 'COMPLETED',
+            'paid_at' => Carbon::now(),
+            'returned_at' => null,
+            'is_collected' => true,
+            'admin_logs' => $logs->merge([[
+                'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
+                'UpdateLocation' => '',
+                'UpdateDescription' => 'Shipment Paid SH239',
+            ]]),
+        ];
+
+        if (isset($data['Comment2'])) {
+            if (!Str::contains($data['Comment2'], 'Cheque')) {
+                if ($merchant->payment_type == 'POSTPAID') {
+                    $balance_after = ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->cod_balance;
+                    $amount = $shipmentInfo['cod'] - $shipmentInfo['fees'];
+                } else {
+                    $balance_after = $shipmentInfo['cod'] + $merchant->cod_balance;
+                    $amount = $shipmentInfo['cod'];
+                }
+
                 $transaction = Transaction::create(
                     [
                         'type' => 'CASHIN',
                         'subtype' => 'COD',
-                        'item_id' => $shipmentInfo['id'],
+                        'item_id' => $shipmentInfo['external_awb'],
                         'merchant_id' => $shipmentInfo['merchant_id'],
                         'source' => 'SHIPMENT',
-                        'status' => 'PROCESSING',
+                        'status' => 'COMPLETED',
                         'created_by' => $shipmentInfo['created_by'],
-                        'balance_after' => ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->bundle_balance,
-                        'amount' => ($shipmentInfo['cod'] - $shipmentInfo['fees']),
-                        'resource' => 'API',
+                        'balance_after' => $balance_after,
+                        'amount' => $amount
                     ]
                 );
+
                 $updated['transaction_id'] = $transaction->id;
-            } else if ($action == 'update_merchant_balance') {
-                if ($shipmentInfo['cod'] > 0) {
-                    $updated['admin_logs'] = $logs->merge([[
-                        'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
-                        'UpdateLocation' => '',
-                        'UpdateDescription' => 'Shipment Completed SH239',
-
-                    ]]);
-
-                    if (isset($data['Comment2'])) {
-                        if (!Str::contains($data['Comment2'], 'Cheque')) {
-                            $merchant->cod_balance += $shipmentInfo['cod'];
-                            $merchant->save();
-                        }
-                    }
-
-                    // $merchant->bundle_balance -= $fees;
-                    // $merchant->save();
-                }
-            } else if ($action == 'check_chargable_weight') {
-                if ($shipmentInfo['chargable_weight'] != $details['ChargeableWeight'] && $shipmentInfo['group'] == 'EXP') {
-                    // Check the paid fees in this shipment
-                    $diff = $fees - $shipmentInfo['fees'];
-                    // $merchant->bundle_balance -= $diff;
-                    // $merchant->save();
-
-                    Transaction::create(
-                        [
-                            'type' => 'CASHOUT',
-                            'subtype' => 'BUNDLE',
-                            'item_id' => $shipmentInfo['id'],
-                            'merchant_id' => $shipmentInfo['merchant_id'],
-                            'source' => 'SHIPMENT',
-                            'status' => 'COMPLETED',
-                            'created_by' => $shipmentInfo['created_by'],
-                            'balance_after' => $merchant->bundle_balance,
-                            'amount' => $diff,
-                            'resource' => 'API',
-                        ]
-                    );
-
-                    $updated['chargable_weight'] = $details['ChargeableWeight'];
-                    $updated['fees'] = $fees;
-
-                    $updated['admin_logs'] = $logs->merge([[
-                        'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
-                        'UpdateLocation' => '',
-                        'UpdateDescription' => 'Update Shipment Weight From ' . $shipmentInfo['actual_weight'] . ' To ' . $updated['chargable_weight'],
-
-                    ]]);
-                }
+                $merchant->cod_balance += $shipmentInfo['cod'];
+                $merchant->save();
             }
         }
+
+        // $merchant->bundle_balance -= $fees;
+        // $merchant->save();
 
         $shipmentInfo->update($updated);
         return $this->successful('Webhook Completed');

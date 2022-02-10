@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Requests\Merchant\DashboardRequest;
-use App\Models\Shipment;
-use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use Carbon\CarbonPeriod;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends MerchantController
 {
@@ -14,13 +12,13 @@ class DashboardController extends MerchantController
         'DRAFT' => 0,
         'PROCESSING' => 0,
         'COMPLETED' => 0,
-        'RENTURND' => 0
+        'RENTURND' => 0,
     ];
 
     private $paymentCounter = [
         "CASHOUT" => 0,
         "CASHIN" => 0,
-        'PENDING_PAYMENTS' => 0
+        'PENDING_PAYMENTS' => 0,
     ];
 
     public function index(DashboardRequest $request)
@@ -40,15 +38,14 @@ class DashboardController extends MerchantController
             ->whereBetween('t.updated_at', [$request->since_at, $request->until])
             ->groupByRaw('date(updated_at), type')
             ->union(DB::table(DB::raw('shipments s'))
-                ->select(DB::raw('date(updated_at) as date'), DB::raw('"PENDING_PAYMENTS" as stype'), DB::raw('count(id) counter'))
-                ->where('s.merchant_id', '=', $merchant_id)
-                ->where('status', '=', 'COMPLETED')
-                ->where('s.is_deleted', false)
-                ->whereBetween('s.updated_at', [$request->since_at, $request->until])
-                ->whereNull('transaction_id')
-                ->groupByRaw('date(updated_at), status'))
+                    ->select(DB::raw('date(updated_at) as date'), DB::raw('"PENDING_PAYMENTS" as stype'), DB::raw('count(id) counter'))
+                    ->where('s.merchant_id', '=', $merchant_id)
+                    ->where('status', '=', 'COMPLETED')
+                    ->where('s.is_deleted', false)
+                    ->whereBetween('s.updated_at', [$request->since_at, $request->until])
+                    ->whereNull('transaction_id')
+                    ->groupByRaw('date(updated_at), status'))
             ->get();
-
 
         $shipping_dates = $payment_dates = $shipping = $payments = [];
 
@@ -59,13 +56,13 @@ class DashboardController extends MerchantController
                 'DRAFT' => 0,
                 'PROCESSING' => 0,
                 'COMPLETED' => 0,
-                'RENTURND' => 0
+                'RENTURND' => 0,
             ];
 
             $payment_dates[$current] = [
                 'CASHIN' => 0,
                 'CASHOUT' => 0,
-                'PENDING_PAYMENTS' => 0
+                'PENDING_PAYMENTS' => 0,
             ];
 
             $shipping['DRAFT'][$current] = 0;
@@ -88,7 +85,6 @@ class DashboardController extends MerchantController
             $this->shippingCounter[$status] += $counter;
         });
 
-
         $transactions->map(function ($transaction) use (&$payment_dates, &$payments) {
             $counter = $transaction->counter;
             $date = $transaction->date;
@@ -102,12 +98,12 @@ class DashboardController extends MerchantController
         $data = [
             "chart" => [
                 "shipping" => $shipping,
-                "payment" => $payments
+                "payment" => $payments,
             ],
             "info" => [
                 "shipping" => $this->shippingCounter,
-                "payment" =>  $this->paymentCounter
-            ]
+                "payment" => $this->paymentCounter,
+            ],
         ];
 
         return $this->response($data, 'Data Retrieved Successfully');
