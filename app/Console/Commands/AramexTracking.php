@@ -8,6 +8,8 @@ use App\Models\Shipment;
 use App\Traits\CarriersManager;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class AramexTracking extends Command
 {
@@ -107,6 +109,11 @@ class AramexTracking extends Command
                 unset($updated['actions']);
             }
             $shipment->update($updated);
+
+            if (($lastEvent == 'SH006' || $lastEvent == 'SH006') && ($shipment->cod == 0)) {
+                $request = Request::create('/api/aramex-webhook', 'POST', ['UpdateCode' => 'SH239', 'WaybillNumber' => $shipment->external_awb]);
+                Route::dispatch($request);
+            }
         });
         return Command::SUCCESS;
     }

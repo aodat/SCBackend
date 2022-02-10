@@ -304,60 +304,51 @@ class Aramex
         $shipmentInfo = Shipment::where('external_awb', $request->WaybillNumber)->first();
         $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
         $logs = collect($shipmentInfo->admin_logs);
+
         $updated = [
             'status' => 'COMPLETED',
             'paid_at' => Carbon::now(),
-            'delivered_at' => Carbon::now(),
             'returned_at' => null,
-        ];
-
-        // POSTPAID
-        //     remove fees from cod
-        // else
-        //     PREPAID
-        //         full amount
-
-        if ($shipmentInfo['cod'] > 0) {
-            $updated['admin_logs'] = $logs->merge([[
+            'is_collected' => true,
+            'admin_logs' => $logs->merge([[
                 'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
                 'UpdateLocation' => '',
-                'UpdateDescription' => 'Shipment Completed SH239',
+                'UpdateDescription' => 'Shipment Paid SH239',
+            ]]),
+        ];
 
-            ]]);
-
-            if (isset($data['Comment2'])) {
-                if (!Str::contains($data['Comment2'], 'Cheque')) {
-                    if ($merchant->payment_type == 'POSTPAID') {
-                        $balance_after = ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->cod_balance;
-                        $amount = $shipmentInfo['cod'] - $shipmentInfo['fees'];
-                    } else {
-                        $balance_after = $shipmentInfo['cod'] + $merchant->cod_balance;
-                        $amount = $shipmentInfo['cod'];
-                    }
-
-                    $transaction = Transaction::create(
-                        [
-                            'type' => 'CASHIN',
-                            'subtype' => 'COD',
-                            'item_id' => $shipmentInfo['external_awb'],
-                            'merchant_id' => $shipmentInfo['merchant_id'],
-                            'source' => 'SHIPMENT',
-                            'status' => 'COMPLETED',
-                            'created_by' => $shipmentInfo['created_by'],
-                            'balance_after' => $balance_after,
-                            'amount' => $amount,
-                        ]
-                    );
-
-                    $updated['transaction_id'] = $transaction->id;
-                    $merchant->cod_balance += $shipmentInfo['cod'];
-                    $merchant->save();
+        if (isset($data['Comment2'])) {
+            if (!Str::contains($data['Comment2'], 'Cheque')) {
+                if ($merchant->payment_type == 'POSTPAID') {
+                    $balance_after = ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->cod_balance;
+                    $amount = $shipmentInfo['cod'] - $shipmentInfo['fees'];
+                } else {
+                    $balance_after = $shipmentInfo['cod'] + $merchant->cod_balance;
+                    $amount = $shipmentInfo['cod'];
                 }
-            }
 
-            // $merchant->bundle_balance -= $fees;
-            // $merchant->save();
+                $transaction = Transaction::create(
+                    [
+                        'type' => 'CASHIN',
+                        'subtype' => 'COD',
+                        'item_id' => $shipmentInfo['external_awb'],
+                        'merchant_id' => $shipmentInfo['merchant_id'],
+                        'source' => 'SHIPMENT',
+                        'status' => 'COMPLETED',
+                        'created_by' => $shipmentInfo['created_by'],
+                        'balance_after' => $balance_after,
+                        'amount' => $amount
+                    ]
+                );
+
+                $updated['transaction_id'] = $transaction->id;
+                $merchant->cod_balance += $shipmentInfo['cod'];
+                $merchant->save();
+            }
         }
+
+        // $merchant->bundle_balance -= $fees;
+        // $merchant->save();
 
         $shipmentInfo->update($updated);
         return $this->successful('Webhook Completed');

@@ -75,6 +75,7 @@ class ShipmentController extends MerchantController
             ->where('merchant_id', $merchant_id)
             ->where('is_deleted', false)
             ->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+
         if (count($external)) {
             $shipments->where(function ($where) use ($external) {
                 foreach ($external as $ext) {
@@ -84,8 +85,12 @@ class ShipmentController extends MerchantController
         }
 
         if (count($phone)) {
-            $shipments = $shipments->where(function ($query) use ($phone) {
-                $query->whereIn('s.sender_phone', $phone)->orWhereIn('s.consignee_phone', $phone);
+            $shipments->where(function ($where) use ($phone) {
+                foreach ($phone as $ext) {
+                    $where->where(function ($sub) use ($ext) {
+                        $sub->orWhere('s.sender_phone', 'like', '%' . $ext . '%')->orWhere('s.consignee_phone', 'like', '%' . $ext . '%');
+                    });
+                }
             });
         }
 
