@@ -358,12 +358,12 @@ class Aramex
                     ]]);
 
 
-                    // if (isset($data['Comment2'])) {
-                    //     if (!Str::contains($data['Comment2'], 'Cheque')) {
-                    //         $merchant->cod_balance += $shipmentInfo['cod'];
-                    //     }
-
-                    // }
+                    if (isset($data['Comment2'])) {
+                        if (!Str::contains($data['Comment2'], 'Cheque')) {
+                            $merchant->cod_balance += $shipmentInfo['cod'];
+                            $merchant->save();
+                        }
+                    }
 
                     // $merchant->bundle_balance -= $fees;
                     // $merchant->save();
