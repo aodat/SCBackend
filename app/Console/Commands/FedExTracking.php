@@ -70,8 +70,7 @@ class FedExTracking extends Command
                 $new[] = [
                     'UpdateDateTime' => Carbon::parse($value['DateOrTimestamp'])->format('Y-m-d H:i:s'),
                     'UpdateLocation' => 'N/A',
-                    'UpdateDescription' => str_replace('_', ' ', $value['Type']),
-                    'TrackingDescription' => 'N/A',
+                    'UpdateDescription' => str_replace('_', ' ', $value['Type'])
                 ];
             }
 

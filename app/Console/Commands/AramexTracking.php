@@ -50,20 +50,17 @@ class AramexTracking extends Command
             $result = collect($this->track('Aramex', [$external_awb], true));
             $result->map(function ($info) use ($external_awb) {
                 $shipmentInfo = $info['Value'];
-
+                $last_update = $shipmentInfo[0]['UpdateDescription'] ?? '';
                 $new = [];
-                $last_update = $shipmentInfo[0]['Comments'] ?? '';
-
                 foreach ($shipmentInfo as $key => $value) {
                     $time = Shipcash::get_string_between($value['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
                     $new[] = [
                         'UpdateDateTime' => Carbon::parse($time)->format('Y-m-d H:i:s'),
                         'UpdateLocation' => $value['UpdateLocation'],
-                        'UpdateDescription' => $value['Comments'],
-                        'TrackingDescription' => $value['UpdateDescription'],
+                        'UpdateDescription' => $value['UpdateDescription']
                     ];
                 }
-
+                
                 Shipment::withoutGlobalScope('ancient')
                     ->where('external_awb', $external_awb)
                     ->update([

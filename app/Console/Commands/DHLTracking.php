@@ -68,8 +68,7 @@ class DHLTracking extends Command
                 $new[] = [
                     'UpdateDateTime' => $value['Date'] . ' ' . $value['Time'],
                     'UpdateLocation' => $value['ServiceArea']['Description'],
-                    'UpdateDescription' => $value['ServiceEvent']['Description'],
-                    'TrackingDescription' => 'N/A',
+                    'UpdateDescription' => $value['ServiceEvent']['Description']
                 ];
             }
 
