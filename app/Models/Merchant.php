@@ -22,7 +22,10 @@ class Merchant extends Model
         'domestic_rates' => 'array',
         'express_rates' => 'array',
         'carriers' => 'array',
-        'rules' => 'array'
+        'rules' => 'array',
+        'is_dom_enabled' => 'boolean',
+        'is_exp_enabled' => 'boolean',
+        'is_cod_enabled' => 'boolean'
     ];
 
     protected $hidden = [

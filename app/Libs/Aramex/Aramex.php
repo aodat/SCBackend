@@ -202,7 +202,7 @@ class Aramex
     {
         $data = $this->bindJsonFile('shipment.create.json');
 
-        $data['Shipper']['Reference1'] = $merchentInfo->id;
+        $data['Shipper']['Reference1'] = $merchentInfo->old_company_id ?? $merchentInfo->id;
         $data['Shipper']['AccountNumber'] =
         $data['Consignee']['AccountNumber'] =
         $this->config['AccountNumber'];
@@ -357,7 +357,6 @@ class Aramex
 
                     ]]);
 
-
                     if (isset($data['Comment2'])) {
                         if (!Str::contains($data['Comment2'], 'Cheque')) {
                             $merchant->cod_balance += $shipmentInfo['cod'];
@@ -392,7 +391,6 @@ class Aramex
 
                     $updated['chargable_weight'] = $details['ChargeableWeight'];
                     $updated['fees'] = $fees;
-
 
                     $updated['admin_logs'] = $logs->merge([[
                         'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
