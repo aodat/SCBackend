@@ -29,6 +29,8 @@ class Controller extends BaseController
 
     public function json()
     {
+
+        die('Stopped Working');
         DB::transaction(function () {
             $zones = DB::table('v1_zones')->pluck('name_en', 'id');
             $areas = DB::table('v1_areas')->pluck('name_en', 'id');
