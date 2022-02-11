@@ -193,7 +193,7 @@ class Aramex
     {
         $data = $this->bindJsonFile('shipment.create.json');
 
-        $data['Shipper']['Reference1'] = $merchentInfo->old_company_id ?? $merchentInfo->id;
+        $data['Shipper']['Reference1'] = $merchentInfo->id;
         $data['Shipper']['AccountNumber'] =
         $data['Consignee']['AccountNumber'] =
         $this->config['AccountNumber'];
