@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Models\Merchant;
 use App\Models\Shipment;
-use App\Models\Transaction;
 use App\Traits\CarriersManager;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -46,10 +45,10 @@ class DHLTracking extends Command
     public function handle()
     {
         $shipments = Shipment::where('carrier_id', 2)
-            ->where('status', '<>', 'COMPLETED')
-            ->orWhere('status', '<>', 'RENTURND')
+            ->where(function ($where) {
+                $where->orWhere('status', '<>', 'COMPLETED')->orWhere('status', '<>', 'RENTURND');
+            })
             ->get();
-
         $setup = [
             'OK' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'PU' => ['status' => 'DRAFT'],
@@ -57,12 +56,11 @@ class DHLTracking extends Command
 
         $shipments->map(function ($shipment) use ($setup) {
             $trackDetails = $this->track('DHL', $shipment->external_awb) ?? [];
-            $lastEvent = $trackDetails[0]['ServiceEvent']['EventCode'] ?? [];
-            if (empty($lastEvent)) {
-                return $shipment;
-            }
 
-            $last_update = $trackDetails[0]['ServiceEvent']['Description'] ?? null;
+            $events = array_reverse($trackDetails['ShipmentEvent'] ?? []);
+
+            $lastEvent = $events[0]['ServiceEvent']['EventCode'] ?? [];
+            $last_update = $events[0]['ServiceEvent']['Description'] ?? null;
 
             $ShipmentEvent = array_reverse($trackDetails['ShipmentEvent']);
             foreach ($ShipmentEvent as $key => $value) {
@@ -70,7 +68,6 @@ class DHLTracking extends Command
                     'UpdateDateTime' => $value['Date'] . ' ' . $value['Time'],
                     'UpdateLocation' => $value['ServiceArea']['Description'],
                     'UpdateDescription' => $value['ServiceEvent']['Description'],
-                    'TrackingDescription' => 'N/A',
                 ];
             }
 
@@ -82,32 +79,18 @@ class DHLTracking extends Command
                 $merchant = Merchant::findOrFail($shipment->merchant_id);
                 if ($shipment->chargable_weight != $trackDetails['Weight']) {
                     $fees = (new ShipmentController)->calculateFees(
-                        3,
+                        2,
                         null,
-                        ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
+                        $shipment->consignee_country,
                         $shipment->group,
                         $trackDetails['Weight']
                     );
 
                     // Check the paid fees in this shipment
-                    $diff = $fees - $shipment->fees;
-                    $merchant->bundle_balance -= $diff;
-                    $merchant->save();
+                    // $diff = $fees - $shipment->fees;
+                    // $merchant->bundle_balance -= $diff;
+                    // $merchant->save();
 
-                    Transaction::create(
-                        [
-                            'type' => 'CASHOUT',
-                            'subtype' => 'BUNDLE',
-                            'item_id' => $shipment->id,
-                            'merchant_id' => $shipment->merchant_id,
-                            'source' => 'SHIPMENT',
-                            'status' => 'COMPLETED',
-                            'created_by' => $shipment->created_by,
-                            'balance_after' => $merchant->bundle_balance,
-                            'amount' => $diff,
-                            'resource' => 'API',
-                        ]
-                    );
                     $updated['fees'] = $fees;
                     $updated['chargable_weight'] = $trackDetails['Weight'];
 
@@ -124,8 +107,8 @@ class DHLTracking extends Command
                 unset($updated['actions']);
             }
             $shipment->update($updated);
-        });
 
+        });
         return Command::SUCCESS;
     }
 }

@@ -9,7 +9,6 @@ use App\Http\Requests\Merchant\ShipmentRequest;
 use App\Models\Carriers;
 use App\Models\Country;
 use App\Models\Invoices;
-use App\Models\Merchant;
 use App\Models\Shipment;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -76,13 +75,22 @@ class ShipmentController extends MerchantController
             ->where('merchant_id', $merchant_id)
             ->where('is_deleted', false)
             ->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+
         if (count($external)) {
-            $shipments->whereIn('s.external_awb', $external);
+            $shipments->where(function ($where) use ($external) {
+                foreach ($external as $ext) {
+                    $where->orWhere('s.external_awb', 'like', '%' . $ext . '%');
+                }
+            });
         }
 
         if (count($phone)) {
-            $shipments = $shipments->where(function ($query) use ($phone) {
-                $query->whereIn('s.sender_phone', $phone)->orWhereIn('s.consignee_phone', $phone);
+            $shipments->where(function ($where) use ($phone) {
+                foreach ($phone as $ext) {
+                    $where->where(function ($sub) use ($ext) {
+                        $sub->orWhere('s.sender_phone', 'like', '%' . $ext . '%')->orWhere('s.consignee_phone', 'like', '%' . $ext . '%');
+                    });
+                }
             });
         }
 
@@ -132,6 +140,11 @@ class ShipmentController extends MerchantController
     // Create Express Shipment will be one by one only
     public function createExpressShipment(ShipmentRequest $request)
     {
+        $merchantInfo = App::make('merchantInfo');
+        if (!$merchantInfo->is_exp_enabled) {
+            return $this->error('Create Express Shipment Not Allowed, Please Contact Administrator');
+        }
+
         return DB::transaction(function () use ($request) {
             $shipmentRequest = $request->validated();
             $provider = Carriers::where('id', $shipmentRequest['carrier_id'])->first()->name;
@@ -141,10 +154,15 @@ class ShipmentController extends MerchantController
 
     public function createDomesticShipment(ShipmentRequest $request)
     {
-        return DB::transaction(function () use ($request) {
+
+        $addressList = App::make('merchantAddresses');
+        $merchantInfo = App::make('merchantInfo');
+        if (!$merchantInfo->is_dom_enabled) {
+            return $this->error('Create Domestic Shipment Not Allowed, Please Contact Administrator');
+        }
+
+        return DB::transaction(function () use ($request, $merchantInfo, $addressList) {
             $shipmentRequest = $request->validated();
-            $addressList = App::make('merchantAddresses');
-            $merchantInfo = App::make('merchantInfo');
             (collect($shipmentRequest)->pluck('sender_address_id'))->map(function ($address_id) use ($merchantInfo, $addressList) {
                 if ($addressList->where('id', $address_id)->where('country_code', $merchantInfo->country_code)->isEmpty()) {
                     throw new InternalException('This is not Domestic request the merchant code different with send country code');
@@ -172,6 +190,12 @@ class ShipmentController extends MerchantController
                 throw new InternalException('Merchent country is empty');
             }
 
+            if ($type == 'DOM' && $shipment['cod'] == 0) {
+                if (!$merchentInfo->is_cod_enabled) {
+                    throw new InternalException('Create Domestic Shipment With No COD Amount Not Allowed, Please Contact Administrator', 400);
+                }
+            }
+
             $shipment['sender_email'] = $merchentInfo['email'];
             $shipment['sender_name'] = $address['name'];
             $shipment['sender_phone'] = $address['phone'];
@@ -193,8 +217,14 @@ class ShipmentController extends MerchantController
 
             // Check if COD is Zero OR Shipment Type Express
             // Check and dedact
-            if ($type == 'EXP' || $shipment['cod'] == 0) {
-                $this->checkbalance($shipment['fees']);
+            $fees = $shipment['fees'];
+            if ($merchentInfo->payment_type == 'PREPAID') {
+                if ($fees <= $merchentInfo->bundle_balance) {
+                    $merchentInfo->bundle_balance -= $fees;
+                    $merchentInfo->save();
+                } else {
+                    throw new InternalException('Your bundle balance is not enough to create shipment.', 400);
+                }
             }
 
             $shipment['merchant_id'] = Request()->user()->merchant_id;
@@ -208,22 +238,10 @@ class ShipmentController extends MerchantController
         return $this->createShipmentDB($shipments, $provider);
     }
 
-    private function checkbalance($fees)
-    {
-        $merchant = $this->getMerchentInfo();
-        if ($fees <= $merchant->bundle_balance || $merchant->payment_type == 'POSTPAID') {
-            $merchant->bundle_balance -= $fees;
-            $merchant->save();
-            return true;
-        }
-        throw new InternalException('Your bundle balance is not enough to create shipment.', 400);
-    }
-
     private function createShipmentDB($shipments, $provider)
     {
-        $resource = Request()->header('agent') ?? 'API';
+        $resource = Request()->header('agent') ?? 'WEB';
         $payments = $shipments->sum('payment');
-        $fees = $shipments->sum('fees');
         $getbulk = $shipments->where('carrier_id', 1);
         $payloads = $getbulk->map(function ($data) {
             return $this->generateShipmentArray('Aramex', $data);
@@ -300,20 +318,6 @@ class ShipmentController extends MerchantController
                 ]
             );
         }
-
-        $merchant = Merchant::findOrFail(Request()->user()->merchant_id);
-        Transaction::create([
-            "type" => "CASHOUT",
-            "subtype" => "BUNDLE",
-            "item_id" => $lastShipment->id,
-            "created_by" => Request()->user()->id,
-            "merchant_id" => Request()->user()->merchant_id,
-            "amount" => $fees,
-            "status" => "COMPLETED",
-            "balance_after" => $merchant->bundle_balance,
-            "source" => "SHIPMENT",
-        ]);
-
         return $this->response(
             [
                 'id' => $lastShipment->id,
@@ -398,13 +402,6 @@ class ShipmentController extends MerchantController
 
         return $this->successful('Your Shipment Created Successfully');
 
-    }
-
-    public function tracking(ShipmentRequest $request)
-    {
-        $shipment = Shipment::where('external_awb', $request->shipment_number)->first();
-        $details = $this->track($shipment->carrier_name, $request->shipment_number, true);
-        return $this->response($details, 'Shipment Info');
     }
 
     public function delete($id, ShipmentRequest $request)
