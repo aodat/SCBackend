@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Http\Controllers\Utilities\Shipcash;
 use App\Models\Merchant;
+use App\Models\Shipment;
 use App\Models\User;
 use App\Traits\CarriersManager;
 use App\Traits\ResponseHandler;
@@ -27,9 +29,40 @@ class Controller extends BaseController
         return $this->error('unauthenticated', 403);
     }
 
+    function fixShipmentFess()
+    {
+        $shipments = Shipment::where('carrier_id', 1)->get();
+
+        $shipments->map(function ($shipment) {
+            $track = $this->track('Aramex', $shipment->external_awb, true) ?? [];
+            if (!isset($track[0]['Value'])) {
+                return $shipment;
+            }
+
+            $events = $track[0]['Value'];
+
+            if(!isset($events[0]))
+                dd($events);
+            $ChargeableWeight = $events[0]['ChargeableWeight'];
+
+            $fees = (new ShipmentController)->calculateFees(
+                1,
+                null,
+                ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
+                $shipment->group,
+                $ChargeableWeight,
+                $shipment->merchant_id
+            );
+
+            $updated['fees'] = $fees;
+            $shipment->update($updated);
+
+        });
+    }
+
     public function json()
     {
-
+        $this->fixShipmentFess();
         die('Stopped Working');
         DB::transaction(function () {
             $zones = DB::table('v1_zones')->pluck('name_en', 'id');

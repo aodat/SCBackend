@@ -85,7 +85,8 @@ class FedExTracking extends Command
                         null,
                         $shipment->consignee_country,
                         $shipment->group,
-                        $trackDetails['ShipmentWeight']['Value']
+                        $trackDetails['ShipmentWeight']['Value'],
+                        $shipment->merchant_id
                     );
 
                     // Check the paid fees in this shipment

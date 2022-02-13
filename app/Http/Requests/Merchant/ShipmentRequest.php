@@ -59,6 +59,8 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'consignee_address_description_2' => '',
                 $type . 'content' => 'required',
                 $type . 'pieces' => 'required|integer',
+                $type . 'actual_weight' => ($isRequired ? 'required|' : '') . 'numeric|between:0,9999',
+                $type . 'reference' => ''
             ];
 
             if (strpos($path, 'shipments/domestic/create') !== false) {
@@ -69,7 +71,6 @@ class ShipmentRequest extends MerchantRequest
                 $validation[$type . 'cod'] = 'numeric|between:0,9999';
                 $validation[$type . 'payment'] = 'numeric|between:0,9999';
                 $validation[$type . 'consignee_country'] = 'required';
-                $validation[$type . 'actual_weight'] = 'required|numeric|between:0,9999';
                 $validation[$type . 'is_doc'] = 'required|boolean';
                 $validation[$type . 'declared_value'] = [
                     new RequiredIf($this->is_doc == false),
