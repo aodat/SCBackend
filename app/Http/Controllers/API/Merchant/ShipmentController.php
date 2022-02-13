@@ -388,8 +388,8 @@ class ShipmentController extends MerchantController
             $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', $shipment['actual_weight']);
         }
 
-        $shipment['merchant_id'] = 1;
-        $shipment['created_by'] = 1;
+        $shipment['merchant_id'] = 870;
+        $shipment['created_by'] = 1632;
         $shipment['created_at'] = Carbon::now();
         $shipment['updated_at'] = Carbon::now();
 
@@ -417,9 +417,9 @@ class ShipmentController extends MerchantController
         return $this->successful('Shipment Deleted Successfully');
     }
 
-    public function calculateFees($carrier_id, $from = null, $to, $type, $weight)
+    public function calculateFees($carrier_id, $from = null, $to, $type, $weight, $merchant_id = null)
     {
-        $merchentInfo = $this->getMerchentInfo();
+        $merchentInfo = $this->getMerchentInfo($merchant_id);
         $to = str_replace("'", "", $to);
         if ($type == 'domestic' || $type == 'DOM') {
 

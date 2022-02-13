@@ -90,7 +90,8 @@ class AramexTracking extends Command
                         null,
                         ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
                         $shipment->group,
-                        $ChargeableWeight
+                        $ChargeableWeight,
+                        $shipment->merchant_id
                     );
 
                     $updated['fees'] = $fees;
