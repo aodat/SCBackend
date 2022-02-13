@@ -208,6 +208,9 @@ class ShipmentController extends MerchantController
 
             $shipment['group'] = $type;
             $shipment['actual_weight'] = $shipment['actual_weight'] ?? 0.5;
+            $shipment['consignee_notes'] = $shipment['consignee_notes'] ?? '';
+            $shipment['consignee_second_phone'] = $shipment['consignee_second_phone'] ?? '';
+
             $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
             if ($type == 'DOM') {
                 $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', $shipment['actual_weight']);
