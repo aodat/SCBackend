@@ -308,12 +308,14 @@ class Aramex
         $awb = $shipmentInfo['external_awb'];
         $created_by = $shipmentInfo['created_by'];
         $merchant = Merchant::findOrFail($merchant_id);
+        $UpdateDescription = 'Shipment Paid SH239 By Cash';
 
-        if ($isCollected) {
-            return $this->error('This Shipment Already Collected');
-        }
+        // if ($isCollected) {
+        //     return $this->error('This Shipment Already Collected');
+        // }
 
         if (Str::contains($request->Comment2, 'Cheque')) {
+            $UpdateDescription = 'Shipment Paid SH239 By Cheque';
             $isCheque = true;
             $cod = 0;
         }
@@ -334,7 +336,7 @@ class Aramex
             'admin_logs' => $logs->merge([[
                 'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
                 'UpdateLocation' => '',
-                'UpdateDescription' => 'Shipment Paid SH239 ' . ($isCheque) ? 'By Cheque' : 'Cash',
+                'UpdateDescription' => $UpdateDescription,
             ]]),
         ];
 
