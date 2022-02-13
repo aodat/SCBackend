@@ -142,7 +142,7 @@ class ShipmentController extends MerchantController
             's.content',
             's.last_update'
         );
-        
+
         return $shipments;
     }
 
@@ -219,6 +219,11 @@ class ShipmentController extends MerchantController
             $shipment['actual_weight'] = $shipment['actual_weight'] ?? 0.5;
             $shipment['consignee_notes'] = $shipment['consignee_notes'] ?? '';
             $shipment['consignee_second_phone'] = $shipment['consignee_second_phone'] ?? '';
+            $shipment['reference1'] = $shipment['reference'] ?? null;
+            
+            if (isset($shipment['reference'])) {
+                unset($shipment['reference']);
+            }
 
             $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
             if ($type == 'DOM') {
