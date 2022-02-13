@@ -47,73 +47,57 @@ class AramexTracking extends Command
     {
         $shipments = Shipment::where('carrier_id', 1)
             ->where(function ($where) {
-                $where->orWhere('status', '<>', 'COMPLETED')->orWhere('status', '<>', 'RENTURND');
+                $where->orWhere('status', 'DRAFT')->orWhere('status', 'PROCESSING');
             })
             ->get();
-        $setup = [
-            'SH014' => ['status' => 'DRAFT', 'delivered_at' => null, 'returned_at' => null, 'paid_at' => null],
-            'SH005' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
-            'SH006' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
-            'SH069' => ['status' => 'RENTURND', 'returned_at' => Carbon::now(), 'delivered_at' => null, 'paid_at' => null],
-        ];
 
-        $shipments->map(function ($shipment) use ($setup) {
-
-            $track = $this->track('Aramex', $shipment->external_awb, true) ?? [];
-            if (!isset($track[0]['Value'])) {
+        $shipments->map(function ($shipment) {
+            $tracking = $this->track('Aramex', $shipment->external_awb, true) ?? [];
+            if (!isset($tracking[0]['Value'])) {
                 return $shipment;
             }
+            $logs = $tracking[0]['Value'];
+            $lastUpdateCode = $logs[0]['UpdateCode'];
+            $lastUpdateTime = Shipcash::get_string_between($logs[0]['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
+            $chargable_weight = $logs[0]['ChargeableWeight'];
 
-            $events = $track[0]['Value'];
+            $updated['last_update'] = $logs[0]['UpdateDescription'];
+            $updated['shipping_logs'] = collect($logs);
 
-            $lastEvent = $events[0]['UpdateCode'] ?? [];
-            $ChargeableWeight = $events[0]['ChargeableWeight'];
+            if ($shipment->chargable_weight < $chargable_weight) {
+                $fees = (new ShipmentController)->calculateFees(
+                    1,
+                    null,
+                    ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
+                    $shipment->group,
+                    $chargable_weight,
+                    $shipment->merchant_id
+                );
 
-            $updated = $setup[$lastEvent] ?? ['status' => 'PROCESSING', 'actions' => ['check_chargable_weight']];
-
-            $updated['last_update'] = $events[0]['UpdateDescription'] ?? null;
-            $new = [];
-            foreach ($events as $key => $value) {
-                $time = Shipcash::get_string_between($value['UpdateDateTime'], '/Date(', '+0200)/') / 1000;
-                $new[] = [
-                    'UpdateDateTime' => Carbon::parse($time)->format('Y-m-d H:i:s'),
-                    'UpdateLocation' => $value['UpdateLocation'],
-                    'UpdateDescription' => $value['UpdateDescription'],
-                ];
+                $updated['fees'] = $fees;
+                $updated['chargable_weight'] = $chargable_weight;
             }
 
-            $updated['shipping_logs'] = collect($new);
-            if (isset($updated['actions'])) {
-                if ($shipment->chargable_weight < $ChargeableWeight) {
-                    $fees = (new ShipmentController)->calculateFees(
-                        1,
-                        null,
-                        ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
-                        $shipment->group,
-                        $ChargeableWeight
-                    );
-
-                    $updated['fees'] = $fees;
-                    $updated['chargable_weight'] = $ChargeableWeight;
-
-                    $logs = collect($shipment->admin_logs);
-
-                    $updated['admin_logs'] = $logs->merge([[
-                        'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
-                        'UpdateLocation' => '',
-                        'UpdateDescription' => 'Update Shipment Weight From ' . $shipment->actual_weight . ' To ' . $ChargeableWeight,
-
-                    ]]);
-
+            if (($lastUpdateCode == 'SH005' || $lastUpdateCode == 'SH006')) {
+                if ($shipment->cod == 0) {
+                    $request = Request::create('/api/aramex-webhook', 'POST', ['UpdateCode' => 'SH239', 'WaybillNumber' => $shipment->external_awb]);
+                    Route::dispatch($request);
+                } else {
+                    $updated['status'] = 'COMPLETED';
+                    $updated['delivered_at'] = Carbon::parse($lastUpdateTime)->format('Y-m-d H:i:s');
                 }
-                unset($updated['actions']);
             }
-            $shipment->update($updated);
 
-            if (($lastEvent == 'SH006' || $lastEvent == 'SH006') && ($shipment->cod == 0)) {
-                $request = Request::create('/api/aramex-webhook', 'POST', ['UpdateCode' => 'SH239', 'WaybillNumber' => $shipment->external_awb]);
-                Route::dispatch($request);
+            if ($lastUpdateCode != 'SH014') {
+                $updated['status'] = 'PROCESSING';
             }
+
+            if ($lastUpdateCode == 'SH069') {
+                $updated['status'] = 'RENTURND';
+                $updated['returned_at'] = Carbon::parse($lastUpdateTime)->format('Y-m-d H:i:s');
+            }
+
+            $shipment->update($updated);
         });
         return Command::SUCCESS;
     }

@@ -130,13 +130,14 @@ class MerchantController extends Controller
         return $this->response(City::getAreas($code), "Data Retrieved Successfully");
     }
 
-    public function getMerchentInfo()
+    public function getMerchentInfo($merchantID = null)
     {
         if (Request()->user() !== null) {
             return Merchant::findOrFail(Request()->user()->merchant_id);
+        } else if ($merchantID !== null) {
+            return Merchant::findOrFail($merchantID);
         } else {
-            return Merchant::findOrFail(1);
-            // Guest Account
+            return Merchant::findOrFail(870); // Guest Account
         }
     }
 }

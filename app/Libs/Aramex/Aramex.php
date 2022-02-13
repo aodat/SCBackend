@@ -3,13 +3,13 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
+use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\Utilities\AWSServices;
 use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Requests\Carrier\AramexRequest;
 use App\Models\City;
 use App\Models\Merchant;
 use App\Models\Shipment;
-use App\Models\Transaction;
 use App\Traits\ResponseHandler;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -296,14 +296,35 @@ class Aramex
 
         return $result;
     }
-
-    public function webhook(AramexRequest $request)
+    public function webhook(AramexRequest $request, TransactionsController $transaction)
     {
-
-        $data = $request->all();
         $shipmentInfo = Shipment::where('external_awb', $request->WaybillNumber)->first();
-        $merchant = Merchant::findOrFail($shipmentInfo['merchant_id']);
+        $isCollected = $shipmentInfo->is_collected;
+        $cod = $shipmentInfo['cod'];
+        $fees = $shipmentInfo['fees'];
         $logs = collect($shipmentInfo->admin_logs);
+        $merchant_id = $shipmentInfo['merchant_id'];
+        $awb = $shipmentInfo['external_awb'];
+        $created_by = $shipmentInfo['created_by'];
+        $merchant = Merchant::findOrFail($merchant_id);
+        $UpdateDescription = 'Shipment Paid SH239 By Cash';
+
+        if ($isCollected) {
+            return $this->error('This Shipment Already Collected');
+        }
+
+        if (Str::contains($request->Comment2, 'Cheque')) {
+            $UpdateDescription = 'Shipment Paid SH239 By Cheque';
+            $cod = 0;
+        }
+
+        if ($merchant->payment_type == 'POSTPAID') {
+            $amount = $cod - $fees;
+            $updated['transaction_id'] = $transaction->cashinCOD($merchant_id, $awb, $amount, "SHIPMENT", $created_by);
+        } else {
+            $amount = $cod;
+            $updated['transaction_id'] = $transaction->cashinCOD($merchant_id, $awb, $amount, "SHIPMENT", $created_by);
+        }
 
         $updated = [
             'status' => 'COMPLETED',
@@ -313,46 +334,16 @@ class Aramex
             'admin_logs' => $logs->merge([[
                 'UpdateDateTime' => Carbon::now()->format('Y-m-d H:i:s'),
                 'UpdateLocation' => '',
-                'UpdateDescription' => 'Shipment Paid SH239',
+                'UpdateDescription' => $UpdateDescription,
             ]]),
         ];
 
-        if (isset($data['Comment2'])) {
-            if (!Str::contains($data['Comment2'], 'Cheque')) {
-                if ($merchant->payment_type == 'POSTPAID') {
-                    $balance_after = ($shipmentInfo['cod'] - $shipmentInfo['fees']) + $merchant->cod_balance;
-                    $amount = $shipmentInfo['cod'] - $shipmentInfo['fees'];
-                } else {
-                    $balance_after = $shipmentInfo['cod'] + $merchant->cod_balance;
-                    $amount = $shipmentInfo['cod'];
-                }
-
-                $transaction = Transaction::create(
-                    [
-                        'type' => 'CASHIN',
-                        'subtype' => 'COD',
-                        'item_id' => $shipmentInfo['external_awb'],
-                        'merchant_id' => $shipmentInfo['merchant_id'],
-                        'source' => 'SHIPMENT',
-                        'status' => 'COMPLETED',
-                        'created_by' => $shipmentInfo['created_by'],
-                        'balance_after' => $balance_after,
-                        'amount' => $amount
-                    ]
-                );
-
-                $updated['transaction_id'] = $transaction->id;
-                $merchant->cod_balance += $shipmentInfo['cod'];
-                $merchant->save();
-            }
+        if (is_null($shipmentInfo->delivered_at)) {
+            $updated['delivered_at'] = Carbon::now();
         }
-
-        // $merchant->bundle_balance -= $fees;
-        // $merchant->save();
 
         $shipmentInfo->update($updated);
         return $this->successful('Webhook Completed');
-
     }
 
     public function bindJsonFile($file)

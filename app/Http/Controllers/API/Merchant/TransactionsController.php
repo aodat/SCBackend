@@ -6,7 +6,6 @@ use App\Exceptions\InternalException;
 use App\Exports\TransactionsExport;
 use App\Http\Controllers\Utilities\Documents;
 use App\Http\Requests\Merchant\TransactionRequest;
-use App\Jobs\WithDrawPayments;
 use App\Models\Merchant;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -109,7 +108,7 @@ class TransactionsController extends MerchantController
 
         $merchecntInfo->cod_balance -= $merchecntInfo->amount;
         $merchecntInfo->save();
-        
+
         Transaction::create([
             "type" => "CASHOUT",
             "subtype" => "COD",
@@ -223,5 +222,27 @@ class TransactionsController extends MerchantController
         }
 
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+    }
+
+    public function cashinCOD($merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED')
+    {
+        $merchant = Merchant::findOrFail($merchant_id);
+        $merchant->cod_balance += $amount;
+        $merchant->save();
+
+        return Transaction::create(
+            [
+                'type' => 'CASHIN',
+                'subtype' => 'COD',
+                'item_id' => $awb,
+                'merchant_id' => $merchant_id,
+                'description' => $description,
+                'balance_after' => $merchant->cod_balance,
+                'amount' => $amount,
+                'source' => $source,
+                'status' => $status,
+                'created_by' => $created_by,
+            ]
+        )->id;
     }
 }

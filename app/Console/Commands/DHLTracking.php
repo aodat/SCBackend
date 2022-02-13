@@ -83,7 +83,8 @@ class DHLTracking extends Command
                         null,
                         $shipment->consignee_country,
                         $shipment->group,
-                        $trackDetails['Weight']
+                        $trackDetails['Weight'],
+                        $shipment->merchant_id
                     );
 
                     // Check the paid fees in this shipment
