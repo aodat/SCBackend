@@ -31,7 +31,14 @@ class ShipmentController extends MerchantController
         $tabs = DB::table(DB::raw("(select id,CASE WHEN s.status = 'COMPLETED' && s.transaction_id is null THEN 'PENDING_PAYMENTS' ELSE s.status END  as exstatus from shipments s where merchant_id = $merchant_id and `group` = '$type' and is_deleted = false) as subs"))
             ->select('exstatus', DB::raw('count(id) as counter'))
             ->groupByRaw('exstatus')
-            ->pluck('counter', 'exstatus');
+            ->union(
+                DB::table('shipments')
+                    ->where('merchant_id', $merchant_id)
+                    ->where('group', $type)
+                    ->where('is_deleted', false)
+                    ->select('status', DB::raw('count(id) as counter'))
+                    ->groupBy('status')
+            )->pluck('counter', 'exstatus');
 
         $tabs = collect($this->status)->merge(collect($tabs));
         return $this->pagination($shipments->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
@@ -101,9 +108,11 @@ class ShipmentController extends MerchantController
         }
 
         $shipments->where('s.group', $type);
+        $colStatus = 's.status';
         if (count($statuses)) {
             if (in_array('PENDING_PAYMENTS', $statuses)) {
                 $shipments->where('s.status', '=', 'COMPLETED')->whereNull('s.transaction_id');
+                $colStatus = DB::raw('CASE WHEN s.status = \'COMPLETED\' and s.transaction_id is null THEN \'PENDING PAYMENTS\' ELSE s.status END as status');
             } else {
                 $shipments->whereIn('s.status', $statuses);
             }
@@ -117,7 +126,7 @@ class ShipmentController extends MerchantController
             's.consignee_name',
             's.consignee_email',
             's.consignee_phone',
-            DB::raw('CASE WHEN s.status = \'COMPLETED\' and s.transaction_id is null THEN \'PENDING PAYMENTS\' ELSE s.status END as status'),
+            $colStatus,
             's.status as actual_status',
             's.fees',
             's.url',
@@ -133,7 +142,7 @@ class ShipmentController extends MerchantController
             's.content',
             's.last_update'
         );
-
+        
         return $shipments;
     }
 
