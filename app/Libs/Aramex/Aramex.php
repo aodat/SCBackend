@@ -313,7 +313,7 @@ class Aramex
             return $this->error('This Shipment Already Collected');
         }
 
-        if (!Str::contains($request->Comment2, 'Cheque')) {
+        if (Str::contains($request->Comment2, 'Cheque')) {
             $isCheque = true;
             $cod = 0;
         }
