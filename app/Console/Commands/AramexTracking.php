@@ -9,6 +9,7 @@ use App\Traits\CarriersManager;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 class AramexTracking extends Command
@@ -83,7 +84,8 @@ class AramexTracking extends Command
                     $request = Request::create('/api/aramex-webhook', 'POST', ['UpdateCode' => 'SH239', 'WaybillNumber' => $shipment->external_awb]);
                     Route::dispatch($request);
                 } else {
-                    $updated['status'] = 'COMPLETED';
+                    // $updated['status'] = 'COMPLETED';
+                    DB::table('shipments')->where('external_awb', $shipment->external_awb)->update(['status' => 'COMPLETED']);
                     $updated['delivered_at'] = Carbon::parse($lastUpdateTime)->format('Y-m-d H:i:s');
                 }
             }
