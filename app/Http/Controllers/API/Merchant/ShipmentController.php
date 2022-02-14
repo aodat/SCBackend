@@ -218,7 +218,7 @@ class ShipmentController extends MerchantController
             $shipment['group'] = $type;
             $shipment['actual_weight'] = $shipment['actual_weight'] ?? 0.5;
             $shipment['consignee_notes'] = $shipment['consignee_notes'] ?? '';
-            $shipment['consignee_second_phone'] = $shipment['consignee_second_phone'] ?? '';
+            $shipment['consignee_second_phone'] = $shipment['consignee_second_phone'] ?? null;
             $shipment['reference1'] = $shipment['reference'] ?? null;
             
             if (isset($shipment['reference'])) {
