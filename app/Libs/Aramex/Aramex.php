@@ -317,15 +317,7 @@ class Aramex
             $UpdateDescription = 'Shipment Paid SH239 By Cheque';
             $cod = 0;
         }
-
-        if ($merchant->payment_type == 'POSTPAID') {
-            $amount = $cod - $fees;
-            $updated['transaction_id'] = $transaction->cashinCOD($merchant_id, $awb, $amount, "SHIPMENT", $created_by);
-        } else {
-            $amount = $cod;
-            $updated['transaction_id'] = $transaction->cashinCOD($merchant_id, $awb, $amount, "SHIPMENT", $created_by);
-        }
-
+        
         $updated = [
             'status' => 'COMPLETED',
             'paid_at' => Carbon::now(),
@@ -337,6 +329,15 @@ class Aramex
                 'UpdateDescription' => $UpdateDescription,
             ]]),
         ];
+
+        if ($merchant->payment_type == 'POSTPAID') {
+            $amount = $cod - $fees;
+            $updated['transaction_id'] = $transaction->cashinCOD($merchant_id, $awb, $amount, "SHIPMENT", $created_by);
+        } else {
+            $amount = $cod;
+            $updated['transaction_id'] = $transaction->cashinCOD($merchant_id, $awb, $amount, "SHIPMENT", $created_by);
+        }
+
 
         if (is_null($shipmentInfo->delivered_at)) {
             $updated['delivered_at'] = Carbon::now();
