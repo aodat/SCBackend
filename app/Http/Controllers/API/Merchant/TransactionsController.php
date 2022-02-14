@@ -86,7 +86,6 @@ class TransactionsController extends MerchantController
 
     public function withDraw(TransactionRequest $request, Dinarak $dinarak)
     {
-
         $merchecntInfo = $this->getMerchentInfo();
 
         if ($merchecntInfo->cod_balance <= 0) {
@@ -116,9 +115,9 @@ class TransactionsController extends MerchantController
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
             'amount' => $dedaction,
-            'status' => 'shipcash',
-            "balance_after" => 0,
-            "source" => "CREDITCARD",
+            'status' => 'PROCESSING',
+            "balance_after" => $merchecntInfo->cod_balance - $dedaction,
+            "source" => "NONE",
         ]);
         return $this->successful('WithDraw Transaction Completed');
     }
