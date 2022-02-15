@@ -103,7 +103,7 @@ class TransactionsController extends MerchantController
             return $this->error('You dont have COD Balance');
         }
 
-        // $dinarak->withdraw($merchecntInfo, $payment['iban'], $dedaction);
+        $result = $dinarak->withdraw($merchecntInfo, $payment['iban'], $dedaction);
 
         $merchecntInfo->cod_balance -= $merchecntInfo->amount;
         $merchecntInfo->save();
@@ -115,6 +115,7 @@ class TransactionsController extends MerchantController
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
             'amount' => $dedaction,
+            'notes' => json_encode($result),
             'status' => 'PROCESSING',
             "balance_after" => $merchecntInfo->cod_balance - $dedaction,
             "source" => "NONE",
