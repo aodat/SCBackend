@@ -156,6 +156,8 @@ class TransactionsController extends MerchantController
 
     public function transfer(TransactionRequest $request)
     {
+
+        return $this->error('Unexpected Error');
         $merchecnt = $this->getMerchantInfo();
         if ($merchecnt->cod_balance >= $request->amount) {
 
