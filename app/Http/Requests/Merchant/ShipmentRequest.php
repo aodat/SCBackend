@@ -60,7 +60,7 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'content' => 'required',
                 $type . 'pieces' => 'required|integer',
                 $type . 'actual_weight' => ($isRequired ? 'required|' : '') . 'numeric|between:0,9999',
-                $type . 'reference' => ''
+                $type . 'reference' => '',
             ];
 
             if (strpos($path, 'shipments/domestic/create') !== false) {
