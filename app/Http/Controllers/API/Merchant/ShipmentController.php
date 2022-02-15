@@ -46,7 +46,7 @@ class ShipmentController extends MerchantController
 
     public function show($id, ShipmentRequest $request)
     {
-        $data = Shipment::findOrFail($id);
+        $data = Shipment::where('id', $id)->orWhere('external_awb', $id)->first();
         return $this->response($data, 'Data Retrieved Sucessfully');
     }
 
@@ -220,7 +220,7 @@ class ShipmentController extends MerchantController
             $shipment['consignee_notes'] = $shipment['consignee_notes'] ?? '';
             $shipment['consignee_second_phone'] = $shipment['consignee_second_phone'] ?? null;
             $shipment['reference1'] = $shipment['reference'] ?? null;
-            
+
             if (isset($shipment['reference'])) {
                 unset($shipment['reference']);
             }
