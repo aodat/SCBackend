@@ -124,7 +124,11 @@ Route::group(['middleware' => ['json.response', 'db.row']], function () {
                     Route::put('transfer', [TransactionsController::class, 'transfer']);
                     Route::put('deposit', [TransactionsController::class, 'deposit']);
                     Route::put('deposit/request', [TransactionsController::class, 'depositwRequest']);
+
+
+                    
                     Route::put('withdraw', [TransactionsController::class, 'withdraw']);
+                    Route::put('transactions/withdraw', [TransactionsController::class, 'withdraw']);
                 });
 
                 Route::get('countries', [MerchantController::class, 'getCountries']);
