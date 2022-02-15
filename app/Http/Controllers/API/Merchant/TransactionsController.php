@@ -166,8 +166,9 @@ class TransactionsController extends MerchantController
                     'type' => 'CASHIN',
                     'subtype' => 'BUNDLE',
                     'merchant_id' => $request->user()->merchant_id,
-                    'source' => 'ORDER',
+                    'source' => 'NONE',
                     'status' => 'COMPLETED',
+                    'description' => 'Money Received from COD Balance',
                     'created_by' => $request->user()->id,
                     'balance_after' => $request->amount + $merchecnt->bundle_balance,
                     'amount' => $request->amount,
@@ -179,15 +180,16 @@ class TransactionsController extends MerchantController
                     'type' => 'CASHOUT',
                     'subtype' => 'COD',
                     'merchant_id' => $request->user()->merchant_id,
-                    'source' => 'ORDER',
+                    'source' => 'NONE',
                     'status' => 'COMPLETED',
+                    'description' => 'Money transferred to Bundle',
                     'created_by' => $request->user()->id,
                     'balance_after' => (($merchecnt->cod_balance - $request->amount) > 0) ? $merchecnt->cod_balance - $request->amount : 0,
                     'amount' => $request->amount,
                     'resource' => Request()->header('agent') ?? 'API',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
-                ],
+                ]
             ]);
 
             $merchecnt->cod_balance -= $request->amount;
