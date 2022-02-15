@@ -299,6 +299,7 @@ class Aramex
     public function webhook(AramexRequest $request, TransactionsController $transaction)
     {
         $shipmentInfo = Shipment::where('external_awb', $request->WaybillNumber)->first();
+
         $isCollected = $shipmentInfo->is_collected;
         $cod = $shipmentInfo['cod'];
         $fees = $shipmentInfo['fees'];
@@ -317,7 +318,7 @@ class Aramex
             $UpdateDescription = 'Shipment Paid SH239 By Cheque';
             $cod = 0;
         }
-        
+
         $updated = [
             'status' => 'COMPLETED',
             'paid_at' => Carbon::now(),
@@ -338,10 +339,11 @@ class Aramex
             $updated['transaction_id'] = $transaction->cashinCOD($merchant_id, $awb, $amount, "SHIPMENT", $created_by);
         }
 
-
         if (is_null($shipmentInfo->delivered_at)) {
             $updated['delivered_at'] = Carbon::now();
         }
+
+        $updated['webhook_logs'] = collect($shipmentInfo->webhook_logs)->merge($request->all());
 
         $shipmentInfo->update($updated);
         return $this->successful('Webhook Completed');

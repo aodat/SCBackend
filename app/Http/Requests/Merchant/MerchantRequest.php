@@ -2,18 +2,15 @@
 
 namespace App\Http\Requests\Merchant;
 
+use App\Models\Invoices;
+use App\Models\Shipment;
+use App\Models\Transaction;
+use App\Rules\Phone;
+use App\Rules\PincodeVerification;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Request;
-
-use App\Models\Transaction;
-use App\Models\Shipment;
-use App\Models\Invoices;
-
-use App\Rules\PincodeVerification;
-use App\Rules\Phone;
-
-use Illuminate\Support\Facades\App;
 
 class MerchantRequest extends FormRequest
 {
@@ -25,16 +22,18 @@ class MerchantRequest extends FormRequest
     public function authorize()
     {
         $path = Request()->route()->uri;
-        if ($this->getMethod() == 'GET' && strpos($path, 'transactions/{id}') !== false)
+        if ($this->getMethod() == 'GET' && strpos($path, 'transactions/{id}') !== false) {
             return Transaction::where('id', Request::instance()->id)->exists();
-        else if ($this->getMethod() == 'GET' && strpos($path, 'shipments/{id}') !== false)
-            return Shipment::where('id', Request::instance()->id)->exists();
-        else if (
+        } else if ($this->getMethod() == 'GET' && strpos($path, 'shipments/{id}') !== false) {
+            return Shipment::where('id', Request::instance()->id)->orWhere('external_awb', Request::instance()->id)->exists();
+        } else if (
             ($this->getMethod() == 'DELETE' && strpos($path, 'invoice/{invoice_id}') !== false) ||
             ($this->getMethod() == 'GET' && strpos($path, 'invoice/finalize/{invoice_id}') !== false) ||
             ($this->getMethod() == 'GET' && strpos($path, 'invoice/{invoice_id}') !== false)
-        )
+        ) {
             return Invoices::where('id', Request::instance()->invoice_id)->exists();
+        }
+
         return true;
     }
 
@@ -70,19 +69,19 @@ class MerchantRequest extends FormRequest
                     'regex:/^([0-9\s\-\+\(\)]*)$/',
                     'min:10',
                     'max:14',
-                    new Phone(App::make('merchantInfo')->country_code)
+                    new Phone(App::make('merchantInfo')->country_code),
                 ],
                 "pin_code" => [
                     'required',
-                    new PincodeVerification()
+                    new PincodeVerification(),
                 ],
             ];
         } else if (strpos($path, 'merchant/phone/verify') !== false) {
             return [
                 "pin_code" => [
                     'required',
-                    new PincodeVerification()
-                ]
+                    new PincodeVerification(),
+                ],
             ];
         }
         return [];
