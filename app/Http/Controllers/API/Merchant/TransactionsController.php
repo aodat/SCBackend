@@ -74,7 +74,7 @@ class TransactionsController extends MerchantController
 
         $tabs = collect($this->type)->merge(collect($tabs));
         $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
-
+        
         return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
@@ -122,7 +122,7 @@ class TransactionsController extends MerchantController
             // 'notes' => json_encode($result),
             'status' => 'PROCESSING',
             "balance_after" => $merchecntInfo->cod_balance,
-            "source" => "NONE", 
+            "source" => "NONE",
         ]);
         return $this->successful('WithDraw Transaction Completed');
     }
@@ -232,7 +232,7 @@ class TransactionsController extends MerchantController
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
     }
 
-    public function cashinCOD($merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED')
+    public function COD($type = 'CASHIN', $merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
     {
         $merchant = Merchant::findOrFail($merchant_id);
         $merchant->cod_balance += $amount;
@@ -240,7 +240,7 @@ class TransactionsController extends MerchantController
 
         return Transaction::create(
             [
-                'type' => 'CASHIN',
+                'type' => $type,
                 'subtype' => 'COD',
                 'item_id' => $awb,
                 'merchant_id' => $merchant_id,
@@ -250,6 +250,7 @@ class TransactionsController extends MerchantController
                 'source' => $source,
                 'status' => $status,
                 'created_by' => $created_by,
+                'resource' => $resource,
             ]
         )->id;
     }
