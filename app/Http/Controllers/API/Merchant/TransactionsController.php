@@ -74,7 +74,7 @@ class TransactionsController extends MerchantController
 
         $tabs = collect($this->type)->merge(collect($tabs));
         $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
-        
+
         return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
@@ -119,6 +119,7 @@ class TransactionsController extends MerchantController
             "merchant_id" => Request()->user()->merchant_id,
             'amount' => $dedaction,
             'description' => 'WithDraw Request',
+            'payment_method' => $payment,
             // 'notes' => json_encode($result),
             'status' => 'PROCESSING',
             "balance_after" => $merchecntInfo->cod_balance,
