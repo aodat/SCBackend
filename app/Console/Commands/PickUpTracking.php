@@ -39,7 +39,7 @@ class PickUpTracking extends Command
      */
     public function handle()
     {
-        Pickup::whereDate('pickup_date', '<=', Carbon::yesterday())->update(['status' => 'DONE']);
+        Pickup::whereDate('pickup_date', '<=', Carbon::yesterday())->where('status', 'PROCESSING')->update(['status' => 'DONE']);
         return Command::SUCCESS;
     }
 }
