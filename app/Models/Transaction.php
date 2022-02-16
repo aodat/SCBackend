@@ -25,7 +25,7 @@ class Transaction extends Model
 
     public function getConsigneeNameAttribute()
     {
-        return DB::table('shipments')->where('awb', $this->item_id)->first()->consignee_name ?? null;
+        return DB::table('shipments')->where('merchant_id', $this->merchant_id)->where('awb', $this->item_id)->first()->consignee_name ?? null;
     }
 
     protected static function booted()
