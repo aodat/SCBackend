@@ -242,11 +242,10 @@ class ShipmentController extends MerchantController
                     Request()->user()->merchant_id,
                     $shipment['dimention'] ?? []
                 );
-
-                if (isset($shipment['dimention'])) {
-                    unset($shipment['dimention']);
-                }
-
+            }
+            
+            if (isset($shipment['dimention'])) {
+                unset($shipment['dimention']);
             }
 
             // Check if COD is Zero OR Shipment Type Express
