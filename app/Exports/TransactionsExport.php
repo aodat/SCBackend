@@ -30,6 +30,8 @@ class TransactionsExport implements FromCollection, WithMapping, WithHeadings, S
         return [
             'Type',
             'Sub Type',
+            'AWB',
+            'Consignee Name',
             'Amount',
             'Balance After',
             'Description',
@@ -45,6 +47,8 @@ class TransactionsExport implements FromCollection, WithMapping, WithHeadings, S
         return [
             $transaction->type,
             $transaction->subtype,
+            $transaction->item_id ?? '--',
+            $transaction->consignee_name ?? '--',
             $transaction->amount,
             $transaction->balance_after,
             $transaction->description,
