@@ -372,22 +372,23 @@ class ShipmentController extends MerchantController
         if ($data['is_cod']) {
             $carriers->where('accept_cod', $data['is_cod']);
         }
-
-        $carrier = $carriers->get()->map(function ($carrier) use ($data) {
+        $dimention = $request->dimention ?? [];
+        $carrier = $carriers->get()->map(function ($carrier) use ($data, $dimention) {
             if ($data['type'] == 'express') {
                 $carrier['fees'] = number_format($this->calculateExpressFees(
                     $carrier->id,
                     $data['country_code'],
                     $data['weight'],
-                    Request()->user()->merchant_id ?? env('GUEST_MERCHANT_ID')
+                    Request()->user()->merchant_id ?? env('GUEST_MERCHANT_ID'),
+                    $dimention
                 ), 2);
             } else {
-                $carrier['fees'] = $this->calculateDomesticFees(
+                $carrier['fees'] = number_format($this->calculateDomesticFees(
                     $carrier->id,
                     $data['city_to'],
                     $data['weight'],
                     Request()->user()->merchant_id ?? env('GUEST_MERCHANT_ID')
-                );
+                ), 2);
             }
 
             return $carrier;
@@ -492,14 +493,20 @@ class ShipmentController extends MerchantController
         return $fees;
     }
 
-    public function calculateExpressFees($carrier_id, $country, $weight, $merchant_id = null)
+    public function calculateExpressFees($carrier_id, $country, $weight, $merchant_id = null, $dimention = [])
     {
         $merchentInfo = $this->getMerchentInfo($merchant_id);
+
+        if (!empty($dimention)) {
+            $dimention_weight = ($dimention['length'] * $dimention['height'] * $dimention['width']) / 5000;
+            if ($weight < $dimention_weight) {
+                $weight = $dimention_weight;
+            }
+        }
+
         $country = str_replace("'", "", $country);
 
-        $zone_id =
-        collect(Country::where('code', $merchentInfo['country_code'])->first())
-        ['rates'][$country][$carrier_id]['zone_id'] ?? null;
+        $zone_id = collect(Country::where('code', $merchentInfo['country_code'])->first())['rates'][$country][$carrier_id]['zone_id'] ?? null;
 
         $rate = collect($merchentInfo['express_rates'][$carrier_id]['zones'] ?? [])->where('id', $zone_id)->first();
         if (is_null($rate)) {

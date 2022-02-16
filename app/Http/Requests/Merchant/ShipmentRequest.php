@@ -107,6 +107,11 @@ class ShipmentRequest extends MerchantRequest
             ];
             if ($type == 'express') {
                 $validation['country_code'] = 'required';
+            if (!empty(Request::instance()->dimention)) {
+                    $validation['dimention.length'] = 'required|numeric|between:0,9999';
+                    $validation['dimention.height'] = 'required|numeric|between:0,9999';
+                    $validation['dimention.width'] = 'required|numeric|between:0,9999';
+                }
             } else {
                 $validation['city_from'] = 'required';
                 $validation['city_to'] = 'required';
