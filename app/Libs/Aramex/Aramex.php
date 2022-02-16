@@ -310,9 +310,9 @@ class Aramex
         $merchant = Merchant::findOrFail($merchant_id);
         $UpdateDescription = 'Shipment Paid SH239 By Cash';
 
-        // if ($isCollected) {
-        //     return $this->error('This Shipment Already Collected');
-        // }
+        if ($isCollected) {
+            return $this->error('This Shipment Already Collected');
+        }
 
         if (Str::contains($request->Comment2, 'Cheque')) {
             $UpdateDescription = 'Shipment Paid SH239 By Cheque';
