@@ -56,7 +56,7 @@ class FedExTracking extends Command
         ];
 
         $shipments->map(function ($shipment) use ($setup) {
-            $trackDetails = $this->track('FedEx', $shipment->external_awb) ?? [];
+            $trackDetails = $this->track('FedEx', $shipment->awb) ?? [];
             $event = $trackDetails['Events'] ?? [];
 
             if (empty($event)) {

@@ -14,7 +14,6 @@ use App\Http\Controllers\API\Merchant\ShipmentController;
 use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\API\TeamController;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Support\Facades\Route;
 use Libs\Aramex;
 
@@ -29,7 +28,7 @@ use Libs\Aramex;
 |
  */
 
-Route::group(['middleware' => ['json.response','db.row']], function () {
+Route::group(['middleware' => ['json.response', 'db.row']], function () {
     Route::middleware(['throttle:ip_address'])->group(function () {
         Route::post('auth/login', [AuthController::class, 'login']);
         Route::post('auth/register', [AuthController::class, 'register']);
@@ -86,17 +85,16 @@ Route::group(['middleware' => ['json.response','db.row']], function () {
                 // Shipments
                 Route::group(['middleware' => ['scope:shipping,admin']], function () {
                     Route::get('shipments/{id}', [ShipmentController::class, 'show'])->where('id', '[0-9]+');
-                    Route::post('shipments/export/{type}', [ShipmentController::class, 'export']);
                     Route::get('shipments/template', [ShipmentController::class, 'template']);
+                    Route::delete('shipments/{id}', [ShipmentController::class, 'delete'])->where('id', '[0-9]+');
 
+                    Route::post('shipments/export/{type}', [ShipmentController::class, 'export']);
                     Route::post('shipments/filters', [ShipmentController::class, 'index']);
                     Route::post('shipments/export/{type}', [ShipmentController::class, 'export']);
                     Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
                     Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
                     Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
                     Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
-
-                    Route::delete('shipments/{id}', [ShipmentController::class, 'delete'])->where('id', '[0-9]+');
                 });
 
                 // Transactions
@@ -126,7 +124,11 @@ Route::group(['middleware' => ['json.response','db.row']], function () {
                     Route::put('transfer', [TransactionsController::class, 'transfer']);
                     Route::put('deposit', [TransactionsController::class, 'deposit']);
                     Route::put('deposit/request', [TransactionsController::class, 'depositwRequest']);
+
+
+                    
                     Route::put('withdraw', [TransactionsController::class, 'withdraw']);
+                    Route::put('transactions/withdraw', [TransactionsController::class, 'withdraw']);
                 });
 
                 Route::get('countries', [MerchantController::class, 'getCountries']);
@@ -146,7 +148,7 @@ Route::group(['middleware' => ['json.response','db.row']], function () {
 
         Route::post('auth/logout', [AuthController::class, 'logout']);
     });
-    
+
     Route::post('aramex-webhook', [Aramex::class, 'webhook']);
     Route::get('process/stripe', [InvoiceController::class, 'stripeProcessSQS']);
 });

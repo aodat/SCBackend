@@ -75,7 +75,7 @@ class Shipment extends Model
 
     public static function InternalAWBExists($number)
     {
-        return DB::table('shipments')->where('external_awb', $number)->exists();
+        return DB::table('shipments')->where('awb', $number)->exists();
     }
 
     protected static function booted()

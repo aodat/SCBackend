@@ -9,6 +9,7 @@ use App\Traits\CarriersManager;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 class AramexTracking extends Command
@@ -52,7 +53,7 @@ class AramexTracking extends Command
             ->get();
 
         $shipments->map(function ($shipment) {
-            $tracking = $this->track('Aramex', $shipment->external_awb, true) ?? [];
+            $tracking = $this->track('Aramex', $shipment->awb, true) ?? [];
             if (!isset($tracking[0]['Value'])) {
                 return $shipment;
             }
@@ -80,10 +81,11 @@ class AramexTracking extends Command
 
             if (($lastUpdateCode == 'SH005' || $lastUpdateCode == 'SH006')) {
                 if ($shipment->cod == 0) {
-                    $request = Request::create('/api/aramex-webhook', 'POST', ['UpdateCode' => 'SH239', 'WaybillNumber' => $shipment->external_awb]);
+                    $request = Request::create('/api/aramex-webhook', 'POST', ['UpdateCode' => 'SH239', 'WaybillNumber' => $shipment->awb]);
                     Route::dispatch($request);
                 } else {
-                    $updated['status'] = 'COMPLETED';
+                    // $updated['status'] = 'COMPLETED';
+                    DB::table('shipments')->where('awb', $shipment->awb)->update(['status' => 'COMPLETED']);
                     $updated['delivered_at'] = Carbon::parse($lastUpdateTime)->format('Y-m-d H:i:s');
                 }
             }

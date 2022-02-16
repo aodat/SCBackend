@@ -35,7 +35,7 @@ class ShipmentController extends Controller
             ->where('is_deleted', false)
             ->whereBetween('s.created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($external)) {
-            $shipments->whereIn('s.external_awb', $external);
+            $shipments->whereIn('s.awb', $external);
         }
 
         if (count($phone)) {
@@ -63,7 +63,7 @@ class ShipmentController extends Controller
         $shipments->select(
             's.id',
             's.created_at',
-            's.external_awb',
+            's.awb',
             's.consignee_name',
             's.consignee_email',
             's.consignee_phone',

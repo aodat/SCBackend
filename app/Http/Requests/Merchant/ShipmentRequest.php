@@ -60,7 +60,7 @@ class ShipmentRequest extends MerchantRequest
                 $type . 'content' => 'required',
                 $type . 'pieces' => 'required|integer',
                 $type . 'actual_weight' => ($isRequired ? 'required|' : '') . 'numeric|between:0,9999',
-                $type . 'reference' => ''
+                $type . 'reference' => '',
             ];
 
             if (strpos($path, 'shipments/domestic/create') !== false) {
@@ -96,7 +96,7 @@ class ShipmentRequest extends MerchantRequest
             ];
         } else if ($this->method() == 'POST' && strpos($path, 'shipments/print') !== false) {
             return [
-                'shipment_number.*' => 'required|exists:shipments,external_awb',
+                'shipment_number.*' => 'required|exists:shipments,awb',
             ];
         } else if ($this->method() == 'POST' && strpos($path, 'shipments/calculate/fees')) {
             $type = Request::instance()->type;
@@ -173,7 +173,7 @@ class ShipmentRequest extends MerchantRequest
             return $validation;
         } else if ($this->method() == 'POST' && (strpos($path, 'shipments/track') !== false)) {
             return [
-                'shipment_number' => 'required|exists:shipments,external_awb',
+                'shipment_number' => 'required|exists:shipments,awb',
             ];
         }
 
