@@ -14,7 +14,7 @@ class RenameAwbExternalEnumVarsTable extends Migration
     public function up()
     {
         Schema::table('shipments', function (Blueprint $table) {
-            $table->rename('external_awb', 'awb');
+            $table->renameColumn('external_awb', 'awb');
         });
     }
 
