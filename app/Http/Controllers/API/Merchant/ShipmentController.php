@@ -421,17 +421,17 @@ class ShipmentController extends MerchantController
 
         if ($type == 'express') {
             $shipment['group'] = 'EXP';
-            $shipment['fees'] = $this->calculateDomesticFees(
+            $shipment['fees'] = $this->calculateExpressFees(
                 $shipment['carrier_id'],
-                $shipment['consignee_city'],
+                $shipment['consignee_country'],
                 $shipment['actual_weight'],
                 870
             );
         } else {
             $shipment['group'] = 'DOM';
-            $shipment['fees'] = $this->calculateExpressFees(
+            $shipment['fees'] = $this->calculateDomesticFees(
                 $shipment['carrier_id'],
-                $shipment['consignee_country'],
+                $shipment['consignee_city'],
                 $shipment['actual_weight'],
                 870
             );
