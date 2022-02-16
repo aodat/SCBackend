@@ -45,7 +45,7 @@ class InvoiceService
             ->pricePerUnit($price);
 
         $invoice = Invoice::make()
-            ->series($data->external_awb)
+            ->series($data->awb)
 
             ->buyer($customer)
             ->seller($client)

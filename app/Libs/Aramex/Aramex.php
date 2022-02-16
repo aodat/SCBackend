@@ -298,14 +298,14 @@ class Aramex
     }
     public function webhook(AramexRequest $request, TransactionsController $transaction)
     {
-        $shipmentInfo = Shipment::where('external_awb', $request->WaybillNumber)->first();
+        $shipmentInfo = Shipment::where('awb', $request->WaybillNumber)->first();
 
         $isCollected = $shipmentInfo->is_collected;
         $cod = $shipmentInfo['cod'];
         $fees = $shipmentInfo['fees'];
         $logs = collect($shipmentInfo->admin_logs);
         $merchant_id = $shipmentInfo['merchant_id'];
-        $awb = $shipmentInfo['external_awb'];
+        $awb = $shipmentInfo['awb'];
         $created_by = $shipmentInfo['created_by'];
         $merchant = Merchant::findOrFail($merchant_id);
         $UpdateDescription = 'Shipment Paid SH239 By Cash';

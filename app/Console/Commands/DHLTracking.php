@@ -55,7 +55,7 @@ class DHLTracking extends Command
         ];
 
         $shipments->map(function ($shipment) use ($setup) {
-            $trackDetails = $this->track('DHL', $shipment->external_awb) ?? [];
+            $trackDetails = $this->track('DHL', $shipment->awb) ?? [];
 
             $events = array_reverse($trackDetails['ShipmentEvent'] ?? []);
 
