@@ -273,7 +273,7 @@ class ShipmentController extends MerchantController
 
     private function createShipmentDB($shipments, $provider)
     {
-        $resource = Request()->header('Agent') ?? 'SHIPMENT';
+        // $resource = Request()->header('Agent') ?? 'SHIPMENT';
         $payments = $shipments->sum('payment');
         $getbulk = $shipments->where('carrier_id', 1);
         $payloads = $getbulk->map(function ($data) {
