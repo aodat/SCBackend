@@ -226,10 +226,21 @@ class ShipmentController extends MerchantController
             }
 
             $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
+
             if ($type == 'DOM') {
-                $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', $shipment['actual_weight']);
+                $shipment['fees'] = $this->calculateDomesticFees(
+                    $shipment['carrier_id'],
+                    $shipment['consignee_city'],
+                    $shipment['actual_weight'],
+                    Request()->user()->merchant_id
+                );
             } else {
-                $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
+                $shipment['fees'] = $this->calculateExpressFees(
+                    $shipment['carrier_id'],
+                    $shipment['consignee_country'],
+                    $shipment['actual_weight'],
+                    Request()->user()->merchant_id
+                );
             }
 
             // Check if COD is Zero OR Shipment Type Express
@@ -364,9 +375,19 @@ class ShipmentController extends MerchantController
 
         $carrier = $carriers->get()->map(function ($carrier) use ($data) {
             if ($data['type'] == 'express') {
-                $carrier['fees'] = (number_format($this->calculateFees($carrier->id, null, $data['country_code'], $data['type'], $data['weight']), 2));
+                $carrier['fees'] = number_format($this->calculateExpressFees(
+                    $carrier->id,
+                    $data['country_code'],
+                    $data['weight'],
+                    Request()->user()->merchant_id ?? env('GUEST_MERCHANT_ID')
+                ), 2);
             } else {
-                $carrier['fees'] = (number_format($this->calculateFees($carrier->id, $data['city_from'], $data['city_to'], $data['type'], $data['weight']), 2));
+                $carrier['fees'] = $this->calculateDomesticFees(
+                    $carrier->id,
+                    $data['city_to'],
+                    $data['weight'],
+                    Request()->user()->merchant_id ?? env('GUEST_MERCHANT_ID')
+                );
             }
 
             return $carrier;
@@ -399,14 +420,24 @@ class ShipmentController extends MerchantController
 
         if ($type == 'express') {
             $shipment['group'] = 'EXP';
-            $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
+            $shipment['fees'] = $this->calculateDomesticFees(
+                $shipment['carrier_id'],
+                $shipment['consignee_city'],
+                $shipment['actual_weight'],
+                870
+            );
         } else {
             $shipment['group'] = 'DOM';
-            $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', $shipment['actual_weight']);
+            $shipment['fees'] = $this->calculateExpressFees(
+                $shipment['carrier_id'],
+                $shipment['consignee_country'],
+                $shipment['actual_weight'],
+                870
+            );
         }
 
-        $shipment['merchant_id'] = 870;
-        $shipment['created_by'] = 1632;
+        $shipment['merchant_id'] = env('GUEST_MERCHANT_ID');
+        $shipment['created_by'] = env('GUEST_MERCHANT_USER_ID');
         $shipment['created_at'] = Carbon::now();
         $shipment['updated_at'] = Carbon::now();
 
@@ -434,99 +465,63 @@ class ShipmentController extends MerchantController
         return $this->successful('Shipment Deleted Successfully');
     }
 
-    public function calculateFees($carrier_id, $from = null, $to, $type, $weight, $merchant_id = null)
+    public function calculateDomesticFees($carrier_id, $city, $weight, $merchant_id = null)
     {
         $merchentInfo = $this->getMerchentInfo($merchant_id);
-        $to = str_replace("'", "", $to);
-        if ($type == 'domestic' || $type == 'DOM') {
+        $city = str_replace("'", "", $city);
 
-            if (!isset($merchentInfo['domestic_rates'][$carrier_id])) {
-                throw new InternalException('The Carrier ID ' . $carrier_id . ' No Support domestic , Please Contact Administrators');
-            }
+        $list = array_map(function ($value) {
+            return str_replace("'", "", $value);
+        }, $merchentInfo['domestic_rates'][$carrier_id] ?? []);
 
-            $data = array_map(function ($value) {
-                return str_replace("'", "", $value);
-            }, $merchentInfo['domestic_rates'][$carrier_id]);
+        $rate = collect($list)->where('code', $city)->first();
 
-            $rate = collect($data)->where('code', $to);
-
-            if ($rate->isEmpty()) {
-                throw new InternalException('Country Code Not Exists, Please Contact Administrators');
-            }
-
-            $price = $rate->first()['price'];
-            $extra = $rate->first()['additional'] ?? 1.5;
-
-            $fees = 0;
-            if ($weight > 0) {
-                $weights_count = ceil($weight / 10);
-                $weight_fees = (($weights_count - 1) * $extra) + $price;
-                $fees += $weight_fees;
-            }
-            return $fees;
-        } else {
-            $express_rates = collect(Country::where('code', $merchentInfo['country_code'])->first());
-            if ($express_rates->isEmpty()) {
-                throw new InternalException('Country Code Not Exists, Please Contact Administrators');
-            }
-
-            $express_rates = $express_rates['rates'];
-            if (count($express_rates) == 0) {
-                throw new InternalException('No Setup Added To This Country, Please Contact Administrators');
-            }
-
-            if (!isset($express_rates[$to])) {
-                throw new InternalException('No Setup Added To This Country, Please Contact Administrators');
-            }
-
-            $rates = collect($express_rates[$to]);
-            $zones = $rates->where('carrier_id', $carrier_id);
-
-            if ($zones->count() > 1) {
-                throw new InternalException('Somthing Wrong On Rates Setup, Please Contact Administrators');
-            }
-
-            if (!isset($zones->first()['zone_id'])) {
-                throw new InternalException('Somthing Wrong On Zone ID Setup, Please Contact Administrators');
-            }
-
-            $zone_id = $zones->first()['zone_id'];
-            $discounts = $merchentInfo['express_rates'][$carrier_id]['discounts'] ?? [];
-
-            $zoneRates = collect($merchentInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id);
-            if ($zoneRates->count() > 1) {
-                throw new InternalException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
-            }
-
-            $zoneRates = $zoneRates->first();
-            if ($zoneRates == null) {
-                return 0;
-            }
-
-            $base = $zoneRates['basic'];
-            $additional = $zoneRates['additional'];
-            if (!empty($discounts)) {
-                foreach ($discounts as $key => $value) {
-                    if (eval("return " . $weight . $value['condintion'] . $value['weight'] . ";")) {
-                        $additional = $additional - ($additional * $value['percent']);
-                    }
-
-                }
-            }
-
-            $fees = 0;
-            if ($weight > 0) {
-                $weights_count = ceil($weight / 0.5);
-                $weight_fees = (($weights_count - 1) * $additional) + $base;
-                $fees += $weight_fees;
-            }
+        if (is_null($rate)) {
+            return 0;
         }
 
-        if ($fees == 0) {
-            throw new InternalException('Fees Equal Zero');
-        }
+        $price = $rate['price'];
+        $extra = $rate['additional'] ?? 1.5;
 
+        $fees = 0;
+        if ($weight > 0) {
+            $weights_count = ceil($weight / 10);
+            $weight_fees = (($weights_count - 1) * $extra) + $price;
+            $fees += $weight_fees;
+        }
         return $fees;
     }
 
+    public function calculateExpressFees($carrier_id, $country, $weight, $merchant_id = null)
+    {
+        $merchentInfo = $this->getMerchentInfo($merchant_id);
+        $country = str_replace("'", "", $country);
+
+        $zone_id =
+        collect(Country::where('code', $merchentInfo['country_code'])->first())
+        ['rates'][$country][$carrier_id]['zone_id'] ?? null;
+
+        $rate = collect($merchentInfo['express_rates'][$carrier_id]['zones'] ?? [])->where('id', $zone_id)->first();
+        if (is_null($rate)) {
+            return 0;
+        }
+
+        $base = $rate['basic'];
+        $additional = $rate['additional'];
+        if (!empty($discounts)) {
+            foreach ($discounts as $key => $value) {
+                if (eval("return " . $weight . $value['condintion'] . $value['weight'] . ";")) {
+                    $additional = $additional - ($additional * $value['percent']);
+                }
+            }
+        }
+
+        $fees = 0;
+        if ($weight > 0) {
+            $weights_count = ceil($weight / 0.5);
+            $weight_fees = (($weights_count - 1) * $additional) + $base;
+            $fees += $weight_fees;
+        }
+        return $fees;
+    }
 }

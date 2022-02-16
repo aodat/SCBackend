@@ -66,14 +66,21 @@ class AramexTracking extends Command
             $updated['shipping_logs'] = collect($logs);
 
             if ($shipment->chargable_weight < $chargable_weight) {
-                $fees = (new ShipmentController)->calculateFees(
-                    1,
-                    null,
-                    ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
-                    $shipment->group,
-                    $chargable_weight,
-                    $shipment->merchant_id
-                );
+                if ($shipment->group == 'DOM') {
+                    $fees = (new ShipmentController)->calculateDomesticFees(
+                        1,
+                        $shipment->consignee_city,
+                        $chargable_weight,
+                        $shipment->merchant_id
+                    );
+                } else {
+                    $fees = (new ShipmentController)->calculateExpressFees(
+                        1,
+                        $shipment->consignee_country,
+                        $chargable_weight,
+                        $shipment->merchant_id
+                    );
+                }
 
                 $updated['fees'] = $fees;
                 $updated['chargable_weight'] = $chargable_weight;
