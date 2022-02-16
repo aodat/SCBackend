@@ -99,13 +99,16 @@ class TransactionsController extends MerchantController
         }
 
         $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
+
         if ($merchecntInfo->cod_balance <= 0 || $dedaction > $merchecntInfo->cod_balance) {
             return $this->error('You dont have COD Balance');
+        } else if ($merchecntInfo->cod_balance < 10) {
+            return $this->error('The minimum withdrawal amount is 10 ' . $merchecntInfo->country_code);
         }
 
         // $result = $dinarak->withdraw($merchecntInfo, $payment['iban'], $dedaction);
 
-        $merchecntInfo->cod_balance -= $merchecntInfo->amount;
+        $merchecntInfo->cod_balance -= $dedaction;
         $merchecntInfo->save();
 
         Transaction::create([
@@ -115,10 +118,11 @@ class TransactionsController extends MerchantController
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
             'amount' => $dedaction,
+            'description' => 'WithDraw Request',
             // 'notes' => json_encode($result),
             'status' => 'PROCESSING',
-            "balance_after" => $merchecntInfo->cod_balance - $dedaction,
-            "source" => "NONE",
+            "balance_after" => $merchecntInfo->cod_balance,
+            "source" => "NONE", 
         ]);
         return $this->successful('WithDraw Transaction Completed');
     }
@@ -189,7 +193,7 @@ class TransactionsController extends MerchantController
                     'resource' => Request()->header('agent') ?? 'API',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
-                ]
+                ],
             ]);
 
             $merchecnt->cod_balance -= $request->amount;
