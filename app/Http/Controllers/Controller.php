@@ -30,7 +30,7 @@ class Controller extends BaseController
         $shipments->map(function ($shipment) {
             $json = [
                 "UpdateCode" => "SH239",
-                "WaybillNumber" => $shipment->external_awb,
+                "WaybillNumber" => $shipment->awb,
             ];
 
             $curl = curl_init();

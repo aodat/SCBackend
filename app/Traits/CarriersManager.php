@@ -85,7 +85,7 @@ trait CarriersManager
     public function printShipment($shipments_number)
     {
         $shipments = DB::table('shipments')
-            ->whereIn('external_awb', $shipments_number)
+            ->whereIn('awb', $shipments_number)
             ->get();
 
         $exported = [];

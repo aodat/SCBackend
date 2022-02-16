@@ -46,7 +46,7 @@ class ShipmentController extends MerchantController
 
     public function show($id, ShipmentRequest $request)
     {
-        $data = Shipment::where('id', $id)->orWhere('external_awb', $id)->first();
+        $data = Shipment::where('id', $id)->orWhere('awb', $id)->first();
         return $this->response($data, 'Data Retrieved Sucessfully');
     }
 
@@ -86,7 +86,7 @@ class ShipmentController extends MerchantController
         if (count($external)) {
             $shipments->where(function ($where) use ($external) {
                 foreach ($external as $ext) {
-                    $where->orWhere('s.external_awb', 'like', '%' . $ext . '%');
+                    $where->orWhere('s.awb', 'like', '%' . $ext . '%');
                 }
             });
         }
@@ -122,7 +122,7 @@ class ShipmentController extends MerchantController
         $shipments->select(
             's.id',
             's.created_at',
-            's.external_awb',
+            's.awb',
             's.consignee_name',
             's.consignee_email',
             's.consignee_phone',
@@ -275,7 +275,7 @@ class ShipmentController extends MerchantController
             $result = $this->generateShipment($provider, $this->getMerchentInfo(), $shipment);
             $links[] = $result['link'];
 
-            $shipment['external_awb'] = $result['id'];
+            $shipment['awb'] = $result['id'];
             $shipment['resource'] = $resource;
             $shipment['url'] = $result['link'];
 
@@ -296,7 +296,7 @@ class ShipmentController extends MerchantController
             $files = $result['link'];
 
             $shipments = $shipments->map(function ($value, $key) use ($externalAWB, $resource, $files) {
-                $value['external_awb'] = $externalAWB[$key];
+                $value['awb'] = $externalAWB[$key];
                 $value['resource'] = $resource;
                 $value['url'] = $files[$key];
 

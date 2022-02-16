@@ -43,7 +43,7 @@ class ShipmentRequest extends FormRequest
             ];
         } else if ($this->method() == 'POST' && (strpos($path, 'shipments/track') !== false)) {
             return [
-                'shipment_number' => 'required|exists:shipments,external_awb',
+                'shipment_number' => 'required|exists:shipments,awb',
             ];
         } else if ($this->method() == 'PUT' && (strpos($path, '{merchant_id}/shipments/{shipment_id}') !== false)) {
             return [

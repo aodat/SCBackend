@@ -298,21 +298,21 @@ class Aramex
     }
     public function webhook(AramexRequest $request, TransactionsController $transaction)
     {
-        $shipmentInfo = Shipment::where('external_awb', $request->WaybillNumber)->first();
+        $shipmentInfo = Shipment::where('awb', $request->WaybillNumber)->first();
 
         $isCollected = $shipmentInfo->is_collected;
         $cod = $shipmentInfo['cod'];
         $fees = $shipmentInfo['fees'];
         $logs = collect($shipmentInfo->admin_logs);
         $merchant_id = $shipmentInfo['merchant_id'];
-        $awb = $shipmentInfo['external_awb'];
+        $awb = $shipmentInfo['awb'];
         $created_by = $shipmentInfo['created_by'];
         $merchant = Merchant::findOrFail($merchant_id);
         $UpdateDescription = 'Shipment Paid SH239 By Cash';
 
-        if ($isCollected) {
-            return $this->error('This Shipment Already Collected');
-        }
+        // if ($isCollected) {
+        //     return $this->error('This Shipment Already Collected');
+        // }
 
         if (Str::contains($request->Comment2, 'Cheque')) {
             $UpdateDescription = 'Shipment Paid SH239 By Cheque';
@@ -333,11 +333,16 @@ class Aramex
 
         if ($merchant->payment_type == 'POSTPAID') {
             $amount = $cod - $fees;
-            $updated['transaction_id'] = $transaction->cashinCOD($merchant_id, $awb, $amount, "SHIPMENT", $created_by);
         } else {
             $amount = $cod;
-            $updated['transaction_id'] = $transaction->cashinCOD($merchant_id, $awb, $amount, "SHIPMENT", $created_by);
         }
+
+        $type = 'CASHIN';
+        if ($amount < 0) {
+            $type = 'CASHOUT';
+        }
+
+        $updated['transaction_id'] = $transaction->COD($type, $merchant_id, $awb, $amount, "SHIPMENT", $created_by,'Aramex SH239 webhook','COMPLETED','API');
 
         if (is_null($shipmentInfo->delivered_at)) {
             $updated['delivered_at'] = Carbon::now();

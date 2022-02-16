@@ -74,7 +74,7 @@ class TransactionsController extends MerchantController
 
         $tabs = collect($this->type)->merge(collect($tabs));
         $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
-
+        
         return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
@@ -99,13 +99,16 @@ class TransactionsController extends MerchantController
         }
 
         $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
+
         if ($merchecntInfo->cod_balance <= 0 || $dedaction > $merchecntInfo->cod_balance) {
             return $this->error('You dont have COD Balance');
+        } else if ($merchecntInfo->cod_balance < 10) {
+            return $this->error('The minimum withdrawal amount is 10 ' . $merchecntInfo->country_code);
         }
 
         // $result = $dinarak->withdraw($merchecntInfo, $payment['iban'], $dedaction);
 
-        $merchecntInfo->cod_balance -= $merchecntInfo->amount;
+        $merchecntInfo->cod_balance -= $dedaction;
         $merchecntInfo->save();
 
         Transaction::create([
@@ -115,9 +118,10 @@ class TransactionsController extends MerchantController
             "created_by" => Request()->user()->id,
             "merchant_id" => Request()->user()->merchant_id,
             'amount' => $dedaction,
+            'description' => 'WithDraw Request',
             // 'notes' => json_encode($result),
             'status' => 'PROCESSING',
-            "balance_after" => $merchecntInfo->cod_balance - $dedaction,
+            "balance_after" => $merchecntInfo->cod_balance,
             "source" => "NONE",
         ]);
         return $this->successful('WithDraw Transaction Completed');
@@ -166,8 +170,9 @@ class TransactionsController extends MerchantController
                     'type' => 'CASHIN',
                     'subtype' => 'BUNDLE',
                     'merchant_id' => $request->user()->merchant_id,
-                    'source' => 'ORDER',
+                    'source' => 'NONE',
                     'status' => 'COMPLETED',
+                    'description' => 'Money Received from COD Balance',
                     'created_by' => $request->user()->id,
                     'balance_after' => $request->amount + $merchecnt->bundle_balance,
                     'amount' => $request->amount,
@@ -179,8 +184,9 @@ class TransactionsController extends MerchantController
                     'type' => 'CASHOUT',
                     'subtype' => 'COD',
                     'merchant_id' => $request->user()->merchant_id,
-                    'source' => 'ORDER',
+                    'source' => 'NONE',
                     'status' => 'COMPLETED',
+                    'description' => 'Money transferred to Bundle',
                     'created_by' => $request->user()->id,
                     'balance_after' => (($merchecnt->cod_balance - $request->amount) > 0) ? $merchecnt->cod_balance - $request->amount : 0,
                     'amount' => $request->amount,
@@ -226,7 +232,7 @@ class TransactionsController extends MerchantController
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
     }
 
-    public function cashinCOD($merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED')
+    public function COD($type = 'CASHIN', $merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
     {
         $merchant = Merchant::findOrFail($merchant_id);
         $merchant->cod_balance += $amount;
@@ -234,7 +240,7 @@ class TransactionsController extends MerchantController
 
         return Transaction::create(
             [
-                'type' => 'CASHIN',
+                'type' => $type,
                 'subtype' => 'COD',
                 'item_id' => $awb,
                 'merchant_id' => $merchant_id,
@@ -244,6 +250,7 @@ class TransactionsController extends MerchantController
                 'source' => $source,
                 'status' => $status,
                 'created_by' => $created_by,
+                'resource' => $resource,
             ]
         )->id;
     }

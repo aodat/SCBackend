@@ -6,14 +6,14 @@ use App\Models\Pickup;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class MerchantCronJobs extends Command
+class PickUpTracking extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'merchant:cron';
+    protected $signature = 'pickup-tracking:cron';
 
     /**
      * The console command description.
@@ -39,8 +39,7 @@ class MerchantCronJobs extends Command
      */
     public function handle()
     {
-        Pickup::whereDate('pickup_date', '<=', Carbon::today())->update(['status' => 'DONE']);
-        Pickup::whereNotNull('cancel_ref')->update(['status' => 'CANCELD']);
+        Pickup::whereDate('pickup_date', '<=', Carbon::yesterday())->where('status', 'PROCESSING')->update(['status' => 'DONE']);
         return Command::SUCCESS;
     }
 }

@@ -13,8 +13,10 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\MerchantCronJobs::class,
-        Commands\AramexTracking::class
+        Commands\AramexTracking::class,
+        Commands\DHLTracking::class,
+        Commands\FedExTracking::class,
+        Commands\PickUpTracking::class,
     ];
 
     /**
@@ -25,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('merchant:cron')->daily();
+        $schedule->command('pickup-tracking:cron')->daily();
         $schedule->command('aramex-tracking:cron')->everyFiveMinutes();
         $schedule->command('dhl-tracking:cron')->everyFiveMinutes();
         $schedule->command('fedex-tracking:cron')->everyFiveMinutes();

@@ -24,7 +24,7 @@ class AramexRequest extends FormRequest
     public function rules()
     {
         return [
-            'WaybillNumber' => 'required|exists:shipments,external_awb,carrier_id,1',
+            'WaybillNumber' => 'required|exists:shipments,awb,carrier_id,1',
             'UpdateCode' => 'required|in:SH239'
         ];
     }
