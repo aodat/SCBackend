@@ -36,7 +36,6 @@ class TransactionsController extends Controller
         $transaction = Transaction::findOrFail($request->id);
         $merchecntInfo = Merchant::findOrFail($transaction->merchant_id);
 
-        
         if ($transaction->status == 'COMPLETED') {
             return $this->error('This transaction was paid');
         }
@@ -50,10 +49,8 @@ class TransactionsController extends Controller
         }
         $status = json_decode($result)->status->id ?? null;
 
-        if ($status == 1) {
+        if ($status == 1 || $status == 2) {
             $transaction->status = 'COMPLETED';
-        } else {
-            $transaction->status = 'REJECTED';
         }
 
         if (env('APP_ENV') == 'production') {
@@ -64,6 +61,6 @@ class TransactionsController extends Controller
 
         $transaction->save();
 
-        return $this->successful('Tansaction Was ' . $transaction->status);
+        return $this->successful('Tansaction Was ' . json_decode($result)->status->name);
     }
 }
