@@ -15,8 +15,7 @@ class TransactionsController extends Controller
     {
         $transactions = Transaction::where('subtype', 'COD')
                         ->where('type', 'CASHOUT')
-                        ->where('status', 'PROCESSING')
-                        ->get();
+                        ->where('status', 'PROCESSING');
         return $this->pagination($transactions->paginate(request()->per_page ?? 30));
     }
 
