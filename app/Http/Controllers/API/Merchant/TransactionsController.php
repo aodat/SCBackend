@@ -84,7 +84,7 @@ class TransactionsController extends MerchantController
         return $this->response($data, 'Data Retrieved Successfully');
     }
 
-    public function withDraw(TransactionRequest $request, Dinarak $dinarak)
+    public function withDraw(TransactionRequest $request)
     {
         $merchecntInfo = $this->getMerchentInfo();
 
@@ -106,8 +106,6 @@ class TransactionsController extends MerchantController
             return $this->error('The minimum withdrawal amount is 10 ' . $merchecntInfo->country_code);
         }
 
-        // $result = $dinarak->withdraw($merchecntInfo, $payment['iban'], $dedaction);
-
         $merchecntInfo->cod_balance -= $dedaction;
         $merchecntInfo->save();
 
@@ -125,7 +123,7 @@ class TransactionsController extends MerchantController
             "balance_after" => $merchecntInfo->cod_balance,
             "source" => "NONE",
         ]);
-        return $this->successful('WithDraw Transaction Completed');
+        return $this->successful('WithDraw Transaction Under Proocssing');
     }
 
     public function depositwRequest(TransactionRequest $request, Dinarak $dinarak)

@@ -68,6 +68,7 @@ Route::group(['middleware' => ['json.response']], function () {
         Route::group(['prefix' => 'transactions/'], function () {
             Route::get('list', [TransactionsController::class, 'index']);
             Route::get('export', [TransactionsController::class, 'export']);
+            Route::put('withdraw', [TransactionsController::class, 'withdraw']);
         });
     });
 });

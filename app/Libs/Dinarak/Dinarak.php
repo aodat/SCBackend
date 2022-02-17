@@ -46,7 +46,7 @@ class Dinarak
         if (!$response->successful()) {
             throw new InternalException('Dinark - Deposite Payment', $response->status());
         }
-        return $response->json();
+        return $response;
     }
 
     public function deposit($merchecntInfo, $wallet_number, $amount, $pincode)
