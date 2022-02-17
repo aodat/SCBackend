@@ -20,7 +20,7 @@ class Transaction extends Model
 
     protected function serializeDate(DateTimeInterface $date)
     {
-        return $date->format('Y-m-d');
+        return $date->format('Y-m-d H:i:s');
     }
 
     public function getConsigneeNameAttribute()
