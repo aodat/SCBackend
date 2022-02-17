@@ -35,19 +35,19 @@ class TransactionsController extends Controller
     {
         $transaction = Transaction::findOrFail($request->id);
         $merchecntInfo = Merchant::findOrFail($transaction->merchant_id);
+
+        
         if ($transaction->status == 'COMPLETED') {
-            // return $this->error('This transaction was paid');
-        } else if ($transaction->payment_method['type'] != 'wallet') {
-            return $this->error('You Cant Make This Transactions By Dinark');
+            return $this->error('This transaction was paid');
         }
 
         $dedaction = $transaction->amount;
+
         // This Tranasction for testing only
         $result = '{"id":898353,"name":"Tareq Fawakhiri","receiverID":"962772170353","amount":1,"description":"Transfer from ShipCash","creationDate":"2022-02-17T08:52:13.6572354Z","approvalDate":"2022-02-17T08:52:13.6831651Z","reference":"83549122033917620e0c349480d422354571","financialReference":"266695128792580","status":{"id":1,"name":"Success","errorMessage":null}}';
         if (env('APP_ENV') == 'production') {
             $result = $dinark->withdraw($merchecntInfo, $transaction->payment_method['iban'], $dedaction);
         }
-
         $status = json_decode($result)->status->id ?? null;
 
         if ($status == 1) {
