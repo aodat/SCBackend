@@ -298,6 +298,10 @@ class Aramex
     }
     public function webhook(AramexRequest $request, TransactionsController $transaction)
     {
+        if ($request->UpdateCode != 'SH239') {
+            return $this->successful('Webhook Completed');
+        }
+
         $shipmentInfo = Shipment::where('awb', $request->WaybillNumber)->first();
 
         $isCollected = $shipmentInfo->is_collected;
@@ -342,7 +346,7 @@ class Aramex
         //     $type = 'CASHOUT';
         // }
 
-        $updated['transaction_id'] = $transaction->COD('CASHIN', $merchant_id, $awb, $amount, "SHIPMENT", $created_by,'Aramex SH239 webhook','COMPLETED','API');
+        $updated['transaction_id'] = $transaction->COD('CASHIN', $merchant_id, $awb, $amount, "SHIPMENT", $created_by, 'Aramex SH239 webhook', 'COMPLETED', 'API');
 
         if (is_null($shipmentInfo->delivered_at)) {
             $updated['delivered_at'] = Carbon::now();
