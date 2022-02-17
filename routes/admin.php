@@ -65,6 +65,9 @@ Route::group(['middleware' => ['json.response']], function () {
             ->where('merchant_id', '[0-9]+')
             ->where('shipment_id', '[0-9]+');
 
-        Route::get('transaction/cod', [TransactionsController::class, 'export']);
+        Route::group(['prefix' => 'transactions/'], function () {
+            Route::get('list', [TransactionsController::class, 'index']);
+            Route::get('export', [TransactionsController::class, 'export']);
+        });
     });
 });

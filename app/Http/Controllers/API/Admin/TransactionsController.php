@@ -11,9 +11,18 @@ use Illuminate\Support\Facades\Request;
 
 class TransactionsController extends Controller
 {
+    public function index(Request $request)
+    {
+        $transactions = Transaction::where('subtype', 'COD')
+                        ->where('type', 'CASHOUT')
+                        ->where('status', 'PROCESSING')
+                        ->get();
+        return $this->pagination($transactions->paginate(request()->per_page ?? 30));
+    }
+
     public function export(Request $request)
     {
-        $transactions = Transaction::where('subtype', 'COD')->where('type', 'CASHOUT')->where('status','PROCESSING')->get();
+        $transactions = Transaction::where('subtype', 'COD')->where('type', 'CASHOUT')->where('status', 'PROCESSING')->get();
 
         $path = "export/transaction-cod-" . Carbon::today()->format('Y-m-d') . ".xlsx";
 
