@@ -80,11 +80,9 @@ class FedExTracking extends Command
             if (isset($updated['actions'])) {
                 $merchant = Merchant::findOrFail($shipment->merchant_id);
                 if ($shipment->chargable_weight != $trackDetails['ShipmentWeight']['Value']) {
-                    $fees = (new ShipmentController)->calculateFees(
+                    $fees = (new ShipmentController)->calculateExpressFees(
                         3,
-                        null,
                         $shipment->consignee_country,
-                        $shipment->group,
                         $trackDetails['ShipmentWeight']['Value'],
                         $shipment->merchant_id
                     );

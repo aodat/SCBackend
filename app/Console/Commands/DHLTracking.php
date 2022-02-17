@@ -59,10 +59,12 @@ class DHLTracking extends Command
 
             $events = array_reverse($trackDetails['ShipmentEvent'] ?? []);
 
-            $lastEvent = $events[0]['ServiceEvent']['EventCode'] ?? [];
+            $lastEvent = $events[0]['ServiceEvent']['EventCode'] ?? null;
             $last_update = $events[0]['ServiceEvent']['Description'] ?? null;
 
-            $ShipmentEvent = array_reverse($trackDetails['ShipmentEvent']);
+
+            $ShipmentEvent = array_reverse($trackDetails['ShipmentEvent'] ?? []);
+            $new = [];
             foreach ($ShipmentEvent as $key => $value) {
                 $new[] = [
                     'UpdateDateTime' => $value['Date'] . ' ' . $value['Time'],
@@ -70,7 +72,6 @@ class DHLTracking extends Command
                     'UpdateDescription' => $value['ServiceEvent']['Description'],
                 ];
             }
-
             $updated = $setup[$lastEvent] ?? ['status' => 'PROCESSING', 'actions' => ['check_chargable_weight']];
             $updated['shipping_logs'] = collect($new);
             $updated['last_update'] = str_replace('_', ' ', $last_update);
@@ -78,11 +79,9 @@ class DHLTracking extends Command
             if (isset($updated['actions'])) {
                 $merchant = Merchant::findOrFail($shipment->merchant_id);
                 if ($shipment->chargable_weight != $trackDetails['Weight']) {
-                    $fees = (new ShipmentController)->calculateFees(
+                    $fees = (new ShipmentController)->calculateExpressFees(
                         2,
-                        null,
                         $shipment->consignee_country,
-                        $shipment->group,
                         $trackDetails['Weight'],
                         $shipment->merchant_id
                     );

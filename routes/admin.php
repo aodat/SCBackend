@@ -8,6 +8,7 @@ use App\Http\Controllers\API\Admin\ExpressRatesController;
 use App\Http\Controllers\API\Admin\MerchantsController;
 use App\Http\Controllers\API\Admin\PaymentMethodsController;
 use App\Http\Controllers\API\Admin\ShipmentController;
+use App\Http\Controllers\API\Admin\TransactionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -63,6 +64,11 @@ Route::group(['middleware' => ['json.response']], function () {
         Route::put('{merchant_id}/shipments/{shipment_id}', [ShipmentController::class, 'update'])
             ->where('merchant_id', '[0-9]+')
             ->where('shipment_id', '[0-9]+');
-        
+
+        Route::group(['prefix' => 'transactions/'], function () {
+            Route::get('list', [TransactionsController::class, 'index']);
+            Route::get('export', [TransactionsController::class, 'export']);
+            Route::put('withdraw', [TransactionsController::class, 'withdraw']);
+        });
     });
 });

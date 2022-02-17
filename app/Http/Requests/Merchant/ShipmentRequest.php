@@ -68,6 +68,13 @@ class ShipmentRequest extends MerchantRequest
                 $validation[$type . 'extra_services'] = 'required|in:DOMCOD';
                 $validation[$type . 'cod'] = 'required|numeric|between:0,750';
             } else if (strpos($path, 'shipments/express/create') !== false) {
+
+                if (!empty(Request::instance()->dimention)) {
+                    $validation[$type . 'dimention.length'] = 'required|numeric|between:0,9999';
+                    $validation[$type . 'dimention.height'] = 'required|numeric|between:0,9999';
+                    $validation[$type . 'dimention.width'] = 'required|numeric|between:0,9999';
+                }
+
                 $validation[$type . 'cod'] = 'numeric|between:0,9999';
                 $validation[$type . 'payment'] = 'numeric|between:0,9999';
                 $validation[$type . 'consignee_country'] = 'required';
@@ -107,6 +114,11 @@ class ShipmentRequest extends MerchantRequest
             ];
             if ($type == 'express') {
                 $validation['country_code'] = 'required';
+                if (!empty(Request::instance()->dimention)) {
+                    $validation['dimention.length'] = 'required|numeric|between:0,9999';
+                    $validation['dimention.height'] = 'required|numeric|between:0,9999';
+                    $validation['dimention.width'] = 'required|numeric|between:0,9999';
+                }
             } else {
                 $validation['city_from'] = 'required';
                 $validation['city_to'] = 'required';
