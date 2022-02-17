@@ -44,7 +44,7 @@ class Dinarak
             ])->post($this->endPoint . "/transfer/transfer", $transferData);
 
         if (!$response->successful()) {
-            throw new InternalException('Dinark - Deposite Payment', $response->status());
+            throw new InternalException('Dinark - Withdraw Error', 400, $transferData, $response->json());
         }
         return $response;
     }
