@@ -299,6 +299,28 @@ class Aramex
     public function webhook(AramexRequest $request, TransactionsController $transaction)
     {
         $shipmentInfo = Shipment::where('awb', $request->WaybillNumber)->first();
+        if (is_null($shipmentInfo)) {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://shipcash.net/shipments-update-receiver',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($request->all()),
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                ),
+            ));
+            curl_exec($curl);
+            curl_close($curl);
+            return $this->successful('Webhook Completed');
+        } else if ($request->UpdateCode != 'SH239') {
+            return $this->successful('Webhook Completed');
+        }
 
         $isCollected = $shipmentInfo->is_collected;
         $cod = $shipmentInfo['cod'];
@@ -337,12 +359,12 @@ class Aramex
             $amount = $cod;
         }
 
-        $type = 'CASHIN';
-        if ($amount < 0) {
-            $type = 'CASHOUT';
-        }
+        // $type = 'CASHIN';
+        // if ($amount < 0) {
+        //     $type = 'CASHOUT';
+        // }
 
-        $updated['transaction_id'] = $transaction->COD($type, $merchant_id, $awb, $amount, "SHIPMENT", $created_by,'Aramex SH239 webhook','COMPLETED','API');
+        $updated['transaction_id'] = $transaction->COD('CASHIN', $merchant_id, $awb, $amount, "SHIPMENT", $created_by, 'Aramex SH239 webhook', 'COMPLETED', 'API');
 
         if (is_null($shipmentInfo->delivered_at)) {
             $updated['delivered_at'] = Carbon::now();
