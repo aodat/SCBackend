@@ -24,17 +24,18 @@ class Controller extends BaseController
 
     public function json()
     {
+        die('Stop Work');
         $merchants = Merchant::get();
         $merchants->map(function ($merchant) {
             $new[] = [
                 'carrier_id' => 1,
                 'carrier_name' => 'Aramex',
                 'weight' => 10,
-                'zones' => $merchant->domestic_rates
+                'zones' => collect($merchant->domestic_rates)->first(),
             ];
-            dd($new);
-            dd($merchant->domestic_rates);
+
+            $merchant->domestic_rates = collect($new);
+            $merchant->save();
         });
-        die('Stop Work');
     }
 }
