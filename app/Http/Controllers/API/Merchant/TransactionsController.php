@@ -209,17 +209,21 @@ class TransactionsController extends MerchantController
         $merchentID = Request()->user()->merchant_id;
         $subtype = $request->subtype;
         $type = $request->type;
-        $date = $request->date;
+        
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
+        $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
+
 
         $transaction = Transaction::where('merchant_id', $merchentID)
-            ->whereDate('created_at', $date);
+            ->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+
 
         if ($subtype && $subtype != '*') {
             $transaction->where('subtype', $subtype);
         }
 
         $transactions = $transaction->get();
-
+        
         $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
         if ($type == 'xlsx') {
