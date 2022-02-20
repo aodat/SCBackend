@@ -129,21 +129,19 @@
     </head>
 
     <body>
-        {{-- Header --}}
-        <img src="https://shipcash.net/_nuxt/img/logo-bw.2b648ef.png" alt="logo" height="100">
 
         <table class="table mt-5">
             <tbody>
                 <tr>
-                    <td class="border-0 pl-0" width="40%">
-                        <h4 class="text-uppercase text-center">
-                            <strong>Receipt Invoice</strong>
-                        </h4>
+                    <td class="border-0 pl-0" width="20%">
+                        <img src="https://shipcash.net/_nuxt/img/logo-bw.2b648ef.png" alt="logo" height="100">
                     </td>
-                    <td class="border-0 pl-0" width="40%">
-                        <p>{{ __('invoices::invoice.serial') }} : <strong>{{ $invoice->getSerialNumber() }}</strong></p>
-                        <p>{{ __('invoices::invoice.date') }} : <strong>{{ $invoice->getDate() }}</strong></p>
-
+                    <td class="border-0 pl-0" width="50%">
+                        <h5 class="text-uppercase text-center">
+                            <strong>Receipt Invoice</strong>
+                        </h5>
+                    </td>
+                    <td class="border-0 pl-0" width="30%">
                         @if($invoice->seller->id)
                             <p class="seller-name">
                                 Merchant ID : <strong>{{ $invoice->seller->id }}</strong>
@@ -154,11 +152,8 @@
                                 Merchant Name :<strong>{{ $invoice->seller->name }}</strong>
                             </p>
                         @endif
-                        @if($invoice->seller->phone)
-                            <p class="seller-name">
-                                Merchant Name :<strong>{{ $invoice->seller->phone }}</strong>
-                            </p>
-                        @endif
+                        <p>Receipt Date : <strong>{{ $invoice->getDate() }}</strong></p>
+                        <p>Receipt ID : <strong>{{ $invoice->getSerialNumber() }}</strong></p>
                     </td>
                 </tr>
             </tbody>

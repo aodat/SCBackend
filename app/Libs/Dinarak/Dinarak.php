@@ -62,7 +62,7 @@ class Dinarak
                 'Content-Type' => 'application/json',
             ])->post($this->endPoint . "/transfer/deduct", $transferData);
         if (!$response->successful()) {
-            throw new InternalException('Dinark - Deposit Payment', $response->status());
+            throw new InternalException('Dinark - Deposit Payment Error', $response->status());
         }
 
         return true;

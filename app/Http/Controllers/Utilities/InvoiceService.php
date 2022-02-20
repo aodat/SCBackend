@@ -63,7 +63,6 @@ class InvoiceService
 
     public static function invoice($merchant_id, $trx_id, $amount, $description)
     {
-
         $mertchatInfo = Merchant::findOrFail($merchant_id);
 
         $client = new Party([
@@ -72,9 +71,8 @@ class InvoiceService
             'phone' => $mertchatInfo->phone,
         ]);
 
-
         $customer = new Buyer([
-            'name' => 'ShipCash System'
+            'name' => 'ShipCash System',
         ]);
 
         $item = (new InvoiceItem())->title($description)
@@ -90,7 +88,7 @@ class InvoiceService
             ->currencySymbol(' JOD ')
             ->currencyCode(' JOD ')
             ->currencyFormat('{SYMBOL}{VALUE}')
-            ->filename('invoices/test') //  . md5(time()))
+            ->filename('invoices/' . md5(time()))
             ->addItem($item);
 
         return $invoice->save('s3')->url();

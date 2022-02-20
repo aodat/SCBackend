@@ -135,8 +135,8 @@ class TransactionsController extends MerchantController
 
     public function deposit(TransactionRequest $request, Dinarak $dinarak)
     {
-
         $merchecntInfo = $this->getMerchentInfo();
+        $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
 
         $this->BUNDLE(
             'CASHIN',
@@ -150,7 +150,6 @@ class TransactionsController extends MerchantController
             Request()->header('agent') ?? 'API',
         );
 
-        // $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
 
         return $this->successful('Deposit Sucessfully');
     }
@@ -256,33 +255,30 @@ class TransactionsController extends MerchantController
 
     public function BUNDLE($type = 'CASHIN', $merchant_id, $item_id = null, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
     {
-        // $merchant = Merchant::findOrFail($merchant_id);
-        // $merchant->bundle_balance = $amount + $merchant->bundle_balance;
-        // $merchant->save();
+        $merchant = Merchant::findOrFail($merchant_id);
+        $merchant->bundle_balance = $amount + $merchant->bundle_balance;
+        $merchant->save();
 
-        // $transaction = Transaction::create(
-        //     [
-        //         'type' => $type,
-        //         'subtype' => 'BUNDLE',
-        //         'item_id' => $item_id,
-        //         'merchant_id' => $merchant_id,
-        //         'description' => $description,
-        //         'balance_after' => $merchant->bundle_balance,
-        //         'amount' => $amount,
-        //         'source' => $source,
-        //         'status' => $status,
-        //         'created_by' => $created_by,
-        //         'resource' => $resource,
-        //     ]
-        // );
+        $transaction = Transaction::create(
+            [
+                'type' => $type,
+                'subtype' => 'BUNDLE',
+                'item_id' => $item_id,
+                'merchant_id' => $merchant_id,
+                'description' => $description,
+                'balance_after' => $merchant->bundle_balance,
+                'amount' => $amount,
+                'source' => $source,
+                'status' => $status,
+                'created_by' => $created_by,
+                'resource' => $resource,
+            ]
+        );
 
         if ($type == 'CASHIN') {
-            dd(InvoiceService::invoice($merchant_id, rand(1, 999), $amount, $description));
-
-            // $transaction->attachments = InvoiceService::invoice($merchant_id,$transaction->id ?? rand(1,999),$amount,$description);
-            // $transaction->saver();
+            $transaction->url = InvoiceService::invoice($merchant_id, rand(1, 999), $amount, $description);
+            $transaction->save();
         }
-        dd('xxxxxx');
-        // return $transaction->id;
+        return $transaction->id;
     }
 }
