@@ -473,12 +473,16 @@ class ShipmentController extends MerchantController
 
     public function calculateDomesticFees($carrier_id, $city, $weight, $merchant_id = null)
     {
-        $merchentInfo = $this->getMerchentInfo($merchant_id);
+        $merchentInfo = $this->getMerchentInfo(127);
         $city = str_replace("'", "", $city);
+        $setup = collect($merchentInfo->domestic_rates)->where('carrier_id', $carrier_id)->first();
+
+        $base_weight = $setup['weight'];
+        $zones = $setup['zones'];
 
         $list = array_map(function ($value) {
             return str_replace("'", "", $value);
-        }, $merchentInfo['domestic_rates'][$carrier_id] ?? []);
+        }, $zones ?? []);
 
         $rate = collect($list)->where('code', $city)->first();
 
@@ -491,7 +495,7 @@ class ShipmentController extends MerchantController
 
         $fees = 0;
         if ($weight > 0) {
-            $weights_count = ceil($weight / 10);
+            $weights_count = ceil($weight / $base_weight);
             $weight_fees = (($weights_count - 1) * $extra) + $price;
             $fees += $weight_fees;
         }

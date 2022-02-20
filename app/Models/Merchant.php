@@ -90,10 +90,9 @@ class Merchant extends Model
             return [];
         $enabledCarriers = $enabledCarriers->pluck('name', 'id');
         $domestic_rates = App::make('merchantInfo')->domestic_rates;
+
         $domestic_rates = collect($domestic_rates)->reject(function ($value, $key) use ($enabledCarriers) {
-            return !(isset($enabledCarriers[$key]));
-        })->keyBy(function ($value, $key) use ($enabledCarriers) {
-            return $enabledCarriers[$key];
+            return !(isset($enabledCarriers[$value['carrier_id']]));
         });
         return $domestic_rates;
     }

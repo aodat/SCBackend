@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Shipment;
+use App\Models\Merchant;
 use App\Traits\CarriersManager;
 use App\Traits\ResponseHandler;
 use App\Traits\SystemRules;
@@ -25,37 +25,17 @@ class Controller extends BaseController
     public function json()
     {
         die('Stop Work');
-        set_time_limit(0);
-        $shipments = Shipment::where('status', 'COMPLETED')->where('is_collected', false)->whereNotNull('delivered_at')->get();
-        $shipments->map(function ($shipment) {
-            $json = [
-                "UpdateCode" => "SH239",
-                "WaybillNumber" => $shipment->awb,
+        $merchants = Merchant::get();
+        $merchants->map(function ($merchant) {
+            $new[] = [
+                'carrier_id' => 1,
+                'carrier_name' => 'Aramex',
+                'weight' => 10,
+                'zones' => collect($merchant->domestic_rates)->first(),
             ];
 
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.shipcash.net/api/aramex-webhook',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => json_encode($json),
-                CURLOPT_HTTPHEADER => array(
-                    'Content-Type: application/json',
-                ),
-            ));
-
-            echo $response = curl_exec($curl);
-            echo "<br>";
-
-            curl_close($curl);
-
-            return $shipment;
+            $merchant->domestic_rates = collect($new);
+            $merchant->save();
         });
     }
 }

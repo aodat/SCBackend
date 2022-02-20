@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Admin;
 use App\Exports\TransactionsExportAdmin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Utilities\Documents;
+use App\Http\Controllers\Utilities\SmsService;
 use App\Http\Requests\Admin\TransactionRequest;
 use App\Models\Merchant;
 use App\Models\Transaction;
@@ -51,6 +52,11 @@ class TransactionsController extends Controller
 
         if ($status == 1 || $status == 2) {
             $transaction->status = 'COMPLETED';
+        }
+
+        // Send SMS on reject payment
+        if ($status == 3) {
+            SmsService::sendSMS(env('DINARK_REJECTED_SMS'), $transaction->payment_method['iban']);
         }
 
         if (env('APP_ENV') == 'production') {

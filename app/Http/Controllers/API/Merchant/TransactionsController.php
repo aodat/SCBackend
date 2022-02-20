@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Exceptions\InternalException;
 use App\Exports\TransactionsExport;
 use App\Http\Controllers\Utilities\Documents;
+use App\Http\Controllers\Utilities\InvoiceService;
 use App\Http\Requests\Merchant\TransactionRequest;
 use App\Models\Merchant;
 use App\Models\Transaction;
@@ -16,10 +17,6 @@ class TransactionsController extends MerchantController
 {
     private $type = [
         'ALL' => 0, 'CASHIN' => 0, 'CASHOUT' => 0,
-    ];
-
-    private $subType = [
-        'ALL' => 0, 'COD' => 0, 'BUNDLE' => 0,
     ];
 
     public function index(TransactionRequest $request)
@@ -84,6 +81,35 @@ class TransactionsController extends MerchantController
         return $this->response($data, 'Data Retrieved Successfully');
     }
 
+    public function export(TransactionRequest $request)
+    {
+        $merchentID = Request()->user()->merchant_id;
+        $subtype = $request->subtype;
+        $type = $request->type;
+
+        $since = $request->created_at['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
+        $until = $request->created_at['until'] ?? Carbon::today()->format('Y-m-d');
+
+        $transaction = Transaction::where('merchant_id', $merchentID)
+            ->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+
+        if ($subtype && $subtype != '*') {
+            $transaction->where('subtype', $subtype);
+        }
+
+        $transactions = $transaction->get();
+
+        $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
+
+        if ($type == 'xlsx') {
+            $url = Documents::xlsx(new TransactionsExport($transactions), $path);
+        } else {
+            $url = Documents::pdf('transactions', $path, $transactions);
+        }
+
+        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+    }
+
     public function withDraw(TransactionRequest $request)
     {
         $merchecntInfo = $this->getMerchentInfo();
@@ -106,23 +132,18 @@ class TransactionsController extends MerchantController
             return $this->error('The minimum withdrawal amount is 10 ' . $merchecntInfo->country_code);
         }
 
-        $merchecntInfo->cod_balance -= $dedaction;
-        $merchecntInfo->save();
+        $this->COD(
+            'CASHOUT',
+            Request()->user()->merchant_id,
+            null,
+            $dedaction,
+            'NONE',
+            Request()->user()->id,
+            'WithDraw Request',
+            'PROCESSING',
+            'WEB'
+        );
 
-        Transaction::create([
-            "type" => "CASHOUT",
-            "subtype" => "COD",
-            "item_id" => null,
-            "created_by" => Request()->user()->id,
-            "merchant_id" => Request()->user()->merchant_id,
-            'amount' => $dedaction,
-            'description' => 'WithDraw Request',
-            'payment_method' => $payment,
-            // 'notes' => json_encode($result),
-            'status' => 'PROCESSING',
-            "balance_after" => $merchecntInfo->cod_balance,
-            "source" => "NONE",
-        ]);
         return $this->successful('WithDraw Transaction Under Proocssing');
     }
 
@@ -137,104 +158,68 @@ class TransactionsController extends MerchantController
         $merchecntInfo = $this->getMerchentInfo();
         $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
 
-        Transaction::create(
-            [
-                'type' => 'CASHIN',
-                'subtype' => 'BUNDLE',
-                'merchant_id' => $request->user()->merchant_id,
-                'source' => 'CREDITCARD',
-                'status' => 'COMPLETED',
-                'created_by' => $request->user()->id,
-                'balance_after' => $request->amount + $merchecntInfo->bundle_balance,
-                'amount' => $request->amount,
-                'resource' => Request()->header('agent') ?? 'API',
-            ]
+        $this->BUNDLE(
+            'CASHIN',
+            $request->user()->merchant_id,
+            null,
+            $request->amount,
+            'CREDITCARD',
+            $request->user()->id,
+            'Deposit To ShipCash',
+            'COMPLETED',
+            Request()->header('agent') ?? 'API',
         );
-
-        $merchecntInfo->bundle_balance = $request->amount + $merchecntInfo->bundle_balance;
-        $merchecntInfo->save();
 
         return $this->successful('Deposit Sucessfully');
     }
 
     public function transfer(TransactionRequest $request)
     {
-
-        return $this->error('Unexpected Error');
+        return $this->error('This Service Was Stopped Try Again Later');
         $merchecnt = $this->getMerchantInfo();
         if ($merchecnt->cod_balance >= $request->amount) {
+            $merchantID = $request->user()->merchant_id;
+            $createdBY = $request->user()->id;
+            $amount = $request->amount;
 
-            Transaction::insert([
-                [
-                    'type' => 'CASHIN',
-                    'subtype' => 'BUNDLE',
-                    'merchant_id' => $request->user()->merchant_id,
-                    'source' => 'NONE',
-                    'status' => 'COMPLETED',
-                    'description' => 'Money Received from COD Balance',
-                    'created_by' => $request->user()->id,
-                    'balance_after' => $request->amount + $merchecnt->bundle_balance,
-                    'amount' => $request->amount,
-                    'resource' => Request()->header('agent') ?? 'API',
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ],
-                [
-                    'type' => 'CASHOUT',
-                    'subtype' => 'COD',
-                    'merchant_id' => $request->user()->merchant_id,
-                    'source' => 'NONE',
-                    'status' => 'COMPLETED',
-                    'description' => 'Money transferred to Bundle',
-                    'created_by' => $request->user()->id,
-                    'balance_after' => (($merchecnt->cod_balance - $request->amount) > 0) ? $merchecnt->cod_balance - $request->amount : 0,
-                    'amount' => $request->amount,
-                    'resource' => Request()->header('agent') ?? 'API',
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ],
-            ]);
+            $this->BUNDLE(
+                'CASHIN',
+                $merchantID,
+                null,
+                $amount,
+                'NONE',
+                $createdBY,
+                'Money Received from COD Balance',
+                'COMPLETED',
+                'WEB'
+            );
 
-            $merchecnt->cod_balance -= $request->amount;
-            $merchecnt->bundle_balance += $request->amount;
-            $merchecnt->save();
+            $this->COD(
+                'CASHOUT',
+                $merchantID,
+                null,
+                $amount,
+                'NONE',
+                $createdBY,
+                'Money Received from COD Balance',
+                'COMPLETED',
+                'WEB'
+            );
 
             return $this->successful('The Amount Transferred Successfully');
         }
         return $this->error('The COD Balance Is Not Enough', 400);
     }
 
-    public function export(TransactionRequest $request)
-    {
-        $merchentID = Request()->user()->merchant_id;
-        $subtype = $request->subtype;
-        $type = $request->type;
-        $date = $request->date;
-
-        $transaction = Transaction::where('merchant_id', $merchentID)
-            ->whereDate('created_at', $date);
-
-        if ($subtype && $subtype != '*') {
-            $transaction->where('subtype', $subtype);
-        }
-
-        $transactions = $transaction->get();
-
-        $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
-
-        if ($type == 'xlsx') {
-            $url = Documents::xlsx(new TransactionsExport($transactions), $path);
-        } else {
-            $url = Documents::pdf('transactions', $path, $transactions);
-        }
-
-        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
-    }
-
     public function COD($type = 'CASHIN', $merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
     {
         $merchant = Merchant::findOrFail($merchant_id);
-        $merchant->cod_balance += $amount;
+        if ($type == 'CASHIN') {
+            $merchant->cod_balance += $amount;
+        } else {
+            $merchant->cod_balance -= $amount;
+        }
+
         $merchant->save();
 
         return Transaction::create(
@@ -252,5 +237,38 @@ class TransactionsController extends MerchantController
                 'resource' => $resource,
             ]
         )->id;
+    }
+
+    public function BUNDLE($type = 'CASHIN', $merchant_id, $item_id = null, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
+    {
+        $merchant = Merchant::findOrFail($merchant_id);
+        if ($type == 'CASHIN') {
+            $merchant->bundle_balance += $amount;
+        } else {
+            $merchant->bundle_balance -= $amount;
+        }
+        $merchant->save();
+
+        $transaction = Transaction::create(
+            [
+                'type' => $type,
+                'subtype' => 'BUNDLE',
+                'item_id' => $item_id,
+                'merchant_id' => $merchant_id,
+                'description' => $description,
+                'balance_after' => $merchant->bundle_balance,
+                'amount' => $amount,
+                'source' => $source,
+                'status' => $status,
+                'created_by' => $created_by,
+                'resource' => $resource,
+            ]
+        );
+
+        if ($type == 'CASHIN') {
+            $transaction->url = InvoiceService::invoice($merchant_id, rand(1, 999), $amount, $description);
+            $transaction->save();
+        }
+        return $transaction->id;
     }
 }
