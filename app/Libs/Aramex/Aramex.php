@@ -359,11 +359,6 @@ class Aramex
             $amount = $cod;
         }
 
-        // $type = 'CASHIN';
-        // if ($amount < 0) {
-        //     $type = 'CASHOUT';
-        // }
-
         $updated['transaction_id'] = $transaction->COD('CASHIN', $merchant_id, $awb, $amount, "SHIPMENT", $created_by, 'Aramex SH239 webhook', 'COMPLETED', 'API');
 
         if (is_null($shipmentInfo->delivered_at)) {

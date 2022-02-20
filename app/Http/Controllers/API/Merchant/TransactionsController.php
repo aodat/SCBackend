@@ -19,10 +19,6 @@ class TransactionsController extends MerchantController
         'ALL' => 0, 'CASHIN' => 0, 'CASHOUT' => 0,
     ];
 
-    private $subType = [
-        'ALL' => 0, 'COD' => 0, 'BUNDLE' => 0,
-    ];
-
     public function index(TransactionRequest $request)
     {
         $filters = $request->json()->all();
@@ -85,122 +81,6 @@ class TransactionsController extends MerchantController
         return $this->response($data, 'Data Retrieved Successfully');
     }
 
-    public function withDraw(TransactionRequest $request)
-    {
-        $merchecntInfo = $this->getMerchentInfo();
-
-        if ($merchecntInfo->cod_balance <= 0) {
-            return $this->error('The COD Balance Is Zero', 400);
-        }
-
-        $paymentMethod = $merchecntInfo->payment_methods;
-        $payment = collect($paymentMethod)->where('id', $request->payment_method_id)->first();
-        if ($payment == null) {
-            throw new InternalException('Invalid Payment Method ID');
-        }
-
-        $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
-
-        if ($merchecntInfo->cod_balance <= 0 || $dedaction > $merchecntInfo->cod_balance) {
-            return $this->error('You dont have COD Balance');
-        } else if ($merchecntInfo->cod_balance < 10) {
-            return $this->error('The minimum withdrawal amount is 10 ' . $merchecntInfo->country_code);
-        }
-
-        $merchecntInfo->cod_balance -= $dedaction;
-        $merchecntInfo->save();
-
-        Transaction::create([
-            "type" => "CASHOUT",
-            "subtype" => "COD",
-            "item_id" => null,
-            "created_by" => Request()->user()->id,
-            "merchant_id" => Request()->user()->merchant_id,
-            'amount' => $dedaction,
-            'description' => 'WithDraw Request',
-            'payment_method' => $payment,
-            // 'notes' => json_encode($result),
-            'status' => 'PROCESSING',
-            "balance_after" => $merchecntInfo->cod_balance,
-            "source" => "NONE",
-        ]);
-        return $this->successful('WithDraw Transaction Under Proocssing');
-    }
-
-    public function depositwRequest(TransactionRequest $request, Dinarak $dinarak)
-    {
-        $dinarak->pincode($request->wallet_number, $request->amount);
-        $this->successful('Check Your OTP');
-    }
-
-    public function deposit(TransactionRequest $request, Dinarak $dinarak)
-    {
-        $merchecntInfo = $this->getMerchentInfo();
-        $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
-
-        $this->BUNDLE(
-            'CASHIN',
-            $request->user()->merchant_id,
-            null,
-            $request->amount,
-            'CREDITCARD',
-            $request->user()->id,
-            'Deposit To ShipCash',
-            'COMPLETED',
-            Request()->header('agent') ?? 'API',
-        );
-
-
-        return $this->successful('Deposit Sucessfully');
-    }
-
-    public function transfer(TransactionRequest $request)
-    {
-
-        return $this->error('Unexpected Error');
-        $merchecnt = $this->getMerchantInfo();
-        if ($merchecnt->cod_balance >= $request->amount) {
-
-            Transaction::insert([
-                [
-                    'type' => 'CASHIN',
-                    'subtype' => 'BUNDLE',
-                    'merchant_id' => $request->user()->merchant_id,
-                    'source' => 'NONE',
-                    'status' => 'COMPLETED',
-                    'description' => 'Money Received from COD Balance',
-                    'created_by' => $request->user()->id,
-                    'balance_after' => $request->amount + $merchecnt->bundle_balance,
-                    'amount' => $request->amount,
-                    'resource' => Request()->header('agent') ?? 'API',
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ],
-                [
-                    'type' => 'CASHOUT',
-                    'subtype' => 'COD',
-                    'merchant_id' => $request->user()->merchant_id,
-                    'source' => 'NONE',
-                    'status' => 'COMPLETED',
-                    'description' => 'Money transferred to Bundle',
-                    'created_by' => $request->user()->id,
-                    'balance_after' => (($merchecnt->cod_balance - $request->amount) > 0) ? $merchecnt->cod_balance - $request->amount : 0,
-                    'amount' => $request->amount,
-                    'resource' => Request()->header('agent') ?? 'API',
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ],
-            ]);
-
-            $merchecnt->cod_balance -= $request->amount;
-            $merchecnt->bundle_balance += $request->amount;
-            $merchecnt->save();
-
-            return $this->successful('The Amount Transferred Successfully');
-        }
-        return $this->error('The COD Balance Is Not Enough', 400);
-    }
-
     public function export(TransactionRequest $request)
     {
         $merchentID = Request()->user()->merchant_id;
@@ -230,10 +110,115 @@ class TransactionsController extends MerchantController
         return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
     }
 
+    public function withDraw(TransactionRequest $request)
+    {
+        $merchecntInfo = $this->getMerchentInfo();
+
+        if ($merchecntInfo->cod_balance <= 0) {
+            return $this->error('The COD Balance Is Zero', 400);
+        }
+
+        $paymentMethod = $merchecntInfo->payment_methods;
+        $payment = collect($paymentMethod)->where('id', $request->payment_method_id)->first();
+        if ($payment == null) {
+            throw new InternalException('Invalid Payment Method ID');
+        }
+
+        $dedaction = ($merchecntInfo->cod_balance <= 1000) ? $merchecntInfo->cod_balance : 1000;
+
+        if ($merchecntInfo->cod_balance <= 0 || $dedaction > $merchecntInfo->cod_balance) {
+            return $this->error('You dont have COD Balance');
+        } else if ($merchecntInfo->cod_balance < 10) {
+            return $this->error('The minimum withdrawal amount is 10 ' . $merchecntInfo->country_code);
+        }
+
+        $this->COD(
+            'CASHOUT',
+            Request()->user()->merchant_id,
+            null,
+            $dedaction,
+            'NONE',
+            Request()->user()->id,
+            'WithDraw Request',
+            'PROCESSING',
+            'WEB'
+        );
+
+        return $this->successful('WithDraw Transaction Under Proocssing');
+    }
+
+    public function depositwRequest(TransactionRequest $request, Dinarak $dinarak)
+    {
+        $dinarak->pincode($request->wallet_number, $request->amount);
+        $this->successful('Check Your OTP');
+    }
+
+    public function deposit(TransactionRequest $request, Dinarak $dinarak)
+    {
+        $merchecntInfo = $this->getMerchentInfo();
+        $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
+
+        $this->BUNDLE(
+            'CASHIN',
+            $request->user()->merchant_id,
+            null,
+            $request->amount,
+            'CREDITCARD',
+            $request->user()->id,
+            'Deposit To ShipCash',
+            'COMPLETED',
+            Request()->header('agent') ?? 'API',
+        );
+
+        return $this->successful('Deposit Sucessfully');
+    }
+
+    public function transfer(TransactionRequest $request)
+    {
+        $merchecnt = $this->getMerchantInfo();
+        if ($merchecnt->cod_balance >= $request->amount) {
+            $merchantID = $request->user()->merchant_id;
+            $createdBY = $request->user()->id;
+            $amount = $request->amount;
+
+            $this->BUNDLE(
+                'CASHIN',
+                $merchantID,
+                null,
+                $amount,
+                'NONE',
+                $createdBY,
+                'Money Received from COD Balance',
+                'COMPLETED',
+                'WEB'
+            );
+
+            $this->COD(
+                'CASHOUT',
+                $merchantID,
+                null,
+                $amount,
+                'NONE',
+                $createdBY,
+                'Money Received from COD Balance',
+                'COMPLETED',
+                'WEB'
+            );
+
+            return $this->successful('The Amount Transferred Successfully');
+        }
+        return $this->error('The COD Balance Is Not Enough', 400);
+    }
+
     public function COD($type = 'CASHIN', $merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
     {
         $merchant = Merchant::findOrFail($merchant_id);
-        $merchant->cod_balance += $amount;
+        if ($type == 'CASHIN') {
+            $merchant->cod_balance += $amount;
+        } else {
+            $merchant->cod_balance -= $amount;
+        }
+
         $merchant->save();
 
         return Transaction::create(
@@ -256,7 +241,11 @@ class TransactionsController extends MerchantController
     public function BUNDLE($type = 'CASHIN', $merchant_id, $item_id = null, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
     {
         $merchant = Merchant::findOrFail($merchant_id);
-        $merchant->bundle_balance = $amount + $merchant->bundle_balance;
+        if ($type == 'CASHIN') {
+            $merchant->bundle_balance += $amount;
+        } else {
+            $merchant->bundle_balance -= $amount;
+        }
         $merchant->save();
 
         $transaction = Transaction::create(
