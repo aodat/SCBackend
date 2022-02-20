@@ -302,7 +302,7 @@ class Aramex
         if (is_null($shipmentInfo)) {
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://shipcash.net/shipments-update-receiver',
+                CURLOPT_URL => 'https://old.shipcash.net/shipments-update-receiver',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
