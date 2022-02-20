@@ -13,7 +13,7 @@ class PickuptRequest extends MerchantRequest
      */
     public function rules()
     {
-        $new_date = Carbon::parse(Carbon::today())->addDays(3);
+        $new_date = Carbon::parse(Carbon::today())->addDays(5);
         $new_date->toDateString();
 
         $path = Request()->path();
