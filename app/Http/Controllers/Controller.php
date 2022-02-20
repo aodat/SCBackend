@@ -24,6 +24,7 @@ class Controller extends BaseController
 
     public function json()
     {
+        die('Stop Work');
         $merchants = Merchant::get();
         $merchants->map(function ($merchant) {
             $new[] = [
