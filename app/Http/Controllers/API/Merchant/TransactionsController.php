@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\Merchant;
 use App\Exceptions\InternalException;
 use App\Exports\TransactionsExport;
 use App\Http\Controllers\Utilities\Documents;
+use App\Http\Controllers\Utilities\InvoiceService;
 use App\Http\Requests\Merchant\TransactionRequest;
 use App\Models\Merchant;
 use App\Models\Transaction;
@@ -134,25 +135,22 @@ class TransactionsController extends MerchantController
 
     public function deposit(TransactionRequest $request, Dinarak $dinarak)
     {
-        $merchecntInfo = $this->getMerchentInfo();
-        $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
 
-        Transaction::create(
-            [
-                'type' => 'CASHIN',
-                'subtype' => 'BUNDLE',
-                'merchant_id' => $request->user()->merchant_id,
-                'source' => 'CREDITCARD',
-                'status' => 'COMPLETED',
-                'created_by' => $request->user()->id,
-                'balance_after' => $request->amount + $merchecntInfo->bundle_balance,
-                'amount' => $request->amount,
-                'resource' => Request()->header('agent') ?? 'API',
-            ]
+        $merchecntInfo = $this->getMerchentInfo();
+
+        $this->BUNDLE(
+            'CASHIN',
+            $request->user()->merchant_id,
+            null,
+            $request->amount,
+            'CREDITCARD',
+            $request->user()->id,
+            'Deposit To ShipCash',
+            'COMPLETED',
+            Request()->header('agent') ?? 'API',
         );
 
-        $merchecntInfo->bundle_balance = $request->amount + $merchecntInfo->bundle_balance;
-        $merchecntInfo->save();
+        // $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
 
         return $this->successful('Deposit Sucessfully');
     }
@@ -210,21 +208,18 @@ class TransactionsController extends MerchantController
         $subtype = $request->subtype;
         $type = $request->type;
 
-        
         $since = $request->created_at['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $request->created_at['until'] ?? Carbon::today()->format('Y-m-d');
 
-
         $transaction = Transaction::where('merchant_id', $merchentID)
             ->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
-
 
         if ($subtype && $subtype != '*') {
             $transaction->where('subtype', $subtype);
         }
 
         $transactions = $transaction->get();
-        
+
         $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
 
         if ($type == 'xlsx') {
@@ -257,5 +252,37 @@ class TransactionsController extends MerchantController
                 'resource' => $resource,
             ]
         )->id;
+    }
+
+    public function BUNDLE($type = 'CASHIN', $merchant_id, $item_id = null, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
+    {
+        // $merchant = Merchant::findOrFail($merchant_id);
+        // $merchant->bundle_balance = $amount + $merchant->bundle_balance;
+        // $merchant->save();
+
+        // $transaction = Transaction::create(
+        //     [
+        //         'type' => $type,
+        //         'subtype' => 'BUNDLE',
+        //         'item_id' => $item_id,
+        //         'merchant_id' => $merchant_id,
+        //         'description' => $description,
+        //         'balance_after' => $merchant->bundle_balance,
+        //         'amount' => $amount,
+        //         'source' => $source,
+        //         'status' => $status,
+        //         'created_by' => $created_by,
+        //         'resource' => $resource,
+        //     ]
+        // );
+
+        if ($type == 'CASHIN') {
+            dd(InvoiceService::invoice($merchant_id, rand(1, 999), $amount, $description));
+
+            // $transaction->attachments = InvoiceService::invoice($merchant_id,$transaction->id ?? rand(1,999),$amount,$description);
+            // $transaction->saver();
+        }
+        dd('xxxxxx');
+        // return $transaction->id;
     }
 }

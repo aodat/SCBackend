@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Utilities;
 
+use App\Http\Controllers\Utilities\Shipcash;
 use App\Models\Merchant;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Invoice;
-use App\Http\Controllers\Utilities\Shipcash;
 
 class InvoiceService
 {
@@ -46,7 +46,6 @@ class InvoiceService
 
         $invoice = Invoice::make()
             ->series($data->awb)
-
             ->buyer($customer)
             ->seller($client)
             ->currencySymbol('$')
@@ -58,6 +57,41 @@ class InvoiceService
         if ($data->consignee_notes != '') {
             $invoice->notes($data->consignee_notes);
         }
+
+        return $invoice->save('s3')->url();
+    }
+
+    public static function invoice($merchant_id, $trx_id, $amount, $description)
+    {
+
+        $mertchatInfo = Merchant::findOrFail($merchant_id);
+
+        $client = new Party([
+            'id' => $mertchatInfo->id,
+            'name' => $mertchatInfo->name,
+            'phone' => $mertchatInfo->phone,
+        ]);
+
+
+        $customer = new Buyer([
+            'name' => 'ShipCash System'
+        ]);
+
+        $item = (new InvoiceItem())->title($description)
+            ->quantity(1)
+            ->subTotalPrice($amount)
+            ->pricePerUnit($amount);
+
+        $invoice = Invoice::make('receipt')
+            ->template('bundle_cashin')
+            ->series($trx_id)
+            ->seller($client)
+            ->buyer($customer)
+            ->currencySymbol(' JOD ')
+            ->currencyCode(' JOD ')
+            ->currencyFormat('{SYMBOL}{VALUE}')
+            ->filename('invoices/test') //  . md5(time()))
+            ->addItem($item);
 
         return $invoice->save('s3')->url();
     }
