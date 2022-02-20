@@ -511,7 +511,7 @@ class ShipmentController extends MerchantController
 
         $country = str_replace("'", "", $country);
 
-        $zone_id = collect(Country::where('code', $merchentInfo['country_code'])->first())['rates'][$country][$carrier_id]['zone_id'] ?? null;
+        $zone_id = collect(collect(Country::where('code', $merchentInfo['country_code'])->first())['rates'][$country])->where('carrier_id',$carrier_id)->first()['zone_id'] ?? null;
 
         $rate = collect($merchentInfo['express_rates'][$carrier_id]['zones'] ?? [])->where('id', $zone_id)->first();
         if (is_null($rate)) {
