@@ -175,6 +175,7 @@ class TransactionsController extends MerchantController
 
     public function transfer(TransactionRequest $request)
     {
+        return $this->error('This Service Was Stopped Try Again Later');
         $merchecnt = $this->getMerchantInfo();
         if ($merchecnt->cod_balance >= $request->amount) {
             $merchantID = $request->user()->merchant_id;
