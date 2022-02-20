@@ -56,7 +56,7 @@ class TransactionsController extends Controller
 
         // Send SMS on reject payment
         if ($status == 3) {
-            SmsService::sendSMS(env('DINARK_REJECTED_SMS'), $merchecntInfo->phone);
+            SmsService::sendSMS(env('DINARK_REJECTED_SMS'), $transaction->payment_method['iban']);
         }
 
         if (env('APP_ENV') == 'production') {
