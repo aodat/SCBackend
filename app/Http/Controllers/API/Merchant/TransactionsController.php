@@ -209,9 +209,10 @@ class TransactionsController extends MerchantController
         $merchentID = Request()->user()->merchant_id;
         $subtype = $request->subtype;
         $type = $request->type;
+
         
-        $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
-        $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
+        $since = $request->created_at['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
+        $until = $request->created_at['until'] ?? Carbon::today()->format('Y-m-d');
 
 
         $transaction = Transaction::where('merchant_id', $merchentID)
