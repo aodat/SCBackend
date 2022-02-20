@@ -177,8 +177,8 @@ class Aramex
             throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $result);
         }
 
-        if (isset($result['Notifications']) && $result['Notifications']['Code'] == 'ERR00') {
-            throw new CarriersException('Aramex Api Is Down plz try again after 30 min');
+        if (isset($result['Notifications']) && isset($result['Notifications']['Code'] ) && $result['Notifications']['Code'] == 'ERR00') {
+            throw new CarriersException('Aramex Api Is Down please try again after 30 min');
         } else if ($result['HasErrors']) {
             throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment', $payload, $result);
         }
