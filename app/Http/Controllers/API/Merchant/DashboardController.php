@@ -33,12 +33,18 @@ class DashboardController extends MerchantController
             ->get();
 
         $transactions = DB::table(DB::raw('transactions t'))
-            ->select(DB::raw('date(updated_at) as date'), 'type as stype', DB::raw('count(id) counter'))
+            ->select(DB::raw('date(updated_at) as date'), 'type as stype', DB::raw('count(id) counter'), DB::raw('sum(amount) as total'))
             ->where([['t.merchant_id', $merchant_id], ['t.status', 'COMPLETED']])
             ->whereBetween('t.updated_at', [$request->since_at, $request->until])
+            ->where('t.subtype', 'COD')
             ->groupByRaw('date(updated_at), type')
             ->union(DB::table(DB::raw('shipments s'))
-                    ->select(DB::raw('date(updated_at) as date'), DB::raw('"PENDING_PAYMENTS" as stype'), DB::raw('count(id) counter'))
+                    ->select(
+                        DB::raw('date(updated_at) as date'),
+                        DB::raw('"PENDING_PAYMENTS" as stype'),
+                        DB::raw('count(id) counter'),
+                        DB::raw('sum(cod) as total')
+                    )
                     ->where('s.merchant_id', '=', $merchant_id)
                     ->where('status', '=', 'COMPLETED')
                     ->where('s.is_deleted', false)
@@ -86,13 +92,14 @@ class DashboardController extends MerchantController
         });
 
         $transactions->map(function ($transaction) use (&$payment_dates, &$payments) {
+            $total = $transaction->total;
             $counter = $transaction->counter;
             $date = $transaction->date;
             $status = $transaction->stype;
 
             $payment_dates[$date][$status] = $counter;
             $payments[$status][$date] = $counter;
-            $this->paymentCounter[$status] += $counter;
+            $this->paymentCounter[$status] += $total;
         });
 
         $data = [
