@@ -171,22 +171,26 @@ class Aramex
             return $response->successful();
         }
 
+        $result = $response->json();
+
         if (!$response->successful()) {
-            throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $response->json());
+            throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $result);
         }
 
-        if ($response->json()['HasErrors']) {
-            throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment', $payload, $response->json());
+        if (isset($result['Notifications']) && $result['Notifications']['Code'] == 'ERR00') {
+            throw new CarriersException('Aramex Api Is Down plz try again after 30 min');
+        } else if ($result['HasErrors']) {
+            throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment', $payload, $result);
         }
 
-        $result = [];
-        foreach ($response->json()['Shipments'] as $ship) {
-            $result[] = [
+        $data = [];
+        foreach ($result['Shipments'] as $ship) {
+            $data[] = [
                 'id' => $ship['ID'],
                 'file' => AWSServices::uploadToS3('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true),
             ];
         }
-        return $result;
+        return $data;
     }
 
     public function shipmentArray($merchentInfo, $shipmentInfo)
@@ -302,7 +306,7 @@ class Aramex
         if (is_null($shipmentInfo)) {
             $curl = curl_init();
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://shipcash.net/shipments-update-receiver',
+                CURLOPT_URL => 'https://old.shipcash.net/shipments-update-receiver',
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
