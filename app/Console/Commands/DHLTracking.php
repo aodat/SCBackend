@@ -62,7 +62,6 @@ class DHLTracking extends Command
             $lastEvent = $events[0]['ServiceEvent']['EventCode'] ?? null;
             $last_update = $events[0]['ServiceEvent']['Description'] ?? null;
 
-
             $ShipmentEvent = array_reverse($trackDetails['ShipmentEvent'] ?? []);
             $new = [];
             foreach ($ShipmentEvent as $key => $value) {
@@ -78,7 +77,8 @@ class DHLTracking extends Command
 
             if (isset($updated['actions'])) {
                 $merchant = Merchant::findOrFail($shipment->merchant_id);
-                if ($shipment->chargable_weight != $trackDetails['Weight']) {
+                if (floatval($shipment->chargable_weight) < floatval($trackDetails['Weight'])) {
+
                     $fees = (new ShipmentController)->calculateExpressFees(
                         2,
                         $shipment->consignee_country,

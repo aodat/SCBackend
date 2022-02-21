@@ -65,7 +65,7 @@ class AramexTracking extends Command
             $updated['last_update'] = $logs[0]['UpdateDescription'];
             $updated['shipping_logs'] = collect($logs);
 
-            if ($shipment->chargable_weight < $chargable_weight) {
+            if (floatval($shipment->chargable_weight) < floatval($chargable_weight)) {
                 if ($shipment->group == 'DOM') {
                     $fees = (new ShipmentController)->calculateDomesticFees(
                         1,
