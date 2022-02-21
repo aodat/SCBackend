@@ -141,7 +141,8 @@ class TransactionsController extends MerchantController
             Request()->user()->id,
             'WithDraw Request',
             'PROCESSING',
-            'WEB'
+            'WEB',
+            $payment
         );
 
         return $this->successful('WithDraw Transaction Under Proocssing');
@@ -211,7 +212,7 @@ class TransactionsController extends MerchantController
         return $this->error('The COD Balance Is Not Enough', 400);
     }
 
-    public function COD($type = 'CASHIN', $merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
+    public function COD($type = 'CASHIN', $merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API', $payment_method = null)
     {
         $merchant = Merchant::findOrFail($merchant_id);
         if ($type == 'CASHIN') {
@@ -235,11 +236,12 @@ class TransactionsController extends MerchantController
                 'status' => $status,
                 'created_by' => $created_by,
                 'resource' => $resource,
+                'payment' => $payment_method,
             ]
         )->id;
     }
 
-    public function BUNDLE($type = 'CASHIN', $merchant_id, $item_id = null, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API')
+    public function BUNDLE($type = 'CASHIN', $merchant_id, $item_id = null, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API', $payment_method = null)
     {
         $merchant = Merchant::findOrFail($merchant_id);
         if ($type == 'CASHIN') {
@@ -262,6 +264,7 @@ class TransactionsController extends MerchantController
                 'status' => $status,
                 'created_by' => $created_by,
                 'resource' => $resource,
+                'payment_method' => $payment_method,
             ]
         );
 
