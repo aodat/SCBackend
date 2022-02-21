@@ -5,7 +5,7 @@ use App\Http\Controllers\API\Merchant\AddressesController;
 use App\Http\Controllers\API\Merchant\CarrierController;
 use App\Http\Controllers\API\Merchant\DashboardController;
 use App\Http\Controllers\API\Merchant\DocumentsController;
-use App\Http\Controllers\API\Merchant\InvoiceController;
+use App\Http\Controllers\API\Merchant\PaymentLinksController;
 use App\Http\Controllers\API\Merchant\MerchantController;
 use App\Http\Controllers\API\Merchant\PaymentMethodsController;
 use App\Http\Controllers\API\Merchant\PickupsController;
@@ -109,11 +109,11 @@ Route::group(['middleware' => ['json.response', 'db.row']], function () {
                 Route::post('pickup/cancel', [PickupsController::class, 'cancel']);
 
                 // Invoice
-                Route::post('invoices', [InvoiceController::class, 'index']);
-                Route::get('invoices/{invoice_id}', [InvoiceController::class, 'show']);
-                Route::get('invoice/finalize/{invoice_id}', [InvoiceController::class, 'finalize']);
-                Route::post('invoice/create', [InvoiceController::class, 'store']);
-                Route::delete('invoice/{invoice_id}', [InvoiceController::class, 'delete'])->where('invoice_id', '[0-9]+');
+                Route::post('payments_link', [PaymentLinksController::class, 'index']);
+                Route::post('payments_link/create', [PaymentLinksController::class, 'store']);
+                Route::get('payments_link/{payments_id}', [PaymentLinksController::class, 'show']);
+                // Route::get('invoice/finalize/{invoice_id}', [PaymentLinksController::class, 'finalize']);
+                // Route::delete('invoice/{invoice_id}', [PaymentLinksController::class, 'delete'])->where('invoice_id', '[0-9]+');
 
                 Route::group(['middleware' => ['scope:admin']], function () {
                     Route::get('rules', [RulesController::class, 'index']);
@@ -150,6 +150,6 @@ Route::group(['middleware' => ['json.response', 'db.row']], function () {
     });
 
     Route::post('aramex-webhook', [Aramex::class, 'webhook']);
-    Route::get('process/stripe', [InvoiceController::class, 'stripeProcessSQS']);
+    Route::get('payment/{hash}', [PaymentLinksController::class, 'showByHash']);
 });
 Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');

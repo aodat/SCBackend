@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Merchant;
 
-class InvoiceRequest extends MerchantRequest
+class PaymentLinksRequest extends MerchantRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -12,13 +12,15 @@ class InvoiceRequest extends MerchantRequest
     public function rules()
     {
         $path = Request()->path();
-        if(strpos($path,'invoice/create') !== false) 
+        if (strpos($path, 'payments_link/create') !== false) {
             return [
                 "customer_name" => "required|string",
                 "customer_email" => "required|email",
                 "description" => "required",
-                "amount" => 'required|numeric|between:0.0001,9999'
+                "amount" => 'required|numeric|between:0.0001,9999',
             ];
+        }
+
         return [];
     }
 }

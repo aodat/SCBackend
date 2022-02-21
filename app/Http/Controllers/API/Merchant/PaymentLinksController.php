@@ -2,37 +2,39 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Http\Requests\Merchant\InvoiceRequest;
-use App\Jobs\StripeUpdates;
+use App\Http\Requests\Merchant\PaymentLinksRequest;
 use App\Models\PaymentLinks;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Libs\Stripe;
-use Stripe\Invoice;
+use Illuminate\Support\Str;
 
-class InvoiceController extends MerchantController
+class PaymentLinksController extends MerchantController
 {
     protected $stripe;
     private $status = [
-        'DRAFT' => 0, 'PAID' => 0, 'FAILED' => 0, 'RENTURND' => 0,
+        'DRAFT' => 0, 'PAID' => 0, 'FAILED' => 0,
     ];
 
-    public function __construct()
-    {
-        $this->stripe = new Stripe();
-    }
-
-    public function index(InvoiceRequest $request)
+    public function index(PaymentLinksRequest $request)
     {
         $filters = $request->json()->all();
 
         $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
+
         $statuses = $filters['statuses'] ?? [];
+        $value = $filters['cod']['val'] ?? null;
+        $operation = $filters['cod']['operation'] ?? null;
 
         $invoices = PaymentLinks::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($statuses)) {
             $invoices->whereIn('status', $statuses);
+        }
+
+        if ($operation) {
+            $invoices->where("amount", $operation, $value);
+        } else if ($value) {
+            $invoices->whereBetween('amount', [intval($value), intval($value) . '.99']);
         }
 
         $tabs = DB::table('payment_links')
@@ -46,56 +48,40 @@ class InvoiceController extends MerchantController
         return $this->pagination($invoices->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
-    public function show($id, InvoiceRequest $request)
-    {
-        $data = PaymentLinks::findOrFail($id);
-        return $this->response($data, 'Data Retrieved Sucessfully');
-    }
-
-    public function store(InvoiceRequest $request)
+    public function store(PaymentLinksRequest $request)
     {
         $data = $request->validated();
 
-        // on create invoice you can build it by stripe
-        $customerID = $this->stripe->createCustomer($data['customer_name'], $data['customer_email']);
-        $receipt = $this->stripe->invoice($customerID, $data['description'], $data['amount']);
-
-        $data['fk_id'] = $receipt['fk_id'];
+        $data['refference'] = Str::uuid();
         $data['merchant_id'] = $request->user()->merchant_id;
         $data['user_id'] = $request->user()->id;
         $data['resource'] = Request()->header('agent') ?? 'API';
+
         PaymentLinks::create($data);
 
         return $this->successful('Created Successfully');
     }
 
-    public function finalize($invoiceID, InvoiceRequest $request)
+    public function show($id, PaymentLinksRequest $request)
     {
-        $invoiceInfo = PaymentLinks::where('id', $invoiceID)->first();
-
-        $link = $this->stripe->finalizeInvoice($invoiceInfo->fk_id);
-        $invoiceInfo->link = $link;
-        $invoiceInfo->save();
-
-        $this->response(['link' => $link], 'Data Retrieved Successfully');
+        $data = PaymentLinks::findOrFail($id);
+        return $this->response($data, 'Data Retrieved Sucessfully');
     }
 
-    public function delete($invoiceID, InvoiceRequest $request)
+    public function showByHash($refference)
+    {
+        $data = PaymentLinks::where('refference', $refference)->where('status', '=', 'DRAFT')->first();
+        return $this->response($data, 'Data Retrieved Sucessfully');
+    }
+
+    public function delete($invoiceID, PaymentLinksRequest $request)
     {
         $invoiceInfo = PaymentLinks::where('id', $invoiceID)->first();
         if ($invoiceInfo->status != 'DRAFT') {
             return $this->error('you cant delete this invoice');
         }
-
-        $this->stripe->deleteInvoice($invoiceInfo->fk_id);
         $invoiceInfo->delete();
 
         return $this->successful('Deleted Successfully');
-    }
-
-    public function stripeProcessSQS(InvoiceRequest $request)
-    {
-        StripeUpdates::dispatch($request->json()->all());
-        return $this->successful('Webhook Completed');
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Merchant;
 
-use App\Models\PaymentLinks;
 use App\Models\Shipment;
 use App\Models\Transaction;
 use App\Rules\Phone;
@@ -26,12 +25,6 @@ class MerchantRequest extends FormRequest
             return Transaction::where('id', Request::instance()->id)->exists();
         } else if ($this->getMethod() == 'GET' && strpos($path, 'shipments/{id}') !== false) {
             return Shipment::where('id', Request::instance()->id)->orWhere('awb', Request::instance()->id)->exists();
-        } else if (
-            ($this->getMethod() == 'DELETE' && strpos($path, 'invoice/{invoice_id}') !== false) ||
-            ($this->getMethod() == 'GET' && strpos($path, 'invoice/finalize/{invoice_id}') !== false) ||
-            ($this->getMethod() == 'GET' && strpos($path, 'invoice/{invoice_id}') !== false)
-        ) {
-            return PaymentLinks::where('id', Request::instance()->invoice_id)->exists();
         }
 
         return true;
