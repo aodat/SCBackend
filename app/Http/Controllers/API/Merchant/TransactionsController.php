@@ -236,7 +236,7 @@ class TransactionsController extends MerchantController
                 'status' => $status,
                 'created_by' => $created_by,
                 'resource' => $resource,
-                'payment' => $payment_method,
+                'payment_method' => collect($payment_method),
             ]
         )->id;
     }
@@ -264,7 +264,7 @@ class TransactionsController extends MerchantController
                 'status' => $status,
                 'created_by' => $created_by,
                 'resource' => $resource,
-                'payment_method' => $payment_method,
+                'payment_method' => collect($payment_method),
             ]
         );
 
