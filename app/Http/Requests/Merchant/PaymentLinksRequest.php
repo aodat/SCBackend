@@ -17,6 +17,7 @@ class PaymentLinksRequest extends MerchantRequest
                 "customer_name" => "required|string",
                 "customer_email" => "required|email",
                 "description" => "required",
+                "refference" => "",
                 "amount" => 'required|numeric|between:0.0001,9999',
             ];
         }

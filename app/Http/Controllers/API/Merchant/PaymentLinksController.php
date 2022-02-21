@@ -52,7 +52,7 @@ class PaymentLinksController extends MerchantController
     {
         $data = $request->validated();
 
-        $data['refference'] = Str::uuid();
+        $data['hash'] = Str::uuid();
         $data['merchant_id'] = $request->user()->merchant_id;
         $data['user_id'] = $request->user()->id;
         $data['resource'] = Request()->header('agent') ?? 'API';
@@ -68,9 +68,9 @@ class PaymentLinksController extends MerchantController
         return $this->response($data, 'Data Retrieved Sucessfully');
     }
 
-    public function showByHash($refference)
+    public function showByHash($hash)
     {
-        $data = PaymentLinks::where('refference', $refference)->where('status', '=', 'DRAFT')->first();
+        $data = PaymentLinks::where('hash', $hash)->where('status', '=', 'DRAFT')->first();
         return $this->response($data, 'Data Retrieved Sucessfully');
     }
 
@@ -84,4 +84,6 @@ class PaymentLinksController extends MerchantController
 
         return $this->successful('Deleted Successfully');
     }
+
+
 }
