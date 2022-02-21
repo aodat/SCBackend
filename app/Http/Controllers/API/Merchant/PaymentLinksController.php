@@ -7,6 +7,7 @@ use App\Models\PaymentLinks;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Libs\Stripe;
 
 class PaymentLinksController extends MerchantController
 {
@@ -85,5 +86,10 @@ class PaymentLinksController extends MerchantController
         return $this->successful('Deleted Successfully');
     }
 
+    public function validateStrip(PaymentLinksRequest $request, Stripe $strip)
+    {
+
+        // $strip->InvoiceWithToken($rea)
+    }
 
 }
