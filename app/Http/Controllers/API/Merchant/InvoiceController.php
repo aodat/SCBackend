@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Requests\Merchant\InvoiceRequest;
 use App\Jobs\StripeUpdates;
-use App\Models\Invoices;
+use App\Models\PaymentLinks;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Libs\Stripe;
@@ -30,12 +30,12 @@ class InvoiceController extends MerchantController
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
         $statuses = $filters['statuses'] ?? [];
 
-        $invoices = Invoices::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        $invoices = PaymentLinks::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($statuses)) {
             $invoices->whereIn('status', $statuses);
         }
 
-        $tabs = DB::table('invoices')
+        $tabs = DB::table('payment_links')
             ->where('merchant_id', Request()->user()->merchant_id)
             ->select('status', DB::raw(
                 'count(status) as counter'
@@ -48,7 +48,7 @@ class InvoiceController extends MerchantController
 
     public function show($id, InvoiceRequest $request)
     {
-        $data = Invoices::findOrFail($id);
+        $data = PaymentLinks::findOrFail($id);
         return $this->response($data, 'Data Retrieved Sucessfully');
     }
 
@@ -64,14 +64,14 @@ class InvoiceController extends MerchantController
         $data['merchant_id'] = $request->user()->merchant_id;
         $data['user_id'] = $request->user()->id;
         $data['resource'] = Request()->header('agent') ?? 'API';
-        Invoices::create($data);
+        PaymentLinks::create($data);
 
         return $this->successful('Created Successfully');
     }
 
     public function finalize($invoiceID, InvoiceRequest $request)
     {
-        $invoiceInfo = Invoices::where('id', $invoiceID)->first();
+        $invoiceInfo = PaymentLinks::where('id', $invoiceID)->first();
 
         $link = $this->stripe->finalizeInvoice($invoiceInfo->fk_id);
         $invoiceInfo->link = $link;
@@ -82,7 +82,7 @@ class InvoiceController extends MerchantController
 
     public function delete($invoiceID, InvoiceRequest $request)
     {
-        $invoiceInfo = Invoices::where('id', $invoiceID)->first();
+        $invoiceInfo = PaymentLinks::where('id', $invoiceID)->first();
         if ($invoiceInfo->status != 'DRAFT') {
             return $this->error('you cant delete this invoice');
         }

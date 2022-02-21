@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Merchant;
 
-use App\Models\Invoices;
+use App\Models\PaymentLinks;
 use App\Models\Shipment;
 use App\Models\Transaction;
 use App\Rules\Phone;
@@ -31,7 +31,7 @@ class MerchantRequest extends FormRequest
             ($this->getMethod() == 'GET' && strpos($path, 'invoice/finalize/{invoice_id}') !== false) ||
             ($this->getMethod() == 'GET' && strpos($path, 'invoice/{invoice_id}') !== false)
         ) {
-            return Invoices::where('id', Request::instance()->invoice_id)->exists();
+            return PaymentLinks::where('id', Request::instance()->invoice_id)->exists();
         }
 
         return true;

@@ -4,8 +4,8 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Utilities\Shipcash;
-use App\Models\Invoices;
 use App\Models\Merchant;
+use App\Models\PaymentLinks;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -16,7 +16,7 @@ class StripController extends Controller
 
     public function strip($shipmentID, Request $request)
     {
-        $invoice = Invoices::where('fk_id', $shipmentID)
+        $invoice = PaymentLinks::where('fk_id', $shipmentID)
             ->where('status', '<>', 'PAID')
             ->first();
         if (!$invoice) {
@@ -28,7 +28,7 @@ class StripController extends Controller
 
     public function stripePost(Request $request)
     {
-        $invoice = Invoices::findOrFail($request->in_id);
+        $invoice = PaymentLinks::findOrFail($request->in_id);
         $merchant = Merchant::findOrFail($invoice->merchant_id);
         try {
             Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
