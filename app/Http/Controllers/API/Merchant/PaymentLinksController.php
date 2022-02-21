@@ -23,8 +23,8 @@ class PaymentLinksController extends MerchantController
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
 
         $statuses = $filters['statuses'] ?? [];
-        $value = $filters['cod']['val'] ?? null;
-        $operation = $filters['cod']['operation'] ?? null;
+        $value = $filters['amount']['val'] ?? null;
+        $operation = $filters['amount']['operation'] ?? null;
 
         $invoices = PaymentLinks::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($statuses)) {
