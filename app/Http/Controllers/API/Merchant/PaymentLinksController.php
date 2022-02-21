@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Requests\Merchant\PaymentLinksRequest;
+use App\Models\Merchant;
 use App\Models\PaymentLinks;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Libs\Stripe;
 
 class PaymentLinksController extends MerchantController
 {
@@ -86,10 +87,31 @@ class PaymentLinksController extends MerchantController
         return $this->successful('Deleted Successfully');
     }
 
-    public function validateStrip(PaymentLinksRequest $request, Stripe $strip)
+    public function validateStrip(PaymentLinksRequest $request)
     {
+        // $token = $request->token;
+        // $hash = $request->hash;
 
-        // $strip->InvoiceWithToken($rea)
+        // $paymentInfo = PaymentLinks::where('hash', $hash)->where('status', '=', 'DRAFT')->first();
+
+        // if (is_null($paymentInfo)) {
+        //     return $this->error('Unecpected Error , Try Again Later');
+        // }
+
+        // $merchant = Merchant::findOrFail($paymentInfo->merchant_id);
+
+        // Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+        // Stripe\Charge::create([
+        //     "amount" => Shipcash::exchange($paymentInfo->amount, 'JOD') * 100,
+        //     "currency" => "usd",
+        //     "source" => $token,
+        //     "description" => "Payment From Shipcash : Merchant ID " . $paymentInfo->merchant_id . " / " . $merchant->name . " To " . $invoice->customer_name,
+        // ]);
+
+        // $paymentInfo->status = 'PAID';
+        // $paymentInfo->save();
+
+
+        // return $this->successful('Sucessfully ');
     }
-
 }
