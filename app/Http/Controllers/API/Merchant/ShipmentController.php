@@ -459,7 +459,7 @@ class ShipmentController extends MerchantController
 
     public function calculateDomesticFees($carrier_id, $city, $weight, $merchant_id = null)
     {
-        $merchentInfo = $this->getMerchentInfo(127);
+        $merchentInfo = $this->getMerchentInfo($merchant_id);
         $city = str_replace("'", "", $city);
         $setup = collect($merchentInfo->domestic_rates)->where('carrier_id', $carrier_id)->first();
 
