@@ -160,6 +160,13 @@
             "name_ar": "دينارك",
             "code": "dn",
             "type": "wallet"
+        },
+        {
+            "id": "24",
+            "name_en": "CliQ",
+            "name_ar": "كليك",
+            "code": "cliq",
+            "type": "wallet"
         }
     ],
     "SA": [

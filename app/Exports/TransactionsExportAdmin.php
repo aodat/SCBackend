@@ -28,7 +28,7 @@ class TransactionsExportAdmin implements FromCollection, WithMapping, WithHeadin
     {
         return [
             'Transaction ID',
-            'Mercahnt ID',
+            'Merchant ID',
             'Payment Name',
             'Payment IBAN',
             'Amount',

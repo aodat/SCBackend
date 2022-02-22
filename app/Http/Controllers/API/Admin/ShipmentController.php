@@ -96,7 +96,7 @@ class ShipmentController extends Controller
             return $this->error('Shipment ID Not Found', 400);
         }
 
-        return $this->response($data, 'Data Retrieved Sucessfully');
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 
     public function update(ShipmentRequest $request)

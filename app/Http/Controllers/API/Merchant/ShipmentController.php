@@ -8,7 +8,6 @@ use App\Http\Controllers\Utilities\Documents;
 use App\Http\Requests\Merchant\ShipmentRequest;
 use App\Models\Carriers;
 use App\Models\Country;
-use App\Models\Invoices;
 use App\Models\Shipment;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -47,7 +46,7 @@ class ShipmentController extends MerchantController
     public function show($id, ShipmentRequest $request)
     {
         $data = Shipment::where('id', $id)->orWhere('awb', $id)->first();
-        return $this->response($data, 'Data Retrieved Sucessfully');
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 
     public function export($type, ShipmentRequest $request)
@@ -62,7 +61,7 @@ class ShipmentController extends MerchantController
             $url = Documents::pdf('shipments', $path, $shipments);
         }
 
-        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+        return $this->response(['link' => $url], 'Data Retrieved Successfully', 200);
     }
 
     private function search($filters)
@@ -338,19 +337,6 @@ class ShipmentController extends MerchantController
 
         $lastShipment = Shipment::first();
 
-        if ($payments > 0) {
-            Invoices::create(
-                [
-                    "merchant_id" => Request()->user()->merchant_id,
-                    "user_id" => Request()->user()->id,
-                    "fk_id" => $lastShipment->id,
-                    "customer_name" => $lastShipment->consignee_name,
-                    "customer_email" => $lastShipment->consignee_email,
-                    "description" => $lastShipment->consignee_notes,
-                    "amount" => $payments,
-                ]
-            );
-        }
         return $this->response(
             [
                 'id' => $lastShipment->id,
@@ -430,7 +416,7 @@ class ShipmentController extends MerchantController
                 $shipment['carrier_id'],
                 $shipment['consignee_country'],
                 $shipment['actual_weight'],
-                870
+                env('GUEST_MERCHANT_ID')
             );
         } else {
             $shipment['group'] = 'DOM';
@@ -438,7 +424,7 @@ class ShipmentController extends MerchantController
                 $shipment['carrier_id'],
                 $shipment['consignee_city'],
                 $shipment['actual_weight'],
-                870
+                env('GUEST_MERCHANT_ID')
             );
         }
 
@@ -515,7 +501,7 @@ class ShipmentController extends MerchantController
 
         $country = str_replace("'", "", $country);
 
-        $zone_id = collect(collect(Country::where('code', $merchentInfo['country_code'])->first())['rates'][$country])->where('carrier_id',$carrier_id)->first()['zone_id'] ?? null;
+        $zone_id = collect(collect(Country::where('code', $merchentInfo['country_code'])->first())['rates'][$country])->where('carrier_id', $carrier_id)->first()['zone_id'] ?? null;
 
         $rate = collect($merchentInfo['express_rates'][$carrier_id]['zones'] ?? [])->where('id', $zone_id)->first();
         if (is_null($rate)) {

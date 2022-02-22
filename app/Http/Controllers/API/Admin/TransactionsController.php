@@ -29,7 +29,7 @@ class TransactionsController extends Controller
         $path = "export/transaction-cod-" . Carbon::today()->format('Y-m-d') . ".xlsx";
 
         $url = Documents::xlsx(new TransactionsExportAdmin($transactions), $path);
-        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+        return $this->response(['link' => $url], 'Data Retrieved Successfully', 200);
     }
 
     public function withdraw(TransactionRequest $request, Dinarak $dinark)

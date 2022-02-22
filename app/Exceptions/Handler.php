@@ -47,10 +47,6 @@ class Handler extends ExceptionHandler
             $response['meta']['code'] = 403;
             $response['meta']['msg'] = 'Unauthorized request';
             return Response::make($response);
-        } else if ($exception instanceof InvalidRequestException) {
-            $response['meta']['code'] = 422;
-            $response['meta']['msg'] = 'Invalid Strip Request';
-            return Response::make($response);
         } else if ($exception instanceof \Swift_TransportException) {
             $response['meta']['code'] = 500;
             $response['meta']['msg'] = 'Request to AWS SES API failed';
