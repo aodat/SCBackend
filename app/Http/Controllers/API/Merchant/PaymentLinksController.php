@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
 use Stripe;
+
 class PaymentLinksController extends MerchantController
 {
     protected $stripe;
@@ -102,11 +103,11 @@ class PaymentLinksController extends MerchantController
 
         try {
             // Stripe
-            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
             Stripe\Charge::create([
                 "amount" => Shipcash::exchange($paymentInfo->amount, $merchant->currency_code) * 100,
-                "currency" => "usd",
-                "source" => "tok_visa",
+                "currency" => "USD",
+                "source" => $token,
                 "description" => "Payment From Shipcash : Merchant ID " . $paymentInfo->merchant_id . " / " . $merchant->name . " To " . $paymentInfo->customer_name,
             ]);
 
@@ -114,7 +115,8 @@ class PaymentLinksController extends MerchantController
             $paymentInfo->paid_at = Carbon::now();
             $paymentInfo->save();
         } catch (Throwable $e) {
-            return $this->error('Invalid Strip Token');
+
+            return $this->error($e->getMessage());
         }
 
         return $this->successful('The Payment Successfully Charged');
