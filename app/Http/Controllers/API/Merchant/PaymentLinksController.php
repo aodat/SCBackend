@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
+use App\Http\Controllers\API\Merchant\TransactionsController;
 use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Requests\Merchant\PaymentLinksRequest;
-use App\Models\PaymentLinks;
-use Carbon\Carbon;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+
+use App\Models\PaymentLinks;
+use Carbon\Carbon;
 use Throwable;
 use Stripe;
 
@@ -92,7 +95,7 @@ class PaymentLinksController extends MerchantController
         return $this->successful('Deleted Successfully');
     }
 
-    public function charge(PaymentLinksRequest $request)
+    public function charge(PaymentLinksRequest $request, TransactionsController $transaction)
     {
         $token = $request->token;
         $hash = $request->hash;
@@ -114,6 +117,18 @@ class PaymentLinksController extends MerchantController
             $paymentInfo->status = 'PAID';
             $paymentInfo->paid_at = Carbon::now();
             $paymentInfo->save();
+
+            $transaction->COD(
+                'CASHIN',
+                $paymentInfo->merchant_id,
+                $paymentInfo->id,
+                $paymentInfo->amount - $paymentInfo->fees,
+                "INVOICE",
+                $paymentInfo->user_id,
+                'Invoice Payment Charged',
+                'COMPLETED',
+                'WEB'
+            );
         } catch (Throwable $e) {
 
             return $this->error($e->getMessage());
