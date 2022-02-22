@@ -46,7 +46,7 @@ class ShipmentController extends MerchantController
     public function show($id, ShipmentRequest $request)
     {
         $data = Shipment::where('id', $id)->orWhere('awb', $id)->first();
-        return $this->response($data, 'Data Retrieved Sucessfully');
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 
     public function export($type, ShipmentRequest $request)
@@ -61,7 +61,7 @@ class ShipmentController extends MerchantController
             $url = Documents::pdf('shipments', $path, $shipments);
         }
 
-        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+        return $this->response(['link' => $url], 'Data Retrieved Successfully', 200);
     }
 
     private function search($filters)

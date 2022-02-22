@@ -150,7 +150,7 @@ Route::group(['middleware' => ['json.response', 'db.row']], function () {
     });
 
     Route::post('aramex-webhook', [Aramex::class, 'webhook']);
-    Route::post('payment/validate', [PaymentLinksController::class, 'validate']);
-    Route::get('payment/{hash}', [PaymentLinksController::class, 'showByHash']);
+    Route::get('payments_link/{hash}', [PaymentLinksController::class, 'hash']);
+    Route::post('payments_link/charge', [PaymentLinksController::class, 'charge']);
 });
 Route::get('unauthenticated', [Controller::class, 'unauthenticated'])->name('unauthenticated');

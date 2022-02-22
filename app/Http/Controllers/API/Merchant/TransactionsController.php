@@ -107,7 +107,7 @@ class TransactionsController extends MerchantController
             $url = Documents::pdf('transactions', $path, $transactions);
         }
 
-        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+        return $this->response(['link' => $url], 'Data Retrieved Successfully', 200);
     }
 
     public function withDraw(TransactionRequest $request)
@@ -171,7 +171,7 @@ class TransactionsController extends MerchantController
             Request()->header('agent') ?? 'API',
         );
 
-        return $this->successful('Deposit Sucessfully');
+        return $this->successful('Deposit Successfully');
     }
 
     public function transfer(TransactionRequest $request)

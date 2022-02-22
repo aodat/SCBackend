@@ -8,7 +8,8 @@ use App\Models\PaymentLinks;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-
+use Throwable;
+use Stripe;
 class PaymentLinksController extends MerchantController
 {
     protected $stripe;
@@ -59,7 +60,6 @@ class PaymentLinksController extends MerchantController
         $data['resource'] = Request()->header('agent') ?? 'API';
 
         $data['fees'] = $data['amount'] * 0.05;
-        $data['amount'] -= $data['fees'];
         PaymentLinks::create($data);
 
         return $this->successful('Created Successfully');
@@ -68,14 +68,16 @@ class PaymentLinksController extends MerchantController
     public function show($id, PaymentLinksRequest $request)
     {
         $data = PaymentLinks::findOrFail($id);
-        return $this->response($data, 'Data Retrieved Sucessfully');
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 
-    public function showByHash($hash)
+    public function hash($hash)
     {
         $data = PaymentLinks::where('hash', $hash)->where('status', '=', 'DRAFT')->first();
-        $data['amount'] = Shipcash::exchange($data['amount'], 'JOD');
-        return $this->response($data, 'Data Retrieved Sucessfully');
+        $merchant = $this->getMerchantInfo($data['merchant_id']);
+
+        $data['amount'] = Shipcash::exchange($data['amount'], $merchant->currency_code);
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 
     public function delete($invoiceID, PaymentLinksRequest $request)
@@ -89,30 +91,32 @@ class PaymentLinksController extends MerchantController
         return $this->successful('Deleted Successfully');
     }
 
-    public function validateStrip(PaymentLinksRequest $request)
+    public function charge(PaymentLinksRequest $request)
     {
-        // $token = $request->token;
-        // $hash = $request->hash;
+        $token = $request->token;
+        $hash = $request->hash;
 
-        // $paymentInfo = PaymentLinks::where('hash', $hash)->where('status', '=', 'DRAFT')->first();
+        $paymentInfo = PaymentLinks::where('hash', $hash)->where('status', '=', 'DRAFT')->first();
 
-        // if (is_null($paymentInfo)) {
-        //     return $this->error('Unecpected Error , Try Again Later');
-        // }
+        $merchant = $this->getMerchantInfo($paymentInfo->merchant_id);
 
-        // $merchant = Merchant::findOrFail($paymentInfo->merchant_id);
+        try {
+            // Stripe
+            Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
+            Stripe\Charge::create([
+                "amount" => Shipcash::exchange($paymentInfo->amount, $merchant->currency_code) * 100,
+                "currency" => "usd",
+                "source" => "tok_visa",
+                "description" => "Payment From Shipcash : Merchant ID " . $paymentInfo->merchant_id . " / " . $merchant->name . " To " . $paymentInfo->customer_name,
+            ]);
 
-        // Stripe\Stripe::setApiKey(env('STRIPE_SECRET'));
-        // Stripe\Charge::create([
-        //     "amount" => Shipcash::exchange($paymentInfo->amount, 'JOD') * 100,
-        //     "currency" => "usd",
-        //     "source" => $token,
-        //     "description" => "Payment From Shipcash : Merchant ID " . $paymentInfo->merchant_id . " / " . $merchant->name . " To " . $invoice->customer_name,
-        // ]);
+            $paymentInfo->status = 'PAID';
+            $paymentInfo->paid_at = Carbon::now();
+            $paymentInfo->save();
+        } catch (Throwable $e) {
+            return $this->error('Invalid Strip Token');
+        }
 
-        // $paymentInfo->status = 'PAID';
-        // $paymentInfo->save();
-
-        // return $this->successful('Sucessfully ');
+        return $this->successful('The Payment Successfully Charged');
     }
 }

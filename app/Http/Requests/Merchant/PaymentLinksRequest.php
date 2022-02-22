@@ -20,8 +20,12 @@ class PaymentLinksRequest extends MerchantRequest
                 "refference" => "",
                 "amount" => 'required|numeric|between:0.0001,9999',
             ];
+        } else if (strpos($path, 'payments_link/charge') !== false) {
+            return [
+                "hash" => "required|exists:payment_links,hash,status,DRAFT",
+                "token" => 'required',
+            ];
         }
-
         return [];
     }
 }
