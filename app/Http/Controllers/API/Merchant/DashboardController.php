@@ -25,16 +25,16 @@ class DashboardController extends MerchantController
     ];
 
     private $shippingChart = [
-        'DRAFT' => null,
-        'PROCESSING' => null,
-        'COMPLETED' => null,
-        'RENTURND' => null,
+        'DRAFT' => [],
+        'PROCESSING' => [],
+        'COMPLETED' => [],
+        'RENTURND' => [],
     ];
 
     private $paymentChart = [
-        'CASHIN' => null,
-        'CASHOUT' => null,
-        'PENDING_PAYMENTS' => null,
+        'CASHIN' => [],
+        'CASHOUT' => [],
+        'PENDING_PAYMENTS' => [],
     ];
 
     private $paymentInfoCard = [
