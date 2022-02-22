@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Requests\Merchant\DashboardRequest;
+use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends MerchantController
@@ -45,6 +46,26 @@ class DashboardController extends MerchantController
 
     public function index(DashboardRequest $request)
     {
+        $period = CarbonPeriod::create($request->since_at, $request->until);
+
+        $datesList = [];
+        foreach ($period as $date) {
+            $current = $date->format('Y-m-d');
+            $datesList[$current] = 0;
+        }
+
+        $this->paymentChart = [
+            'CASHIN' => $datesList,
+            'CASHOUT' => $datesList,
+            'PENDING_PAYMENTS' => $datesList  
+        ];
+
+        $this->paymentChart = [
+            'DRAFT' => $datesList,
+            'PROCESSING' => $datesList,
+            'COMPLETED' => $datesList,
+            'RENTURND' => $datesList  
+        ];
 
         if ($request->user()->role == 'super_admin')
             $merchant_ids = DB::table('shipments')->distinct()->pluck('merchant_id');
