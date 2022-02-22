@@ -53,19 +53,20 @@ class DashboardController extends MerchantController
             $current = $date->format('Y-m-d');
             $datesList[$current] = 0;
         }
-
+        
         $this->paymentChart = [
             'CASHIN' => $datesList,
             'CASHOUT' => $datesList,
             'PENDING_PAYMENTS' => $datesList  
         ];
 
-        $this->paymentChart = [
+        $this->shippingChart = [
             'DRAFT' => $datesList,
             'PROCESSING' => $datesList,
             'COMPLETED' => $datesList,
             'RENTURND' => $datesList  
         ];
+        
 
         if ($request->user()->role == 'super_admin')
             $merchant_ids = DB::table('shipments')->distinct()->pluck('merchant_id');
