@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API\Merchant;
 
 use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Requests\Merchant\PaymentLinksRequest;
-use App\Models\Merchant;
 use App\Models\PaymentLinks;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -59,6 +58,8 @@ class PaymentLinksController extends MerchantController
         $data['user_id'] = $request->user()->id;
         $data['resource'] = Request()->header('agent') ?? 'API';
 
+        $data['fees'] = $data['amount'] * 0.05;
+        $data['amount'] -= $data['fees'];
         PaymentLinks::create($data);
 
         return $this->successful('Created Successfully');
@@ -73,6 +74,7 @@ class PaymentLinksController extends MerchantController
     public function showByHash($hash)
     {
         $data = PaymentLinks::where('hash', $hash)->where('status', '=', 'DRAFT')->first();
+        $data['amount'] = Shipcash::exchange($data['amount'], 'JOD');
         return $this->response($data, 'Data Retrieved Sucessfully');
     }
 
@@ -110,7 +112,6 @@ class PaymentLinksController extends MerchantController
 
         // $paymentInfo->status = 'PAID';
         // $paymentInfo->save();
-
 
         // return $this->successful('Sucessfully ');
     }
