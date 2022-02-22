@@ -46,7 +46,7 @@ class Controller extends BaseController
                 $shipment->merchant_id
             );
 
-            if ($newFees != $shipment->fees) {
+            if ($newFees != $shipment->fees && $shipment->chargable_weight != 0) {
                 echo "<tr>
                         <td>{$shipment->id}</td>
                         <td>{$shipment->merchant_id}</td>
