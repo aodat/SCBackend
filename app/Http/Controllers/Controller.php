@@ -51,9 +51,10 @@ class Controller extends BaseController
                         <td>{$shipment->id}</td>
                         <td>{$shipment->merchant_id}</td>
                         <td>{$shipment->awb}</td>
-                        <td>{$shipment->transaction_id}</td>
                         <td>{$shipment->fees}</td>
                         <td>{$newFees}</td>
+                        <td>{" . $shipment->fees - $newFees . "}</td>
+                        <td>{$shipment->transaction_id}</td>
                         <td>{$shipment->status}</td>
                     </tr>
                 ";
