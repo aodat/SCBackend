@@ -137,7 +137,7 @@ class MerchantController extends Controller
         } else if ($merchantID !== null) {
             return Merchant::findOrFail($merchantID);
         } else {
-            return Merchant::findOrFail(870); // Guest Account
+            return Merchant::findOrFail(env('GUEST_MERCHANT_ID')); // Guest Account
         }
     }
 }

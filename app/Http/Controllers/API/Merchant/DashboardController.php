@@ -45,10 +45,15 @@ class DashboardController extends MerchantController
 
     public function index(DashboardRequest $request)
     {
-        $merchant_id = $request->user()->merchant_id;
+
+        if ($request->user()->role == 'super_admin')
+            $merchant_ids = DB::table('shipments')->distinct()->pluck('merchant_id');
+        else
+            $merchant_ids = [$request->user()->merchant_id];
+
 
         $shipments = DB::table(DB::raw('shipments s'))
-            ->where('s.merchant_id', '=', $merchant_id)
+            ->whereIn('s.merchant_id', $merchant_ids)
             ->where('s.is_deleted', false);
 
         $shippingOverAll = $shipments->select('status', DB::raw('count(id) counter'))
@@ -76,13 +81,13 @@ class DashboardController extends MerchantController
                     'counter' => $data['counter'],
                     'rate' => ($data['counter'] > 0 ? round(($data['counter'] / $totalData) * 100) : 0) . '%',
                 ];
-
             }, $this->shippinInfoCard);
         }
 
         $transactions = DB::table(DB::raw('transactions t'))
             ->select(DB::raw('date(updated_at) as date'), 'type as stype', DB::raw('count(id) counter'), DB::raw('sum(amount) as total'))
-            ->where([['t.merchant_id', $merchant_id], ['t.status', 'COMPLETED']])
+            ->whereIn('t.merchant_id', $merchant_ids)
+            ->where('t.status', 'COMPLETED')
             ->where('t.subtype', 'COD')
             ->groupByRaw('date(updated_at), type');
 
@@ -93,7 +98,7 @@ class DashboardController extends MerchantController
                 DB::raw('count(id) counter'),
                 DB::raw('sum(cod) as total')
             )
-            ->where('s.merchant_id', '=', $merchant_id)
+            ->whereIn('s.merchant_id', $merchant_ids)
             ->where('status', '=', 'COMPLETED')
             ->where('s.is_deleted', false)
             ->whereNull('transaction_id')

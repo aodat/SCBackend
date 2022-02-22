@@ -416,7 +416,7 @@ class ShipmentController extends MerchantController
                 $shipment['carrier_id'],
                 $shipment['consignee_country'],
                 $shipment['actual_weight'],
-                870
+                env('GUEST_MERCHANT_ID')
             );
         } else {
             $shipment['group'] = 'DOM';
@@ -424,7 +424,7 @@ class ShipmentController extends MerchantController
                 $shipment['carrier_id'],
                 $shipment['consignee_city'],
                 $shipment['actual_weight'],
-                870
+                env('GUEST_MERCHANT_ID')
             );
         }
 
