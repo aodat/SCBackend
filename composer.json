@@ -38,7 +38,6 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "classmap": [
-            "app/Libs/Stripe",
             "app/Libs/Aramex",
             "app/Libs/DHL",
             "app/Libs/Fedex",

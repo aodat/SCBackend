@@ -112,8 +112,7 @@ Route::group(['middleware' => ['json.response', 'db.row']], function () {
                 Route::post('payments_link', [PaymentLinksController::class, 'index']);
                 Route::post('payments_link/create', [PaymentLinksController::class, 'store']);
                 Route::get('payments_link/{payments_id}', [PaymentLinksController::class, 'show']);
-                Route::delete('invoice/{payments_id}', [PaymentLinksController::class, 'delete'])->where('payments_id', '[0-9]+');
-                // Route::get('invoice/finalize/{invoice_id}', [PaymentLinksController::class, 'finalize']);
+                Route::delete('payments_link/{payments_id}', [PaymentLinksController::class, 'delete'])->where('payments_id', '[0-9]+');
 
                 Route::group(['middleware' => ['scope:admin']], function () {
                     Route::get('rules', [RulesController::class, 'index']);

@@ -16,7 +16,6 @@ use Stripe;
 
 class PaymentLinksController extends MerchantController
 {
-    protected $stripe;
     private $status = [
         'DRAFT' => 0, 'PAID' => 0, 'FAILED' => 0,
     ];
@@ -32,15 +31,15 @@ class PaymentLinksController extends MerchantController
         $value = $filters['amount']['val'] ?? null;
         $operation = $filters['amount']['operation'] ?? null;
 
-        $invoices = PaymentLinks::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        $paymentLinks = PaymentLinks::whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
         if (count($statuses)) {
-            $invoices->whereIn('status', $statuses);
+            $paymentLinks->whereIn('status', $statuses);
         }
 
         if ($operation) {
-            $invoices->where("amount", $operation, $value);
+            $paymentLinks->where("amount", $operation, $value);
         } else if ($value) {
-            $invoices->whereBetween('amount', [intval($value), intval($value) . '.99']);
+            $paymentLinks->whereBetween('amount', [intval($value), intval($value) . '.99']);
         }
 
         $tabs = DB::table('payment_links')
@@ -51,7 +50,7 @@ class PaymentLinksController extends MerchantController
             ->groupBy('status')
             ->pluck('counter', 'status');
         $tabs = collect($this->status)->merge(collect($tabs));
-        return $this->pagination($invoices->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
+        return $this->pagination($paymentLinks->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
     public function store(PaymentLinksRequest $request)
@@ -84,13 +83,13 @@ class PaymentLinksController extends MerchantController
         return $this->response($data, 'Data Retrieved Successfully');
     }
 
-    public function delete($invoiceID, PaymentLinksRequest $request)
+    public function delete($PaymentID, PaymentLinksRequest $request)
     {
-        $invoiceInfo = PaymentLinks::where('id', $invoiceID)->first();
-        if ($invoiceInfo->status != 'DRAFT') {
-            return $this->error('you cant delete this invoice');
+        $PaymentInfo = PaymentLinks::where('id', $PaymentID)->first();
+        if ($PaymentInfo->status != 'DRAFT') {
+            return $this->error('You Cant Delete This Payment Link');
         }
-        $invoiceInfo->delete();
+        $PaymentInfo->delete();
 
         return $this->successful('Deleted Successfully');
     }
