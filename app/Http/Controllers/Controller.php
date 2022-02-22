@@ -47,6 +47,17 @@ class Controller extends BaseController
             );
 
             if ($newFees != $shipment->fees && $shipment->chargable_weight != 0) {
+
+                $ship = Shipment::findOrFail($shipment->id);
+                $ship->fees = $newFees;
+                $ship->save();
+                
+
+                $trans = Transaction::findOrFail($shipment->transaction_id);
+                $trans->amount = $shipment->cod - $newFees;
+                $trans->balance_after += $shipment->fees - $newFees;
+                $trans->save();
+
                 echo "<tr>
                         <td>{$shipment->id}</td>
                         <td>{$shipment->merchant_id}</td>
