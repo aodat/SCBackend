@@ -80,7 +80,12 @@ class TransactionsController extends MerchantController
 
     public function byDates(TransactionRequest $request)
     {
-        $merchant_id = $request->user()->merchant_id;
+        $merchant_id = 93; // $request->user()->merchant_id;
+        $filters = $request->json()->all();
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
+        $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
+        $type = $filters['type'] ?? null;
+
         $start = (request()->per_page ?? 30) * ($request->page ?? 0);
 
         $cashin = DB::table(DB::raw('transactions t'))
@@ -119,12 +124,31 @@ class TransactionsController extends MerchantController
             ->where('merchant_id', '=', $merchant_id)
             ->groupByRaw('date(t.created_at)');
 
-        $allTransaction = DB::table($cashin->union($cashout)->orderBy('date'))
+        if ($type == 'CASHIN')
+            $allTransaction = DB::table($cashin->orderBy('date'))
+                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+                ->whereBetween('date', [$since, $until])
+                ->paginate(request()->per_page ?? 30);
+        else if ($type == 'CASHOUT')
+
+            $allTransaction = DB::table($cashout->orderBy('date'))
+                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+                ->whereBetween('date', [$since, $until])
+                ->paginate(request()->per_page ?? 30);
+        else
+            $allTransaction = DB::table($cashin->union($cashout)->orderBy('date'))
+                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+                ->whereBetween('date', [$since, $until])
+                ->paginate(request()->per_page ?? 30);
+
+        
+        $tabsTransaction = DB::table($cashin->union($cashout)->orderBy('date'))
             ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
             ->paginate(request()->per_page ?? 30);
 
 
-        $types = collect($allTransaction->toArray()['data'])->groupBy('type');
+        
+        $types = collect($tabsTransaction->toArray()['data'])->groupBy('type');
 
         $tabs['CASHIN'] = count($types['CASHIN'] ?? []);
         $tabs['CASHOUT'] = count($types['CASHOUT'] ?? []);
