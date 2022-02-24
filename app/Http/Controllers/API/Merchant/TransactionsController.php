@@ -80,7 +80,7 @@ class TransactionsController extends MerchantController
 
     public function byDates(TransactionRequest $request)
     {
-        $merchant_id = 93; // $request->user()->merchant_id;
+        $merchant_id = $request->user()->merchant_id;
         $filters = $request->json()->all();
         $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
