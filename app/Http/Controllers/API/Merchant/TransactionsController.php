@@ -57,7 +57,7 @@ class TransactionsController extends MerchantController
         }
 
         $tabs = DB::table('transactions')
-            ->where('merchant_id', Request()->user()->merchant_id);
+            ->where('merchant_id', $request->user()->merchant_id);
 
         if ($subtype && $subtype != '*') {
             $tabs->where('subtype', $subtype);
@@ -75,6 +75,39 @@ class TransactionsController extends MerchantController
         return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
+    public function byDates(TransactionRequest $request)
+    {
+        $dates = DB::table('transactions')
+            ->where([
+                'merchant_id' => $request->user()->merchant_id,
+                'source' => 'SHIPMENT',
+                'type'  => $request->type ?? 'CASHIN',
+                'subtype' => $request->subtype ?? 'COD',
+            ])->whereNotNull('item_id')
+            ->select(
+                DB::raw('date(created_at) as date'),
+                'type',
+                DB::raw('count(item_id) as number_shipment'),
+                DB::raw('sum(amount) as total')
+            )
+            ->groupByRaw('date(created_at)');
+
+        $tabs = DB::table('transactions')
+            ->where('merchant_id', $request->user()->merchant_id);
+
+
+        $tabs = $tabs->select('type', DB::raw(
+            'count(type) as counter'
+        ))
+            ->groupBy('type')
+            ->pluck('counter', 'type');
+
+        $tabs = collect($this->type)->merge(collect($tabs));
+        $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
+
+        return $this->pagination($dates->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
+    }
+
     public function show($id, TransactionRequest $request)
     {
         $data = Transaction::findOrFail($id);
@@ -83,7 +116,7 @@ class TransactionsController extends MerchantController
 
     public function export(TransactionRequest $request)
     {
-        $merchentID = Request()->user()->merchant_id;
+        $merchentID = $request->user()->merchant_id;
         $subtype = $request->subtype;
         $type = $request->type;
 
@@ -134,7 +167,7 @@ class TransactionsController extends MerchantController
 
         $this->COD(
             'CASHOUT',
-            Request()->user()->merchant_id,
+            $request->user()->merchant_id,
             null,
             $dedaction,
             'NONE',

@@ -99,6 +99,7 @@ Route::group(['middleware' => ['json.response', 'db.row']], function () {
 
                 // Transactions
                 Route::post('transactions', [TransactionsController::class, 'index']);
+                Route::post('transactions/dates', [TransactionsController::class, 'byDates']);
                 Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+');
                 Route::post('transactions/export', [TransactionsController::class, 'export']);
 
