@@ -1,11 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Merchant;
+namespace App\Http\Requests;
 
-use Carbon\Carbon;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Carbon;
 
-class DashboardRequest extends MerchantRequest
+class DashboardRequest extends FormRequest
 {
+    public function authorize()
+    {
+        return true;
+    }
+
     public function all($keys = null)
     {
         $path = Request()->route()->uri;
@@ -32,8 +39,8 @@ class DashboardRequest extends MerchantRequest
 
         if (strpos($path, 'merchant/dashboard') !== false) {
             return [
-                'since_at' => 'date',
-                'until' => 'date|after_or_equal:since_at',
+                'since_at' => 'required|date',
+                'until' => 'required|date|after_or_equal:since_at',
             ];
         }
         return [];

@@ -3,7 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Merchant\AddressesController;
 use App\Http\Controllers\API\Merchant\CarrierController;
-use App\Http\Controllers\API\Merchant\DashboardController;
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\Merchant\DocumentsController;
 use App\Http\Controllers\API\Merchant\PaymentLinksController;
 use App\Http\Controllers\API\Merchant\MerchantController;

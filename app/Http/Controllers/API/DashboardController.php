@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\API\Merchant;
+namespace App\Http\Controllers\API;
 
-use App\Http\Requests\Merchant\DashboardRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\DashboardRequest;
 use Carbon\CarbonPeriod;
 use Illuminate\Support\Facades\DB;
 
-class DashboardController extends MerchantController
+class DashboardController extends Controller
 {
     private $shippinInfoCard = [
         'DRAFT' => ['counter' => 0, 'rate' => 0],
@@ -53,20 +54,20 @@ class DashboardController extends MerchantController
             $current = $date->format('Y-m-d');
             $datesList[$current] = 0;
         }
-        
+
         $this->paymentChart = [
             'CASHIN' => $datesList,
             'CASHOUT' => $datesList,
-            'PENDING_PAYMENTS' => $datesList  
+            'PENDING_PAYMENTS' => $datesList
         ];
 
         $this->shippingChart = [
             'DRAFT' => $datesList,
             'PROCESSING' => $datesList,
             'COMPLETED' => $datesList,
-            'RENTURND' => $datesList  
+            'RENTURND' => $datesList
         ];
-        
+
 
         if ($request->user()->role == 'super_admin')
             $merchant_ids = DB::table('shipments')->distinct()->pluck('merchant_id');
