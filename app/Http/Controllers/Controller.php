@@ -29,52 +29,6 @@ class Controller extends BaseController
     public function json()
     {
         set_time_limit(0);
-        $shipments = DB::table(DB::raw('shipments s'))
-            ->select('id', 'merchant_id', 'awb', 'fees', 'consignee_city', 'cod', 'chargable_weight', 'transaction_id', 'status')
-            ->where('group', 'DOM')
-            ->where('status', '<>', 'DRAFT')
-            // ->whereBetween(DB::raw('date(created_at)'), ['2022-02-12', '2022-02-25'])
-            ->orderBy('merchant_id')
-            ->get();
-        $counter = 1;
-        echo "<table border='1'></tr>";
-        $shipments->map(function ($shipment) use (&$counter) {
-            $newFees = (new ShipmentController)->calculateDomesticFees(
-                1,
-                $shipment->consignee_city,
-                $shipment->chargable_weight,
-                $shipment->merchant_id
-            );
-
-            if ($newFees != $shipment->fees && $shipment->chargable_weight != 0) {
-
-                $ship = Shipment::findOrFail($shipment->id);
-                $ship->fees = $newFees;
-                $ship->save();
-                
-
-                $trans = Transaction::findOrFail($shipment->transaction_id);
-                $trans->amount = $shipment->cod - $newFees;
-                $trans->balance_after += $shipment->fees - $newFees;
-                $trans->save();
-
-                echo "<tr>
-                        <td>{$shipment->id}</td>
-                        <td>{$shipment->merchant_id}</td>
-                        <td>{$shipment->awb}</td>
-                        <td>{$shipment->fees}</td>
-                        <td>{$newFees}</td>
-                        <td>{" . $shipment->fees - $newFees . "}</td>
-                        <td>{$shipment->transaction_id}</td>
-                        <td>{$shipment->status}</td>
-                    </tr>
-                ";
-
-                $counter++;
-            }
-        });
-        echo "<table>";
-        echo "<hr>";
-        echo "Result $counter";
+        die('Stopped ');
     }
 }
