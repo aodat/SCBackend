@@ -46,7 +46,7 @@ class TransactionsController extends MerchantController
             $transaction->whereIn('type', $types);
         }
 
-        if ($subtype && $subtype != '*') {
+        if ($subtype != '*') {
             $transaction->where('subtype', $subtype);
         }
 
@@ -56,29 +56,34 @@ class TransactionsController extends MerchantController
             $transaction->whereBetween('amount', [intval($amount), intval($amount) . '.99']);
         }
 
-        $tabs = DB::table('transactions')
-            ->where('merchant_id', $request->user()->merchant_id);
+        if (in_array('CASHIN', $types)  && $subtype == 'COD') {
+            return $this->response($transaction->get(), 'Data Retrieved Successfully');
+        } else {
+            $tabs = DB::table('transactions')
+                ->where('merchant_id', $request->user()->merchant_id);
 
-        if ($subtype && $subtype != '*') {
-            $tabs->where('subtype', $subtype);
+            if ($subtype && $subtype != '*') {
+                $tabs->where('subtype', $subtype);
+            }
+
+            $tabs = $tabs->select('type', DB::raw(
+                'count(type) as counter'
+            ))
+                ->groupBy('type')
+                ->pluck('counter', 'type');
+
+            $tabs = collect($this->type)->merge(collect($tabs));
+            $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
+            return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
         }
-
-        $tabs = $tabs->select('type', DB::raw(
-            'count(type) as counter'
-        ))
-            ->groupBy('type')
-            ->pluck('counter', 'type');
-
-        $tabs = collect($this->type)->merge(collect($tabs));
-        $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
-
-        return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
     }
 
     public function byDates(TransactionRequest $request)
     {
         $merchant_id = $request->user()->merchant_id;
-        $dates = DB::table(DB::raw('transactions t'))
+        $start = (request()->per_page ?? 30) * ($request->page ?? 0);
+
+        $cashin = DB::table(DB::raw('transactions t'))
             ->select(
                 DB::raw('date(created_at) as date'),
                 'type',
@@ -92,24 +97,39 @@ class TransactionsController extends MerchantController
             )
             ->where(function ($query) use ($request) {
                 $query->where('source', 'SHIPMENT')
-                    ->where('type', $request->type ?? 'CASHIN')
-                    ->where('subtype', $request->subtype ?? 'CASHIN');
+                    ->where('subtype', $request->subtype ?? 'COD')
+                    ->where('type', 'CASHIN');
             })
             ->whereNotNull('item_id')
             ->where('merchant_id', '=', $merchant_id)
-            ->groupByRaw('date(t.created_at)')
-            ->orderByRaw('date(t.created_at) DESC');
+            ->groupByRaw('date(t.created_at)');
 
-        $tabs = DB::table('transactions')
-            ->where('merchant_id', $merchant_id)
-            ->select('type', DB::raw('count(type) as counter'))
-            ->groupBy('type')
-            ->pluck('counter', 'type');
+        $cashout = DB::table(DB::raw('transactions t'))
+            ->select(
+                DB::raw('date(created_at) as date'),
+                'type',
+                'item_id',
+                'balance_after',
+                'amount'
+            )
+            ->where(function ($query) use ($request) {
+                $query->where('subtype', $request->subtype ?? 'COD')
+                    ->where('type', 'CASHOUT');
+            })
+            ->where('merchant_id', '=', $merchant_id)
+            ->groupByRaw('date(t.created_at)');
 
-        $tabs = collect($this->type)->merge(collect($tabs));
+        $allTransaction = DB::table($cashin->union($cashout)->orderBy('date'))
+            ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+            ->paginate(request()->per_page ?? 30);
+
+
+        $types = collect($allTransaction->toArray()['data'])->groupBy('type');
+
+        $tabs['CASHIN'] = count($types['CASHIN'] ?? []);
+        $tabs['CASHOUT'] = count($types['CASHOUT'] ?? []);
         $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
-
-        return $this->pagination($dates->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
+        return $this->pagination($allTransaction, ['tabs' => $tabs]);
     }
 
     public function show($id, TransactionRequest $request)

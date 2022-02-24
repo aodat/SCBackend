@@ -13,9 +13,12 @@ class Transaction extends Model
     use HasFactory;
     protected $guarded = [];
 
-    protected $appends = ['consignee_name'];
+    protected $appends = [
+        'shipment_info'
+    ];
+
     protected $casts = [
-        'payment_method' => 'array',
+        'payment_method' => 'array'
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -23,9 +26,21 @@ class Transaction extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function getConsigneeNameAttribute()
+    public function getShipmentInfoAttribute()
     {
-        return DB::table('shipments')->where('merchant_id', $this->merchant_id)->where('awb', $this->item_id)->first()->consignee_name ?? null;
+        if ($this->subtype == 'COD' && !is_null($this->item_id)) {
+            $shipment = DB::table('shipments')->where('merchant_id', $this->merchant_id)->where('awb', $this->item_id)->first();
+            return [
+                'sender_name' => $shipment->sender_name,
+                'consignee_name' => $shipment->consignee_name,
+                'consignee_phone' => $shipment->consignee_phone,
+                'consignee_city' => $shipment->consignee_city,
+                'cod' => $shipment->cod,
+                'fees' => $shipment->fees,
+                'net' => $shipment->cod - $shipment->fees,
+            ];
+        } else
+            return [];
     }
 
     protected static function booted()
