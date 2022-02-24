@@ -12,6 +12,9 @@ class Transaction extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $hidden = [
+        'notes'
+    ];
 
     protected $appends = [
         'shipment_info'
