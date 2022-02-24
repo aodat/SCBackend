@@ -174,7 +174,7 @@ class TransactionsController extends MerchantController
         $transaction = Transaction::where('merchant_id', $merchentID)
             ->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
 
-        if ($subtype && $subtype != '*') {
+        if ($subtype != '*') {
             $transaction->where('subtype', $subtype);
         }
 
