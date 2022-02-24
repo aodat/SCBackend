@@ -97,7 +97,7 @@ class TransactionsController extends MerchantController
                         select t2.balance_after 
                         from transactions t2 
                         where t2.id = max(t.id)
-                    ) as balance'),
+                    ) as balance_after'),
                 DB::raw('sum(amount) as amount')
             )
             ->where(function ($query) use ($request) {
