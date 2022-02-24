@@ -98,7 +98,7 @@ class TransactionsController extends MerchantController
                         from transactions t2 
                         where t2.id = max(t.id)
                     ) as balance'),
-                DB::raw('sum(amount) as total_amount')
+                DB::raw('sum(amount) as amount')
             )
             ->where(function ($query) use ($request) {
                 $query->where('source', 'SHIPMENT')
