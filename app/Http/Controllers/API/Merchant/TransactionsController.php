@@ -77,28 +77,32 @@ class TransactionsController extends MerchantController
 
     public function byDates(TransactionRequest $request)
     {
-        $dates = DB::table('transactions')
-            ->where([
-                'merchant_id' => $request->user()->merchant_id,
-                'source' => 'SHIPMENT',
-                'type'  => $request->type ?? 'CASHIN',
-                'subtype' => $request->subtype ?? 'COD',
-            ])->whereNotNull('item_id')
+        $merchant_id = $request->user()->merchant_id;
+        $dates = DB::table(DB::raw('transactions t'))
             ->select(
                 DB::raw('date(created_at) as date'),
                 'type',
                 DB::raw('count(item_id) as number_shipment'),
-                DB::raw('sum(amount) as total')
+                DB::raw('(
+                        select t2.balance_after 
+                        from transactions t2 
+                        where t2.id = max(t.id)
+                    ) as balance'),
+                DB::raw('sum(amount) as total_amount')
             )
-            ->groupByRaw('date(created_at)');
+            ->where(function ($query) use ($request) {
+                $query->where('source', 'SHIPMENT')
+                    ->where('type', $request->type ?? 'CASHIN')
+                    ->where('subtype', $request->subtype ?? 'CASHIN');
+            })
+            ->whereNotNull('item_id')
+            ->where('merchant_id', '=', $merchant_id)
+            ->groupByRaw('date(t.created_at)')
+            ->orderByRaw('date(t.created_at) DESC');
 
         $tabs = DB::table('transactions')
-            ->where('merchant_id', $request->user()->merchant_id);
-
-
-        $tabs = $tabs->select('type', DB::raw(
-            'count(type) as counter'
-        ))
+            ->where('merchant_id', $merchant_id)
+            ->select('type', DB::raw('count(type) as counter'))
             ->groupBy('type')
             ->pluck('counter', 'type');
 
