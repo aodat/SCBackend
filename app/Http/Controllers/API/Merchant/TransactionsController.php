@@ -6,12 +6,17 @@ use App\Exceptions\InternalException;
 use App\Exports\TransactionsExport;
 use App\Http\Controllers\Utilities\Documents;
 use App\Http\Controllers\Utilities\InvoiceService;
+use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Requests\Merchant\TransactionRequest;
 use App\Models\Merchant;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Libs\Dinarak;
+
+use Throwable;
+use Stripe;
+
 
 class TransactionsController extends MerchantController
 {
@@ -246,8 +251,26 @@ class TransactionsController extends MerchantController
 
     public function deposit(TransactionRequest $request, Dinarak $dinarak)
     {
-        $merchecntInfo = $this->getMerchentInfo();
-        $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
+        $type = $request->type;
+        $merchecntInfo = $this->getMerchantInfo();
+
+        if ($type == 'stripe') {
+            try {
+                Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
+                Stripe\Charge::create([
+                    "amount" => Shipcash::exchange($request->amount, $merchecntInfo->currency_code) * 100,
+                    "currency" => "USD",
+                    "source" => $request->token,
+                    "description" => "Deposit Transaction : Merchant ID " . $merchecntInfo->id . " / " . $merchecntInfo->name,
+                ]);
+            } catch (Throwable $e) {
+                return $this->error($e->getMessage());
+            }
+        } else {
+            return $this->error('This Service Was Stopped Try Again Later');
+            $merchecntInfo = $this->getMerchentInfo();
+            $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
+        }
 
         $this->BUNDLE(
             'CASHIN',
@@ -260,7 +283,6 @@ class TransactionsController extends MerchantController
             'COMPLETED',
             Request()->header('agent') ?? 'API',
         );
-
         return $this->successful('Deposit Successfully');
     }
 
