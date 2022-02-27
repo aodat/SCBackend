@@ -208,7 +208,7 @@
             <tfoot>
                 <tr>
                     <td width="20%">Details</td>
-                    <td width="80%" colspan="6" class="text-left">{{ $value['shipment_info']['consignee_address_description'] }}</td>
+                    <td width="80%" colspan="6" class="text-left">{{ $value['shipment_info']['consignee_address_description'] ?? ''}}</td>
                 </tr>
             </tfoot>
         </table>
