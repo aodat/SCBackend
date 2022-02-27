@@ -198,11 +198,11 @@
                 <tr>
                     <td class="text-center"><?= $counter++ ?></td>
                     <td class="text-center">{{ $value['item_id'] }}</td>
-                    <td class="text-center">{{ $value['shipment_info']['consignee_name'] }}</td>
-                    <td class="text-center">{{ $value['shipment_info']['consignee_city'] }}</td>
-                    <td class="text-center">{{ $total_cash += $value['shipment_info']['cod'] }}</td>
-                    <td class="text-center">{{ $total_fees += $value['shipment_info']['fees'] }}</td>
-                    <td class="text-center">{{ $total_net += $value['shipment_info']['net'] }}</td>
+                    <td class="text-center">{{ $value['shipment_info']['consignee_name'] ?? '' }}</td>
+                    <td class="text-center">{{ $value['shipment_info']['consignee_city'] ?? '' }}</td>
+                    <td class="text-center">{{ $total_cash += $value['shipment_info']['cod'] ?? '' }}</td>
+                    <td class="text-center">{{ $total_fees += $value['shipment_info']['fees'] ?? '' }}</td>
+                    <td class="text-center">{{ $total_net += $value['shipment_info']['net'] ?? '' }}</td>
                 <tr>
             </tbody>
             <tfoot>
