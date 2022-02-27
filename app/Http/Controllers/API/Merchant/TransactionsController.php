@@ -141,13 +141,13 @@ class TransactionsController extends MerchantController
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
 
-        
+
         $tabsTransaction = DB::table($cashin->union($cashout)->orderBy('date'))
             ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
             ->paginate(request()->per_page ?? 30);
 
 
-        
+
         $types = collect($tabsTransaction->toArray()['data'])->groupBy('type');
 
         $tabs['CASHIN'] = count($types['CASHIN'] ?? []);
@@ -164,29 +164,38 @@ class TransactionsController extends MerchantController
 
     public function export(TransactionRequest $request)
     {
-        $merchentID = $request->user()->merchant_id;
-        $subtype = $request->subtype;
-        $type = $request->type;
+        $filters = $request->json()->all();
+
+        $format = $filters['format'] ?? 'PDF'; // PDF , Excel
+        $type = $filters['type'] ?? '*'; // CASHIN , CASHOUT , All
+        $subtype = $filters['subtype'] ?? 'COD'; // COD , BUNDLE
 
         $since = $request->created_at['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $request->created_at['until'] ?? Carbon::today()->format('Y-m-d');
 
-        $transaction = Transaction::where('merchant_id', $merchentID)
-            ->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        $transaction = Transaction::whereBetween(DB::raw('date(created_at)'), [$since, $until])
+            ->where('subtype', $subtype);
 
-        if ($subtype != '*') {
-            $transaction->where('subtype', $subtype);
+        $merchecntInfo = $this->getMerchentInfo();
+
+        if ($type != '*') {
+            $transaction->where('type', $type);
         }
 
         $transactions = $transaction->get();
+        $path = "export/$merchecntInfo->id/transaction-" . Carbon::today()->format('Y-m-d') . ".$format";
 
-        $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
-
-        if ($type == 'xlsx') {
+        if ($type == 'CASHIN' && $subtype == 'COD' &&  $since = $until)
+            $url = Documents::pdf('cashin', $path, $transactions, [
+                'date' => $request->created_at['since'],
+                'merchecnt_id' => $merchecntInfo->id,
+                'merchecnt_name' => $merchecntInfo->name
+            ]);
+        else if ($format == 'xlsx')
             $url = Documents::xlsx(new TransactionsExport($transactions), $path);
-        } else {
+        else
             $url = Documents::pdf('transactions', $path, $transactions);
-        }
+
 
         return $this->response(['link' => $url], 'Data Retrieved Successfully', 200);
     }

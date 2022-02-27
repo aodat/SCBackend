@@ -33,11 +33,14 @@ class Transaction extends Model
     {
         if ($this->subtype == 'COD' && !is_null($this->item_id)) {
             $shipment = DB::table('shipments')->where('merchant_id', $this->merchant_id)->where('awb', $this->item_id)->first();
+            if (is_null($shipment))
+                return [];
             return [
                 'sender_name' => $shipment->sender_name,
                 'consignee_name' => $shipment->consignee_name,
                 'consignee_phone' => $shipment->consignee_phone,
                 'consignee_city' => $shipment->consignee_city,
+                'consignee_address_description' => $shipment->consignee_address_description,
                 'cod' => $shipment->cod,
                 'fees' => $shipment->fees,
                 'net' => $shipment->cod - $shipment->fees,
