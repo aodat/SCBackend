@@ -9,75 +9,53 @@
     <style type="text/css" media="all">
         html {
             font-family: sans-serif;
-            line-height: 1.15;
             margin: 0;
-        }
-
-        strong {
-            font-weight: bolder;
-        }
-
-        img {
-            vertical-align: middle;
-            border-style: none;
         }
 
         table {
             border-collapse: collapse;
         }
-
         th {
-            text-align: inherit;
+            font-weight: bold !important;
+            font-size: 0.75rem !important
         }
-
+        td {
+            font-weight: normal !important;
+            font-size: 0.75rem !important
+        }
         h4,
         .h4 {
             margin-bottom: 0.5rem;
             font-weight: 500;
             line-height: 1.2;
-        }
-
-        h4,
-        .h4 {
             font-size: 1.5rem;
         }
 
         .table {
             width: 100%;
-            margin-bottom: 1rem;
             color: #212529;
         }
 
         .table th,
-        .table td,
-        .box td {
-            padding: 0.75rem;
-            vertical-align: top;
+        .table td{
+            padding: 0.65rem;
+            vertical-align: middle;
         }
 
-        .table.table-items td {
-            border-top: 1px solid #dee2e6;
+        .box td {
+            padding: 0.25rem;
         }
 
         .table thead th,
         .table tbody td,
         .summary tbody td{
-            vertical-align: bottom;
+            vertical-align: middle;
             border: 1px solid #dee2e6;
+            border-bottom:0 !important;
         }
 
         .mt-5 {
             margin-top: 3rem !important;
-        }
-
-        .pr-0,
-        .px-0 {
-            padding-right: 0 !important;
-        }
-
-        .pl-0,
-        .px-0 {
-            padding-left: 0 !important;
         }
 
         .text-right {
@@ -92,38 +70,8 @@
             text-transform: uppercase !important;
         }
 
-        body,
-        h1,
-        h2,
-        h3,
-        h4,
-        h5,
-        h6,
-        table,
-        th,
-        tr,
-        td,
-        p,
-        div {
-            line-height: 1.1;
-        }
-
-        .party-header {
-            font-size: 1.5rem;
-            font-weight: 400;
-        }
-
-        .total-amount {
-            font-size: 12px;
-            font-weight: 700;
-        }
-
         .border-0 {
             border: none !important;
-        }
-
-        .cool-gray {
-            color: #6B7280;
         }
 
         .box {
@@ -134,11 +82,14 @@
             height: 25px;
             border-bottom: 1px solid #dee2e6;
         }
+        .divider-table{
+            height: 1px;
+            border-top: 1px solid #dee2e6;
+        }
 
         .font-bold {
             font-weight: bold;
         }
-
     </style>
 </head>
 
@@ -146,11 +97,10 @@
     <table class="mt-5" width="100%">
         <tbody>
             <tr>
-                <td class="border-0 pl-0" width="10%">
+                <td class="border-0 pl-0" width="450px">
                     <img src="https://shipcash.net/_nuxt/img/logo-bw.2b648ef.png" alt="logo" style="width:150px;">
-                </td>
-                <td class="border-0 pl-0" width="60%"></td>
-                <td class="table" width="30%">
+				</td>
+                <td width="20%">
                     <table width="100%" class="box">
                         <tr>
                             <td width="40%" class="font-bold">ID</td>
@@ -176,9 +126,9 @@
     <table class="table mt-5">
         <thead>
             <tr>
-                <th width="15px" scope="col" class="text-center">#</th>
+                <th width="5%"  scope="col" class="text-center">#</th>
                 <th width="25%" scope="col" class="text-center">AWB</th>
-                <th width="27%" scope="col" class="text-center">Shipper Name</th>
+                <th width="25%" scope="col" class="text-center">Shipper Name</th>
                 <th width="15%" scope="col" class="text-center">City</th>
                 <th width="10%" scope="col" class="text-center">COD</th>
                 <th width="10%" scope="col" class="text-center">Fees</th>
@@ -188,9 +138,9 @@
         <tbody>
             @foreach ($cashin as $value)
                 <tr>
-                    <td width="15px" class="text-center"><?= $counter++ ?></td>
+                    <td width="5%" class="text-center"><?= $counter++ ?></td>
                     <td width="25%" class="text-center">{{ $value['item_id'] }}</td>
-                    <td width="27%" class="text-center">{{ $value['shipment_info']['consignee_name'] ?? '' }}</td>
+                    <td width="25%" class="text-center">{{ $value['shipment_info']['consignee_name'] ?? '' }}</td>
                     <td width="15%" class="text-center">{{ $value['shipment_info']['consignee_city'] ?? '' }}</td>
                     <td width="10%" class="text-center">{{ $total_cash += $value['shipment_info']['cod'] ?? 0 }}
                     </td>
@@ -201,18 +151,20 @@
                         {{ $total_net += $value['shipment_info']['net'] ?? 0 }}
                     </td>
                 <tr>
-                <tr class="border-bottom">
-                    <td class="text-center" width="20%">Details</td>
-                    <td width="80%" colspan="6" class="text-left">
+                <tr>
+                    <td colspan="7">
+                        <span>Details : </span>
                         {{ $value['shipment_info']['consignee_address_description'] ?? '' }}
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+    <div class="divider-table"></div>
     <div class="divider"></div>
-    <h4 class="mt-5 font-bold">Summary</h4>
-    <table class="table mt-5 summary" style="width:100%">
+    <h4 class="font-bold">Summary</h4>
+    <div class="divider no-border"></div>
+    <table class="table summary" style="width:100%">
         <tbody>
             <tr>
                 <td width="30%" class="font-bold">Total Cash</td>
