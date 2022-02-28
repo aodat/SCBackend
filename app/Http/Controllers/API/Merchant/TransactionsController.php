@@ -6,12 +6,17 @@ use App\Exceptions\InternalException;
 use App\Exports\TransactionsExport;
 use App\Http\Controllers\Utilities\Documents;
 use App\Http\Controllers\Utilities\InvoiceService;
+use App\Http\Controllers\Utilities\Shipcash;
 use App\Http\Requests\Merchant\TransactionRequest;
 use App\Models\Merchant;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Libs\Dinarak;
+
+use Throwable;
+use Stripe;
+
 
 class TransactionsController extends MerchantController
 {
@@ -46,7 +51,7 @@ class TransactionsController extends MerchantController
             $transaction->whereIn('type', $types);
         }
 
-        if ($subtype && $subtype != '*') {
+        if ($subtype != '*') {
             $transaction->where('subtype', $subtype);
         }
 
@@ -56,23 +61,104 @@ class TransactionsController extends MerchantController
             $transaction->whereBetween('amount', [intval($amount), intval($amount) . '.99']);
         }
 
-        $tabs = DB::table('transactions')
-            ->where('merchant_id', Request()->user()->merchant_id);
+        if (in_array('CASHIN', $types)  && $subtype == 'COD') {
+            return $this->response($transaction->get(), 'Data Retrieved Successfully');
+        } else {
+            $tabs = DB::table('transactions')
+                ->where('merchant_id', $request->user()->merchant_id);
 
-        if ($subtype && $subtype != '*') {
-            $tabs->where('subtype', $subtype);
+            if ($subtype && $subtype != '*') {
+                $tabs->where('subtype', $subtype);
+            }
+
+            $tabs = $tabs->select('type', DB::raw(
+                'count(type) as counter'
+            ))
+                ->groupBy('type')
+                ->pluck('counter', 'type');
+
+            $tabs = collect($this->type)->merge(collect($tabs));
+            $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
+            return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
         }
+    }
 
-        $tabs = $tabs->select('type', DB::raw(
-            'count(type) as counter'
-        ))
-            ->groupBy('type')
-            ->pluck('counter', 'type');
+    public function byDates(TransactionRequest $request)
+    {
+        $merchant_id = $request->user()->merchant_id;
+        $filters = $request->json()->all();
+        $since = $filters['created_at']['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
+        $until = $filters['created_at']['until'] ?? Carbon::today()->format('Y-m-d');
+        $type = $filters['type'] ?? null;
 
-        $tabs = collect($this->type)->merge(collect($tabs));
+        $start = (request()->per_page ?? 30) * ($request->page ?? 0);
+
+        $cashin = DB::table(DB::raw('transactions t'))
+            ->select(
+                DB::raw('date(created_at) as date'),
+                'type',
+                DB::raw('count(item_id) as number_shipment'),
+                DB::raw('(
+                        select t2.balance_after 
+                        from transactions t2 
+                        where t2.id = max(t.id)
+                    ) as balance_after'),
+                DB::raw('sum(amount) as amount')
+            )
+            ->where(function ($query) use ($request) {
+                $query->where('source', 'SHIPMENT')
+                    ->where('subtype', $request->subtype ?? 'COD')
+                    ->where('type', 'CASHIN');
+            })
+            ->whereNotNull('item_id')
+            ->where('merchant_id', '=', $merchant_id)
+            ->groupByRaw('date(t.created_at)');
+
+        $cashout = DB::table(DB::raw('transactions t'))
+            ->select(
+                DB::raw('date(created_at) as date'),
+                'type',
+                'item_id',
+                'balance_after',
+                'amount'
+            )
+            ->where(function ($query) use ($request) {
+                $query->where('subtype', $request->subtype ?? 'COD')
+                    ->where('type', 'CASHOUT');
+            })
+            ->where('merchant_id', '=', $merchant_id)
+            ->groupByRaw('date(t.created_at)');
+
+        if ($type == 'CASHIN')
+            $allTransaction = DB::table($cashin->orderBy('date'))
+                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+                ->whereBetween('date', [$since, $until])
+                ->paginate(request()->per_page ?? 30);
+        else if ($type == 'CASHOUT')
+
+            $allTransaction = DB::table($cashout->orderBy('date'))
+                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+                ->whereBetween('date', [$since, $until])
+                ->paginate(request()->per_page ?? 30);
+        else
+            $allTransaction = DB::table($cashin->union($cashout)->orderBy('date'))
+                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+                ->whereBetween('date', [$since, $until])
+                ->paginate(request()->per_page ?? 30);
+
+
+        $tabsTransaction = DB::table($cashin->union($cashout)->orderBy('date'))
+            ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+            ->paginate(request()->per_page ?? 30);
+
+
+
+        $types = collect($tabsTransaction->toArray()['data'])->groupBy('type');
+
+        $tabs['CASHIN'] = count($types['CASHIN'] ?? []);
+        $tabs['CASHOUT'] = count($types['CASHOUT'] ?? []);
         $tabs['ALL'] = $tabs['CASHIN'] + $tabs['CASHOUT'];
-
-        return $this->pagination($transaction->paginate(request()->per_page ?? 30), ['tabs' => $tabs]);
+        return $this->pagination($allTransaction, ['tabs' => $tabs]);
     }
 
     public function show($id, TransactionRequest $request)
@@ -83,29 +169,41 @@ class TransactionsController extends MerchantController
 
     public function export(TransactionRequest $request)
     {
-        $merchentID = Request()->user()->merchant_id;
-        $subtype = $request->subtype;
-        $type = $request->type;
+        $filters = $request->json()->all();
+
+        $format = $filters['format'] ?? 'PDF'; // PDF , Excel
+        $type = $filters['type'] ?? '*'; // CASHIN , CASHOUT , All
+        $subtype = $filters['subtype'] ?? 'COD'; // COD , BUNDLE
 
         $since = $request->created_at['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $request->created_at['until'] ?? Carbon::today()->format('Y-m-d');
 
-        $transaction = Transaction::where('merchant_id', $merchentID)
-            ->whereBetween('created_at', [$since . " 00:00:00", $until . " 23:59:59"]);
+        $transaction = Transaction::whereBetween(DB::raw('date(created_at)'), [$since, $until])
+            ->where('subtype', $subtype);
 
-        if ($subtype && $subtype != '*') {
-            $transaction->where('subtype', $subtype);
+        $merchecntInfo = $this->getMerchentInfo();
+
+        if ($type != '*') {
+            $transaction->where('type', $type);
+        }
+        if ($type == 'CASHIN' && $subtype == 'COD' &&  $since = $until) {
+            $transaction->whereNotNull('item_id');
         }
 
         $transactions = $transaction->get();
+        $path = "export/$merchecntInfo->id/transaction-" . Carbon::today()->format('Y-m-d') . ".$format";
 
-        $path = "export/transaction-$merchentID-" . Carbon::today()->format('Y-m-d') . ".$type";
-
-        if ($type == 'xlsx') {
+        if ($type == 'CASHIN' && $subtype == 'COD' &&  $since = $until)
+            $url = Documents::pdf('cashin', $path, $transactions, [
+                'date' => $request->created_at['since'],
+                'merchecnt_id' => $merchecntInfo->id,
+                'merchecnt_name' => $merchecntInfo->name
+            ]);
+        else if ($format == 'xlsx')
             $url = Documents::xlsx(new TransactionsExport($transactions), $path);
-        } else {
+        else
             $url = Documents::pdf('transactions', $path, $transactions);
-        }
+
 
         return $this->response(['link' => $url], 'Data Retrieved Successfully', 200);
     }
@@ -134,7 +232,7 @@ class TransactionsController extends MerchantController
 
         $this->COD(
             'CASHOUT',
-            Request()->user()->merchant_id,
+            $request->user()->merchant_id,
             null,
             $dedaction,
             'NONE',
@@ -156,21 +254,40 @@ class TransactionsController extends MerchantController
 
     public function deposit(TransactionRequest $request, Dinarak $dinarak)
     {
-        $merchecntInfo = $this->getMerchentInfo();
-        $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
+        $type = $request->type;
+        $merchecntInfo = $this->getMerchantInfo();
+
+        if ($type == 'stripe') {
+            try {
+                $stripAmount = Shipcash::exchange($request->amount, $merchecntInfo->currency_code);
+                $fees = $stripAmount * env('STRIPE_FEES', 0.05);
+                Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
+                Stripe\Charge::create([
+                    "amount" => round($stripAmount + $fees) * 100,
+                    "currency" => "USD",
+                    "source" => $request->token,
+                    "description" => "Deposit Transaction : Merchant ID " . $merchecntInfo->id . " / " . $merchecntInfo->name,
+                ]);
+            } catch (Throwable $e) {
+                return $this->error($e->getMessage());
+            }
+        } else {
+            return $this->error('This Service Was Stopped Try Again Later');
+            $merchecntInfo = $this->getMerchentInfo();
+            $dinarak->deposit($merchecntInfo, $request->wallet_number, $request->amount, $request->pincode);
+        }
 
         $this->BUNDLE(
             'CASHIN',
             $request->user()->merchant_id,
             null,
-            $request->amount,
+            $request->amount, // JOD
             'CREDITCARD',
             $request->user()->id,
             'Deposit To ShipCash',
             'COMPLETED',
             Request()->header('agent') ?? 'API',
         );
-
         return $this->successful('Deposit Successfully');
     }
 

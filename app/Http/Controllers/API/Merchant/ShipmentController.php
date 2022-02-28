@@ -115,7 +115,6 @@ class ShipmentController extends MerchantController
             } else {
                 $shipments->whereIn('s.status', $statuses);
             }
-
         }
         $shipments->orderBy('created_at', 'desc');
         $shipments->select(
@@ -175,7 +174,6 @@ class ShipmentController extends MerchantController
                 if ($addressList->where('id', $address_id)->where('country_code', $merchantInfo->country_code)->isEmpty()) {
                     throw new InternalException('This is not Domestic request the merchant code different with send country code');
                 }
-
             });
             return $this->shipment('DOM', collect($shipmentRequest), 'Aramex');
         });
@@ -212,17 +210,17 @@ class ShipmentController extends MerchantController
             $shipment['sender_area'] = $address['area'];
             $shipment['sender_address_description'] = $address['description'];
 
-            unset($shipment['sender_address_id']);
 
             $shipment['group'] = $type;
             $shipment['actual_weight'] = $shipment['actual_weight'] ?? 0.5;
             $shipment['consignee_notes'] = $shipment['consignee_notes'] ?? '';
             $shipment['consignee_second_phone'] = $shipment['consignee_second_phone'] ?? null;
-            $shipment['reference1'] = $shipment['reference'] ?? null;
+            $shipment['reference'] = $shipment['reference'] ?? '';
+            $shipment['reference1'] = $shipment['reference'];
 
-            if (isset($shipment['reference'])) {
-                unset($shipment['reference']);
-            }
+
+            unset($shipment['sender_address_id']);
+            unset($shipment['reference']);
 
             $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
 
@@ -441,7 +439,6 @@ class ShipmentController extends MerchantController
         // }
 
         return $this->successful('Your Shipment Created Successfully');
-
     }
 
     public function delete($id, ShipmentRequest $request)

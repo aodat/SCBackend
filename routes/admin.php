@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\Admin\AddressesController;
 use App\Http\Controllers\API\Admin\CarriersController;
 use App\Http\Controllers\API\Admin\DocumentsController;
@@ -24,7 +25,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['json.response']], function () {
     Route::group(['middleware' => ['auth:api', 'scope:super_admin']], function () {
-        Route::group(['prefix' => 'merchant/'], function () {
+        Route::post('dashboard', [DashboardController::class, 'index']);
+        
+        Route::group(['prefix' => 'merchant/'], function () {    
             Route::get('list', [MerchantsController::class, 'index']);
 
             Route::get('{merchant_id}/info', [MerchantsController::class, 'show']);

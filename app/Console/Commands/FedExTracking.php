@@ -49,7 +49,7 @@ class FedExTracking extends Command
                 $where->orWhere('status', '<>', 'COMPLETED')->orWhere('status', '<>', 'RENTURND');
             })
             ->get();
-
+            
         $setup = [
             'DL' => ['status' => 'COMPLETED', 'delivered_at' => Carbon::now(), 'returned_at' => null, 'paid_at' => null],
             'OD' => ['status' => 'DRAFT'],
@@ -79,6 +79,8 @@ class FedExTracking extends Command
 
             if (isset($updated['actions'])) {
                 $merchant = Merchant::findOrFail($shipment->merchant_id);
+                if ($trackDetails['ShipmentWeight']['Units'] == 'LB')
+                    $trackDetails['ShipmentWeight']['Value'] = $trackDetails['ShipmentWeight']['Value'] * 0.45359237; // Change from LB to KG
                 if (floatval($shipment->chargable_weight) < floatval($trackDetails['ShipmentWeight']['Value'])) {
                     $fees = (new ShipmentController)->calculateExpressFees(
                         3,
@@ -103,7 +105,6 @@ class FedExTracking extends Command
                         'UpdateDescription' => 'Update Shipment Weight From ' . $shipment->actual_weight . ' To ' . $trackDetails['ShipmentWeight']['Value'],
 
                     ]]);
-
                 }
                 unset($updated['actions']);
             }

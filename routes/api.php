@@ -3,7 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\Merchant\AddressesController;
 use App\Http\Controllers\API\Merchant\CarrierController;
-use App\Http\Controllers\API\Merchant\DashboardController;
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\Merchant\DocumentsController;
 use App\Http\Controllers\API\Merchant\PaymentLinksController;
 use App\Http\Controllers\API\Merchant\MerchantController;
@@ -99,6 +99,7 @@ Route::group(['middleware' => ['json.response', 'db.row']], function () {
 
                 // Transactions
                 Route::post('transactions', [TransactionsController::class, 'index']);
+                Route::post('transactions/dates', [TransactionsController::class, 'byDates']);
                 Route::get('transactions/{id}', [TransactionsController::class, 'show'])->where('id', '[0-9]+');
                 Route::post('transactions/export', [TransactionsController::class, 'export']);
 

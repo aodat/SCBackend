@@ -11,7 +11,7 @@ return [
 	'margin_header'            => 0,
 	'margin_footer'            => 0,
 	'orientation'              => 'P',
-	'title'                    => 'Laravel mPDF',
+	'title'                    => 'Shipcash Report',
 	'author'                   => '',
 	'watermark'                => '',
 	'show_watermark'           => false,
