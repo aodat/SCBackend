@@ -41,6 +41,7 @@ class Transaction extends Model
                 'consignee_phone' => $shipment->consignee_phone,
                 'consignee_city' => $shipment->consignee_city,
                 'consignee_address_description' => $shipment->consignee_address_description,
+                'chargable_weight' => $shipment->chargable_weight,
                 'cod' => $shipment->cod,
                 'fees' => $shipment->fees,
                 'net' => $shipment->cod - $shipment->fees,

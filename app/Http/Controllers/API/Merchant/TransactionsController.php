@@ -186,6 +186,9 @@ class TransactionsController extends MerchantController
         if ($type != '*') {
             $transaction->where('type', $type);
         }
+        if ($type == 'CASHIN' && $subtype == 'COD' &&  $since = $until) {
+            $transaction->whereNotNull('item_id');
+        }
 
         $transactions = $transaction->get();
         $path = "export/$merchecntInfo->id/transaction-" . Carbon::today()->format('Y-m-d') . ".$format";
@@ -260,7 +263,7 @@ class TransactionsController extends MerchantController
                 $fees = $stripAmount * env('STRIPE_FEES', 0.05);
                 Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
                 Stripe\Charge::create([
-                    "amount" => ($stripAmount + $fees) * 100,
+                    "amount" => round($stripAmount + $fees) * 100,
                     "currency" => "USD",
                     "source" => $request->token,
                     "description" => "Deposit Transaction : Merchant ID " . $merchecntInfo->id . " / " . $merchecntInfo->name,

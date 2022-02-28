@@ -127,32 +127,34 @@
         <thead>
             <tr>
                 <th width="5%"  scope="col" class="text-center">#</th>
-                <th width="25%" scope="col" class="text-center">AWB</th>
+                <th width="20%" scope="col" class="text-center">AWB</th>
                 <th width="25%" scope="col" class="text-center">Shipper Name</th>
-                <th width="15%" scope="col" class="text-center">City</th>
-                <th width="10%" scope="col" class="text-center">COD</th>
-                <th width="10%" scope="col" class="text-center">Fees</th>
-                <th width="10%" scope="col" class="text-center">Net</th>
+                <th width="10%" scope="col" class="text-center">City</th>
+                <th width="15%" scope="col" class="text-center">Weight (KG)</th>
+                <th width="7%" scope="col" class="text-center">COD</th>
+                <th width="7%" scope="col" class="text-center">Fees</th>
+                <th width="7%" scope="col" class="text-center">Net</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($cashin as $value)
                 <tr>
                     <td width="5%" class="text-center"><?= $counter++ ?></td>
-                    <td width="25%" class="text-center">{{ $value['item_id'] }}</td>
+                    <td width="20%" class="text-center">{{ $value['item_id'] }}</td>
                     <td width="25%" class="text-center">{{ $value['shipment_info']['consignee_name'] ?? '' }}</td>
-                    <td width="15%" class="text-center">{{ $value['shipment_info']['consignee_city'] ?? '' }}</td>
-                    <td width="10%" class="text-center">{{ $total_cash += $value['shipment_info']['cod'] ?? 0 }}
+                    <td width="10%" class="text-center">{{ $value['shipment_info']['consignee_city'] ?? '' }}</td>
+                    <td width="15%" class="text-center">{{ $value['shipment_info']['chargable_weight'] }}</td>
+                    <td width="7%" class="text-center">{{ $total_cash += $value['shipment_info']['cod'] ?? 0 }}
                     </td>
-                    <td width="10%" class="text-center">
+                    <td width="7%" class="text-center">
                         {{ $total_fees += $value['shipment_info']['fees'] ?? 0 }}
                     </td>
-                    <td width="10%" class="text-center">
+                    <td width="7%" class="text-center">
                         {{ $total_net += $value['shipment_info']['net'] ?? 0 }}
                     </td>
                 <tr>
                 <tr>
-                    <td colspan="7">
+                    <td colspan="8">
                         <span>Details : </span>
                         {{ $value['shipment_info']['consignee_address_description'] ?? '' }}
                     </td>
@@ -180,6 +182,7 @@
             </tr>
         </tbody>
     </table>
+    <div class="divider-table"></div>
 </body>
 
 </html>
