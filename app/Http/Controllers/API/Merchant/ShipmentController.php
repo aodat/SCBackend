@@ -8,7 +8,6 @@ use App\Http\Controllers\Utilities\Documents;
 use App\Http\Requests\Merchant\ShipmentRequest;
 use App\Models\Carriers;
 use App\Models\Country;
-use App\Models\Invoices;
 use App\Models\Shipment;
 use App\Models\Transaction;
 use Carbon\Carbon;
@@ -47,7 +46,7 @@ class ShipmentController extends MerchantController
     public function show($id, ShipmentRequest $request)
     {
         $data = Shipment::where('id', $id)->orWhere('awb', $id)->first();
-        return $this->response($data, 'Data Retrieved Sucessfully');
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 
     public function export($type, ShipmentRequest $request)
@@ -62,7 +61,7 @@ class ShipmentController extends MerchantController
             $url = Documents::pdf('shipments', $path, $shipments);
         }
 
-        return $this->response(['link' => $url], 'Data Retrieved Sucessfully', 200);
+        return $this->response(['link' => $url], 'Data Retrieved Successfully', 200);
     }
 
     private function search($filters)
@@ -116,7 +115,6 @@ class ShipmentController extends MerchantController
             } else {
                 $shipments->whereIn('s.status', $statuses);
             }
-
         }
         $shipments->orderBy('created_at', 'desc');
         $shipments->select(
@@ -176,7 +174,6 @@ class ShipmentController extends MerchantController
                 if ($addressList->where('id', $address_id)->where('country_code', $merchantInfo->country_code)->isEmpty()) {
                     throw new InternalException('This is not Domestic request the merchant code different with send country code');
                 }
-
             });
             return $this->shipment('DOM', collect($shipmentRequest), 'Aramex');
         });
@@ -213,23 +210,39 @@ class ShipmentController extends MerchantController
             $shipment['sender_area'] = $address['area'];
             $shipment['sender_address_description'] = $address['description'];
 
-            unset($shipment['sender_address_id']);
 
             $shipment['group'] = $type;
             $shipment['actual_weight'] = $shipment['actual_weight'] ?? 0.5;
             $shipment['consignee_notes'] = $shipment['consignee_notes'] ?? '';
             $shipment['consignee_second_phone'] = $shipment['consignee_second_phone'] ?? null;
-            $shipment['reference1'] = $shipment['reference'] ?? null;
+            $shipment['reference'] = $shipment['reference'] ?? '';
+            $shipment['reference1'] = $shipment['reference'];
 
-            if (isset($shipment['reference'])) {
-                unset($shipment['reference']);
-            }
+
+            unset($shipment['sender_address_id']);
+            unset($shipment['reference']);
 
             $shipment['consignee_country'] = $countries[$shipment['consignee_country']] ?? null;
+
             if ($type == 'DOM') {
-                $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', $shipment['actual_weight']);
+                $shipment['fees'] = $this->calculateDomesticFees(
+                    $shipment['carrier_id'],
+                    $shipment['consignee_city'],
+                    $shipment['actual_weight'],
+                    Request()->user()->merchant_id
+                );
             } else {
-                $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
+                $shipment['fees'] = $this->calculateExpressFees(
+                    $shipment['carrier_id'],
+                    $shipment['consignee_country'],
+                    $shipment['actual_weight'],
+                    Request()->user()->merchant_id,
+                    $shipment['dimention'] ?? []
+                );
+            }
+
+            if (isset($shipment['dimention'])) {
+                unset($shipment['dimention']);
             }
 
             // Check if COD is Zero OR Shipment Type Express
@@ -257,7 +270,7 @@ class ShipmentController extends MerchantController
 
     private function createShipmentDB($shipments, $provider)
     {
-        $resource = Request()->header('agent') ?? 'WEB';
+        $resource = Request()->header('Agent') ?? 'WEB';
         $payments = $shipments->sum('payment');
         $getbulk = $shipments->where('carrier_id', 1);
         $payloads = $getbulk->map(function ($data) {
@@ -322,19 +335,6 @@ class ShipmentController extends MerchantController
 
         $lastShipment = Shipment::first();
 
-        if ($payments > 0) {
-            Invoices::create(
-                [
-                    "merchant_id" => Request()->user()->merchant_id,
-                    "user_id" => Request()->user()->id,
-                    "fk_id" => $lastShipment->id,
-                    "customer_name" => $lastShipment->consignee_name,
-                    "customer_email" => $lastShipment->consignee_email,
-                    "description" => $lastShipment->consignee_notes,
-                    "amount" => $payments,
-                ]
-            );
-        }
         return $this->response(
             [
                 'id' => $lastShipment->id,
@@ -361,12 +361,23 @@ class ShipmentController extends MerchantController
         if ($data['is_cod']) {
             $carriers->where('accept_cod', $data['is_cod']);
         }
-
-        $carrier = $carriers->get()->map(function ($carrier) use ($data) {
+        $dimention = $request->dimention ?? [];
+        $carrier = $carriers->get()->map(function ($carrier) use ($data, $dimention) {
             if ($data['type'] == 'express') {
-                $carrier['fees'] = (number_format($this->calculateFees($carrier->id, null, $data['country_code'], $data['type'], $data['weight']), 2));
+                $carrier['fees'] = number_format($this->calculateExpressFees(
+                    $carrier->id,
+                    $data['country_code'],
+                    $data['weight'],
+                    Request()->user()->merchant_id ?? env('GUEST_MERCHANT_ID'),
+                    $dimention
+                ), 2);
             } else {
-                $carrier['fees'] = (number_format($this->calculateFees($carrier->id, $data['city_from'], $data['city_to'], $data['type'], $data['weight']), 2));
+                $carrier['fees'] = number_format($this->calculateDomesticFees(
+                    $carrier->id,
+                    $data['city_to'],
+                    $data['weight'],
+                    Request()->user()->merchant_id ?? env('GUEST_MERCHANT_ID')
+                ), 2);
             }
 
             return $carrier;
@@ -399,14 +410,24 @@ class ShipmentController extends MerchantController
 
         if ($type == 'express') {
             $shipment['group'] = 'EXP';
-            $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_country'], 'express', $shipment['actual_weight']);
+            $shipment['fees'] = $this->calculateExpressFees(
+                $shipment['carrier_id'],
+                $shipment['consignee_country'],
+                $shipment['actual_weight'],
+                env('GUEST_MERCHANT_ID')
+            );
         } else {
             $shipment['group'] = 'DOM';
-            $shipment['fees'] = $this->calculateFees($shipment['carrier_id'], null, $shipment['consignee_city'], 'domestic', $shipment['actual_weight']);
+            $shipment['fees'] = $this->calculateDomesticFees(
+                $shipment['carrier_id'],
+                $shipment['consignee_city'],
+                $shipment['actual_weight'],
+                env('GUEST_MERCHANT_ID')
+            );
         }
 
-        $shipment['merchant_id'] = 870;
-        $shipment['created_by'] = 1632;
+        $shipment['merchant_id'] = env('GUEST_MERCHANT_ID');
+        $shipment['created_by'] = env('GUEST_MERCHANT_USER_ID');
         $shipment['created_at'] = Carbon::now();
         $shipment['updated_at'] = Carbon::now();
 
@@ -418,7 +439,6 @@ class ShipmentController extends MerchantController
         // }
 
         return $this->successful('Your Shipment Created Successfully');
-
     }
 
     public function delete($id, ShipmentRequest $request)
@@ -434,99 +454,73 @@ class ShipmentController extends MerchantController
         return $this->successful('Shipment Deleted Successfully');
     }
 
-    public function calculateFees($carrier_id, $from = null, $to, $type, $weight, $merchant_id = null)
+    public function calculateDomesticFees($carrier_id, $city, $weight, $merchant_id = null)
     {
         $merchentInfo = $this->getMerchentInfo($merchant_id);
-        $to = str_replace("'", "", $to);
-        if ($type == 'domestic' || $type == 'DOM') {
+        $city = str_replace("'", "", $city);
+        $setup = collect($merchentInfo->domestic_rates)->where('carrier_id', $carrier_id)->first();
 
-            if (!isset($merchentInfo['domestic_rates'][$carrier_id])) {
-                throw new InternalException('The Carrier ID ' . $carrier_id . ' No Support domestic , Please Contact Administrators');
-            }
+        $base_weight = $setup['weight'];
+        $zones = $setup['zones'];
 
-            $data = array_map(function ($value) {
-                return str_replace("'", "", $value);
-            }, $merchentInfo['domestic_rates'][$carrier_id]);
+        $list = array_map(function ($value) {
+            return str_replace("'", "", $value);
+        }, $zones ?? []);
 
-            $rate = collect($data)->where('code', $to);
+        $rate = collect($list)->where('code', $city)->first();
 
-            if ($rate->isEmpty()) {
-                throw new InternalException('Country Code Not Exists, Please Contact Administrators');
-            }
-
-            $price = $rate->first()['price'];
-            $extra = $rate->first()['additional'] ?? 1.5;
-
-            $fees = 0;
-            if ($weight > 0) {
-                $weights_count = ceil($weight / 10);
-                $weight_fees = (($weights_count - 1) * $extra) + $price;
-                $fees += $weight_fees;
-            }
-            return $fees;
-        } else {
-            $express_rates = collect(Country::where('code', $merchentInfo['country_code'])->first());
-            if ($express_rates->isEmpty()) {
-                throw new InternalException('Country Code Not Exists, Please Contact Administrators');
-            }
-
-            $express_rates = $express_rates['rates'];
-            if (count($express_rates) == 0) {
-                throw new InternalException('No Setup Added To This Country, Please Contact Administrators');
-            }
-
-            if (!isset($express_rates[$to])) {
-                throw new InternalException('No Setup Added To This Country, Please Contact Administrators');
-            }
-
-            $rates = collect($express_rates[$to]);
-            $zones = $rates->where('carrier_id', $carrier_id);
-
-            if ($zones->count() > 1) {
-                throw new InternalException('Somthing Wrong On Rates Setup, Please Contact Administrators');
-            }
-
-            if (!isset($zones->first()['zone_id'])) {
-                throw new InternalException('Somthing Wrong On Zone ID Setup, Please Contact Administrators');
-            }
-
-            $zone_id = $zones->first()['zone_id'];
-            $discounts = $merchentInfo['express_rates'][$carrier_id]['discounts'] ?? [];
-
-            $zoneRates = collect($merchentInfo['express_rates'][$carrier_id]['zones'])->where('id', $zone_id);
-            if ($zoneRates->count() > 1) {
-                throw new InternalException('Express Rates Json Retrun More Than One Zone In User Merchant ID');
-            }
-
-            $zoneRates = $zoneRates->first();
-            if ($zoneRates == null) {
-                return 0;
-            }
-
-            $base = $zoneRates['basic'];
-            $additional = $zoneRates['additional'];
-            if (!empty($discounts)) {
-                foreach ($discounts as $key => $value) {
-                    if (eval("return " . $weight . $value['condintion'] . $value['weight'] . ";")) {
-                        $additional = $additional - ($additional * $value['percent']);
-                    }
-
-                }
-            }
-
-            $fees = 0;
-            if ($weight > 0) {
-                $weights_count = ceil($weight / 0.5);
-                $weight_fees = (($weights_count - 1) * $additional) + $base;
-                $fees += $weight_fees;
-            }
+        if (is_null($rate)) {
+            return 0;
         }
 
-        if ($fees == 0) {
-            throw new InternalException('Fees Equal Zero');
-        }
+        $price = $rate['price'];
+        $extra = $rate['additional'] ?? 1.5;
 
+        $fees = 0;
+        if ($weight > 0) {
+            $weights_count = ceil($weight / $base_weight);
+            $weight_fees = (($weights_count - 1) * $extra) + $price;
+            $fees += $weight_fees;
+        }
         return $fees;
     }
 
+    public function calculateExpressFees($carrier_id, $country, $weight, $merchant_id = null, $dimention = [])
+    {
+        $merchentInfo = $this->getMerchentInfo($merchant_id);
+
+        if (!empty($dimention)) {
+            $dimention_weight = ($dimention['length'] * $dimention['height'] * $dimention['width']) / 5000;
+            if ($weight < $dimention_weight) {
+                $weight = $dimention_weight;
+            }
+        }
+
+        $country = str_replace("'", "", $country);
+
+        $zone_id = collect(collect(Country::where('code', $merchentInfo['country_code'])->first())['rates'][$country])->where('carrier_id', $carrier_id)->first()['zone_id'] ?? null;
+
+        $rate = collect($merchentInfo['express_rates'][$carrier_id]['zones'] ?? [])->where('id', $zone_id)->first();
+        if (is_null($rate)) {
+            return 0;
+        }
+
+        $base = $rate['basic'];
+        $additional = $rate['additional'];
+        if (!empty($discounts)) {
+            foreach ($discounts as $key => $value) {
+                if (eval("return " . $weight . $value['condintion'] . $value['weight'] . ";")) {
+                    $additional = $additional - ($additional * $value['percent']);
+                }
+            }
+        }
+
+        $fees = 0;
+        if ($weight > 0) {
+            $weights_count = ceil($weight / 0.5);
+            $weight_fees = (($weights_count - 1) * $additional) + $base;
+            $fees += $weight_fees;
+        }
+        return $fees;
+    }
 }

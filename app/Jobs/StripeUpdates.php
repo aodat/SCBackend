@@ -2,9 +2,8 @@
 
 namespace App\Jobs;
 
-use App\Models\Invoices;
+use App\Models\PaymentLinks;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -25,7 +24,6 @@ class StripeUpdates implements ShouldQueue
         $this->data = $data;
     }
 
-
     /**
      * Execute the job.
      *
@@ -33,7 +31,7 @@ class StripeUpdates implements ShouldQueue
      */
     public function handle()
     {
-        $invoice = Invoices::where('fk_id',$this->data['id'])->first();
+        $invoice = PaymentLinks::where('fk_id', $this->data['id'])->first();
         $invoice->status = ($this->data['enabled_events'] == "charge.failed") ? 'FAILED' : 'PAID';
         $invoice->save();
     }

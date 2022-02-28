@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 
 class AramexTracking extends Command
@@ -65,24 +66,30 @@ class AramexTracking extends Command
             $updated['last_update'] = $logs[0]['UpdateDescription'];
             $updated['shipping_logs'] = collect($logs);
 
-            if ($shipment->chargable_weight < $chargable_weight) {
-                $fees = (new ShipmentController)->calculateFees(
-                    1,
-                    null,
-                    ($shipment->group == 'DOM') ? $shipment->consignee_city : $shipment->consignee_country,
-                    $shipment->group,
-                    $chargable_weight,
-                    $shipment->merchant_id
-                );
+            if (floatval($shipment->chargable_weight) < floatval($chargable_weight)) {
+                if ($shipment->group == 'DOM') {
+                    $fees = (new ShipmentController)->calculateDomesticFees(
+                        1,
+                        $shipment->consignee_city,
+                        $chargable_weight,
+                        $shipment->merchant_id
+                    );
+                } else {
+                    $fees = (new ShipmentController)->calculateExpressFees(
+                        1,
+                        $shipment->consignee_country,
+                        $chargable_weight,
+                        $shipment->merchant_id
+                    );
+                }
 
                 $updated['fees'] = $fees;
                 $updated['chargable_weight'] = $chargable_weight;
             }
 
-            if (($lastUpdateCode == 'SH005' || $lastUpdateCode == 'SH006')) {
+            if ($lastUpdateCode == 'SH005' || $lastUpdateCode == 'SH006') {
                 if ($shipment->cod == 0) {
-                    $request = Request::create('/api/aramex-webhook', 'POST', ['UpdateCode' => 'SH239', 'WaybillNumber' => $shipment->awb]);
-                    Route::dispatch($request);
+                    Http::post('https://api.shipcash.net/api/aramex-webhook', ['UpdateCode' => 'SH239', 'WaybillNumber' => $shipment->awb]);
                 } else {
                     // $updated['status'] = 'COMPLETED';
                     DB::table('shipments')->where('awb', $shipment->awb)->update(['status' => 'COMPLETED']);

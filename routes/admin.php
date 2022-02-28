@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\Admin\AddressesController;
 use App\Http\Controllers\API\Admin\CarriersController;
 use App\Http\Controllers\API\Admin\DocumentsController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\API\Admin\ExpressRatesController;
 use App\Http\Controllers\API\Admin\MerchantsController;
 use App\Http\Controllers\API\Admin\PaymentMethodsController;
 use App\Http\Controllers\API\Admin\ShipmentController;
+use App\Http\Controllers\API\Admin\TransactionsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +25,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['json.response']], function () {
     Route::group(['middleware' => ['auth:api', 'scope:super_admin']], function () {
-        Route::group(['prefix' => 'merchant/'], function () {
+        Route::post('dashboard', [DashboardController::class, 'index']);
+        
+        Route::group(['prefix' => 'merchant/'], function () {    
             Route::get('list', [MerchantsController::class, 'index']);
 
             Route::get('{merchant_id}/info', [MerchantsController::class, 'show']);
@@ -63,6 +67,11 @@ Route::group(['middleware' => ['json.response']], function () {
         Route::put('{merchant_id}/shipments/{shipment_id}', [ShipmentController::class, 'update'])
             ->where('merchant_id', '[0-9]+')
             ->where('shipment_id', '[0-9]+');
-        
+
+        Route::group(['prefix' => 'transactions/'], function () {
+            Route::get('list', [TransactionsController::class, 'index']);
+            Route::get('export', [TransactionsController::class, 'export']);
+            Route::put('withdraw', [TransactionsController::class, 'withdraw']);
+        });
     });
 });

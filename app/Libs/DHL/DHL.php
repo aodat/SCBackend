@@ -208,6 +208,10 @@ class DHL
         $payload['ShipmentDetails']['Pieces']['Piece']['PieceContents'] = $shipmentInfo['content'] ?? '';
         $payload['ShipmentDetails']['Pieces']['Piece']['Weight'] = $shipmentInfo['actual_weight'] ?? '';
 
+        $docCode = ($shipmentInfo['is_doc']) ? 'D' : 'P';
+        $payload['ShipmentDetails']['GlobalProductCode'] =
+            $payload['ShipmentDetails']['LocalProductCode'] = $docCode;
+
         $payload['Shipper']['ShipperID'] = $merchentInfo->id;
         $payload['Shipper']['CompanyName'] = substr($shipmentInfo['sender_name'], 0, 25);
         $payload['Shipper']['AddressLine1'] = substr($shipmentInfo['sender_address_description'], 0, 25);

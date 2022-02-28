@@ -171,22 +171,26 @@ class Aramex
             return $response->successful();
         }
 
+        $result = $response->json();
+
         if (!$response->successful()) {
-            throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $response->json());
+            throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $result);
         }
 
-        if ($response->json()['HasErrors']) {
-            throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment', $payload, $response->json());
+        if (isset($result['Notifications']) && isset($result['Notifications']['Code'] ) && $result['Notifications']['Code'] == 'ERR00') {
+            throw new CarriersException('Aramex Api Is Down please try again after 30 min');
+        } else if ($result['HasErrors']) {
+            throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment', $payload, $result);
         }
 
-        $result = [];
-        foreach ($response->json()['Shipments'] as $ship) {
-            $result[] = [
+        $data = [];
+        foreach ($result['Shipments'] as $ship) {
+            $data[] = [
                 'id' => $ship['ID'],
                 'file' => AWSServices::uploadToS3('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true),
             ];
         }
-        return $result;
+        return $data;
     }
 
     public function shipmentArray($merchentInfo, $shipmentInfo)
@@ -299,6 +303,28 @@ class Aramex
     public function webhook(AramexRequest $request, TransactionsController $transaction)
     {
         $shipmentInfo = Shipment::where('awb', $request->WaybillNumber)->first();
+        if (is_null($shipmentInfo)) {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://old.shipcash.net/shipments-update-receiver',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => json_encode($request->all()),
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/json',
+                ),
+            ));
+            curl_exec($curl);
+            curl_close($curl);
+            return $this->successful('Webhook Completed');
+        } else if ($request->UpdateCode != 'SH239') {
+            return $this->successful('Webhook Completed');
+        }
 
         $isCollected = $shipmentInfo->is_collected;
         $cod = $shipmentInfo['cod'];
@@ -337,12 +363,7 @@ class Aramex
             $amount = $cod;
         }
 
-        $type = 'CASHIN';
-        if ($amount < 0) {
-            $type = 'CASHOUT';
-        }
-
-        $updated['transaction_id'] = $transaction->COD($type, $merchant_id, $awb, $amount, "SHIPMENT", $created_by,'Aramex SH239 webhook','COMPLETED','API');
+        $updated['transaction_id'] = $transaction->COD('CASHIN', $merchant_id, $awb, $amount, "SHIPMENT", $created_by, 'Aramex SH239 webhook', 'COMPLETED', 'API');
 
         if (is_null($shipmentInfo->delivered_at)) {
             $updated['delivered_at'] = Carbon::now();

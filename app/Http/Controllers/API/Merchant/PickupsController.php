@@ -53,7 +53,7 @@ class PickupsController extends MerchantController
     public function show($id, PickuptRequest $request)
     {
         $data = Pickup::findOrFail($id);
-        return $this->response($data, 'Data Retrieved Sucessfully');
+        return $this->response($data, 'Data Retrieved Successfully');
     }
 
     public function store(PickuptRequest $request)

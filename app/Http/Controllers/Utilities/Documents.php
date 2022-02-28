@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Http\Controllers\Utilities;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use LynX39\LaraPdfMerger\Facades\PdfMerger;
 use Maatwebsite\Excel\Facades\Excel as Excel;
-use Mpdf\Mpdf;
+
+use PDF;
 
 class Documents
 {
@@ -39,12 +41,9 @@ class Documents
         return Storage::disk('s3')->url($export);
     }
 
-    public static function pdf($view, $path, $data)
+    public static function pdf($view, $path, $data, $header = [])
     {
-        $mpdf = new Mpdf();
-        $html = view("pdf.$view", [$view => $data])->render();
-        $mpdf->WriteHTML($html);
-
+        $mpdf = PDF::loadView("pdf.$view", ['header' => $header, $view => $data]);
         Storage::disk('s3')->put($path, $mpdf->Output('filename.pdf', 'S'));
         return Storage::disk('s3')->url($path);
     }
