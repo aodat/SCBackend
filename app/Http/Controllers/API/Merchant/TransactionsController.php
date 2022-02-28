@@ -256,9 +256,11 @@ class TransactionsController extends MerchantController
 
         if ($type == 'stripe') {
             try {
+                $stripAmount = Shipcash::exchange($request->amount, $merchecntInfo->currency_code);
+                $fees = $stripAmount * env('STRIPE_FEES', 0.05);
                 Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
                 Stripe\Charge::create([
-                    "amount" => Shipcash::exchange($request->amount, $merchecntInfo->currency_code) * 100,
+                    "amount" => ($stripAmount + $fees) * 100,
                     "currency" => "USD",
                     "source" => $request->token,
                     "description" => "Deposit Transaction : Merchant ID " . $merchecntInfo->id . " / " . $merchecntInfo->name,
@@ -276,7 +278,7 @@ class TransactionsController extends MerchantController
             'CASHIN',
             $request->user()->merchant_id,
             null,
-            $request->amount,
+            $request->amount, // JOD
             'CREDITCARD',
             $request->user()->id,
             'Deposit To ShipCash',

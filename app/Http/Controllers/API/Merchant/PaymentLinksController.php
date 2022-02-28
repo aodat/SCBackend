@@ -62,7 +62,7 @@ class PaymentLinksController extends MerchantController
         $data['user_id'] = $request->user()->id;
         $data['resource'] = Request()->header('agent') ?? 'API';
 
-        $data['fees'] = $data['amount'] * 0.05;
+        $data['fees'] = $data['amount'] * env('STRIPE_FEES', 0.05);
         PaymentLinks::create($data);
 
         return $this->successful('Created Successfully');
@@ -105,9 +105,11 @@ class PaymentLinksController extends MerchantController
 
         try {
             // Stripe
+            $amountUSD =
+                $stripFees = Shipcash::exchange($paymentInfo->amount, $merchant->currency_code) * 0.05;
             Stripe\Stripe::setApiKey(env('STRIPE_KEY'));
             Stripe\Charge::create([
-                "amount" => Shipcash::exchange($paymentInfo->amount, $merchant->currency_code) * 100,
+                "amount" =>  $amountUSD + $stripFees * 100,
                 "currency" => "USD",
                 "source" => $token,
                 "description" => "Payment From Shipcash : Merchant ID " . $paymentInfo->merchant_id . " / " . $merchant->name . " To " . $paymentInfo->customer_name,
