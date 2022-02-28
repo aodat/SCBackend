@@ -144,13 +144,23 @@
                     <td width="25%" class="text-center">{{ $value['shipment_info']['consignee_name'] ?? '' }}</td>
                     <td width="10%" class="text-center">{{ $value['shipment_info']['consignee_city'] ?? '' }}</td>
                     <td width="15%" class="text-center">{{ $value['shipment_info']['chargable_weight'] }}</td>
-                    <td width="7%" class="text-center">{{ $total_cash += $value['shipment_info']['cod'] ?? 0 }}
+                    <td width="7%" class="text-center">
+                        <?php 
+                            echo $value['shipment_info']['cod'];
+                            $total_cash += $value['shipment_info']['cod']; 
+                        ?>
                     </td>
                     <td width="7%" class="text-center">
-                        {{ $total_fees += $value['shipment_info']['fees'] ?? 0 }}
+                        <?php 
+                            echo $value['shipment_info']['fees'];
+                            $total_fees += $value['shipment_info']['fees']; 
+                        ?>
                     </td>
                     <td width="7%" class="text-center">
-                        {{ $total_net += $value['shipment_info']['net'] ?? 0 }}
+                        <?php 
+                            echo $value['shipment_info']['net'];
+                            $total_net += $value['shipment_info']['net']; 
+                        ?>
                     </td>
                 <tr>
                 <tr>
