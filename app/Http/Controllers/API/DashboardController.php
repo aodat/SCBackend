@@ -131,7 +131,7 @@ class DashboardController extends Controller
         );
 
         $transactionByDates = $transactions->union(
-            $pendingPayments->groupByRaw('date(updated_at), status')
+            $pendingPayments->groupByRaw('date(updated_at), stype')
         )->get()->whereBetween('date', [$request->since_at, $request->until]);
 
         $transactionOverAll->get()->map(function ($trans) {
@@ -145,11 +145,14 @@ class DashboardController extends Controller
             $date = $transaction->date;
             $counter = $transaction->counter;
             $total = $transaction->total;
-
+            
+            $oldCounter = $this->paymentInfoCard[$type]['counter'];
+            $oldTotal = $this->paymentInfoCard[$type]['amount'];
+            
             $this->paymentChart[$type][$date] = $counter;
             $this->paymentInfoCard[$type] = [
-                'counter' => $counter,
-                'amount' => $total,
+                'counter' => $counter + $oldCounter,
+                'amount' => $total  + $oldTotal,
             ];
         });
 
