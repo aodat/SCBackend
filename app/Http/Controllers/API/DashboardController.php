@@ -124,18 +124,21 @@ class DashboardController extends Controller
             ->whereIn('s.merchant_id', $merchant_ids)
             ->where('status', '=', 'COMPLETED')
             ->where('s.is_deleted', false)
-            ->whereNull('transaction_id')
-            ->groupByRaw('date(updated_at), status');
+            ->whereNull('transaction_id');
 
         $transactionOverAll = $transactions->union(
             $pendingPayments
         );
 
         $transactionByDates = $transactions->union(
-            $pendingPayments
+            $pendingPayments->groupByRaw('date(updated_at), status')
         )->get()->whereBetween('date', [$request->since_at, $request->until]);
 
-        $this->overall = array_merge($this->overall, $shippingOverAll, $transactionOverAll->pluck('total', 'stype')->toArray());
+        $transactionOverAll->get()->map(function ($trans) {
+            $this->overall[$trans->stype] += $trans->total;
+        });
+
+        $this->overall = array_merge($this->overall, $shippingOverAll);
 
         $transactionByDates->map(function ($transaction) {
             $type = $transaction->stype;
