@@ -115,7 +115,6 @@ class Merchant extends Model
     public function getConfigAttribute()
     {
         return [
-            'countries' => collect(json_decode(Storage::disk('local')->get('template/countries.json'), true)),
             'payment_providers' =>  collect(json_decode(Storage::disk('local')->get('template/payment_providers.json'), true))[$this->country_code] ?? []
         ];
     }

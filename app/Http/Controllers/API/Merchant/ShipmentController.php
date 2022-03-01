@@ -274,19 +274,12 @@ class ShipmentController extends MerchantController
         return $this->response($carrier->flatten(), 'Fees Calculated Successfully');
     }
 
-    public function template(ShipmentRequest $request)
-    {
-        $path = storage_path() . '/' . 'app/template/domestic_template.xlsx';
-        return $this->download($path);
-    }
 
-    public function delete($id, ShipmentRequest $request)
+    public function delete(ShipmentRequest $request)
     {
-        $data = Shipment::findOrFail($id);
-        if ($data->status != 'DRAFT') {
-            $this->error('You Cant Delete This Shipment (Only Draft)');
-        }
-
+        $data = Shipment::findOrFail($request->id);
+        if ($data->status != 'DRAFT')
+            return $this->error('You Can\'t Delete This Shipment (Only Draft) Shipments');
         $data->is_deleted = true;
         $data->save();
 
@@ -361,5 +354,11 @@ class ShipmentController extends MerchantController
             $fees += $weight_fees;
         }
         return $fees;
+    }
+
+    public function template(ShipmentRequest $request)
+    {
+        $path = storage_path() . '/' . 'app/template/domestic-template.xlsx';
+        return $this->download($path);
     }
 }
