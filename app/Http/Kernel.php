@@ -21,7 +21,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        
+
     ];
 
     /**
@@ -68,6 +68,7 @@ class Kernel extends HttpKernel
         'scopes' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         'scope' => \Laravel\Passport\Http\Middleware\CheckForAnyScope::class,
         'check.merchant' => \App\Http\Middleware\CheckMerchant::class,
-        'db.row' =>\App\Http\Middleware\DBTransaction::class
+        'check.shipment' => \App\Http\Middleware\Shipment::class,
+        'db.row' => \App\Http\Middleware\DBTransaction::class
     ];
 }

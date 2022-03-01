@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\App;
+use Countries;
 
 class CountryCode implements Rule
 {
@@ -16,7 +17,7 @@ class CountryCode implements Rule
      */
     public function passes($attribute, $value)
     {
-        $Countries =  App::make('Countrieslookup');
+        $Countries =  Countries::lookup('en', true);
         $reqCountry = Request('country');
         $countryCode = isset($Countries[$reqCountry]) ? $Countries[$reqCountry] : null;
         return  $value ===  $countryCode;

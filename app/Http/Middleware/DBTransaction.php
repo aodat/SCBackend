@@ -25,7 +25,7 @@ class DBTransaction
 
         try {
             $response = $next($request);
-        } catch (\Exception$e) {
+        } catch (\Exception $e) {
             DB::rollBack();
             throw $e;
         }
@@ -66,6 +66,5 @@ class DBTransaction
         } else if ($code == 500 || $response->getStatusCode() == 500) {
             Log::error('Inernal server Error :', ['request' => $data, 'response' => json_decode($response->getContent())]);
         }
-
     }
 }

@@ -91,8 +91,12 @@ Route::group(['middleware' => ['json.response', 'db.row']], function () {
                     Route::post('shipments/export/{type}', [ShipmentController::class, 'export']);
                     Route::post('shipments/filters', [ShipmentController::class, 'index']);
                     Route::post('shipments/export/{type}', [ShipmentController::class, 'export']);
-                    Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
-                    Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
+
+                    Route::group(['middleware' => ['check.shipment']], function () {
+                        Route::post('shipments/domestic/create', [ShipmentController::class, 'createDomesticShipment']);
+                        Route::post('shipments/express/create', [ShipmentController::class, 'createExpressShipment']);
+                    });
+
                     Route::post('shipments/print', [ShipmentController::class, 'printLabel']);
                     Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
                 });
@@ -126,7 +130,7 @@ Route::group(['middleware' => ['json.response', 'db.row']], function () {
                     Route::put('deposit/request', [TransactionsController::class, 'depositwRequest']);
 
 
-                    
+
                     Route::put('withdraw', [TransactionsController::class, 'withdraw']);
                     Route::put('transactions/withdraw', [TransactionsController::class, 'withdraw']);
                 });

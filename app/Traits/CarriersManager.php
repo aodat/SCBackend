@@ -25,12 +25,15 @@ trait CarriersManager
         }
 
         switch ($provider) {
+            case 1:
             case "ARAMEX":
                 $this->adapter = new Aramex($settings);
                 break;
+            case 2:
             case "DHL":
                 $this->adapter = new DHL($settings);
                 break;
+            case 3:
             case "FEDEX":
                 $this->adapter = new Fedex($settings);
                 break;
@@ -41,7 +44,6 @@ trait CarriersManager
         if ($getMerchant) {
             $this->merchantInfo = $this->getMerchantInfo();
         }
-
     }
 
     public function getMerchantInfo()
@@ -51,7 +53,6 @@ trait CarriersManager
         } else {
             return App::make('merchantInfo');
         }
-
     }
 
     public function check($provider, $settings)
@@ -60,13 +61,13 @@ trait CarriersManager
         $this->adapter->validate($this->merchantInfo);
     }
 
-    public function generateShipment($provider, $merchantInfo = null, $shipmentArray)
+    public function generateShipment($provider, $merchantInfo = null, $shipment)
     {
         $this->loadProvider($provider);
-        $shipments = $this->adapter->createShipment($merchantInfo, $shipmentArray);
+        $shipment = $this->adapter->createShipment($merchantInfo, $shipment);
         return [
-            'link' => (isset($shipments[0])) ? collect($shipments)->pluck('file')->toArray() : $shipments['file'],
-            'id' => (isset($shipments[0])) ? collect($shipments)->pluck('id') : $shipments['id'],
+            'link' => (isset($shipment[0])) ? collect($shipment)->pluck('file')->toArray() : $shipment['file'],
+            'awb' => (isset($shipment[0])) ? collect($shipment)->pluck('id') : $shipment['id'],
         ];
     }
 
@@ -94,9 +95,8 @@ trait CarriersManager
             if ($shipment->group == 'EXP' && !$shipment->is_doc) {
                 $exported[] = InvoiceService::commercial($shipment);
             }
-
         });
-        
+
         return Documents::merge($exported);
     }
 

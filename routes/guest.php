@@ -11,7 +11,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('areas/{area_code}', [MerchantController::class, 'getAreas']);
 
     Route::post('shipments/calculate/fees', [ShipmentController::class, 'calculate']);
-    Route::post('shipments/create', [ShipmentController::class, 'guestShipment']);
+    // Route::post('shipments/create', [ShipmentController::class, 'guestShipment']);
 
 
     Route::get('json', [Controller::class, 'json']);

@@ -4,13 +4,10 @@ namespace App\Providers;
 
 use App\Models\Carriers;
 use App\Models\Merchant;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
-use Countries;
 
 use Illuminate\Support\Str;
 
-use Illuminate\Support\Facades\Storage;
 
 class MerchantServiceProvider extends ServiceProvider
 {
@@ -21,43 +18,29 @@ class MerchantServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('merchantInfo', function () {
-            if (Request()->user() === null)
-                return Merchant::findOrFail(1);
-            return Merchant::findOrFail(Auth::user()->merchant_id);
+        $merchantID = Request()->user() ? Request()->user()->merchant_id : env('GUEST_MERCHANT_ID');
+
+        $this->app->singleton('merchantInfo', function () use ($merchantID) {
+            return Merchant::findOrFail($merchantID);
         });
 
-
-        $this->app->singleton('merchantCarriers', function () {
-            if (!Auth::user())
-                return [];
-            return collect(Merchant::findOrFail(Auth::user()->merchant_id)->carriers);
+        $this->app->singleton('merchantCarriers', function () use ($merchantID) {
+            return collect(Merchant::findOrFail($merchantID)->carriers);
         });
 
-
-        $this->app->singleton('merchantAddresses', function () {
-            if (!Auth::user())
-                return [];
-            return collect(Merchant::findOrFail(Auth::user()->merchant_id)->addresses);
+        $this->app->singleton('merchantAddresses', function () use ($merchantID) {
+            return collect(Merchant::findOrFail($merchantID)->addresses);
         });
 
-        $this->app->singleton('merchantRules', function () {
-            if (!Auth::user())
-                return [];
-            return collect(Merchant::findOrFail(Auth::user()->merchant_id)->rules)->where('is_active', true);
+        $this->app->singleton('merchantRules', function () use ($merchantID) {
+            return collect(Merchant::findOrFail($merchantID)->rules)->where('is_active', true);
         });
 
-
-        $this->app->singleton('Countrieslookup', function () {
-            return Countries::lookup('en', true);
-        });
-        
-        $this->app->singleton('request_id' ,function () {
+        $this->app->singleton('request_id', function () {
             return Str::orderedUuid()->toString();
         });
 
-
-        $this->app->singleton('carriers' ,function () {
+        $this->app->singleton('carriers', function () {
             return Carriers::all();
         });
     }
