@@ -68,7 +68,6 @@ class Aramex
 
         $shipment = $this->shipmentArray($merchentInfo, $shipmentInfo);
         return $this->createShipment(null, $shipment, true);
-
     }
 
     public function createPickup($email, $info, $address)
@@ -150,12 +149,12 @@ class Aramex
         return $files;
     }
 
-    public function createShipment($merchentInfo = null, $shipmentInfo, $checkAuth = false)
+    public function createShipment($merchentInfo, $shipmentInfo, $checkAuth = false)
     {
         $payload = [
             'ClientInfo' => $this->config,
             'LabelInfo' => ['ReportID' => 9729, 'ReportType' => 'URL'],
-            'Shipments' => $shipmentInfo,
+            'Shipments' => [$this->shipmentArray($merchentInfo, $shipmentInfo)],
             'Transaction' => [
                 'Reference1' => '',
                 'Reference2' => '',
@@ -177,20 +176,17 @@ class Aramex
             throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $result);
         }
 
-        if (isset($result['Notifications']) && isset($result['Notifications']['Code'] ) && $result['Notifications']['Code'] == 'ERR00') {
+        if (isset($result['Notifications']) && isset($result['Notifications']['Code']) && $result['Notifications']['Code'] == 'ERR00') {
             throw new CarriersException('Aramex Api Is Down please try again after 30 min');
         } else if ($result['HasErrors']) {
             throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment', $payload, $result);
         }
 
-        $data = [];
-        foreach ($result['Shipments'] as $ship) {
-            $data[] = [
-                'id' => $ship['ID'],
-                'file' => AWSServices::uploadToS3('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true),
-            ];
-        }
-        return $data;
+        return [
+            'id' => $result['Shipments'][0]['ID'],
+            'file' => AWSServices::uploadToS3('aramex/shipment', file_get_contents($result['Shipments'][0]['ShipmentLabel']['LabelURL']), 'pdf', true),
+
+        ];
     }
 
     public function shipmentArray($merchentInfo, $shipmentInfo)
@@ -199,8 +195,8 @@ class Aramex
 
         $data['Shipper']['Reference1'] = $merchentInfo->id;
         $data['Shipper']['AccountNumber'] =
-        $data['Consignee']['AccountNumber'] =
-        $this->config['AccountNumber'];
+            $data['Consignee']['AccountNumber'] =
+            $this->config['AccountNumber'];
 
         $data['Shipper']['PartyAddress']['Line1'] = $shipmentInfo['sender_address_description'];
         $data['Shipper']['PartyAddress']['Line2'] = $shipmentInfo['sender_area'];
@@ -263,7 +259,7 @@ class Aramex
         ];
 
         $data['Details']['CustomsValueAmount']['CurrencyCode'] =
-        ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD';
+            ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD';
 
         $data['Details']['Services'] = (isset($shipmentInfo['cod']) && $shipmentInfo['cod'] > 0) ? 'CODS' : '';
         return $data;

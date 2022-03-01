@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use AWS\CRT\HTTP\Request;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\App;
 
@@ -22,8 +23,11 @@ class ShipmentRule implements Rule
      */
     public function passes($key, $value)
     {
-        $merchantInfo = App::make('merchantInfo');
+        $index = explode('.', $key)[0];
+        if ($index == $key)
+            $index = null;
 
+        $merchantInfo = App::make('merchantInfo');
         if ($this->type == 'carrier') {
             return App::make('carriers')
                 ->where('id', $value)
@@ -47,14 +51,21 @@ class ShipmentRule implements Rule
                 'sender_address_description' => $address['description'],
             ];
 
-            // remove the key sender_address_id
-            Request()->request->remove('sender_address_id');
-            Request()->merge($addressData);
+
+            if (strpos(Request()->route()->uri, 'shipments/domestic/create') !== false) {
+                $requests = Request()->all();
+                unset($requests[$index]['sender_address_id']);
+                $requests[$index] = array_merge($requests[$index], $addressData);
+                Request()->merge($requests);
+            } else {
+                Request()->request->remove('sender_address_id');
+                Request()->merge($addressData);
+            }
+        
         } else if ($this->type == 'word_count') {
             $numWords = count(explode(' ', trim($value)));
             return ($numWords >= $this->data['min'] && $numWords <= $this->data['max']);
         }
-
         return true;
     }
 

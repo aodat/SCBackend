@@ -166,9 +166,9 @@ class ShipmentController extends MerchantController
             unset($shipment['dimention']);
         }
 
-        // $result = $this->generateShipment($shipment['carrier_id'], App::make('merchantInfo'), $shipment);
-        $shipment['awb'] = $result['awb'] ?? '123456';
-        $shipment['url'] = $result['link'] ?? '123456';
+        $result = $this->generateShipment($shipment['carrier_id'], App::make('merchantInfo'), $shipment);
+        $shipment['awb'] = $result['awb'];
+        $shipment['url'] = $result['link'];
 
         $address2 = '';
         if (isset($shipment['consignee_address_description_2'])) {
@@ -181,7 +181,7 @@ class ShipmentController extends MerchantController
         if (isset($shipment['consignee_address_description_1'])) {
             unset($shipment['consignee_address_description_1']);
         }
-        
+
         return $this->response(
             [
                 'id' => Shipment::create($shipment)->id,
@@ -193,115 +193,51 @@ class ShipmentController extends MerchantController
 
     public function createDomesticShipment(ShipmentCreator $request)
     {
+        $shipments = $request->all();
 
-        $addressList = App::make('merchantAddresses');
-        $merchantInfo = App::make('merchantInfo');
-        if (!$merchantInfo->is_dom_enabled) {
-            return $this->error('Create Domestic Shipment Not Allowed, Please Contact Administrator');
-        }
-
-        return DB::transaction(function () use ($request, $merchantInfo, $addressList) {
-            $shipmentRequest = $request->validated();
-            (collect($shipmentRequest)->pluck('sender_address_id'))->map(function ($address_id) use ($merchantInfo, $addressList) {
-                if ($addressList->where('id', $address_id)->where('country_code', $merchantInfo->country_code)->isEmpty()) {
-                    throw new InternalException('This is not Domestic request the merchant code different with send country code');
-                }
-            });
-            return $this->shipment('DOM', collect($shipmentRequest), 'Aramex');
-        });
-    }
-
-    private function shipment($type, $shipments, $provider = null)
-    {
-        $merchentInfo = $this->getMerchentInfo();
-
-        $shipments = $shipments->map(function ($shipment) use ($merchentInfo, $type) {
-
-            if ($type == 'DOM' && $shipment['cod'] == 0) {
-                if (!$merchentInfo->is_cod_enabled) {
-                    throw new InternalException('Create Domestic Shipment With No COD Amount Not Allowed, Please Contact Administrator', 400);
-                }
-            }
-
+        $links = [];
+        foreach ($shipments as $shipment) {
             $shipment['actual_weight'] = $shipment['actual_weight'] ?? 0.5;
             $shipment['consignee_notes'] = $shipment['consignee_notes'] ?? '';
             $shipment['consignee_second_phone'] = $shipment['consignee_second_phone'] ?? null;
-            $shipment['reference'] = $shipment['reference'] ?? '';
-            $shipment['reference1'] = $shipment['reference'];
+            $shipment['reference1'] = $shipment['reference'] ?? '';
 
+            $shipment['fees'] = $this->calculateDomesticFees(
+                $shipment['carrier_id'],
+                $shipment['consignee_city'],
+                $shipment['actual_weight'],
+                Request()->user()->merchant_id
+            );
 
+            // $result = $this->generateShipment($shipment['carrier_id'], App::make('merchantInfo'), $shipment);
 
-            if ($type == 'DOM') {
-                $shipment['fees'] = $this->calculateDomesticFees(
-                    $shipment['carrier_id'],
-                    $shipment['consignee_city'],
-                    $shipment['actual_weight'],
-                    Request()->user()->merchant_id
-                );
+            $links[] = $shipment['url'] = $result['link'] ?? 'xxxx';
+            $shipment['awb'] = $result['awb'] ?? '123465';
+
+            $address2 = '';
+            if (isset($shipment['consignee_address_description_2'])) {
+                $address2 = $shipment['consignee_address_description_2'];
+                unset($shipment['consignee_address_description_2']);
             }
 
+            $shipment['consignee_address_description'] = $shipment['consignee_address_description_1'] . ' ' . $address2;
 
-            // Check if COD is Zero OR Shipment Type Express
-            // Check and dedact
-            // $fees = $shipment['fees'];
-            // if ($merchentInfo->payment_type == 'PREPAID') {
-            //     if ($fees <= $merchentInfo->bundle_balance) {
-            //         $merchentInfo->bundle_balance -= $fees;
-            //         $merchentInfo->save();
-            //     } else {
-            //         throw new InternalException('Your bundle balance is not enough to create shipment.', 400);
-            //     }
-            // }
+            if (isset($shipment['consignee_address_description_1'])) {
+                unset($shipment['consignee_address_description_1']);
+            }
+            
+            if (isset($shipment['reference'])) {
+                unset($shipment['reference']);
+            }
 
-            return $shipment;
-        });
-        return $this->createShipmentDB($shipments, $provider);
-    }
-
-    private function createShipmentDB($shipments, $provider)
-    {
-        $getbulk = $shipments->where('carrier_id', 1);
-        $payloads = $getbulk->map(function ($data) {
-            return $this->generateShipmentArray('Aramex', $data);
-        });
-
-        $links = [];
-       
-        if (!$payloads->isEmpty()) {
-            $result = $this->generateShipment('Aramex', $this->getMerchentInfo(), $payloads);
-            $externalAWB = $result['id'];
-            $files = $result['link'];
-
-            $shipments = $shipments->map(function ($value, $key) use ($externalAWB, $files) {
-                $value['awb'] = $externalAWB[$key];
-                $value['url'] = $files[$key];
-
-                $address2 = '';
-                if (isset($value['consignee_address_description_2'])) {
-                    $address2 = $value['consignee_address_description_2'];
-                    unset($value['consignee_address_description_2']);
-                }
-
-                $value['consignee_address_description'] = $value['consignee_address_description_1'] . ' ' . $address2;
-
-                if (isset($value['consignee_address_description_1'])) {
-                    unset($value['consignee_address_description_1']);
-                }
-
-                unset($value['payment']);
-                return $value;
-            });
-
-            $links = array_merge($links, $result['link']);
-            Shipment::insert($shipments->toArray());
+            
+            Shipment::create($shipment);
         }
-
-        $lastShipment = Shipment::first();
 
         return $this->response(
             [
-                'id' => $lastShipment->id,
-                'link' => Documents::merge($links),
+                'id' => null,
+                // 'link' => Documents::merge($links)
             ],
             'Shipment Created Successfully'
         );
@@ -355,7 +291,7 @@ class ShipmentController extends MerchantController
         $path = storage_path() . '/' . 'app/template/domestic_template.xlsx';
         return $this->download($path);
     }
-    
+
     public function delete($id, ShipmentRequest $request)
     {
         $data = Shipment::findOrFail($id);

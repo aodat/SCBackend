@@ -21,21 +21,32 @@ class Shipment
         $type = (strpos(Request()->route()->uri, 'shipments/domestic/create') !== false) ? 'DOM' : 'EXP';
         $merchantInfo = App::make('merchantInfo');
 
+        $add = [
+            'group' => $type,
+            'merchant_id' => Request()->user()->merchant_id,
+            'created_by' => Request()->user()->id,
+            'status' => 'DRAFT',
+            'resource' => Request()->header('Agent') ?? 'WEB'
+        ];
+
         if ($type == 'EXP') {
             if (!$merchantInfo->is_exp_enabled)
                 throw new InternalException('Create Express Shipment Not Allowed, Please Contact Administrator');
-
-            $request->merge(
-                [
-                    'group' => 'EXP',
-                    'merchant_id' => Request()->user()->merchant_id,
-                    'created_by' => Request()->user()->id,
-                    'status' => 'DRAFT',
-                    'resource' => Request()->header('Agent') ?? 'WEB'
-                ]
-            );
+            $request->merge($add);
         } else if ($type == 'DOM') {
-            dd('DOM');
+            if (!$merchantInfo->is_dom_enabled)
+                throw new InternalException('Create Domestic Shipment Not Allowed, Please Contact Administrator');
+            // Check how man request with zero COD 
+            $numberShipmentCOD = collect($request->all())->where('cod', 0)->count();
+
+            if ($numberShipmentCOD > 0 && !$merchantInfo->is_cod_enabled)
+                throw new InternalException('Create Domestic Shipment With No COD Amount Not Allowed, Please Contact Administrator');
+
+            $requests = $request->all();
+            foreach ($requests as $key => $value) {
+                $requests[$key] = array_merge($value, $add);
+            }
+            $request->merge($requests);
         }
         return $next($request);
     }
