@@ -193,6 +193,7 @@ class ShipmentController extends MerchantController
         $shipments = $request->all();
 
         $links = [];
+        $ids = [];
         foreach ($shipments as $shipment) {
             $shipment['actual_weight'] = $shipment['actual_weight'] ?? 0.5;
             if ($reference = $shipment['reference'] ?? null) {
@@ -219,12 +220,12 @@ class ShipmentController extends MerchantController
                 unset($shipment['consignee_address_description_1']);
 
 
-            Shipment::create($shipment);
+            $ids[] = Shipment::create($shipment)->id;
         }
 
         return $this->response(
             [
-                'id' => null,
+                'ids' => $ids,
                 'link' => Documents::merge($links)
             ],
             'Shipment Created Successfully'
