@@ -170,17 +170,14 @@ class ShipmentController extends MerchantController
         $shipment['awb'] = $result['awb'];
         $shipment['url'] = $result['link'];
 
-        $address2 = '';
+
+        $shipment['consignee_address_description'] = $shipment['consignee_address_description_1'];
         if (isset($shipment['consignee_address_description_2'])) {
-            $address2 = $shipment['consignee_address_description_2'];
-            unset($shipment['consignee_address_description_2']);
-        }
-
-        $shipment['consignee_address_description'] = $shipment['consignee_address_description_1'] . ' ' . $address2;
-
-        if (isset($shipment['consignee_address_description_1'])) {
+            $shipment['consignee_address_description'] .= $shipment['consignee_address_description_2'];
+            unset($shipment['consignee_address_description_1'], $shipment['consignee_address_description_2']);
+        } else
             unset($shipment['consignee_address_description_1']);
-        }
+
 
         return $this->response(
             [
@@ -198,9 +195,10 @@ class ShipmentController extends MerchantController
         $links = [];
         foreach ($shipments as $shipment) {
             $shipment['actual_weight'] = $shipment['actual_weight'] ?? 0.5;
-            $shipment['consignee_notes'] = $shipment['consignee_notes'] ?? '';
-            $shipment['consignee_second_phone'] = $shipment['consignee_second_phone'] ?? null;
-            $shipment['reference1'] = $shipment['reference'] ?? '';
+            if ($reference = $shipment['reference'] ?? null) {
+                unset($shipment['reference']);
+            }
+            $shipment['reference1'] = $reference;
 
             $shipment['fees'] = $this->calculateDomesticFees(
                 $shipment['carrier_id'],
@@ -209,35 +207,25 @@ class ShipmentController extends MerchantController
                 Request()->user()->merchant_id
             );
 
-            // $result = $this->generateShipment($shipment['carrier_id'], App::make('merchantInfo'), $shipment);
+            $result = $this->generateShipment($shipment['carrier_id'], App::make('merchantInfo'), $shipment);
+            $links[] = $shipment['url'] = $result['link'];
+            $shipment['awb'] = $result['awb'];
 
-            $links[] = $shipment['url'] = $result['link'] ?? 'xxxx';
-            $shipment['awb'] = $result['awb'] ?? '123465';
-
-            $address2 = '';
+            $shipment['consignee_address_description'] = $shipment['consignee_address_description_1'];
             if (isset($shipment['consignee_address_description_2'])) {
-                $address2 = $shipment['consignee_address_description_2'];
-                unset($shipment['consignee_address_description_2']);
-            }
-
-            $shipment['consignee_address_description'] = $shipment['consignee_address_description_1'] . ' ' . $address2;
-
-            if (isset($shipment['consignee_address_description_1'])) {
+                $shipment['consignee_address_description'] .= $shipment['consignee_address_description_2'];
+                unset($shipment['consignee_address_description_1'], $shipment['consignee_address_description_2']);
+            } else
                 unset($shipment['consignee_address_description_1']);
-            }
-            
-            if (isset($shipment['reference'])) {
-                unset($shipment['reference']);
-            }
 
-            
+
             Shipment::create($shipment);
         }
 
         return $this->response(
             [
                 'id' => null,
-                // 'link' => Documents::merge($links)
+                'link' => Documents::merge($links)
             ],
             'Shipment Created Successfully'
         );

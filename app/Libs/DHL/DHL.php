@@ -202,7 +202,7 @@ class DHL
         $payload['Consignee']['Contact']['Email'] = $shipmentInfo['consignee_email'];
         $payload['Consignee']['Contact']['PhoneExtension'] = '';
 
-        $payload['ShipmentDetails']['Contents'] = $shipmentInfo['content'] ?? ''; // $shipmentInfo['consignee_notes'] ?? '';
+        $payload['ShipmentDetails']['Contents'] = $shipmentInfo['content'] ?? '';;
         $payload['ShipmentDetails']['Date'] = Carbon::now()->format('Y-m-d');
 
         $payload['ShipmentDetails']['Pieces']['Piece']['PieceContents'] = $shipmentInfo['content'] ?? '';
