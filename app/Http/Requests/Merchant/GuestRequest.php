@@ -45,67 +45,7 @@ class GuestRequest extends FormRequest
                 $validation['city_to'] = 'required';
             }
             return $validation;
-        } else if ($this->method() == 'POST' && (strpos($path, 'shipments/create') !== false)) {
-            dd('Error ');
-            $validation = [
-                'strip_token' => 'required',
-                'type' => 'required|in:express,domestic',
-                'carrier_id' => [
-                    'required',
-                    'exists:carriers,id,is_active,1',
-                ],
-                'sender_email' => 'required|email',
-                'sender_name' => [
-                    'required'
-                ],
-                'sender_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:14',
-                'sender_country' => 'required',
-                'sender_city' => 'required',
-                'sender_area' => 'required',
-                'sender_address_description' => 'required',
-
-                'consignee_name' => 'required|max:255',
-                'consignee_email' => 'email',
-                'consignee_phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-                'consignee_notes' => [
-                    // new wordCount(1, 10),
-                ],
-                'consignee_country' => 'required',
-                'consignee_city' => 'required',
-                'consignee_area' => 'required',
-                'consignee_address_description_1' => [
-                    'required',
-                ],
-                'consignee_address_description_2' => '',
-                'content' => [
-                    'required',
-                ],
-                'pieces' => 'required|integer',
-                'consignee_zip_code' => '',
-                'actual_weight' => 'required|numeric|between:0,9999',
-            ];
-
-            $type = Request::instance()->type;
-            if ($type == 'express') {
-                $validation['cod'] = 'numeric|between:0,9999';
-                $validation['payment'] = 'numeric|between:0,9999';
-                $validation['consignee_country'] = 'required';
-                $validation['actual_weight'] = 'required|numeric|between:0,9999';
-                $validation['is_doc'] = 'required|boolean';
-                $validation['declared_value'] = [
-                    new RequiredIf($this->is_doc == false),
-                    'numeric',
-                    'between:0,9999',
-                ];
-                $validation['consignee_zip_code'] = '';
-                $validation['consignee_second_phone'] = '';
-            } else {
-                $validation['cod'] = 'required|numeric|between:0,9999';
-                $validation['extra_services'] = 'required|in:DOMCOD';
-            }
-            return $validation;
         }
-
         return [];
     }
 }

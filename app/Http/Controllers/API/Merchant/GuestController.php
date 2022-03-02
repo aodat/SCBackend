@@ -43,11 +43,4 @@ class GuestController extends MerchantController
         });
         return $this->response($carrier->flatten(), 'Fees Calculated Successfully');
     }
-
-    public function express()
-    {
-    }
-    public function domastic()
-    {
-    }
 }
