@@ -9,10 +9,7 @@ Route::group(['middleware' => ['json.response']], function () {
     Route::get('countries', [MerchantController::class, 'getCountries']);
     Route::get('cities/{city_code}', [MerchantController::class, 'getCities']);
     Route::get('areas/{area_code}', [MerchantController::class, 'getAreas']);
-
     Route::post('shipments/calculate/fees', [GuestController::class, 'calculate']);
-    // Route::post('shipments/create', [ShipmentController::class, 'guestShipment']);
-
-
+    
     Route::get('json', [Controller::class, 'json']);
 });
