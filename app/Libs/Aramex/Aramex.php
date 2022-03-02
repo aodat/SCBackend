@@ -3,17 +3,19 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
-use App\Http\Controllers\API\Merchant\TransactionsController;
-use App\Http\Controllers\Utilities\AWSServices;
-use App\Http\Controllers\Utilities\Shipcash;
-use App\Http\Requests\Carrier\AramexRequest;
-use App\Models\City;
-use App\Models\Merchant;
-use App\Models\Shipment;
-use App\Traits\ResponseHandler;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+
+use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
+
+use App\Http\Requests\Carrier\AramexRequest;
+
+use App\Models\City;
+use App\Models\Shipment;
+
+use App\Traits\ResponseHandler;
+use Carbon\Carbon;
 
 class Aramex
 {
@@ -296,7 +298,8 @@ class Aramex
 
         return $result;
     }
-    public function webhook(AramexRequest $request, TransactionsController $transaction)
+    
+    public function webhook(AramexRequest $request)
     {
         $shipmentInfo = Shipment::where('awb', $request->WaybillNumber)->first();
         if (is_null($shipmentInfo)) {
@@ -324,26 +327,25 @@ class Aramex
 
         $isCollected = $shipmentInfo->is_collected;
         $cod = $shipmentInfo['cod'];
-        $fees = $shipmentInfo['fees'];
         $logs = collect($shipmentInfo->admin_logs);
-        $merchant_id = $shipmentInfo['merchant_id'];
-        $awb = $shipmentInfo['awb'];
-        $created_by = $shipmentInfo['created_by'];
-        $merchant = Merchant::findOrFail($merchant_id);
         $UpdateDescription = 'Shipment Paid SH239 By Cash';
 
         if ($isCollected) {
             return $this->error('This Shipment Already Collected');
         }
 
+        $type = 'CASH';
         if (Str::contains($request->Comment2, 'Cheque')) {
             $UpdateDescription = 'Shipment Paid SH239 By Cheque';
+            $type = 'CHEQUE';
             $cod = 0;
         }
 
         $updated = [
+            'payment' => $type,
             'status' => 'COMPLETED',
             'paid_at' => Carbon::now(),
+            'cod' => $cod,
             'returned_at' => null,
             'is_collected' => true,
             'admin_logs' => $logs->merge([[
@@ -352,14 +354,6 @@ class Aramex
                 'UpdateDescription' => $UpdateDescription,
             ]]),
         ];
-
-        if ($merchant->payment_type == 'POSTPAID') {
-            $amount = $cod - $fees;
-        } else {
-            $amount = $cod;
-        }
-
-        $updated['transaction_id'] = $transaction->COD('CASHIN', $merchant_id, $awb, $amount, "SHIPMENT", $created_by, 'Aramex SH239 webhook', 'COMPLETED', 'API');
 
         if (is_null($shipmentInfo->delivered_at)) {
             $updated['delivered_at'] = Carbon::now();
