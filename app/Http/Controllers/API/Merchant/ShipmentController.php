@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\API\Merchant;
 
-use App\Exceptions\InternalException;
 use App\Exports\ShipmentExport;
 
 use App\Http\Controllers\Utilities\Documents;
@@ -151,9 +150,6 @@ class ShipmentController extends MerchantController
     public function createExpressShipment(ShipmentCreator $request)
     {
         $shipment = $request->all();
-
-        $shipment['consignee_country'] = Country::pluck('code', 'name_en')[$shipment['consignee_country']] ?? null;
-
         $shipment['fees'] = $this->calculateExpressFees(
             $shipment['carrier_id'],
             $shipment['consignee_country'],
