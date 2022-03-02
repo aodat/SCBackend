@@ -245,6 +245,7 @@ class ShipmentController extends MerchantController
         if ($data['is_cod']) {
             $carriers->where('accept_cod', $data['is_cod']);
         }
+
         $dimention = $request->dimention ?? [];
         $carrier = $carriers->get()->map(function ($carrier) use ($data, $dimention) {
             if ($data['type'] == 'express') {
@@ -270,7 +271,6 @@ class ShipmentController extends MerchantController
         });
         return $this->response($carrier->flatten(), 'Fees Calculated Successfully');
     }
-
 
     public function delete(ShipmentRequest $request)
     {
