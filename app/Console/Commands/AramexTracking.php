@@ -8,10 +8,8 @@ use App\Models\Shipment;
 use App\Traits\CarriersManager;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Route;
 
 class AramexTracking extends Command
 {

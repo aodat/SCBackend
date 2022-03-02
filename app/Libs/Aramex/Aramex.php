@@ -68,7 +68,6 @@ class Aramex
 
         $shipment = $this->shipmentArray($merchentInfo, $shipmentInfo);
         return $this->createShipment(null, $shipment, true);
-
     }
 
     public function createPickup($email, $info, $address)
@@ -177,7 +176,7 @@ class Aramex
             throw new CarriersException('Aramex Create Shipment – Something Went Wrong', $payload, $result);
         }
 
-        if (isset($result['Notifications']) && isset($result['Notifications']['Code'] ) && $result['Notifications']['Code'] == 'ERR00') {
+        if (isset($result['Notifications']) && isset($result['Notifications']['Code']) && $result['Notifications']['Code'] == 'ERR00') {
             throw new CarriersException('Aramex Api Is Down please try again after 30 min');
         } else if ($result['HasErrors']) {
             throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment', $payload, $result);
@@ -199,8 +198,8 @@ class Aramex
 
         $data['Shipper']['Reference1'] = $merchentInfo->id;
         $data['Shipper']['AccountNumber'] =
-        $data['Consignee']['AccountNumber'] =
-        $this->config['AccountNumber'];
+            $data['Consignee']['AccountNumber'] =
+            $this->config['AccountNumber'];
 
         $data['Shipper']['PartyAddress']['Line1'] = $shipmentInfo['sender_address_description'];
         $data['Shipper']['PartyAddress']['Line2'] = $shipmentInfo['sender_area'];
@@ -263,7 +262,7 @@ class Aramex
         ];
 
         $data['Details']['CustomsValueAmount']['CurrencyCode'] =
-        ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD';
+            ($shipmentInfo['group'] == 'DOM') ? $merchentInfo->currency_code : 'USD';
 
         $data['Details']['Services'] = (isset($shipmentInfo['cod']) && $shipmentInfo['cod'] > 0) ? 'CODS' : '';
         return $data;
@@ -300,7 +299,7 @@ class Aramex
 
         return $result;
     }
-    public function webhook(AramexRequest $request, TransactionsController $transaction)
+    public function webhook(AramexRequest $request)
     {
         $shipmentInfo = Shipment::where('awb', $request->WaybillNumber)->first();
         if (is_null($shipmentInfo)) {
@@ -328,12 +327,7 @@ class Aramex
 
         $isCollected = $shipmentInfo->is_collected;
         $cod = $shipmentInfo['cod'];
-        $fees = $shipmentInfo['fees'];
         $logs = collect($shipmentInfo->admin_logs);
-        $merchant_id = $shipmentInfo['merchant_id'];
-        $awb = $shipmentInfo['awb'];
-        $created_by = $shipmentInfo['created_by'];
-        $merchant = Merchant::findOrFail($merchant_id);
         $UpdateDescription = 'Shipment Paid SH239 By Cash';
 
         if ($isCollected) {
@@ -348,6 +342,7 @@ class Aramex
         $updated = [
             'status' => 'COMPLETED',
             'paid_at' => Carbon::now(),
+            'cod' => $cod,
             'returned_at' => null,
             'is_collected' => true,
             'admin_logs' => $logs->merge([[
@@ -356,14 +351,6 @@ class Aramex
                 'UpdateDescription' => $UpdateDescription,
             ]]),
         ];
-
-        if ($merchant->payment_type == 'POSTPAID') {
-            $amount = $cod - $fees;
-        } else {
-            $amount = $cod;
-        }
-
-        $updated['transaction_id'] = $transaction->COD('CASHIN', $merchant_id, $awb, $amount, "SHIPMENT", $created_by, 'Aramex SH239 webhook', 'COMPLETED', 'API');
 
         if (is_null($shipmentInfo->delivered_at)) {
             $updated['delivered_at'] = Carbon::now();
