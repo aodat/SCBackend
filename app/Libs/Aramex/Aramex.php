@@ -3,17 +3,19 @@
 namespace Libs;
 
 use App\Exceptions\CarriersException;
-use App\Http\Controllers\API\Merchant\TransactionsController;
-use App\Http\Controllers\Utilities\AWSServices;
-use App\Http\Controllers\Utilities\Shipcash;
-use App\Http\Requests\Carrier\AramexRequest;
-use App\Models\City;
-use App\Models\Merchant;
-use App\Models\Shipment;
-use App\Traits\ResponseHandler;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+
+use App\Http\Controllers\Utilities\AWSServices;
+use App\Http\Controllers\Utilities\Shipcash;
+
+use App\Http\Requests\Carrier\AramexRequest;
+
+use App\Models\City;
+use App\Models\Shipment;
+
+use App\Traits\ResponseHandler;
+use Carbon\Carbon;
 
 class Aramex
 {
@@ -149,12 +151,12 @@ class Aramex
         return $files;
     }
 
-    public function createShipment($merchentInfo = null, $shipmentInfo, $checkAuth = false)
+    public function createShipment($merchentInfo, $shipmentInfo, $checkAuth = false)
     {
         $payload = [
             'ClientInfo' => $this->config,
             'LabelInfo' => ['ReportID' => 9729, 'ReportType' => 'URL'],
-            'Shipments' => $shipmentInfo,
+            'Shipments' => [$this->shipmentArray($merchentInfo, $shipmentInfo)],
             'Transaction' => [
                 'Reference1' => '',
                 'Reference2' => '',
@@ -182,14 +184,11 @@ class Aramex
             throw new CarriersException('Aramex Data Provided Not Correct - Create Shipment', $payload, $result);
         }
 
-        $data = [];
-        foreach ($result['Shipments'] as $ship) {
-            $data[] = [
-                'id' => $ship['ID'],
-                'file' => AWSServices::uploadToS3('aramex/shipment', file_get_contents($ship['ShipmentLabel']['LabelURL']), 'pdf', true),
-            ];
-        }
-        return $data;
+        return [
+            'id' => $result['Shipments'][0]['ID'],
+            'file' => AWSServices::uploadToS3('aramex/shipment', file_get_contents($result['Shipments'][0]['ShipmentLabel']['LabelURL']), 'pdf', true),
+
+        ];
     }
 
     public function shipmentArray($merchentInfo, $shipmentInfo)
@@ -299,6 +298,7 @@ class Aramex
 
         return $result;
     }
+    
     public function webhook(AramexRequest $request)
     {
         $shipmentInfo = Shipment::where('awb', $request->WaybillNumber)->first();
@@ -334,12 +334,15 @@ class Aramex
             return $this->error('This Shipment Already Collected');
         }
 
+        $type = 'CASH';
         if (Str::contains($request->Comment2, 'Cheque')) {
             $UpdateDescription = 'Shipment Paid SH239 By Cheque';
+            $type = 'CHEQUE';
             $cod = 0;
         }
 
         $updated = [
+            'payment' => $type,
             'status' => 'COMPLETED',
             'paid_at' => Carbon::now(),
             'cod' => $cod,

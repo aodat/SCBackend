@@ -39,10 +39,7 @@ class Fedex
         $this->key = $settings['fedex_key'] ?? config('carriers.fedex.KEY');
         $this->password = $settings['fedex_password'] ?? config('carriers.fedex.PASSWORD');
 
-        $this->end_point = self::$stagingUrl;
-        if (config('app.env') == 'production') {
-            $this->end_point = self::$productionUrl;
-        }
+        $this->end_point = self::$productionUrl;
 
     }
 
