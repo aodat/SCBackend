@@ -191,7 +191,6 @@ class ShipmentController extends MerchantController
         $links = [];
         $ids = [];
         foreach ($shipments as $shipment) {
-            $shipment['actual_weight'] = $shipment['actual_weight'] ?? 0.5;
             if ($reference = $shipment['reference'] ?? null) {
                 unset($shipment['reference']);
             }

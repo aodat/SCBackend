@@ -53,6 +53,7 @@ class Shipment
             $requests = $request->all();
             foreach ($requests as $key => $value) {
                 $add['consignee_country'] = Country::pluck('code', 'name_en')[$value['consignee_country']];
+                $add['actual_weight'] = $value['actual_weight'] ?? 0.5;
 
                 if ($add['consignee_country'] != $merchantInfo->country_code)
                     throw new InternalException('Invalid Domestic Shipment Provided, Please Contact Administrator');
