@@ -220,7 +220,7 @@ class ShipmentController extends MerchantController
 
         return $this->response(
             [
-                'ids' => $ids,
+                'id' => (count($ids) == 1) ? $ids[0] : $ids,
                 'link' => Documents::merge($links)
             ],
             'Shipment Created Successfully'
