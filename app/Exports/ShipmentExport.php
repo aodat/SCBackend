@@ -52,7 +52,7 @@ class ShipmentExport implements FromCollection, WithMapping, WithHeadings, Shoul
             $shipment->consignee_city,
             $shipment->consignee_area,
             $shipment->consignee_address_description,
-            $shipment->cod ?? 0,
+            ($shipment->cod == '') ?? 0,
             (!is_null($shipment->delivered_at)) ? date('Y-m-d', strtotime($shipment->delivered_at)) : '',
             $shipment->pieces,
             $shipment->content,
