@@ -11,26 +11,26 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class ShipmentExport implements FromCollection, WithMapping, WithHeadings, ShouldAutoSize
 {
     protected $shipments;
-    
+
     function __construct($shipments)
     {
         $this->shipments = $shipments;
     }
-    
+
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * @return \Illuminate\Support\Collection
+     */
     public function collection()
     {
         return $this->shipments;
     }
-    
+
     public function headings(): array
     {
         return [
             'Sender Name',
-            'Consignee name',
-            'Consignee phone number',
+            'Consignee Name',
+            'Consignee Phone Number',
             'City',
             'Area',
             'Address',
@@ -39,7 +39,7 @@ class ShipmentExport implements FromCollection, WithMapping, WithHeadings, Shoul
             'Pieces',
             'Shipment Content',
             'Status',
-            'Created At',
+            'Created Date',
         ];
     }
 
@@ -53,7 +53,7 @@ class ShipmentExport implements FromCollection, WithMapping, WithHeadings, Shoul
             $shipment->consignee_area,
             $shipment->consignee_address_description,
             $shipment->cod,
-            date('Y-m-d', strtotime($shipment->delivered_at)),
+            (!is_null($shipment->delivered_at)) ? date('Y-m-d', strtotime($shipment->delivered_at)) : '',
             $shipment->pieces,
             $shipment->content,
             $shipment->status,
