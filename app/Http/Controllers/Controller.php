@@ -29,6 +29,32 @@ class Controller extends BaseController
     public function json()
     {
         set_time_limit(0);
-        die('Stopped ');
+        DB::transaction(function () {
+            $lists = DB::table(DB::raw('transactions t'))
+                ->select('merchant_id', DB::raw('(
+                    select cod_balance 
+                    from merchants m 
+                    where m.id = merchant_id 
+                ) cod_balance'), DB::raw('sum(amount) as total'))
+                ->whereRaw('id NOT IN (
+                    select transaction_id 
+                    from shipments s 
+                    where transaction_id is not null 
+                )')
+                ->where('type', '=', 'CASHIN')
+                ->where('subtype', '=', 'COD')
+                ->where('description', '=', 'Aramex SH239 Tracking')
+                ->groupBy('merchant_id')
+                ->orderByRaw('merchant_id ASC,total DESC')
+                ->get();
+
+            $lists->map(function ($list) {
+                $merchant = Merchant::findOrFail($list->merchant_id);
+                $merchant->cod_balance = $merchant->cod_balance - $list->total;
+                $merchant->save();
+            });
+        });
+
+        echo "Done";
     }
 }
