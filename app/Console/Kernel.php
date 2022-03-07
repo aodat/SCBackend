@@ -16,8 +16,7 @@ class Kernel extends ConsoleKernel
         Commands\AramexTracking::class,
         Commands\DHLTracking::class,
         Commands\FedExTracking::class,
-        Commands\PickUpTracking::class,
-        Commands\CODTransactions::class
+        Commands\PickUpTracking::class
     ];
 
     /**
@@ -32,7 +31,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('aramex-tracking:cron')->everyFiveMinutes();
         $schedule->command('dhl-tracking:cron')->everyFiveMinutes();
         $schedule->command('fedex-tracking:cron')->everyFiveMinutes();
-        $schedule->command('cod-transactions:cron')->hourly();
     }
 
     /**
