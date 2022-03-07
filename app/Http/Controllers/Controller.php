@@ -52,7 +52,7 @@ class Controller extends BaseController
                         $balance_after -= $value->amount;
 
 
-                    echo "Balance : " . $value->amount . " Balance After : " . $balance_after;
+                    echo "Merchant ID : " . $trans->merchant_id . " Balance : " . $value->amount . " Balance After : " . $balance_after;
                     if ($value->type == 'CASHOUT')
                         echo "<hr>";
                     echo "<br>";
