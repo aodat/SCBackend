@@ -35,14 +35,13 @@ class Controller extends BaseController
                 ->select('merchant_id')
                 ->where('subtype', '=', 'COD')
                 ->orderBy('merchant_id', 'ASC')
-                ->orderBy('updated_at', 'ASC')
                 ->get();
 
             $merchantsTransaction->map(function ($trans) {
                 $transactions = DB::table(DB::raw('transactions t'))
                     ->where('subtype', '=', 'COD')
                     ->where('merchant_id', '=', $trans->merchant_id)
-                    ->orderBy('updated_at', 'ASC')
+                    ->orderBy('id', 'ASC')
                     ->get()
                     ->toArray();
                 $balance_after = 0;
@@ -57,7 +56,7 @@ class Controller extends BaseController
                     // if ($value->type == 'CASHOUT')
                     //     echo "<hr>";
                     // echo "<br>";
-                    
+
                     DB::table('transactions')
                         ->where('id', $value->id)
                         ->update(
