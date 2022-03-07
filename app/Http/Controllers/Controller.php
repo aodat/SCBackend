@@ -29,30 +29,43 @@ class Controller extends BaseController
     public function json()
     {
         set_time_limit(0);
-        die;
         DB::transaction(function () {
-            $lists = DB::table(DB::raw('transactions t'))
-                ->select('merchant_id', DB::raw('(
-                    select cod_balance 
-                    from merchants m 
-                    where m.id = merchant_id 
-                ) cod_balance'), DB::raw('sum(amount) as total'))
-                ->whereRaw('id NOT IN (
-                    select transaction_id 
-                    from shipments s 
-                    where transaction_id is not null 
-                )')
-                ->where('type', '=', 'CASHIN')
+            $merchantsTransaction = DB::table(DB::raw('transactions t'))
+                ->distinct()
+                ->select('merchant_id')
                 ->where('subtype', '=', 'COD')
-                ->where('description', '=', 'Aramex SH239 Tracking')
-                ->groupBy('merchant_id')
-                ->orderByRaw('merchant_id ASC,total DESC')
+                ->orderBy('merchant_id', 'ASC')
+                ->orderBy('updated_at', 'ASC')
                 ->get();
 
-            $lists->map(function ($list) {
-                $merchant = Merchant::findOrFail($list->merchant_id);
-                $merchant->cod_balance = $merchant->cod_balance - $list->total;
-                $merchant->save();
+            $merchantsTransaction->map(function ($trans) {
+                $transactions = DB::table(DB::raw('transactions t'))
+                    ->where('subtype', '=', 'COD')
+                    ->where('merchant_id', '=', $trans->merchant_id)
+                    ->orderBy('updated_at', 'ASC')
+                    ->get()
+                    ->toArray();
+                $balance_after = 0;
+                foreach ($transactions as $key => $value) {
+                    if ($value->type == 'CASHIN')
+                        $balance_after += $value->amount;
+                    else
+                        $balance_after -= $value->amount;
+
+
+                    // echo "Balance : " . $value->amount . " Balance After : " . $balance_after;
+                    // if ($value->type == 'CASHOUT')
+                    //     echo "<hr>";
+                    // echo "<br>";
+                    
+                    DB::table('transactions')
+                        ->where('id', $value->id)
+                        ->update(
+                            [
+                                'balance_after' => $balance_after
+                            ]
+                        );
+                }
             });
         });
 
