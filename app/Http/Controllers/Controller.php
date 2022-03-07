@@ -52,10 +52,10 @@ class Controller extends BaseController
                         $balance_after -= $value->amount;
 
 
-                    // echo "Balance : " . $value->amount . " Balance After : " . $balance_after;
-                    // if ($value->type == 'CASHOUT')
-                    //     echo "<hr>";
-                    // echo "<br>";
+                    echo "Balance : " . $value->amount . " Balance After : " . $balance_after;
+                    if ($value->type == 'CASHOUT')
+                        echo "<hr>";
+                    echo "<br>";
 
                     DB::table('transactions')
                         ->where('id', $value->id)
