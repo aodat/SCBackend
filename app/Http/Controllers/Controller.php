@@ -28,6 +28,7 @@ class Controller extends BaseController
 
     public function json()
     {
+        die;
         set_time_limit(0);
         DB::transaction(function () {
             $merchantsTransaction = DB::table(DB::raw('transactions t'))
@@ -52,26 +53,29 @@ class Controller extends BaseController
                     else
                         $balance_after -= $value->amount;
 
-
                     $html .= " Balance : " . $value->amount . " Balance After : " . $balance_after;
                     if ($value->type == 'CASHOUT')
                         $html .= "<hr>";
                     $html .= "<br>";
 
-                    // DB::table('transactions')
-                    //     ->where('id', $value->id)
-                    //     ->update(
-                    //         [
-                    //             'balance_after' => $balance_after
-                    //         ]
-                    //     );
+                    DB::table('transactions')
+                        ->where('id', $value->id)
+                        ->update(
+                            [
+                                'balance_after' => $balance_after
+                            ]
+                        );
                 }
 
                 $html .= "<br>";
-                if ($balance_after != Merchant::findOrFail($trans->merchant_id)->cod_balance) {
-                    echo $html;
-                    echo "Last COD Balance : " . $balance_after . " Current Balance : " . Merchant::findOrFail($trans->merchant_id)->cod_balance;
-                    echo "<hr>";
+                $merchant = Merchant::findOrFail($trans->merchant_id);
+                if ($balance_after != $merchant->cod_balance) {
+                    $merchant->cod_balance = $balance_after;
+                    $merchant->save();
+
+                    // echo $html;
+                    // echo "Last COD Balance : " . $balance_after . " Current Balance : " . Merchant::findOrFail($trans->merchant_id)->cod_balance;
+                    // echo "<hr>";
                 }
             });
         });
