@@ -66,6 +66,8 @@ class Controller extends BaseController
                     //         ]
                     //     );
                 }
+                echo "<br>";
+                echo "Last COD Balance : " . $balance_after . " Current Balance : " . Merchant::findOrFail($trans->merchant_id)->cod_balance;
                 echo "<hr>";
             });
         });
