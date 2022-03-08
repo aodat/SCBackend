@@ -29,7 +29,6 @@ class Controller extends BaseController
     public function json()
     {
         set_time_limit(0);
-        die;
         DB::transaction(function () {
             $merchantsTransaction = DB::table(DB::raw('transactions t'))
                 ->distinct()
@@ -46,6 +45,7 @@ class Controller extends BaseController
                     ->get()
                     ->toArray();
                 $balance_after = 0;
+                echo "<h1> Mercahnt ID : " . $trans->merchant_id . "</h1>";
                 foreach ($transactions as $key => $value) {
                     if ($value->type == 'CASHIN')
                         $balance_after += $value->amount;
@@ -53,19 +53,20 @@ class Controller extends BaseController
                         $balance_after -= $value->amount;
 
 
-                    echo "Merchant ID : " . $trans->merchant_id . " Balance : " . $value->amount . " Balance After : " . $balance_after;
+                    echo  " Balance : " . $value->amount . " Balance After : " . $balance_after;
                     if ($value->type == 'CASHOUT')
                         echo "<hr>";
                     echo "<br>";
 
-                    DB::table('transactions')
-                        ->where('id', $value->id)
-                        ->update(
-                            [
-                                'balance_after' => $balance_after
-                            ]
-                        );
+                    // DB::table('transactions')
+                    //     ->where('id', $value->id)
+                    //     ->update(
+                    //         [
+                    //             'balance_after' => $balance_after
+                    //         ]
+                    //     );
                 }
+                echo "<hr>";
             });
         });
 
