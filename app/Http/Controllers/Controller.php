@@ -67,15 +67,10 @@ class Controller extends BaseController
                 }
 
                 $html .= "<br>";
-                $merchant = Merchant::findOrFail($trans->merchant_id);
-                if ($balance_after != $merchant->cod_balance) {
-                    $merchant->cod_balance = $balance_after;
-                    $merchant->save();
-
-                    // echo $html;
-                    // echo "Last COD Balance : " . $balance_after . " Current Balance : " . Merchant::findOrFail($trans->merchant_id)->cod_balance;
-                    // echo "<hr>";
-                }
+                
+                echo $html;
+                echo "Last COD Balance : " . $balance_after . " Current Balance : " . Merchant::findOrFail($trans->merchant_id)->cod_balance;
+                echo "<hr>";
             });
         });
 
