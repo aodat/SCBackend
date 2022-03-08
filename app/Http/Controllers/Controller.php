@@ -28,7 +28,6 @@ class Controller extends BaseController
 
     public function json()
     {
-        die;
         set_time_limit(0);
         DB::transaction(function () {
             $merchantsTransaction = DB::table(DB::raw('transactions t'))
