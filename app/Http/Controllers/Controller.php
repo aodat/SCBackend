@@ -45,7 +45,7 @@ class Controller extends BaseController
                     ->get()
                     ->toArray();
                 $balance_after = 0;
-                echo "<h1> Mercahnt ID : " . $trans->merchant_id . "</h1>";
+                $html = "<h1> Mercahnt ID : " . $trans->merchant_id . "</h1>";
                 foreach ($transactions as $key => $value) {
                     if ($value->type == 'CASHIN')
                         $balance_after += $value->amount;
@@ -53,10 +53,10 @@ class Controller extends BaseController
                         $balance_after -= $value->amount;
 
 
-                    echo  " Balance : " . $value->amount . " Balance After : " . $balance_after;
+                    $html .= " Balance : " . $value->amount . " Balance After : " . $balance_after;
                     if ($value->type == 'CASHOUT')
-                        echo "<hr>";
-                    echo "<br>";
+                        $html .= "<hr>";
+                    $html .= "<br>";
 
                     // DB::table('transactions')
                     //     ->where('id', $value->id)
@@ -66,9 +66,13 @@ class Controller extends BaseController
                     //         ]
                     //     );
                 }
-                echo "<br>";
-                echo "Last COD Balance : " . $balance_after . " Current Balance : " . Merchant::findOrFail($trans->merchant_id)->cod_balance;
-                echo "<hr>";
+
+                $html .= "<br>";
+                if ($balance_after != Merchant::findOrFail($trans->merchant_id)->cod_balance) {
+                    echo $html;
+                    echo "Last COD Balance : " . $balance_after . " Current Balance : " . Merchant::findOrFail($trans->merchant_id)->cod_balance;
+                    echo "<hr>";
+                }
             });
         });
 
