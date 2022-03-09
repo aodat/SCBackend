@@ -103,7 +103,8 @@ class TransactionsController extends MerchantController
                         from transactions t2 
                         where t2.id = max(t.id)
                     ) as balance_after'),
-                DB::raw('sum(amount) as amount')
+                DB::raw('sum(amount) as amount'),
+                'status'
             )
             ->where(function ($query) use ($request) {
                 $query->where('source', 'SHIPMENT')
@@ -120,7 +121,8 @@ class TransactionsController extends MerchantController
                 'type',
                 'item_id',
                 'balance_after',
-                'amount'
+                'amount',
+                'status'
             )
             ->where(function ($query) use ($request) {
                 $query->where('subtype', $request->subtype ?? 'COD')
