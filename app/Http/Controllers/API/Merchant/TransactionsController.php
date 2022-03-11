@@ -333,7 +333,7 @@ class TransactionsController extends MerchantController
 
     public function COD($type = 'CASHIN', $merchant_id, $awb, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API', $payment_method = null)
     {
-        sleep(5 * rand(1,20));
+        sleep(1 * rand(1,20));
 
         $merchant = Merchant::findOrFail($merchant_id);
         if ($type == 'CASHIN') {
