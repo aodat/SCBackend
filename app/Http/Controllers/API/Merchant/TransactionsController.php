@@ -129,7 +129,8 @@ class TransactionsController extends MerchantController
                     ->where('type', 'CASHOUT');
             })
             ->where('merchant_id', '=', $merchant_id)
-            ->orderByDesc('id');
+            ->orderBy('id', 'asc');
+
 
         if ($type == 'CASHIN')
             $allTransaction = DB::table($cashin->orderBy('date'))
