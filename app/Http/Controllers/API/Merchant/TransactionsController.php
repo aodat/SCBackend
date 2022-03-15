@@ -101,7 +101,7 @@ class TransactionsController extends MerchantController
                 DB::raw('(
                         select t2.balance_after 
                         from transactions t2 
-                        where t2.id = max(t.id)
+                        where t2.id = max(t.id) and t2.merchant_id = t.merchant_id
                     ) as balance_after'),
                 DB::raw('sum(amount) as amount'),
                 'status'
@@ -129,7 +129,7 @@ class TransactionsController extends MerchantController
                     ->where('type', 'CASHOUT');
             })
             ->where('merchant_id', '=', $merchant_id)
-            ->groupByRaw('date(t.created_at)');
+            ->orderByDesc('id');
 
         if ($type == 'CASHIN')
             $allTransaction = DB::table($cashin->orderBy('date'))
