@@ -142,7 +142,7 @@ class TransactionsController extends MerchantController
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
         else
-            $allTransaction = DB::table($cashin->union($cashout)->orderBy('id'))
+            $allTransaction = DB::table($cashin->union($cashout)->orderBy('date'))
                 ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
