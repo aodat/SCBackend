@@ -327,12 +327,8 @@ class Aramex
 
         $isCollected = $shipmentInfo->is_collected;
         $cod = $shipmentInfo['cod'];
-        $fees = $shipmentInfo['fees'];
+
         $logs = collect($shipmentInfo->admin_logs);
-        $merchant_id = $shipmentInfo['merchant_id'];
-        $awb = $shipmentInfo['awb'];
-        $created_by = $shipmentInfo['created_by'];
-        $merchant = Merchant::findOrFail($merchant_id);
         $UpdateDescription = 'Shipment Paid SH239 By Cash';
 
         if ($isCollected) {
@@ -347,6 +343,7 @@ class Aramex
         $updated = [
             'status' => 'COMPLETED',
             'paid_at' => Carbon::now(),
+            'cod' => $cod,
             'returned_at' => null,
             'is_collected' => true,
             'admin_logs' => $logs->merge([[
@@ -356,13 +353,13 @@ class Aramex
             ]]),
         ];
 
-        if ($merchant->payment_type == 'POSTPAID') {
-            $amount = $cod - $fees;
-        } else {
-            $amount = $cod;
-        }
+        // if ($merchant->payment_type == 'POSTPAID') {
+        //     $amount = $cod - $fees;
+        // } else {
+        //     $amount = $cod;
+        // }
 
-        $updated['transaction_id'] = $transaction->COD('CASHIN', $merchant_id, $awb, $amount, "SHIPMENT", $created_by, 'Aramex SH239 webhook', 'COMPLETED', 'API');
+        // $updated['transaction_id'] = $transaction->COD('CASHIN', $merchant_id, $awb, $amount, "SHIPMENT", $created_by, 'Aramex SH239 webhook', 'COMPLETED', 'API');
 
         if (is_null($shipmentInfo->delivered_at)) {
             $updated['delivered_at'] = Carbon::now();
