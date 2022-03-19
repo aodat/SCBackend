@@ -343,7 +343,7 @@ class TransactionsController extends MerchantController
 
         $merchant->save();
 
-        return Transaction::create(
+        $transaction =  Transaction::create(
             [
                 'type' => $type,
                 'subtype' => 'COD',
@@ -358,7 +358,10 @@ class TransactionsController extends MerchantController
                 'resource' => $resource,
                 'payment_method' => collect($payment_method),
             ]
-        )->id;
+        );
+
+        return $transaction->id;
+
     }
 
     public function BUNDLE($type = 'CASHIN', $merchant_id, $item_id = null, $amount, $source, $created_by, $description = '', $status = 'COMPLETED', $resource = 'API', $payment_method = null)
