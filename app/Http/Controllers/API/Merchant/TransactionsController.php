@@ -139,8 +139,8 @@ class TransactionsController extends MerchantController
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
         else if ($type == 'CASHOUT')
-            $allTransaction = DB::table($cashout->orderBy('id'))
-                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+            $allTransaction = DB::table($cashout->orderBy('id','DESC'))
+                ->select('*')
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
         else
