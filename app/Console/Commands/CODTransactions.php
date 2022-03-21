@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Merchant;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
@@ -80,7 +81,9 @@ class CODTransactions extends Command
                         'status' => 'COMPLETED',
                         'created_by' => $created_by,
                         'resource' => 'API',
-                        'payment_method' => null
+                        'payment_method' => null,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
                     ]
                 );
                 DB::table('shipments')->where('id', $id)->update(['transaction_id' => $transaction_id]);
