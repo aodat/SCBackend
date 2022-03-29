@@ -135,7 +135,7 @@ class TransactionsController extends MerchantController
 
         if ($type == 'CASHIN')
             $allTransaction = DB::table($cashin->orderBy('id','DESC'))
-                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC)'))
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
         else if ($type == 'CASHOUT')
@@ -145,13 +145,13 @@ class TransactionsController extends MerchantController
                 ->paginate(request()->per_page ?? 30);
         else
             $allTransaction = DB::table($cashin->union($cashout)->orderBy('date','DESC'))
-                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+                ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC)'))
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
 
 
         $tabsTransaction = DB::table($cashin->union($cashout)->orderBy('date','DESC'))
-            ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
+            ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC)'))
             ->paginate(request()->per_page ?? 30);
 
 
