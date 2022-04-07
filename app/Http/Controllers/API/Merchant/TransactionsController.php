@@ -134,23 +134,23 @@ class TransactionsController extends MerchantController
 
 
         if ($type == 'CASHIN')
-            $allTransaction = DB::table($cashin->orderBy('date','DESC'))
+            $allTransaction = DB::table($cashin->orderBy('id','DESC'))
                 ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
         else if ($type == 'CASHOUT')
-            $allTransaction = DB::table($cashout->orderBy('date','DESC'))
+            $allTransaction = DB::table($cashout->orderBy('id','DESC'))
                 ->select('*')
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
         else
-            $allTransaction = DB::table($cashin->union($cashout)->orderBy('date','DESC'))
+            $allTransaction = DB::table($cashin->union($cashout)->orderBy('id','DESC'))
                 ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
 
 
-        $tabsTransaction = DB::table($cashin->union($cashout)->orderBy('date','DESC'))
+        $tabsTransaction = DB::table($cashin->union($cashout)->orderBy('id','DESC'))
             ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
             ->paginate(request()->per_page ?? 30);
 
