@@ -96,7 +96,7 @@ class TransactionsController extends MerchantController
         $cashin = DB::table(DB::raw('transactions t'))
             ->select(
                 DB::raw('null as id'),
-                DB::raw('(created_at) as date'),
+                DB::raw('date(created_at) as date'),
                 'type',
                 DB::raw('count(item_id) as number_shipment'),
                 DB::raw('(
@@ -119,7 +119,7 @@ class TransactionsController extends MerchantController
         $cashout = DB::table(DB::raw('transactions t'))
             ->select(
                 'id',
-                DB::raw('(created_at) as date'),
+                DB::raw('date(created_at) as date'),
                 'type',
                 'item_id',
                 'balance_after',
@@ -181,7 +181,7 @@ class TransactionsController extends MerchantController
         $since = $request->created_at['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $request->created_at['until'] ?? Carbon::today()->format('Y-m-d');
 
-        $transaction = Transaction::whereBetween(DB::raw('(created_at)'), [$since, $until])
+        $transaction = Transaction::whereBetween(DB::raw('date(created_at)'), [$since, $until])
             ->where('subtype', $subtype);
 
         $merchecntInfo = $this->getMerchentInfo();
