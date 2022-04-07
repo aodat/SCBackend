@@ -181,7 +181,7 @@ class TransactionsController extends MerchantController
         $since = $request->created_at['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
         $until = $request->created_at['until'] ?? Carbon::today()->format('Y-m-d');
 
-        $transaction = Transaction::whereBetween(DB::raw('date(created_at)'), [$since, $until])
+        $transaction = Transaction::whereBetween(DB::raw('(created_at)'), [$since, $until])
             ->where('subtype', $subtype);
 
         $merchecntInfo = $this->getMerchentInfo();
