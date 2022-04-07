@@ -96,7 +96,7 @@ class TransactionsController extends MerchantController
         $cashin = DB::table(DB::raw('transactions t'))
             ->select(
                 DB::raw('null as id'),
-                DB::raw('date(created_at) as date'),
+                DB::raw('(created_at) as date'),
                 'type',
                 DB::raw('count(item_id) as number_shipment'),
                 DB::raw('(
@@ -119,7 +119,7 @@ class TransactionsController extends MerchantController
         $cashout = DB::table(DB::raw('transactions t'))
             ->select(
                 'id',
-                DB::raw('date(created_at) as date'),
+                DB::raw('(created_at) as date'),
                 'type',
                 'item_id',
                 'balance_after',
@@ -134,23 +134,23 @@ class TransactionsController extends MerchantController
 
 
         if ($type == 'CASHIN')
-            $allTransaction = DB::table($cashin->orderBy('id','DESC'))
+            $allTransaction = DB::table($cashin->orderBy('date','DESC'))
                 ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
         else if ($type == 'CASHOUT')
-            $allTransaction = DB::table($cashout->orderBy('id','DESC'))
+            $allTransaction = DB::table($cashout->orderBy('date','DESC'))
                 ->select('*')
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
         else
-            $allTransaction = DB::table($cashin->union($cashout)->orderBy('id','DESC'))
+            $allTransaction = DB::table($cashin->union($cashout)->orderBy('date','DESC'))
                 ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
                 ->whereBetween('date', [$since, $until])
                 ->paginate(request()->per_page ?? 30);
 
 
-        $tabsTransaction = DB::table($cashin->union($cashout)->orderBy('id','DESC'))
+        $tabsTransaction = DB::table($cashin->union($cashout)->orderBy('date','DESC'))
             ->select('*', DB::raw($start . ' + ROW_NUMBER() OVER(ORDER BY date DESC) AS id'))
             ->paginate(request()->per_page ?? 30);
 
