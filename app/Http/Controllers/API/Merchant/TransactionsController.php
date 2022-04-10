@@ -96,7 +96,7 @@ class TransactionsController extends MerchantController
         $cashin = DB::table(DB::raw('transactions t'))
             ->select(
                 DB::raw('null as id'),
-                DB::raw('date(created_at) as date'),
+                DB::raw('(created_at) as date'),
                 'type',
                 DB::raw('count(item_id) as number_shipment'),
                 DB::raw('(
@@ -114,7 +114,7 @@ class TransactionsController extends MerchantController
             })
             ->whereNotNull('item_id')
             ->where('merchant_id', '=', $merchant_id)
-            ->groupByRaw('date(t.created_at)');
+            ->groupByRaw('(t.created_at)');
 
         $cashout = DB::table(DB::raw('transactions t'))
             ->select(
@@ -359,7 +359,7 @@ class TransactionsController extends MerchantController
                 'payment_method' => collect($payment_method),
             ]
         );
-
+ 
         return $transaction->id;
 
     }
