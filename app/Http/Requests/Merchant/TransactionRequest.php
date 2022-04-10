@@ -40,8 +40,8 @@ class TransactionRequest extends MerchantRequest
             ];
         } else if ($this->getMethod() == 'POST' && strpos($path, 'export') !== false) {
             return [
-                'created_at.since' => 'nullable|date|date_format:Y-m-d',
-                'created_at.until' => 'nullable|date|date_format:Y-m-d|after_or_equal:created_at.since',
+                'created_at.since' => 'nullable|date',
+                'created_at.until' => 'nullable|date',
                 'type' => 'in:CASHIN,CASHOUT,*',
                 'subtype' => 'in:COD,BUNDLE',
                 'format' => 'in:xlsx,pdf'

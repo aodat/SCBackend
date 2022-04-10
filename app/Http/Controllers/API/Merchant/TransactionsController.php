@@ -178,8 +178,8 @@ class TransactionsController extends MerchantController
         $type = $filters['type'] ?? '*'; // CASHIN , CASHOUT , All
         $subtype = $filters['subtype'] ?? 'COD'; // COD , BUNDLE
 
-        $since = $request->created_at['since'] ?? Carbon::today()->subYear(1)->format('Y-m-d');
-        $until = $request->created_at['until'] ?? Carbon::today()->format('Y-m-d');
+        $since = date('Y-m-d', strtotime($request->created_at['since'])) ?? Carbon::today()->subYear(1)->format('Y-m-d');
+        $until = date('Y-m-d', strtotime($request->created_at['until'])) ?? Carbon::today()->format('Y-m-d');
 
         $transaction = Transaction::whereBetween(DB::raw('date(created_at)'), [$since, $until])
             ->where('subtype', $subtype);
